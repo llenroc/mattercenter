@@ -198,7 +198,7 @@
     <comment>URL for Search Matter App</comment>
   </data>
   <data name="Site_Url" xml:space="preserve">
-    <value>[Enter URL of the SharePoint site, e.g. https://[TENANTNAME].sharepoint.com]</value>
+    <value>[Enter URL of the SharePoint site, e.g. https://mytenant.sharepoint.com]</value>
     <comment>URL of the SharePoint site</comment>
   </data>
   <data name="IsDeployedOnAzure" xml:space="preserve">

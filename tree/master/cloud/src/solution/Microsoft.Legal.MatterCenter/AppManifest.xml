@@ -7,7 +7,7 @@
      SharePointMinVersion="15.0.0.0"
 >
   <Properties>
-    <StartPage>[Enter azure website URL for UI site, e.g. https://[SITENAME].azurewebsites.net/pages/Home.aspx?{StandardTokens}]</StartPage>
+    <StartPage>[Enter azure website URL for UI site, e.g. https://[SITENAME].azurewebsite.net/pages/Home.aspx?{StandardTokens}]</StartPage>
     <Title>Matter Center</Title>
     <SupportedLocales>
       <SupportedLocale CultureName="en-US" />
