@@ -40,7 +40,7 @@ oGlobalConstants.iPresenceCount = 100000;
 oGlobalConstants.sWebDashboardUrl = "[[[Tenant Web Dashboard Url]]]";
 oGlobalConstants.sNA = "NA";
 oGlobalConstants.oListItem = null;
-oGlobalConstants.sAppName = "ProvisionDMSMatter";
+oGlobalConstants.sAppName = "MatterCenter";
 oGlobalConstants.sSendMailListName = "SendMail";
 oGlobalConstants.sEffectivePermissionUrl = "/{0}/_api/Web/lists/getbytitle('{1}')/EffectiveBasePermissions";
 

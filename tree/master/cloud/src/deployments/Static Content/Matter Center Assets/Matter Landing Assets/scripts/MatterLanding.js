@@ -177,7 +177,7 @@ oGlobalConstants.sMatterIdAndClientIdTitle = "Client & Matter ID";
 oGlobalConstants.oneNoteExtension = ".onetoc2";
 oGlobalConstants.wopiFrameUrl = "/_layouts/WopiFrame.aspx?sourcedoc=";
 oGlobalConstants.Go_To_OneNote = "GoToOneNote";
-oGlobalConstants.sAppName = "ProvisionDMSMatter";
+oGlobalConstants.sAppName = "MatterCenter";
 oGlobalConstants.sSendMailListName = "SendMail";
 oGlobalConstants.sEffectivePermissionUrl = "{0}/_api/Web/lists/getbytitle('{1}')/EffectiveBasePermissions";
 
