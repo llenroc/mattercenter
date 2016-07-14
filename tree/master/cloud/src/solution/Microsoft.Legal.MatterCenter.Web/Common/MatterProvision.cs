@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Legal.MatterCenter.Web.Common
 {
-    public class MatterProvision:IMatterProvision
+    public class MatterProvision : IMatterProvision
     {
         private MatterSettings matterSettings;
         private IMatterRepository matterRepositoy;
@@ -24,7 +24,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
         private ErrorSettings errorSettings;
         private ICustomLogger customLogger;
         private LogTables logTables;
-        private MailSettings  mailSettings;
+        private MailSettings mailSettings;
         private IValidationFunctions validationFunctions;
         private CamlQueries camlQueries;
         private ListNames listNames;
@@ -64,7 +64,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
 
             var searchResultsVM = await matterRepositoy.GetMattersAsync(searchRequestVM);
             return searchResultsVM.TotalRows;
-            
+
         }
 
         public async Task<int> GetMyCounts(SearchRequestVM searchRequestVM)
@@ -96,7 +96,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
             SearchUtility.EncodeSearchDetails(searchObject.Filters, false);
             // Encode Search Term
             searchObject.SearchTerm = (searchObject.SearchTerm != null) ?
-                WebUtility.HtmlEncode(searchObject.SearchTerm).Replace(ServiceConstants.ENCODED_DOUBLE_QUOTES, 
+                WebUtility.HtmlEncode(searchObject.SearchTerm).Replace(ServiceConstants.ENCODED_DOUBLE_QUOTES,
                 ServiceConstants.DOUBLE_QUOTE) : string.Empty;
 
             var searchResultsVM = await matterRepositoy.GetMattersAsync(searchRequestVM);
@@ -106,63 +106,69 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                 IEnumerable<IDictionary<string, object>> searchResults = searchResultsVM.SearchResults;
                 foreach (var searchResult in searchResults)
                 {
-                    MatterData matterData = new MatterData();
-                    foreach (var key in searchResult.Keys)
+                    try
                     {
-                        switch (key.ToLower())
+                        MatterData matterData = new MatterData();
+                        foreach (var key in searchResult.Keys)
                         {
-                            case "mcmattername":
-                                matterData.MatterName = searchResult[key].ToString();
-                                break;
-                            case "description":
-                                matterData.MatterDescription = searchResult[key].ToString();
-                                break;
-                            case "mcopendate":
-                                matterData.MatterCreatedDate = searchResult[key].ToString();
-                                break;
-                            case "path":
-                                matterData.MatterUrl = searchResult[key].ToString();
+                            switch (key.ToLower())
+                            {
+                                case "mcmattername":
+                                    matterData.MatterName = searchResult[key].ToString();
+                                    break;
+                                case "description":
+                                    matterData.MatterDescription = searchResult[key].ToString();
+                                    break;
+                                case "mcopendate":
+                                    matterData.MatterCreatedDate = searchResult[key].ToString();
+                                    break;
+                                case "path":
+                                    matterData.MatterUrl = searchResult[key].ToString();
 
-                                break;
-                            case "sitename":
-                                matterData.MatterClientUrl = searchResult[key].ToString();
-                                break;
-                            case "mcpracticegroup":
-                                matterData.MatterPracticeGroup = searchResult[key].ToString();
-                                break;
-                            case "mcareaoflaw":
-                                matterData.MatterAreaOfLaw = searchResult[key].ToString();
-                                break;
-                            case "mcsubareaoflaw":
-                                matterData.MatterSubAreaOfLaw = searchResult[key].ToString();
-                                break;
-                            case "mcclientname":
-                                matterData.MatterClient = searchResult[key].ToString();
-                                break;
-                            case "mcclientid":
-                                matterData.MatterClientId = searchResult[key].ToString();
-                                break;
-                            case "mcblockeduploaduser":
-                                matterData.HideUpload = searchResult[key].ToString();
-                                break;
-                            case "mcmatterid":
-                                matterData.MatterID = searchResult[key].ToString();
-                                break;
-                            case "mcresponsibleattorney":
-                                matterData.MatterResponsibleAttorney = searchResult[key].ToString();
-                                break;
-                            case "lastmodifiedtime":
-                                matterData.MatterModifiedDate = searchResult[key].ToString();
-                                break;
-                            case "mattercentermatterguid":
-                                matterData.MatterGuid = searchResult[key].ToString();
-                                break;
+                                    break;
+                                case "sitename":
+                                    matterData.MatterClientUrl = searchResult[key].ToString();
+                                    break;
+                                case "mcpracticegroup":
+                                    matterData.MatterPracticeGroup = searchResult[key].ToString();
+                                    break;
+                                case "mcareaoflaw":
+                                    matterData.MatterAreaOfLaw = searchResult[key].ToString();
+                                    break;
+                                case "mcsubareaoflaw":
+                                    matterData.MatterSubAreaOfLaw = searchResult[key].ToString();
+                                    break;
+                                case "mcclientname":
+                                    matterData.MatterClient = searchResult[key].ToString();
+                                    break;
+                                case "mcclientid":
+                                    matterData.MatterClientId = searchResult[key].ToString();
+                                    break;
+                                case "mcblockeduploaduser":
+                                    matterData.HideUpload = searchResult[key].ToString();
+                                    break;
+                                case "mcmatterid":
+                                    matterData.MatterID = searchResult[key].ToString();
+                                    break;
+                                case "mcresponsibleattorney":
+                                    matterData.MatterResponsibleAttorney = searchResult[key].ToString();
+                                    break;
+                                case "lastmodifiedtime":
+                                    matterData.MatterModifiedDate = searchResult[key].ToString();
+                                    break;
+                                case "mattercentermatterguid":
+                                    matterData.MatterGuid = searchResult[key].ToString();
+                                    break;
+                            }
+                            matterData.PinType = "Pin";
                         }
-                        matterData.PinType = "Pin";
+                        matterDataList.Add(matterData);
                     }
-                    matterDataList.Add(matterData);
+                    catch (Exception ex)
+                    {
+                    }
                 }
-                searchResultsVM.MatterDataList = matterDataList;                
+                searchResultsVM.MatterDataList = matterDataList;
             }
             searchResultsVM.SearchResults = null;
             return searchResultsVM;
@@ -185,19 +191,19 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
             IEnumerable<RoleAssignment> userPermissionOnLibrary = null;
             GenericResponseVM genericResponse = null;
             try
-            {                
-                
+            {
+
                 bool isFullControlPresent = editFunctions.ValidateFullControlPermission(matter);
-                
+
                 if (!isFullControlPresent)
                 {
-                    return ServiceUtility.GenericResponse(errorSettings.IncorrectInputSelfPermissionRemoval, 
+                    return ServiceUtility.GenericResponse(errorSettings.IncorrectInputSelfPermissionRemoval,
                         errorSettings.ErrorEditMatterMandatoryPermission);
                 }
                 genericResponse = matterRepositoy.UpdateMatter(matterInformation);
-               
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MatterRevertList matterRevertListObject = new MatterRevertList()
                 {
@@ -207,14 +213,14 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                     MatterTask = matter.Name + matterSettings.TaskNameSuffix,
                     MatterSitePages = matterSettings.MatterLandingPageRepositoryName
                 };
-                matterRepositoy.RevertMatterUpdates(client, matter, clientContext, matterRevertListObject, loggedInUserName, 
-                    userPermissionOnLibrary, listItemId, isEditMode);                
+                matterRepositoy.RevertMatterUpdates(client, matter, clientContext, matterRevertListObject, loggedInUserName,
+                    userPermissionOnLibrary, listItemId, isEditMode);
             }
             return ServiceUtility.GenericResponse("9999999", "Error in updating matter information");
         }
 
 
-        
+
 
         public GenericResponseVM UpdateMatterMetadata(MatterMetdataVM matterMetadata)
         {
@@ -238,7 +244,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                     ServiceUtility.GenericResponse("", "Matter Update Success");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 DeleteMatter(matterMetadata as MatterVM);
                 customLogger.LogError(ex, MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name, logTables.SPOLogTable);
@@ -251,7 +257,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
         {
             var client = matterVM.Client;
             var matter = matterVM.Matter;
-            GenericResponseVM genericResponse =   matterRepositoy.DeleteMatter(client, matter);
+            GenericResponseVM genericResponse = matterRepositoy.DeleteMatter(client, matter);
             return genericResponse;
         }
 
@@ -269,7 +275,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                 {
                     returnFlag = matterRepositoy.ValidateTeamMembers(clientContext, matter, saveConfigurationsVM.UserId);
                 }
-                if (returnFlag!=null)
+                if (returnFlag != null)
                 {
                     returnFlag = matterRepositoy.SaveConfigurationToList(saveConfigurationsVM.MatterConfigurations, clientContext, saveConfigurationsVM.CachedItemModifiedDate);
                     bool tempResult = false;
@@ -309,7 +315,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                 clientContext = spoAuthorization.GetClientContext(matterVM.Client.Url);
                 matterStampedProperties = matterRepositoy.GetStampedProperties(clientContext, matter.Name);
                 Dictionary<string, object> stampedPropertyValues = matterStampedProperties.FieldValues;
-                if (stampedPropertyValues.Count>0)
+                if (stampedPropertyValues.Count > 0)
                 {
                     string matterCenterUsers = GetStampPropertyValue(stampedPropertyValues, matterSettings.StampedPropertyMatterCenterUsers);
                     string matterCenterUserEmails = GetStampPropertyValue(stampedPropertyValues, matterSettings.StampedPropertyMatterCenterUserEmails);
@@ -359,7 +365,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
             }
             catch (Exception ex)
             {
-               
+
                 customLogger.LogError(ex, MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name, logTables.SPOLogTable);
                 throw;
             }
@@ -384,10 +390,10 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                     Matter = matterMetadataVM.Matter,
                     MatterDetails = matterMetadataVM.MatterDetails
                 };
-                genericResponseVM = validationFunctions.IsMatterValid(matterInfo, 
+                genericResponseVM = validationFunctions.IsMatterValid(matterInfo,
                     int.Parse(ServiceConstants.PROVISION_MATTER_ASSIGN_USER_PERMISSIONS, CultureInfo.InvariantCulture), null);
 
-                if(genericResponseVM!=null)
+                if (genericResponseVM != null)
                 {
                     DeleteMatter(matterMetadataVM as MatterVM);
                     return genericResponseVM;
@@ -404,12 +410,13 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                         if (!returnValueCalendar)
                         {
                             genericResponseVM =
-                                new GenericResponseVM() {
+                                new GenericResponseVM()
+                                {
                                     Code = errorSettings.ErrorCodeCalendarCreation,
                                     Value = errorSettings.ErrorMessageCalendarCreation,
                                     IsError = true
                                 };
-                            return genericResponseVM; 
+                            return genericResponseVM;
                         }
                     }
 
@@ -419,7 +426,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                         bool returnValueTask = matterRepositoy.SetPermission(clientContext, matter.AssignUserEmails, matter.Permissions, taskLibraryName);
                         if (!returnValueTask)
                         {
-                            
+
                             genericResponseVM =
                                 new GenericResponseVM()
                                 {
@@ -459,7 +466,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                                         Value = errorSettings.ErrorMessageContentTypes,
                                         IsError = true
                                     };
-                        
+
                     }
                     return genericResponseVM;
                 }
@@ -480,22 +487,22 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
             using (ClientContext clientContext = spoAuthorization.GetClientContext(matterMetadataVM.Client.Url))
             {
                 List<string> listExists = validationFunctions.CheckListExists(matterMetadataVM.Client, matterMetadataVM.Matter.Name, matterMetadataVM.MatterConfigurations);
-                if (listExists.Count>0)
+                if (listExists.Count > 0)
                 {
-                    string listName = !string.Equals(matter.Name, listExists[0]) ? listExists[0].Contains(ServiceConstants.UNDER_SCORE) ? 
+                    string listName = !string.Equals(matter.Name, listExists[0]) ? listExists[0].Contains(ServiceConstants.UNDER_SCORE) ?
                         listExists[0].Split(ServiceConstants.UNDER_SCORE[0]).Last() : ServiceConstants.MATTER : ServiceConstants.MATTER;
                     return ServiceUtility.GenericResponse(errorSettings.MatterLibraryExistsCode,
-                        string.Format(CultureInfo.InvariantCulture, errorSettings.ErrorDuplicateMatter, listName) + ServiceConstants.DOLLAR + 
+                        string.Format(CultureInfo.InvariantCulture, errorSettings.ErrorDuplicateMatter, listName) + ServiceConstants.DOLLAR +
                         ServiceConstants.PIPE + ServiceConstants.DOLLAR + MatterPrerequisiteCheck.LibraryExists);
                 }
                 else
                 {
                     Uri clientUri = new Uri(client.Url);
-                    string requestedUrl = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}", clientUri.AbsolutePath, ServiceConstants.FORWARD_SLASH, 
+                    string requestedUrl = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}", clientUri.AbsolutePath, ServiceConstants.FORWARD_SLASH,
                         matterSettings.MatterLandingPageRepositoryName.Replace(ServiceConstants.SPACE, string.Empty),
                         ServiceConstants.FORWARD_SLASH, matter.Name, ServiceConstants.ASPX_EXTENSION);
                     if (matterRepositoy.IsPageExists(clientContext, requestedUrl))
-                    {                        
+                    {
                         return ServiceUtility.GenericResponse(errorSettings.MatterLibraryExistsCode,
                         errorSettings.ErrorDuplicateMatterLandingPage + ServiceConstants.DOLLAR + ServiceConstants.PIPE + ServiceConstants.DOLLAR + MatterPrerequisiteCheck.MatterLandingPageExists);
                     }
@@ -513,7 +520,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
             using (ClientContext clientContext = spoAuthorization.GetClientContext(matterInformationVM.Client.Url))
             {
                 genericResponseVM = matterRepositoy.ValidateTeamMembers(clientContext, matter, userids);
-                if(genericResponseVM!=null)
+                if (genericResponseVM != null)
                 {
                     return genericResponseVM;
                 }
@@ -522,7 +529,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                     if (null != matter.Conflict && !string.IsNullOrWhiteSpace(matter.Conflict.Identified))
                     {
                         if (0 == matter.AssignUserEmails.Count())
-                        {                            
+                        {
                             return ServiceUtility.GenericResponse(errorSettings.IncorrectInputUserNamesCode, errorSettings.IncorrectInputUserNamesMessage);
                         }
                         else
@@ -534,7 +541,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                         }
                     }
                     else
-                    {                        
+                    {
                         return ServiceUtility.GenericResponse(errorSettings.IncorrectInputConflictIdentifiedCode, errorSettings.IncorrectInputConflictIdentifiedMessage);
                     }
                 }
@@ -593,7 +600,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                 }
                 return genericResponseVM;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -622,7 +629,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
             string pageName = string.Format(CultureInfo.InvariantCulture, "{0}{1}", matter.MatterGuid, ServiceConstants.ASPX_EXTENSION);
             using (ClientContext clientContext = spoAuthorization.GetClientContext(client.Url))
             {
-                matterLandingPageId = matterRepositoy.CreateWebPartPage(clientContext, pageName, ServiceConstants.DefaultLayout, 
+                matterLandingPageId = matterRepositoy.CreateWebPartPage(clientContext, pageName, ServiceConstants.DefaultLayout,
                     ServiceConstants.MasterPageGallery, matterSettings.MatterLandingPageRepositoryName, matter.Name);
                 if (0 <= matterLandingPageId)
                 {
@@ -631,10 +638,10 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
 
                     bool isCopyRoleAssignment = CopyRoleAssignment(matter.Conflict.Identified, matter.Conflict.SecureMatter);
                     matterRepositoy.BreakItemPermission(clientContext, matterSettings.MatterLandingPageRepositoryName, matterLandingPageId, isCopyRoleAssignment);
-                    matterRepositoy.SetItemPermission(clientContext, matter.AssignUserEmails, matterSettings.MatterLandingPageRepositoryName, 
+                    matterRepositoy.SetItemPermission(clientContext, matter.AssignUserEmails, matterSettings.MatterLandingPageRepositoryName,
                         matterLandingPageId, matter.Permissions);
                     //// Configure All Web Parts
-                    string[] webParts = matterRepositoy.ConfigureXMLCodeOfWebParts(client, matter, clientContext, 
+                    string[] webParts = matterRepositoy.ConfigureXMLCodeOfWebParts(client, matter, clientContext,
                         pageName, uri, web, matterConfigurations);
                     Microsoft.SharePoint.Client.File file = web.GetFileByServerRelativeUrl(string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}", uri.AbsolutePath, ServiceConstants.FORWARD_SLASH, matterSettings.MatterLandingPageRepositoryName.Replace(ServiceConstants.SPACE, string.Empty), ServiceConstants.FORWARD_SLASH, pageName));
                     clientContext.Load(file);
@@ -662,9 +669,9 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
             var matter = matterMetadataVM.Matter;
             GenericResponseVM genericResponseVM = null;
             try
-            {                
-                var matterConfiguration = matterMetadataVM.MatterConfigurations;                
-                Uri centralListURL = new Uri(string.Concat(matterSettings.CentralRepositoryUrl, ServiceConstants.FORWARD_SLASH, 
+            {
+                var matterConfiguration = matterMetadataVM.MatterConfigurations;
+                Uri centralListURL = new Uri(string.Concat(matterSettings.CentralRepositoryUrl, ServiceConstants.FORWARD_SLASH,
                     ServiceConstants.LISTS, ServiceConstants.FORWARD_SLASH, listNames.DMSMatterListName)); // Central Repository List URL  
                 IList<string> documentLibraryFolders = new List<string>();
                 Dictionary<string, bool> documentLibraryVersioning = new Dictionary<string, bool>();
@@ -711,7 +718,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                         matterRepositoy.BreakPermission(clientContext, calendarName, isCopyRoleAssignment);
                     }
                     else
-                    {                        
+                    {
                         return ServiceUtility.GenericResponse(errorSettings.ErrorCodeAddCalendarList, errorSettings.ErrorMessageAddCalendarList);
                     }
                 }
@@ -728,12 +735,12 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                         matterRepositoy.BreakPermission(clientContext, taskListName, isCopyRoleAssignment);
                     }
                     else
-                    {                        
+                    {
                         return ServiceUtility.GenericResponse(errorSettings.ErrorCodeAddTaskList, errorSettings.ErrorMessageAddTaskList);
                     }
                 }
 
-                string oneNoteUrl = string.Concat(clientUrl.AbsolutePath, ServiceConstants.FORWARD_SLASH, 
+                string oneNoteUrl = string.Concat(clientUrl.AbsolutePath, ServiceConstants.FORWARD_SLASH,
                     matter.MatterGuid, matterSettings.OneNoteLibrarySuffix, ServiceConstants.FORWARD_SLASH, matter.MatterGuid);
                 matterRepositoy.AddOneNote(clientContext, client.Url, oneNoteUrl, matter.MatterGuid, matter.Name);
                 if (null != matter.Conflict)
@@ -747,19 +754,19 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                 }
 
                 genericResponseVM = validationFunctions.RoleCheck(matter);
-                if(genericResponseVM==null)
+                if (genericResponseVM == null)
                 {
                     string centralList = Convert.ToString(centralListURL, CultureInfo.InvariantCulture);
-                    string matterSiteURL = centralList.Substring(0, centralList.LastIndexOf(string.Concat(ServiceConstants.FORWARD_SLASH, 
+                    string matterSiteURL = centralList.Substring(0, centralList.LastIndexOf(string.Concat(ServiceConstants.FORWARD_SLASH,
                         ServiceConstants.LISTS, ServiceConstants.FORWARD_SLASH), StringComparison.OrdinalIgnoreCase));
                     string matterListName = centralList.Substring(centralList.LastIndexOf(ServiceConstants.FORWARD_SLASH, StringComparison.OrdinalIgnoreCase) + 1);
 
-                    
+
                     bool isMatterSaved = matterRepositoy.SaveMatter(client, matter, matterListName, matterConfiguration, matterSiteURL);
-                    if(isMatterSaved==false)
+                    if (isMatterSaved == false)
                     {
                         genericResponseVM = ServiceUtility.GenericResponse(errorSettings.ErrorCodeAddTaskList, "Matter Not Saved");
-                        genericResponseVM.IsError = true;                        
+                        genericResponseVM.IsError = true;
                         return genericResponseVM;
                     }
                 }
@@ -902,7 +909,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
             {
                 try
                 {
-                    Uri mailListURL = new Uri(string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}", matterSettings.ProvisionMatterAppURL, 
+                    Uri mailListURL = new Uri(string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}", matterSettings.ProvisionMatterAppURL,
                         ServiceConstants.FORWARD_SLASH, ServiceConstants.LISTS, ServiceConstants.FORWARD_SLASH, matterSettings.SendMailListName));
                     string centralMailListURL = Convert.ToString(mailListURL, CultureInfo.InvariantCulture);
                     string mailSiteURL = centralMailListURL.Substring(0, centralMailListURL.LastIndexOf(string.Concat(ServiceConstants.FORWARD_SLASH,
@@ -912,7 +919,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                     {
                         if (!string.IsNullOrWhiteSpace(mailSiteURL))
                         {
-                            returnFlag = ShareMatterUtility(client, matter, matterDetails, 
+                            returnFlag = ShareMatterUtility(client, matter, matterDetails,
                                 mailSiteURL, centralMailListURL, matterLandingFlag, matterConfigurations);
                         }
                     }
@@ -935,7 +942,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
         /// <param name="subAreaOfLawList">String contains all sub area of law</param>
         /// <param name="mailListURL">URL contains list of mail recipients</param>
         /// <returns>Result of operation: Matter Shared successfully or not</returns>        
-        internal GenericResponseVM  ShareMatterUtility(Client client, Matter matter, MatterDetails matterDetails, string mailSiteURL, string centralMailListURL, string matterLandingFlag, MatterConfigurations matterConfigurations)
+        internal GenericResponseVM ShareMatterUtility(Client client, Matter matter, MatterDetails matterDetails, string mailSiteURL, string centralMailListURL, string matterLandingFlag, MatterConfigurations matterConfigurations)
         {
             bool shareFlag = false;
             string mailListName = centralMailListURL.Substring(centralMailListURL.LastIndexOf(ServiceConstants.FORWARD_SLASH, StringComparison.OrdinalIgnoreCase) + 1);
@@ -946,20 +953,20 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
             {
                 using (ClientContext clientContext = spoAuthorization.GetClientContext(mailSiteURL))
                 {
-                    
-                    genericResponse = validationFunctions.MatterDetailsValidation(matter, client, 
+
+                    genericResponse = validationFunctions.MatterDetailsValidation(matter, client,
                         int.Parse(ServiceConstants.ProvisionMatterShareMatter, CultureInfo.InvariantCulture), matterConfigurations);
-                    if(genericResponse!=null)
+                    if (genericResponse != null)
                     {
                         return genericResponse;
                     }
-                    
+
                     // Get the current logged in User
                     clientContext.Load(clientContext.Web.CurrentUser);
                     clientContext.ExecuteQuery();
                     string matterMailBody, blockUserNames;
                     // Generate Mail Subject
-                    string matterMailSubject = string.Format(CultureInfo.InvariantCulture, mailSettings.MatterMailSubject, 
+                    string matterMailSubject = string.Format(CultureInfo.InvariantCulture, mailSettings.MatterMailSubject,
                         matter.Id, matter.Name, clientContext.Web.CurrentUser.Title);
 
                     // Logic to Create Mail body
@@ -969,7 +976,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                     // Step 4: Create Conflict check Information based on the conflict check flag and create mail body
 
                     // Step 1: Create Matter Information
-                    string defaultContentType = string.Format(CultureInfo.InvariantCulture, 
+                    string defaultContentType = string.Format(CultureInfo.InvariantCulture,
                         mailSettings.MatterMailDefaultContentTypeHtmlChunk, matter.DefaultContentType);
                     string matterType = string.Join(";", matter.ContentTypes.ToArray()).TrimEnd(';').Replace(matter.DefaultContentType, defaultContentType);
 
@@ -982,12 +989,12 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                     // Step 3: Create Access Information
                     if (ServiceConstants.TRUE == matterLandingFlag)
                     {
-                        matterLocation = string.Concat(client.Url, ServiceConstants.FORWARD_SLASH, 
-                            matterSettings.MatterLandingPageRepositoryName.Replace(ServiceConstants.SPACE, string.Empty), 
+                        matterLocation = string.Concat(client.Url, ServiceConstants.FORWARD_SLASH,
+                            matterSettings.MatterLandingPageRepositoryName.Replace(ServiceConstants.SPACE, string.Empty),
                             ServiceConstants.FORWARD_SLASH, matter.MatterGuid, ServiceConstants.ASPX_EXTENSION);
                     }
-                    string oneNotePath = string.Concat(client.Url, ServiceConstants.FORWARD_SLASH, 
-                        matter.MatterGuid, matterSettings.OneNoteLibrarySuffix, 
+                    string oneNotePath = string.Concat(client.Url, ServiceConstants.FORWARD_SLASH,
+                        matter.MatterGuid, matterSettings.OneNoteLibrarySuffix,
                         ServiceConstants.FORWARD_SLASH, matter.MatterGuid, ServiceConstants.FORWARD_SLASH, matter.MatterGuid);
 
                     // Step 4: Create Conflict check Information based on the conflict check flag and create mail body
@@ -997,36 +1004,36 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                         ServiceConstants.NO : ServiceConstants.YES;
                         blockUserNames = string.Join(";", matter.BlockUserNames.ToArray()).Trim().TrimEnd(';');
 
-                        blockUserNames = !String.IsNullOrEmpty(blockUserNames) ? string.Format(CultureInfo.InvariantCulture, 
+                        blockUserNames = !String.IsNullOrEmpty(blockUserNames) ? string.Format(CultureInfo.InvariantCulture,
                             "<div>{0}: {1}</div>", "Conflicted User", blockUserNames) : string.Empty;
-                        matterMailBody = string.Format(CultureInfo.InvariantCulture, 
-                            mailSettings.MatterMailBodyMatterInformation, client.Name, client.Id, 
-                            matter.Name, matter.Id, matter.Description, matterType) + string.Format(CultureInfo.InvariantCulture, 
-                            mailSettings.MatterMailBodyConflictCheck, ServiceConstants.YES, matter.Conflict.CheckBy, 
-                            Convert.ToDateTime(matter.Conflict.CheckOn, CultureInfo.InvariantCulture).ToString(matterSettings.MatterCenterDateFormat, CultureInfo.InvariantCulture), 
-                            conflictIdentified) + string.Format(CultureInfo.InvariantCulture, 
-                            mailSettings.MatterMailBodyTeamMembers, secureMatter, mailBodyTeamInformation, 
+                        matterMailBody = string.Format(CultureInfo.InvariantCulture,
+                            mailSettings.MatterMailBodyMatterInformation, client.Name, client.Id,
+                            matter.Name, matter.Id, matter.Description, matterType) + string.Format(CultureInfo.InvariantCulture,
+                            mailSettings.MatterMailBodyConflictCheck, ServiceConstants.YES, matter.Conflict.CheckBy,
+                            Convert.ToDateTime(matter.Conflict.CheckOn, CultureInfo.InvariantCulture).ToString(matterSettings.MatterCenterDateFormat, CultureInfo.InvariantCulture),
+                            conflictIdentified) + string.Format(CultureInfo.InvariantCulture,
+                            mailSettings.MatterMailBodyTeamMembers, secureMatter, mailBodyTeamInformation,
                             blockUserNames, client.Url, oneNotePath, matter.Name, matterLocation, matter.Name);
                     }
                     else
                     {
                         blockUserNames = string.Empty;
-                        matterMailBody = string.Format(CultureInfo.InvariantCulture, mailSettings.MatterMailBodyMatterInformation, 
-                            client.Name, client.Id, matter.Name, matter.Id, 
-                            matter.Description, matterType) + string.Format(CultureInfo.InvariantCulture, mailSettings.MatterMailBodyTeamMembers, secureMatter, 
+                        matterMailBody = string.Format(CultureInfo.InvariantCulture, mailSettings.MatterMailBodyMatterInformation,
+                            client.Name, client.Id, matter.Name, matter.Id,
+                            matter.Description, matterType) + string.Format(CultureInfo.InvariantCulture, mailSettings.MatterMailBodyTeamMembers, secureMatter,
                             mailBodyTeamInformation, blockUserNames, client.Url, oneNotePath, matter.Name, matterLocation, matter.Name);
                     }
 
                     Microsoft.SharePoint.Client.Web web = clientContext.Web;
                     List mailList = web.Lists.GetByTitle(mailListName);
                     List<FieldUserValue> userList = new List<FieldUserValue>();
-                    List<FieldUserValue> userEmailList = GenerateMailList(matter, new Client {Url = mailSiteURL }, ref userList);
+                    List<FieldUserValue> userEmailList = GenerateMailList(matter, new Client { Url = mailSiteURL }, ref userList);
                     ///// Add the Matter URL in list
                     FieldUrlValue matterPath = new FieldUrlValue()
                     {
-                        Url = string.Concat(client.Url.Replace(String.Concat(ServiceConstants.HTTPS, ServiceConstants.COLON, 
-                        ServiceConstants.FORWARD_SLASH, ServiceConstants.FORWARD_SLASH), String.Concat(ServiceConstants.HTTP, ServiceConstants.COLON, 
-                        ServiceConstants.FORWARD_SLASH, ServiceConstants.FORWARD_SLASH)), ServiceConstants.FORWARD_SLASH, matter.Name, 
+                        Url = string.Concat(client.Url.Replace(String.Concat(ServiceConstants.HTTPS, ServiceConstants.COLON,
+                        ServiceConstants.FORWARD_SLASH, ServiceConstants.FORWARD_SLASH), String.Concat(ServiceConstants.HTTP, ServiceConstants.COLON,
+                        ServiceConstants.FORWARD_SLASH, ServiceConstants.FORWARD_SLASH)), ServiceConstants.FORWARD_SLASH, matter.Name,
                         ServiceConstants.FORWARD_SLASH, matter.Name),
                         Description = matter.Name
                     };
@@ -1035,7 +1042,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                     List<object> columnValues = new List<object>() { matterPath, userEmailList, matterMailBody, matterMailSubject };
                     // To avoid the invalid symbol error while parsing the JSON, return the response in lower case 
                     matterRepositoy.AddItem(clientContext, mailList, columnNames, columnValues);
-                    
+
                 }
             }
             return genericResponse;
@@ -1090,7 +1097,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
 
                 foreach (KeyValuePair<string, string> entry in roleInformation)
                 {
-                    mailBodyTeamInformation = string.Format(CultureInfo.InvariantCulture, ServiceConstants.RoleInfoHtmlChunk, entry.Key, entry.Value) + 
+                    mailBodyTeamInformation = string.Format(CultureInfo.InvariantCulture, ServiceConstants.RoleInfoHtmlChunk, entry.Key, entry.Value) +
                         mailBodyTeamInformation;
                 }
             }
@@ -1158,7 +1165,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
             propertyList.Add(matterSettings.StampedPropertySecureMatter, (matter.Conflict != null) ? (matter.Conflict.SecureMatter != null) ? WebUtility.HtmlEncode(matter.Conflict.SecureMatter) : "False" : "False");
             propertyList.Add(matterSettings.StampedPropertyBlockedUploadUsers, WebUtility.HtmlEncode(string.Join(";", matterDetails.UploadBlockedUsers)));
             propertyList.Add(matterSettings.StampedPropertyMatterDescription, WebUtility.HtmlEncode(matter.Description));
-            propertyList.Add(matterSettings.StampedPropertyConflictCheckDate, (string.IsNullOrEmpty(matter.Conflict.CheckOn)) ? 
+            propertyList.Add(matterSettings.StampedPropertyConflictCheckDate, (string.IsNullOrEmpty(matter.Conflict.CheckOn)) ?
                 "" : WebUtility.HtmlEncode(Convert.ToDateTime(matter.Conflict.CheckOn, CultureInfo.InvariantCulture).ToString(matterSettings.ValidDateFormat, CultureInfo.InvariantCulture)));
             propertyList.Add(matterSettings.StampedPropertyConflictCheckBy, WebUtility.HtmlEncode(matter.Conflict.CheckBy));
             propertyList.Add(matterSettings.StampedPropertyMatterCenterRoles, WebUtility.HtmlEncode(matterCenterRoles));
@@ -1173,9 +1180,9 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
             return propertyList;
         }
 
-        
 
-        
+
+
         #endregion
     }
 }

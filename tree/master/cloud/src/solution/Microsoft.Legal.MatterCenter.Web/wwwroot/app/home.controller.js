@@ -82,7 +82,7 @@
             vm.getUserProfilePicture = function () {
 
                 var client = {
-                    Url: "https://msmatter.sharepoint.com"
+                    Url: "https://lcadms.sharepoint.com"
                 }
 
                 getUserProfilePicture(client, function (response) {
@@ -98,7 +98,7 @@
                 var helpRequestModel = {
                     Client:
                     {
-                        Url: "https://msmatter.sharepoint.com/sites/catalog"
+                        Url: "https://lcadms.sharepoint.com/sites/catalog"
                     },
                     SelectedPage: $rootScope.pageIndex
                 };

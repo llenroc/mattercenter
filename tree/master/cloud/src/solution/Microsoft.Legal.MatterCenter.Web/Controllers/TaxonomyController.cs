@@ -201,7 +201,7 @@ namespace Microsoft.Legal.MatterCenter.Web
                 {
                     Id = "123456",
                     Name = "Disney",
-                    Url = "https://msmatter.sharepoint.com/sites/microsoft"
+                    Url = "https://lcadms.sharepoint.com/sites/microsoft"
                 },
                 TermStoreDetails = new TermStoreDetails()
                 {
