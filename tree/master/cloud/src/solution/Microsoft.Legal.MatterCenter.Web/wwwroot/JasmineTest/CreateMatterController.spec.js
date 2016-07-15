@@ -1,4 +1,39 @@
-﻿//Test suite
+﻿var selectedPracticeGroup={
+    "termName": "Advertising, Marketing ＆ Promotions",
+    "parentTermName": "Practice Groups",
+    "folderNames": "Email;Lorem;Ipsum",
+    "areaTerms": [
+    {
+        "termName": "Advertising, Marketing ＆ Promotions",
+        "parentTermName": "Advertising, Marketing ＆ Promotions",
+        "folderNames": "Email;Lorem;Ipsum",
+        "subareaTerms": [
+        {
+            "termName": "Advertising, Marketing ＆Promotions",
+            "parentTermName": "Advertising, Marketing ＆ Promotions",
+            "folderNames": "Email;Lorem;Ipsum",
+            "isNoFolderStructurePresent": "false",
+            "documentTemplates": "Advertising, Marketing ＆ Promotions",
+            "documentTemplateNames": "Agribusiness;Aircraft;California Public Utilities Commission (CPUC);Class Action Defense",
+            "id": "683ec070-7ed0-4e82-b07c-13a1b4485b7b",
+            "wssId": 0,
+            "subareaTerms": null,
+            "$$hashKey": "object:153"
+        }
+        ],
+        "id": "16827aa4-a8b3-4275-920b-184a04bc60ea",
+        "wssId": 0,
+        "$$hashKey": "object:149"
+    }
+    ],
+    "id": "a42ab615-0d27-4de2-9f55-144e71219770",
+    "wssId": 0,
+    "$$hashKey": "object:122"
+}
+
+
+
+//Test suite
 describe('Matter Center Test suite', function () {
     var $scope = {};
     var vm;
@@ -220,10 +255,96 @@ describe('Matter Center Test suite', function () {
         });
     });
 
+    describe('Verification of selectMatterTypePopUpClose function', function () {
+        it('Test whether popupContainerBackground and popupContainer is hide or not', function () {
+            vm.popupContainer = "Show";
+            vm.selectMatterTypePopUpClose();
+            var val = vm.popupContainerBackground;
+            var data = vm.popupContainer;
+            expect(val).toBe("hide");
+            expect(data).toBe("hide");
+        });
+    });
+
+    describe('Verification of getSelectedPracticeGroupValue function', function () {
+        it('Test whether hierarchy value is set or not', function () {
+            vm.getSelectedPracticeGroupValue();
+            vm.selectedPracticeGroup = selectedPracticeGroup;
+            if (vm.selectedPracticeGroup!= null)
+            {
+                areaOfLawTerms = vm.selectedPracticeGroup.areaTerms;
+                subAreaOfLawTerms = vm.selectedPracticeGroup.areaTerms[0].subareaTerms;
+                activeSubAOLTerm = vm.selectedPracticeGroup.areaTerms[0].subareaTerms[0];
+                activeAOLTerm = vm.selectedPracticeGroup.areaTerms[0];
+
+                expect(areaOfLawTerms).not.toBe(null);
+                expect(subAreaOfLawTerms).not.toBe(null);
+                expect(activeSubAOLTerm.termName).toBe("Advertising, Marketing ＆Promotions");
+                expect(activeAOLTerm.folderNames).toBe("Email;Lorem;Ipsum");
+                expect(vm.errorPopUp).toBe(false);
+                
+            }
+            else
+            {
+                expect(areaOfLawTerms).toBe(null);
+                expect(subAreaOfLawTerms).toBe(null);
+            }
+
+            
+        });
+    });
+
+    describe('Verification of selectAreaOfLawTerm function', function () {
+        it('Test whether selectAreaOfLawTerm has valid value or not', function () {
+            vm.selectAreaOfLawTerm(selectedPracticeGroup.areaTerms[0]);
+            var subArea = selectedPracticeGroup.areaTerms[0].subareaTerms;
+            var activeSub = selectedPracticeGroup.areaTerms[0].subareaTerms[0];
+
+            expect(subArea).not.toBe(null);
+            expect(activeSub.termName).toBe("Advertising, Marketing ＆Promotions");
+            expect(vm.errorPopUp).toBe(false);
+
+        });
+    });
+
+    describe('Verification of selectSubAreaOfLawTerm function', function () {
+        it('Test whether selectSubAreaOfLawTerm has valid value or not', function () {
+      
+            vm.selectSubAreaOfLawTerm(selectedPracticeGroup.areaTerms[0].subareaTerms[0]);
+            subArea = selectedPracticeGroup.areaTerms[0].subareaTerms;
+            activeSub = selectedPracticeGroup.areaTerms[0].subareaTerms[0];
+
+            expect(subArea).not.toBe(null);
+            expect(activeSub.termName).toBe("Advertising, Marketing ＆Promotions");
+            expect(vm.errorPopUp).toBe(false);
+
+        });
+    });
+
+
+    // Pending methods to verify
+    //getSelectedPracticeGroupValue
+    //selectAreaOfLawTerm
+    //selectSubAreaOfLawTerm
+    //selectDocumentTemplateTypeLawTerm
+    //addToDocumentTemplate
+    //removeFromDocumentTemplate
+    //onSelect
+    //saveDocumentTemplates
+    //open1
+    //conflictRadioChange
+    //addNewAssignPermissions
+    //removeAssignPermissionsRow
+    //createAndNotify
+    //NextClick
+    //PreviousClick
+    //CheckPopUp
+    //closesuccessbanner
+
     //describe('Verification of CheckMatterName function', function () {
     //    it('Test whether Matter name is already  present or not', function () {
 
-
+           
     //        vm.matterName = "abcrtawc";
     //        vm.clientUrl = "https://lcadms.sharepoint.com/sites/AdventureWorksCycles";
     //        vm.checkValidMatterName();
