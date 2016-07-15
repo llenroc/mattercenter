@@ -1,10 +1,10 @@
 var configs = {
     "uri": {
-        "SPOsiteURL": "https://msmatter.sharepoint.com",
-        "tenant": "msmatter.onmicrosoft.com",
+        "SPOsiteURL": "https://lcadms.sharepoint.com",
+        "tenant": "lcadms.onmicrosoft.com",
     },
     "ADAL": {
-        "clientId": "b94f07df-c825-431f-b9c5-b9499e8e9ac1"
+        "clientId": "61394aba-09ba-4e25-ae32-e10805c6841b"
     },
     "uploadMessages": {
         "maxAttachedMessage": "Do not select more than five documents to attach at one time.",
@@ -20,6 +20,6 @@ var configs = {
         "uploadPNGIconExtensions": "pdf"
     },
     "global": {
-        repositoryUrl: "https://msmatter.sharepoint.com/sites/catalog",
+        repositoryUrl: "https://lcadms.sharepoint.com/sites/catalog",
     }
 };

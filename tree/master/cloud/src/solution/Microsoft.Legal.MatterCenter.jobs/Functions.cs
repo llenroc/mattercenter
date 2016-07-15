@@ -212,9 +212,9 @@ namespace Microsoft.Legal.MatterCenter.Jobs
         {
             try
             {
-                string clientId = "b9de791e-0b7b-402a-a3fa-d2a26f463783";
+                string clientId = "61394aba-09ba-4e25-ae32-e10805c6841b";
                 string aadInstance = "https://login.windows.net/{0}";
-                string tenant = "msmatter.onmicrosoft.com";
+                string tenant = "lcadms.onmicrosoft.com";
                 string authority = String.Format(System.Globalization.CultureInfo.InvariantCulture, aadInstance, tenant);
 
                 var context = new AuthenticationContext(string.Format("https://login.windows.net/{0}", tenant));

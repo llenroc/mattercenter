@@ -141,10 +141,10 @@ namespace Microsoft.Legal.MatterCenter.Jobs
         {
 
             string tempUserEmail = userEmail;
-            if (!userEmail.Contains("msmatter.onmicrosoft.com"))
+            if (!userEmail.Contains("lcadms.onmicrosoft.com"))
             {
                 tempUserEmail = userEmail.Replace("@", "_");
-                tempUserEmail = $"i:0#.f|membership|{tempUserEmail}#ext#@msmatter.onmicrosoft.com";
+                tempUserEmail = $"i:0#.f|membership|{tempUserEmail}#ext#@lcadms.onmicrosoft.com";
             }
             GroupCollection groupCollection = catalogContext.Web.SiteGroups;
             Group group = groupCollection.GetByName("Matter Center Users");
