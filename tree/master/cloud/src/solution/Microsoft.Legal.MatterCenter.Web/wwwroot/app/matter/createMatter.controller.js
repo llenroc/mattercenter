@@ -628,14 +628,14 @@
             cm.selectDocumentTemplateTypeLawTerm = function (documentTemplateTypeLawTerm) {
                 // alert(documentTemplateTypeLawTerm);
                 if (documentTemplateTypeLawTerm != null) {
-                    cm.errorPopUp = false;;
+                    cm.errorPopUp = false;
                     cm.removeDTItem = true;
                     cm.activeDocumentTypeLawTerm = documentTemplateTypeLawTerm;
                     cm.primaryMatterType = true;
                 }
 
             }
-
+            
             cm.addToDocumentTemplate = function () {
                 var   isThisNewDocTemplate = true;
                 if (cm.activeSubAOLTerm != null) {

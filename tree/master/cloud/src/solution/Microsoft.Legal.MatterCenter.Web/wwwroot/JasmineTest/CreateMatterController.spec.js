@@ -1,40 +1,5 @@
-﻿var selectedPracticeGroup={
-    "termName": "Advertising, Marketing ＆ Promotions",
-    "parentTermName": "Practice Groups",
-    "folderNames": "Email;Lorem;Ipsum",
-    "areaTerms": [
-    {
-        "termName": "Advertising, Marketing ＆ Promotions",
-        "parentTermName": "Advertising, Marketing ＆ Promotions",
-        "folderNames": "Email;Lorem;Ipsum",
-        "subareaTerms": [
-        {
-            "termName": "Advertising, Marketing ＆Promotions",
-            "parentTermName": "Advertising, Marketing ＆ Promotions",
-            "folderNames": "Email;Lorem;Ipsum",
-            "isNoFolderStructurePresent": "false",
-            "documentTemplates": "Advertising, Marketing ＆ Promotions",
-            "documentTemplateNames": "Agribusiness;Aircraft;California Public Utilities Commission (CPUC);Class Action Defense",
-            "id": "683ec070-7ed0-4e82-b07c-13a1b4485b7b",
-            "wssId": 0,
-            "subareaTerms": null,
-            "$$hashKey": "object:153"
-        }
-        ],
-        "id": "16827aa4-a8b3-4275-920b-184a04bc60ea",
-        "wssId": 0,
-        "$$hashKey": "object:149"
-    }
-    ],
-    "id": "a42ab615-0d27-4de2-9f55-144e71219770",
-    "wssId": 0,
-    "$$hashKey": "object:122"
-}
-
-
-
-//Test suite
-describe('Matter Center Test suite', function () {
+﻿//Test suite
+describe('CreateMatter Controller test suite', function () {
     var $scope = {};
     var vm;
     var api;
@@ -45,7 +10,7 @@ describe('Matter Center Test suite', function () {
     var $stateParams;
     var $window;
 
-    var mockmatterResourceService = function ($resource, auth) {
+    var mockmatterResourceService = function matterResource($resource, auth) {
         return $resource(null, null,
                 {
                     'get': auth.attachCSRF({
@@ -232,137 +197,141 @@ describe('Matter Center Test suite', function () {
     }));
 
     describe('Verification of clearpopup function', function () {
-        it('Test wether errorPopUpBlock is enable or disable', function () {
+        it('errorPopUpBlock should be set to false', function () {
             vm.clearPopUp();
             var val = vm.errorPopUpBlock;
             expect(val).toBe(false);
         });
+
+        it('errorPopUpBlock should not be set', function () {
+            var val = vm.errorPopUpBlock;
+            expect(val).toBeUndefined();
+        });
     });
 
     describe('Verification of getMatterGUID function', function () {
-        it('Test whether matterGUID length is 32 bit or not', function () {
+        it('Should return the GUID for matter with length of 32 bit', function () {
 
             var val = vm.matterGUID;
             expect(val.length).toBe(32);
         });
-    });
 
-    describe('Verification of searchUsers function', function () {
-        it('Test whether function is getting defined or not', function () {
+        it('Should return the GUID for matter instead of null value', function () {
 
-            var val = vm.searchUsers;
+            var val = vm.matterGUID;
             expect(val).not.toBe(null);
+        });
+
+        it('Should return the GUID for matter with defined value', function () {
+
+            var val = vm.matterGUID;
+            expect(val).toBeDefined();
         });
     });
 
     describe('Verification of selectMatterTypePopUpClose function', function () {
-        it('Test whether popupContainerBackground and popupContainer is hide or not', function () {
+        it('Should return the status of popupContainerBackground and popupContainer as hide', function () {
             vm.popupContainer = "Show";
             vm.selectMatterTypePopUpClose();
-            var val = vm.popupContainerBackground;
+            var value = vm.popupContainerBackground;
             var data = vm.popupContainer;
-            expect(val).toBe("hide");
+            expect(value).toBe("hide");
+            expect(data).toBe("hide");
+        });
+
+        it('Should not return the status of popupContainerBackground and popupContainer as hide', function () {
+            vm.popupContainer = "hide";
+            vm.selectMatterTypePopUpClose();
+            var value = vm.popupContainerBackground;
+            var data = vm.popupContainer;
+            expect(value).toBe("Show");
             expect(data).toBe("hide");
         });
     });
 
     describe('Verification of getSelectedPracticeGroupValue function', function () {
-        it('Test whether hierarchy value is set or not', function () {
-            vm.getSelectedPracticeGroupValue();
+        it('Should return the selected PracticeGroup Value (all AOL and SAOL terms)', function () {
             vm.selectedPracticeGroup = selectedPracticeGroup;
-            if (vm.selectedPracticeGroup!= null)
-            {
-                areaOfLawTerms = vm.selectedPracticeGroup.areaTerms;
-                subAreaOfLawTerms = vm.selectedPracticeGroup.areaTerms[0].subareaTerms;
-                activeSubAOLTerm = vm.selectedPracticeGroup.areaTerms[0].subareaTerms[0];
-                activeAOLTerm = vm.selectedPracticeGroup.areaTerms[0];
-
-                expect(areaOfLawTerms).not.toBe(null);
-                expect(subAreaOfLawTerms).not.toBe(null);
-                expect(activeSubAOLTerm.termName).toBe("Advertising, Marketing ＆Promotions");
-                expect(activeAOLTerm.folderNames).toBe("Email;Lorem;Ipsum");
-                expect(vm.errorPopUp).toBe(false);
-                
-            }
-            else
-            {
-                expect(areaOfLawTerms).toBe(null);
-                expect(subAreaOfLawTerms).toBe(null);
-            }
-
+            vm.getSelectedPracticeGroupValue();
             
+                expect(vm.areaOfLawTerms).not.toBe(null);
+                expect(vm.subAreaOfLawTerms).not.toBe(null);
+                expect(vm.activeSubAOLTerm.termName).toBe("Advertising, Marketing ＆Promotions");
+                expect(vm.activeAOLTerm.folderNames).toBe("Email;Lorem;Ipsum");
+                expect(vm.errorPopUp).toBe(false);
+           
         });
+
+        it('Should return the null value for selected PracticeGroup Value (all AOL and SAOL terms)', function () {
+            vm.selectedPracticeGroup = null;
+            vm.getSelectedPracticeGroupValue();
+            
+                expect(vm.areaOfLawTerms).toBe(null);
+                expect(vm.subAreaOfLawTerms).toBe(null);
+        });
+
     });
 
     describe('Verification of selectAreaOfLawTerm function', function () {
-        it('Test whether selectAreaOfLawTerm has valid value or not', function () {
+        it('Should return the subAOL items on selection of AOLTerm', function () {
             vm.selectAreaOfLawTerm(selectedPracticeGroup.areaTerms[0]);
-            var subArea = selectedPracticeGroup.areaTerms[0].subareaTerms;
-            var activeSub = selectedPracticeGroup.areaTerms[0].subareaTerms[0];
 
-            expect(subArea).not.toBe(null);
-            expect(activeSub.termName).toBe("Advertising, Marketing ＆Promotions");
+            expect(vm.subAreaOfLawTerms).not.toBe(null);
+            expect(vm.activeSubAOLTerm.termName).toBe("Advertising, Marketing ＆Promotions");
             expect(vm.errorPopUp).toBe(false);
+            expect(vm.activeAOLTerm).toBe(selectedPracticeGroup.areaTerms[0]);
+        });
 
+        it('Should return defined subAOL items on selection of AOLTerm', function () {
+            vm.selectAreaOfLawTerm(selectedPracticeGroup.areaTerms[0]);
+
+            expect(vm.subAreaOfLawTerms).not.toBeUndefined();
+            expect(vm.activeSubAOLTerm).not.toBeUndefined();
+            expect(vm.errorPopUp).not.toBeUndefined();
+            expect(vm.activeAOLTerm).not.toBeUndefined();
         });
     });
 
     describe('Verification of selectSubAreaOfLawTerm function', function () {
-        it('Test whether selectSubAreaOfLawTerm has valid value or not', function () {
-      
-            vm.selectSubAreaOfLawTerm(selectedPracticeGroup.areaTerms[0].subareaTerms[0]);
-            subArea = selectedPracticeGroup.areaTerms[0].subareaTerms;
-            activeSub = selectedPracticeGroup.areaTerms[0].subareaTerms[0];
+        it('Should return the subAOL items', function () {
 
-            expect(subArea).not.toBe(null);
-            expect(activeSub.termName).toBe("Advertising, Marketing ＆Promotions");
+            vm.selectSubAreaOfLawTerm(selectedPracticeGroup.areaTerms[0].subareaTerms[0]);
+            expect(vm.activeSubAOLTerm).toBe(selectedPracticeGroup.areaTerms[0].subareaTerms[0]);
             expect(vm.errorPopUp).toBe(false);
+
+        });
+
+        it('Should return defined subAOL items', function () {
+
+            vm.selectSubAreaOfLawTerm(selectedPracticeGroup.areaTerms[0].subareaTerms[0]);
+            expect(vm.activeSubAOLTerm).not.toBeUndefined();
+            expect(vm.errorPopUp).not.toBeUndefined();
 
         });
     });
 
+    describe('Verification of selectDocumentTemplateTypeLawTerm function', function () {
+        it('Should return the document template type term', function () {
 
-    // Pending methods to verify
-    //getSelectedPracticeGroupValue
-    //selectAreaOfLawTerm
-    //selectSubAreaOfLawTerm
-    //selectDocumentTemplateTypeLawTerm
-    //addToDocumentTemplate
-    //removeFromDocumentTemplate
-    //onSelect
-    //saveDocumentTemplates
-    //open1
-    //conflictRadioChange
-    //addNewAssignPermissions
-    //removeAssignPermissionsRow
-    //createAndNotify
-    //NextClick
-    //PreviousClick
-    //CheckPopUp
-    //closesuccessbanner
+            vm.selectDocumentTemplateTypeLawTerm(documentTemplateTypeLawTerm);
 
-    //describe('Verification of CheckMatterName function', function () {
-    //    it('Test whether Matter name is already  present or not', function () {
+            expect(vm.removeDTItem).toBe(true);
+            expect(vm.errorPopUp).toBe(false);
+            expect(vm.activeDocumentTypeLawTerm).toBe(documentTemplateTypeLawTerm);
+            expect(vm.primaryMatterType).toBe(true);
 
-           
-    //        vm.matterName = "abcrtawc";
-    //        vm.clientUrl = "https://lcadms.sharepoint.com/sites/AdventureWorksCycles";
-    //        vm.checkValidMatterName();
-    //        setTimeout(function () {
-    //            debugger;
-    //            console.log(vm.errTextMsg);
-    //        }, 50000);
-    //        debugger;
-    //       // {
-                
-    //        //    //expect(response).toBe("s");
-    //        //});
-    //        //var val = vm.checkValidMatterName();
-    //        //console.log(val);
-    //        //expect(val).toBe(true);
-    //    });
-    //});
+        });
 
+        it('Should return expected document template type term', function () {
 
+            vm.selectDocumentTemplateTypeLawTerm(documentTemplateTypeLawTerm);
+
+            expect(vm.removeDTItem).not.toBe(false);
+            expect(vm.errorPopUp).not.toBe(true);
+            expect(vm.activeDocumentTypeLawTerm).not.toBe(null);
+            expect(vm.primaryMatterType).not.toBe(false);
+
+        });
+    });
 
 });
