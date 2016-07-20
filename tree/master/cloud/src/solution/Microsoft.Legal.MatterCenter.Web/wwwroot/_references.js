@@ -39,6 +39,7 @@
 /// <reference path="jasminetest/createmattercontroller.spec.js" />
 /// <reference path="jasminetest/object.js" />
 /// <reference path="jasminetest/objectcollectiont.js" />
+/// <reference path="jasminetest/test.js" />
 /// <reference path="js/site.js" />
 /// <reference path="lib/adal-angular/dist/adal.min.js" />
 /// <reference path="lib/adal-angular/dist/adal-angular.min.js" />

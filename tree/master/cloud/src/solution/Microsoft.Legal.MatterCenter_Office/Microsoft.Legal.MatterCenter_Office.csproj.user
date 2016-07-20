@@ -2,5 +2,11 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <GeneratedFeatureId>eddc208b-06f6-412a-bdf1-2deffedd5a80</GeneratedFeatureId>
+    <GeneratedPackageId>149ccf02-40f4-431c-a045-e6174f576619</GeneratedPackageId>
+    <GeneratedModuleId>{a543fb1d-17b7-4b2f-9812-566723d1200a}</GeneratedModuleId>
+    <GeneratedListId>{36a5759a-fcec-4560-ada5-ed008d9235f7}</GeneratedListId>
+    <GeneratedProductId>{d6eb505c-3da4-4a13-bb9d-926865e621d6}</GeneratedProductId>
+    <GeneratedAppVersion>1.0.0.0</GeneratedAppVersion>
+    <GeneratedClientSecret>Zj0jDa6a3/9/xiF09mwtf6jrf0SdSxMMRe9VCaAPbtQ=</GeneratedClientSecret>
   </PropertyGroup>
 </Project>

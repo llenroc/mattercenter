@@ -10,7 +10,7 @@ describe('CreateMatter Controller test suite', function () {
     var $stateParams;
     var $window;
 
-    var mockmatterResourceService = function matterResource($resource, auth) {
+    var mockmatterResourceService = function ($resource, auth) {
         return $resource(null, null,
                 {
                     'get': auth.attachCSRF({
@@ -115,7 +115,7 @@ describe('CreateMatter Controller test suite', function () {
                 });
     };
 
-    var mockapi = function api(matterResource, documentResource, documentDashBoardResource, matterDashBoardResource, homeResource) {
+    var mockapi = function (matterResource, documentResource, documentDashBoardResource, matterDashBoardResource, homeResource) {
         var resources = {
             'matterResource': matterResource,
             'documentResource': documentResource,
@@ -180,12 +180,12 @@ describe('CreateMatter Controller test suite', function () {
 
     beforeEach(module('matterMain'));
     beforeEach(module('matterMain', function ($provide) {
-        $provide.factory("matterResource", mockmatterResourceService);
+        $provide.factory("matterResource", ['$resource', 'auth', mockmatterResourceService]);
     }));
 
     beforeEach(module('matterMain'));
     beforeEach(module('matterMain', function ($provide) {
-        $provide.factory("api", mockapi);
+        $provide.factory("api", ['matterResource', 'documentResource', 'documentDashBoardResource', 'matterDashBoardResource', 'homeResource', mockapi]);
     }));
 
     beforeEach(module('ui.router'));
@@ -333,5 +333,140 @@ describe('CreateMatter Controller test suite', function () {
 
         });
     });
+
+    describe('Verification of addToDocumentTemplate function', function () {
+        it('Should return the document template type law terms', function () {
+            vm.activeSubAOLTerm = documentTemplateTypeLawTerm;
+            vm.documentTypeLawTerms = subareaTerms;
+            vm.addToDocumentTemplate();
+            expect(vm.documentTypeLawTerms).not.toBeUndefined();
+        });
+
+        it('Should return activeDocumentTypeLawTerm as null', function () {
+            vm.activeSubAOLTerm = documentTemplateTypeLawTerm;
+            vm.documentTypeLawTerms = subareaTerms;
+            vm.addToDocumentTemplate();
+            expect(vm.activeDocumentTypeLawTerm).toBe(null);
+        });
+
+    });
+
+    describe('Verification of removeFromDocumentTemplate function', function () {
+        it('Should not return document template type law terms while removing', function () {
+            vm.removeDTItem = false;
+            vm.removeFromDocumentTemplate();
+            expect(vm.removeDTItem).not.toBe(true);
+            expect(vm.primaryMatterType).not.toBe(true);
+        });
+
+        it('Should return the document template type law terms while removing', function () {
+            vm.removeDTItem = true;
+            vm.removeFromDocumentTemplate();
+            expect(vm.removeDTItem).toBe(false);
+            expect(vm.primaryMatterType).toBe(false);
+        });
+    });
+
+    describe('Verification of onSelect function', function () {
+
+        it('Should return the conflicted ensured user', function () {
+            vm.removeDTItem = false;
+            vm.onSelect(item, "MAQ User", "MAQ Use", "conflictcheckuser");
+            expect(vm.selectedConflictCheckUser).toBe("MAQ User(MAQUser@LCADMS.onmicrosoft.com)");
+
+        });
+
+        it('Should return the blocked ensured user', function () {
+            vm.removeDTItem = false;
+            vm.onSelect(item, "MAQ User", "MAQ User", "blockuser");
+            expect(vm.blockedUserName).toBe("MAQ User(MAQUser@LCADMS.onmicrosoft.com)");
+
+        });
+
+    });
+    //-----------------------------------------------------------------------------------------
+    // Methods to verify:
+    //onSelect
+    //saveDocumentTemplates
+    //open1
+    //conflictRadioChange
+    //addNewAssignPermissions
+    //removeAssignPermissionsRow
+    //createAndNotify
+    //NextClick
+    //PreviousClick
+    //CheckPopUp
+    //closesuccessbanner
+    //-------------------------------------------------------------------------------------------
+
+
+    describe("Check if matter already exist (POC Spec)", function () {
+        beforeEach(function () {
+
+            vm.matterName = "abcrtawc";
+            vm.clientUrl = "https://lcadms.sharepoint.com/sites/AdventureWorksCycles";
+
+        });
+
+        it("should return a failing Ajax Response", function () {
+            var val = vm.checkValidMatterName();
+            console.log(val);
+            expect(val).toBe(true);
+        });
+
+        //var data;
+
+        //beforeEach(function () {
+        //    vm.matterName = "abcrtawc";
+        //    vm.clientUrl = "https://lcadms.sharepoint.com/sites/AdventureWorksCycles";
+        //    runs(function () {
+        //        vm.checkValidMatterName(function (res) {
+        //            data = res;
+        //        });
+        //    });
+
+        //    waitsFor(function () { return !!data; }, 'Timed out', 1000);
+        //});
+
+        //it("test1", function () {
+        //    runs(function () {
+        //        expect(data).toBe(something);
+        //    });
+        //});
+        //it("won't be detected. It's executed without waiting for the asynchronous result", function(){
+
+        //vm.checkValidMatterName().then(function (message) {
+        //    expect(message).toBeDefined();
+        //}, function (error) {
+        //    expect("first test received error: " + error).toFail();
+        //});
+        //});
+
+
+        //describe('Verification of CheckMatterName function', function () {
+        //    it('Test whether Matter name is already  present or not', function () {
+
+
+        //        vm.matterName = "abcrtawc";
+        //        vm.clientUrl = "https://lcadms.sharepoint.com/sites/AdventureWorksCycles";
+        //        vm.checkValidMatterName();
+        //        setTimeout(function () {
+        //            debugger;
+        //            console.log(vm.errTextMsg);
+        //        }, 50000);
+        //        debugger;
+        //       // {
+
+        //        //    //expect(response).toBe("s");
+        //        //});
+        //        //var val = vm.checkValidMatterName();
+        //        //console.log(val);
+        //        //expect(val).toBe(true);
+        //    });
+        //});
+    });
+
+
+
 
 });
