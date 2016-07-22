@@ -59,6 +59,7 @@ var subareaTerms =
            "documentTemplates": "Advertising, Marketing ＆ Promotions",
            "documentTemplateNames": "Agribusiness;Aircraft;California Public Utilities Commission (CPUC);Class Action Defense",
            "id": "578cfafb-59eb-4f4c-b219-47886c61e384",
+           "primaryMatterType": "true",
            "wssId": 0,
            "subareaTerms": null,
            "$$hashKey": "object:153"

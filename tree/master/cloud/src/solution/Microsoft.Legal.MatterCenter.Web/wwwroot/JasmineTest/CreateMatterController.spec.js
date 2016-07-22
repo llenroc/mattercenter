@@ -346,7 +346,7 @@ describe('CreateMatter Controller test suite', function () {
             vm.activeSubAOLTerm = documentTemplateTypeLawTerm;
             vm.documentTypeLawTerms = subareaTerms;
             vm.addToDocumentTemplate();
-            expect(vm.activeDocumentTypeLawTerm).toBe(null);
+            expect(vm.activeDocumentTypeLawTerm).not.toBe(null);
         });
 
     });
@@ -384,6 +384,76 @@ describe('CreateMatter Controller test suite', function () {
         });
 
     });
+
+    describe('Verification of saveDocumentTemplates function', function () {
+        it('Should return the saved document Templates', function () {
+            vm.primaryMatterType = true;
+            vm.activeDocumentTypeLawTerm = documentTemplateTypeLawTerm;
+            vm.documentTypeLawTerms = subareaTerms;
+            vm.saveDocumentTemplates();
+            expect(vm.selectedDocumentTypeLawTerms).toBe(vm.documentTypeLawTerms);
+            expect(vm.popupContainerBackground).toBe("hide");
+            expect(vm.popupContainer).toBe("hide");
+
+        });
+
+        it('Should not return saved document Templates and error popup should be prompt', function () {
+            vm.primaryMatterType = false;
+            vm.saveDocumentTemplates();
+            expect(vm.errorPopUp).toBe(true);
+        });;
+
+    });
+
+    describe('Verification of open1 function', function () {
+        it('Should return the status of date picker', function () {
+            vm.open1();
+            expect(vm.opened).toBe(true);
+        });
+    });
+
+
+    describe('Verification of conflictRadioChange function', function () {
+        it('Should return the status of secureMatterRadioEnabled as true', function () {
+            vm.conflictRadioChange(true);
+            expect(vm.secureMatterRadioEnabled).toBe(true);
+            expect(vm.secureMatterCheck).toBe(true);
+
+        });
+
+        it('Should return the status of secureMatterRadioEnabled as false', function () {
+            vm.conflictRadioChange(false);
+            expect(vm.secureMatterRadioEnabled).toBe(false);
+
+        });
+    });
+
+    describe('Verification of conflictRadioChange function', function () {
+        it('Should return the status of secureMatterRadioEnabled as true', function () {
+            vm.addNewAssignPermissions();
+            expect(vm.assignPermissionTeams).not.toBeUndefined();
+            console.log(vm.assignPermissionTeams);
+
+        });
+    });
+
+    describe('Verification of removeAssignPermissionsRow function', function () {
+        it('Should return the remaining users', function () {
+            vm.assignPermissionTeams.length = 3;
+            vm.removeAssignPermissionsRow(0);
+            expect(vm.assignPermissionTeams.length).tobe(2);
+        });
+        it('Should return return no result', function () {
+            vm.assignPermissionTeams.length = 0;
+            vm.removeAssignPermissionsRow(0);
+            expect(vm.assignPermissionTeams.length).tobe(null);
+        });
+
+    });
+
+
+
+
 //-----------------------------------------------------------------------------------------
    // Methods to verify:
     //onSelect
@@ -400,71 +470,6 @@ describe('CreateMatter Controller test suite', function () {
 //-------------------------------------------------------------------------------------------
 
 
-    describe("Check if matter already exist (POC Spec)", function () {
-        beforeEach(function () {
-
-            vm.matterName = "abcrtawc";
-            vm.clientUrl = "https://lcadms.sharepoint.com/sites/AdventureWorksCycles";
-
-        });
-
-        it("should return a failing Ajax Response", function () {
-            var val = vm.checkValidMatterName();
-            console.log(val);
-            expect(val).toBe(true);
-        });
-
-        //var data;
-
-        //beforeEach(function () {
-        //    vm.matterName = "abcrtawc";
-        //    vm.clientUrl = "https://lcadms.sharepoint.com/sites/AdventureWorksCycles";
-        //    runs(function () {
-        //        vm.checkValidMatterName(function (res) {
-        //            data = res;
-        //        });
-        //    });
-
-        //    waitsFor(function () { return !!data; }, 'Timed out', 1000);
-        //});
-
-        //it("test1", function () {
-        //    runs(function () {
-        //        expect(data).toBe(something);
-        //    });
-        //});
-        //it("won't be detected. It's executed without waiting for the asynchronous result", function(){
-
-        //vm.checkValidMatterName().then(function (message) {
-        //    expect(message).toBeDefined();
-        //}, function (error) {
-        //    expect("first test received error: " + error).toFail();
-        //});
-        //});
-
-
-        //describe('Verification of CheckMatterName function', function () {
-        //    it('Test whether Matter name is already  present or not', function () {
-
-
-        //        vm.matterName = "abcrtawc";
-        //        vm.clientUrl = "https://lcadms.sharepoint.com/sites/AdventureWorksCycles";
-        //        vm.checkValidMatterName();
-        //        setTimeout(function () {
-        //            debugger;
-        //            console.log(vm.errTextMsg);
-        //        }, 50000);
-        //        debugger;
-        //       // {
-
-        //        //    //expect(response).toBe("s");
-        //        //});
-        //        //var val = vm.checkValidMatterName();
-        //        //console.log(val);
-        //        //expect(val).toBe(true);
-        //    });
-        //});
-    });
 
 
 
