@@ -6,6 +6,7 @@
         function ($scope, $state, $stateParams, api, matterResource, $filter, $window, $rootScope) {
             ///All Variables
             var cm = this;
+
             $rootScope.pageIndex = "4";
             cm.selectedConflictCheckUser = undefined;
             cm.blockedUserName = undefined;

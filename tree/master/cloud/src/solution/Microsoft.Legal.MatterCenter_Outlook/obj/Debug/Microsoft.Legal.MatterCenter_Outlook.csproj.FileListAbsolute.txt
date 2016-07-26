@@ -1,1 +1,0 @@
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter_Outlook\obj\Debug\Microsoft.Legal.MatterCenter_Outlook.csprojResolveAssemblyReference.cache

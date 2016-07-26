@@ -348,6 +348,7 @@
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\site.min.js" />
     <Content Include="Specs\CreateMatter.spec.js" />
+    <Content Include="Specs\DocumentDashboardController.spec.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
