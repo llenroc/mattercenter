@@ -40,6 +40,7 @@
 /// <reference path="fabric-0.6.0/js/jquery.components-0.6.0.min.js" />
 /// <reference path="jasminetest/createmattercontroller.spec.js" />
 /// <reference path="jasminetest/documentdashboardcontroller.spec.js" />
+/// <reference path="jasminetest/matterdashboardcontroller.spec.js" />
 /// <reference path="jasminetest/object.js" />
 /// <reference path="JasmineTest/ObjectCollection.js" />
 /// <reference path="jasminetest/test.js" />
