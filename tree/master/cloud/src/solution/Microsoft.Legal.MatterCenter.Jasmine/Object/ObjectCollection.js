@@ -121,3 +121,100 @@ var obj = [{
     "$$hashKey": "object:286",
     "selected": true
 }]
+
+var clientobj = [{
+    "id": "0016765",
+    "name": "A. Datum Corporation",
+    "url": "https://lcadms.sharepoint.com/sites/ADatumCorporation",
+    "$$hashKey": "object:320",
+    "Selected": true
+},
+	{
+	    "id": "0016761",
+	    "name": "AdventureWorks Cycles",
+	    "url": "https://lcadms.sharepoint.com/sites/AdventureWorksCycles",
+	    "$$hashKey": "object:321",
+	    "Selected": false
+	},
+	{
+	    "id": "0016762",
+	    "name": "Alpine Ski House",
+	    "url": "https://lcadms.sharepoint.com/sites/AlpineSkiHouse",
+	    "$$hashKey": "object:322",
+	    "Selected": false
+	}]
+
+var event = {
+    preventDefault: function () { this.defaultPrevented = true; },
+    isDefaultPrevented: function () { return this.defaultPrevented === true; },
+    stopImmediatePropagation: function () { this.immediatePropagationStopped = true; },
+    isImmediatePropagationStopped: function () { return this.immediatePropagationStopped === true; },
+    stopPropagation: function () { }
+
+}
+
+var practicegroup = [
+	{
+	    "termName": "Advertising, Marketing ＆ Promotions",
+	    "parentTermName": "Practice Groups",
+	    "folderNames": "Email;Lorem;Ipsum",
+	    "areaTerms": [
+			{
+			    "termName": "Advertising, Marketing ＆ Promotions",
+			    "parentTermName": "Advertising, Marketing ＆ Promotions",
+			    "folderNames": "Email;Lorem;Ipsum",
+			    "subareaTerms": [
+					{
+					    "termName": "Advertising, Marketing ＆Promotions",
+					    "parentTermName": "Advertising, Marketing ＆ Promotions",
+					    "folderNames": "Email;Lorem;Ipsum",
+					    "isNoFolderStructurePresent": "false",
+					    "documentTemplates": "Advertising, Marketing ＆ Promotions",
+					    "documentTemplateNames": "Agribusiness;Aircraft;California Public Utilities Commission (CPUC);Class Action Defense",
+					    "id": "683ec070-7ed0-4e82-b07c-13a1b4485b7b",
+					    "wssId": 0,
+					    "subareaTerms": null
+					}
+			    ],
+			    "id": "16827aa4-a8b3-4275-920b-184a04bc60ea",
+			    "wssId": 0,
+			    "Selected": true
+			}
+	    ],
+	    "id": "a42ab615-0d27-4de2-9f55-144e71219770",
+	    "wssId": 0,
+	    "$$hashKey": "object:582",
+	    "Selected": true
+	},
+	{
+	    "termName": "Bankruptcy ＆ Creditors Rights",
+	    "parentTermName": "Practice Groups",
+	    "folderNames": "Email;Lorem;Ipsum",
+	    "areaTerms": [
+			{
+			    "termName": "Bankruptcy",
+			    "parentTermName": "Bankruptcy ＆ Creditors Rights",
+			    "folderNames": "Email;Lorem;Ipsum",
+			    "subareaTerms": [
+					{
+					    "termName": "Personal Bankruptcy",
+					    "parentTermName": "Bankruptcy",
+					    "folderNames": "Email;Bankruptcy",
+					    "isNoFolderStructurePresent": "false",
+					    "documentTemplates": "Bankruptcy ＆ Creditors Rights",
+					    "documentTemplateNames": "California Public Utilities Commission (CPUC);Class Action Defense",
+					    "id": "2aa63c68-bcde-411b-bb0f-dc266de78a46",
+					    "wssId": 0,
+					    "subareaTerms": null
+					}
+			    ],
+			    "id": "b6678495-0a16-424e-a94e-8a73d326e5bb",
+			    "wssId": 0,
+			    "Selected": false
+			}
+	    ],
+	    "id": "1a185a92-569a-466e-8c94-e2c31083a821",
+	    "wssId": 0,
+	    "$$hashKey": "object:583",
+	    "Selected": false
+	}]

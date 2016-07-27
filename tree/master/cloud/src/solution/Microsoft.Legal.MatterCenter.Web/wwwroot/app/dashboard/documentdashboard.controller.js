@@ -746,7 +746,7 @@
                 if (vm.totalrecords > gridOptions.paginationPageSize) {
                     vm.fromtopage = vm.first + " - " + vm.last;
                 }
-                else {
+                else;{
                     if (vm.total < gridOptions.paginationPageSize) { vm.fromtopage = vm.first + " - " + vm.totalrecords; } else {
                         vm.fromtopage = vm.first + " - " + vm.last;
                     }

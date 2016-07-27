@@ -1,8 +1,8 @@
 ﻿(function () {
     'use strict;'
     var app = angular.module("matterMain");
-    app.controller('MatterDashBoardController', ['$scope', '$state', '$interval', '$stateParams', 'api', '$timeout', 'matterDashBoardResource', '$rootScope', 'uiGridConstants', '$location', '$http','$q', '$filter','commonFunctions',
-        function matterDashBoardController($scope, $state, $interval, $stateParams, api, $timeout, matterDashBoardResource, $rootScope, uiGridConstants, $location, $http, $q, $filter,commonFunctions) {
+    app.controller('MatterDashBoardController', ['$scope', '$state', '$interval', '$stateParams', 'api', '$timeout', 'matterDashBoardResource', '$rootScope', 'uiGridConstants', '$location', '$http', '$q', '$filter', 'commonFunctions',
+        function matterDashBoardController($scope, $state, $interval, $stateParams, api, $timeout, matterDashBoardResource, $rootScope, uiGridConstants, $location, $http, $q, $filter, commonFunctions) {
             var vm = this;
             vm.downwarddrop = true;
             vm.upwarddrop = false;
@@ -275,7 +275,7 @@
                     if (!$scope.$$phase) {
                         $scope.$apply();
                     }
-                    
+
                     vm.lazyloaderdashboard = true;
                 });
             }
@@ -562,9 +562,9 @@
                 formatYear: 'yy',
                 maxDate: new Date()
             }
-            $scope.$watch('startdate', function (newval, oldval) {
-                $scope.enddateOptions.minDate = newval;
-            });
+            //$scope.$watch('startdate', function (newval, oldval) {
+            //    $scope.enddateOptions.minDate = newval;
+            //});
             $scope.openStartDate = function ($event) {
                 if ($event) {
                     $event.preventDefault();
@@ -718,7 +718,7 @@
             vm.handleDesktopDrop = function (targetDropUrl, sourceFiles, isOverwrite) {
                 vm.oUploadGlobal.successBanner = false;
                 vm.isLoadingFromDesktopStarted = true;
-               // vm.files = sourceFiles.files;
+                // vm.files = sourceFiles.files;
                 var fd = new FormData();
                 fd.append('targetDropUrl', targetDropUrl);
                 fd.append('folderUrl', targetDropUrl)
@@ -1008,151 +1008,151 @@
                 canceler: $q.defer(),
                 successBanner: false
             };
-             $rootScope.breadcrumb = true;
+            $rootScope.breadcrumb = true;
             $rootScope.foldercontent = false;
-             vm.hideBreadCrumb = function () {
+            vm.hideBreadCrumb = function () {
                 $rootScope.breadcrumb = true;
                 $rootScope.foldercontent = false;
 
-             }
+            }
 
             //#region To getContentCheckConfigurations
             //start
 
-             function getContentCheckConfigurations(options, callback) {
-                 api({
-                     resource: 'matterResource',
-                     method: 'getDefaultMatterConfigurations',
-                     data: options,
-                     success: callback
-                 });
-             }
-            
-             vm.getContentCheckConfigurations = function (siteCollectionPath) {
-                 siteCollectionPath = JSON.stringify(siteCollectionPath);
-                 getContentCheckConfigurations(siteCollectionPath, function (response) {
-                     if (!response.isError) {
-                         var defaultMatterConfig = JSON.parse(response.code);
-                         vm.oUploadGlobal.bAllowContentCheck = defaultMatterConfig.IsContentCheck;
+            function getContentCheckConfigurations(options, callback) {
+                api({
+                    resource: 'matterResource',
+                    method: 'getDefaultMatterConfigurations',
+                    data: options,
+                    success: callback
+                });
+            }
 
-                     } else {
-                         vm.oUploadGlobal.bAllowContentCheck = false;
-                     }
+            vm.getContentCheckConfigurations = function (siteCollectionPath) {
+                siteCollectionPath = JSON.stringify(siteCollectionPath);
+                getContentCheckConfigurations(siteCollectionPath, function (response) {
+                    if (!response.isError) {
+                        var defaultMatterConfig = JSON.parse(response.code);
+                        vm.oUploadGlobal.bAllowContentCheck = defaultMatterConfig.IsContentCheck;
 
-                 });
+                    } else {
+                        vm.oUploadGlobal.bAllowContentCheck = false;
+                    }
 
-             }
+                });
+
+            }
 
             //#region To expand and collapse the folder tree structure in upload
-             vm.showSelectedFolderTree = function (folder) {
-                 function setActiveItem(item) {
-                     if (item.children !== null) {
-                         angular.forEach(item.children, function (child) {
-                             if (item.parentURL !== null) {
-                                 if (item.active) {
-                                     child.active = child.active ? false : true;
-                                     if (!child.active) { setActiveItem(child); }
-                                 } else {
-                                     child.active = false;
-                                     setActiveItem(child);
-                                 }
-                             }
-                             else {
-                                 child.active = child.active ? false : true;
-                                 if (!child.active) {
-                                     setActiveItem(child);
-                                 }
-                             }
-                         });
-                     }
+            vm.showSelectedFolderTree = function (folder) {
+                function setActiveItem(item) {
+                    if (item.children !== null) {
+                        angular.forEach(item.children, function (child) {
+                            if (item.parentURL !== null) {
+                                if (item.active) {
+                                    child.active = child.active ? false : true;
+                                    if (!child.active) { setActiveItem(child); }
+                                } else {
+                                    child.active = false;
+                                    setActiveItem(child);
+                                }
+                            }
+                            else {
+                                child.active = child.active ? false : true;
+                                if (!child.active) {
+                                    setActiveItem(child);
+                                }
+                            }
+                        });
+                    }
 
-                 }
-                 setActiveItem(folder);
+                }
+                setActiveItem(folder);
 
-             }
+            }
             //#endRegion
             //#region To do contentcheck or save as latestversion
-             vm.localOverWriteDocument = function (duplicateFile, sOperation) {
-                 if ("contentCheck" === sOperation) {
-                     vm.files = [vm.oUploadGlobal.arrFiles[vm.oUploadGlobal.arrFiles.length - 1]];
-                 } else {
-                     vm.files = [vm.oUploadGlobal.arrFiles.pop()];
-                     duplicateFile.cancel = null;
-                 }
+            vm.localOverWriteDocument = function (duplicateFile, sOperation) {
+                if ("contentCheck" === sOperation) {
+                    vm.files = [vm.oUploadGlobal.arrFiles[vm.oUploadGlobal.arrFiles.length - 1]];
+                } else {
+                    vm.files = [vm.oUploadGlobal.arrFiles.pop()];
+                    duplicateFile.cancel = null;
+                }
 
-                 var nOperation = "";
-                 if ("ignore" !== sOperation) {
-                     switch (sOperation) {
-                         case "overwrite":
-                             nOperation = "0";
-                             break;
-                         case "append":
-                             nOperation = "1";
-                             break;
-                         case "contentCheck":
-                             nOperation = "2";
-                             break;
-                         case "cancelContentCheck":
-                             nOperation = "3";
-                             break;
-                     }
-                     // uploadFile(oUploadGlobal.sClientRelativeUrl, oUploadGlobal.sFolderUrl, nOperation);
+                var nOperation = "";
+                if ("ignore" !== sOperation) {
+                    switch (sOperation) {
+                        case "overwrite":
+                            nOperation = "0";
+                            break;
+                        case "append":
+                            nOperation = "1";
+                            break;
+                        case "contentCheck":
+                            nOperation = "2";
+                            break;
+                        case "cancelContentCheck":
+                            nOperation = "3";
+                            break;
+                    }
+                    // uploadFile(oUploadGlobal.sClientRelativeUrl, oUploadGlobal.sFolderUrl, nOperation);
 
-                     vm.handleDesktopDrop(vm.clientRelativeUrl, vm.files, nOperation);
+                    vm.handleDesktopDrop(vm.clientRelativeUrl, vm.files, nOperation);
 
 
 
-                 } else {
-                     duplicateFile.cancel = "False";
-                     if (vm.ducplicateSourceFile.length > 0) {
-                         vm.ducplicateSourceFile.pop();
-                     }
-                 }
-             }
+                } else {
+                    duplicateFile.cancel = "False";
+                    if (vm.ducplicateSourceFile.length > 0) {
+                        vm.ducplicateSourceFile.pop();
+                    }
+                }
+            }
 
             // Function to configure time stamp
-             vm.overwriteConfiguration = function (fileName) {
-                 // Update the content as per the logic.
-                 var selectedOverwriteConfiguration = configs.uploadMessages.overwrite_Config_Property.trim().toLocaleUpperCase(),
-                     fileExtension = fileName.trim().substring(fileName.trim().lastIndexOf(".") + 1),
-                     bAppendEnabled = false;
+            vm.overwriteConfiguration = function (fileName) {
+                // Update the content as per the logic.
+                var selectedOverwriteConfiguration = configs.uploadMessages.overwrite_Config_Property.trim().toLocaleUpperCase(),
+                    fileExtension = fileName.trim().substring(fileName.trim().lastIndexOf(".") + 1),
+                    bAppendEnabled = false;
 
-                 switch (selectedOverwriteConfiguration) {
-                     case "BOTH":
-                         bAppendEnabled = true;
-                         break;
-                     case "DOCUMENT ONLY":
-                         bAppendEnabled = "eml" === fileExtension || "msg" === fileExtension ? false : true;
-                         break;
-                     default:
-                         bAppendEnabled = "eml" === fileExtension || "msg" === fileExtension ? true : false;
-                         break;
-                 }
-                 return bAppendEnabled;
-             }
+                switch (selectedOverwriteConfiguration) {
+                    case "BOTH":
+                        bAppendEnabled = true;
+                        break;
+                    case "DOCUMENT ONLY":
+                        bAppendEnabled = "eml" === fileExtension || "msg" === fileExtension ? false : true;
+                        break;
+                    default:
+                        bAppendEnabled = "eml" === fileExtension || "msg" === fileExtension ? true : false;
+                        break;
+                }
+                return bAppendEnabled;
+            }
 
-             vm.contentCheckNotification = function (file, isLocalUpload) {
-                 file.contentCheck = "contentCheck";
-                 file.saveLatestVersion = "False";
-                 file.cancel = "False";
+            vm.contentCheckNotification = function (file, isLocalUpload) {
+                file.contentCheck = "contentCheck";
+                file.saveLatestVersion = "False";
+                file.cancel = "False";
 
-             }
-             vm.abortContentCheck = function (file, isLocalUpload) {
-                 "use strict";
-                 if (isLocalUpload) {
-                     vm.oUploadGlobal.canceler.resolve();
-                     vm.oUploadGlobal.canceler = $q.defer();
-                 }
-                 file.contentCheck = null;
-                 file.saveLatestVersion = "True";
-                 file.value = file.value + "<br/><div>" + configs.uploadMessages.content_Check_Abort + "</div>";
-                 file.cancel = "True";
+            }
+            vm.abortContentCheck = function (file, isLocalUpload) {
+                "use strict";
+                if (isLocalUpload) {
+                    vm.oUploadGlobal.canceler.resolve();
+                    vm.oUploadGlobal.canceler = $q.defer();
+                }
+                file.contentCheck = null;
+                file.saveLatestVersion = "True";
+                file.value = file.value + "<br/><div>" + configs.uploadMessages.content_Check_Abort + "</div>";
+                file.cancel = "True";
 
-             }
+            }
 
-             vm.closeSuccessBanner = function () {
-                 vm.oUploadGlobal.successBanner = false;
-             }
+            vm.closeSuccessBanner = function () {
+                vm.oUploadGlobal.successBanner = false;
+            }
             //#end region
         }
     ]);
