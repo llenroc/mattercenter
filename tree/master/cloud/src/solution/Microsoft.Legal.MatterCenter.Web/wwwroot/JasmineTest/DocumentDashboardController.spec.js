@@ -164,8 +164,17 @@ describe('DocumentDashboard Controller test suite', function () {
     describe('Verification of toggleChecker function', function () {
         it('It should set all drop down value as false', function () {
             dm.documentsCheckedCount = 2;
-            dm.toggleChecker(true, "rowinfo");
+            dm.toggleChecker(true, obj);
+            expect(dm.documentsCheckedCount).toBe(3);
             expect(dm.cartelements).toBeDefined();
+        });
+        it('It should not set all drop down value', function () {
+            dm.documentsCheckedCount = 2;
+            dm.gridApi = {};
+            dm.gridApi.grid = 1;
+            dm.gridApi = gridrows;
+            dm.toggleChecker(false, obj);
+            expect(dm.documentsCheckedCount).toBe(1);
         });
     });
 
@@ -173,9 +182,16 @@ describe('DocumentDashboard Controller test suite', function () {
         it('It should return the cartelement count', function () {
             dm.cartelements = obj;
             dm.documentsCheckedCount = 3;
-            dm.removeAttachment(obj);
-            expect(dm.cartelements.length).not.toBe(0);
-            expect(dm.documentsCheckedCount).not.toBe(0);
+            dm.removeAttachment(obj[0]);
+            expect(dm.cartelements.length).toBe(1);
+            expect(dm.documentsCheckedCount).toBe(2);
+        });
+        it('It should return the cartelement count as zero', function () {
+            dm.cartelements = {};
+            dm.cartelements.length=0
+            dm.removeAttachment(obj[0]);
+            expect(dm.cartelements.length).toBe(0);
+            expect(dm.documentsCheckedCount).not.toBeLessThan(0);
         });
     });
 
@@ -186,7 +202,14 @@ describe('DocumentDashboard Controller test suite', function () {
             dm.documentsCheckedCount = 3;
             dm.toggleCheckerAll(true);
             expect(dm.cartelements.length).toBeDefined();
-            expect(dm.documentsCheckedCount).not.toBe(0);
+            expect(dm.documentsCheckedCount).toBe(1);
+        });
+        it('It should not select the document ', function () {
+            dm.documentGridOptions.data = obj
+            dm.documentsCheckedCount = 3;
+            dm.toggleCheckerAll(false);
+            expect(dm.cartelements.length).toBe(0);
+            expect(dm.documentsCheckedCount).toBe(0);
         });
     });
 
@@ -230,15 +253,16 @@ describe('DocumentDashboard Controller test suite', function () {
     describe('Verification of pagination function', function () {
         it('It should not display pagination on page', function () {
             $scope.$apply = function () { };
+            dm.totalrecords = 0;
             dm.pagination();
             expect(dm.fromtopage).toBe("1 - 0");
             expect(dm.displaypagination).toBe(false);
         });
         it('It should display pagination on page', function () {
             $scope.$apply = function () { };
-            dm.totalrecords =1;
+            dm.totalrecords = 16;
             dm.pagination();
-            expect(dm.fromtopage).toBe("1 - 1");
+            expect(dm.fromtopage).toBe("1 - 6");
             expect(dm.displaypagination).toBe(true);
 
         });

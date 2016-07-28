@@ -218,3 +218,9 @@ var practicegroup = [
 	    "$$hashKey": "object:583",
 	    "Selected": false
 	}]
+
+var gridrows = {
+    "core": {
+        getVisibleRows: function (data) { return 0; }
+    }
+}

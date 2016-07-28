@@ -194,9 +194,119 @@ describe('MatterDashBoard Controller test suite', function () {
             expect(pm.aoldropvisible).toBe(false);
             expect(pm.aoldrop).toBe(false);
             expect(pm.selectedAOLs).toBe("Advertising, Marketing ＆ Promotions,");
+        });
+    });
+
+    describe('Verification of filterSearchCancel function', function () {
+        it('It should trigger when the user clicks on "Cancel" button in the filter panel', function () {
+            pm.filterSearchCancel("client");
+            expect(pm.clientdrop).toBe(false);
+            expect(pm.clientdropvisible).toBe(false);
+            expect(pm.pgdrop).toBe(false);
+            expect(pm.pgdropvisible).toBe(false);
+            expect(pm.aoldropvisible).toBe(false);
+            expect(pm.aoldrop).toBe(false);
+        });
+
+    });
+
+    describe('Verification of showupward function', function () {
+        it('It should show upward dropdown box', function () {
+            pm.showupward(event);
+            expect(pm.searchdrop).toBe(true);
+            expect(pm.downwarddrop).toBe(false);
+            expect(pm.upwarddrop).toBe(true);
 
         });
     });
+
+    describe('Verification of showdownward function', function () {
+        it('It should show downward dropdown box', function () {
+            pm.showdownward(event);
+            expect(pm.searchdrop).toBe(false);
+            expect(pm.upwarddrop).toBe(false);
+            expect(pm.downwarddrop).toBe(true);
+
+        });
+    });
+
+    describe('Verification of showsortby function', function () {
+        it('It should show sortby box', function () {
+            pm.sortbydropvisible = false
+             pm.showsortby(event);
+            
+             expect(pm.sortbydrop).toBe(true);
+             expect(pm.sortbydropvisible).toBe(true);
+         });
+         it('It should not show sortby box', function () {
+             pm.sortbydropvisible = true
+             pm.showsortby(event);
+             
+             expect(pm.sortbydrop).toBe(false);
+             expect(pm.sortbydropvisible).toBe(false);
+         });
+     });
+
+    describe('Verification of pagination function', function () {
+        it('It should not display pagination on page', function () {
+            $scope.$apply = function () { };
+            pm.totalrecords = 0;
+            pm.pagination();
+            expect(pm.fromtopage).toBe("1 - 0");
+            expect(pm.displaypagination).toBe(false);
+        });
+        it('It should display pagination on page', function () {
+            $scope.$apply = function () { };
+            pm.totalrecords = 16;
+            pm.pagination();
+            expect(pm.fromtopage).toBe("1 - 10");
+            expect(pm.displaypagination).toBe(true);
+
+        });
+    });
+
+    describe('Verification of overwriteConfiguration function', function () {
+        it('It should overwrite the Configuration of file', function () {
+            var bAppendEnabled = pm.overwriteConfiguration("TestEmail.msg");
+            expect(bAppendEnabled).toBe(true);
+        });
+
+    });
+
+    describe('Verification of contentCheckNotification function', function () {
+        it('It should set file parameter', function () {
+            pm.file = {};
+            pm.contentCheckNotification(pm.file,true);
+            expect(pm.file.contentCheck).toBe("contentCheck");
+            expect(pm.file.saveLatestVersion).toBe("False");
+            expect(pm.file.cancel).toBe("False");
+        });
+        
+    });
+
+    describe('Verification of abortContentCheck function', function () {
+        it('It should set file parameter while aborting the content check', function () {
+            pm.file = {};
+            pm.file.value="This";
+            pm.abortContentCheck(pm.file, false);
+            expect(pm.file.contentCheck).toBe(null);
+            expect(pm.file.saveLatestVersion).toBe("True");
+            expect(pm.file.value).toBe("This<br/><div>Content check has been aborted.</div>");
+            expect(pm.file.cancel).toBe("True");
+        });
+
+    });
+
+    describe('Verification of closeSuccessBanner function', function () {
+        it('It should close success banner', function () {
+            pm.closeSuccessBanner();
+            expect(pm.oUploadGlobal.successBanner).toBe(false);
+        });
+
+    });
+
+
+
    
 });
 
