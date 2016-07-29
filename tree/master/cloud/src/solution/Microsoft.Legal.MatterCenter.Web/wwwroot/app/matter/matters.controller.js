@@ -16,19 +16,33 @@
             vm.sortname = "";
             vm.mattersdrop = false;
             vm.mattersdropinner = true;
-            //$rootScope.bodyclass = "bodymain";
+            $rootScope.bodyclass = "bodymain";
+            $rootScope.profileClass="";
             //This value is for displaying the help
             $rootScope.pageIndex = "1";
             //#region Onload show ui grid and hide error div
             //start
             vm.divuigrid = true;
             vm.nodata = false;
+            vm.filternodata = false;
             //#endregion
 
             //#region To hide lazyloader on load
             //start
             vm.lazyloader = true;
             //#endregion
+
+            //#region scopes for displaying and hiding filter icons
+            //start
+            vm.matterfilter = false;
+            vm.moddatefilter = false;
+            vm.opendatefilter = false;
+            vm.clientfilter = false;
+            vm.areafilter = false;
+            vm.attorneyfilter = false;
+            //end
+
+
 
             //#region Assigning scopes for Dropdowns in headers
             //Start
@@ -47,6 +61,14 @@
             };
 
 
+
+            //For setting dynamic height to the grid
+            vm.getTableHeight = function () {
+                return {
+                    height: ($window.innerHeight - 115) + "px"
+                };
+            };
+
             $templateCache.put('coldefheadertemplate.html', "<div><div role='button' class='ui-grid-cell-contents ui-grid-header-cell-primary-focus' col-index='renderIndex'><span class='ui-grid-header-cell-label ng-binding' title='Click to sort by {{ col.colDef.displayName }}'>{{ col.colDef.displayName }}<span id='asc{{col.colDef.field}}' style='float:right;display:none' class='padl10px'>↑</span><span id='desc{{col.colDef.field}}' style='float:right;display:none' class='padlf10'>↓</span></span></div></div>");
 
             //#region Setting the options for grid
@@ -64,12 +86,12 @@
                 multiSelect: false,
                 columnDefs: [
                      { field: 'matterName', displayName: 'Matter', enableHiding: false, width: "275", cellTemplate: '../app/matter/MatterTemplates/MatterCellTemplate.html', headerCellTemplate: '../app/matter/MatterTemplates/MatterHeaderTemplate.html' },
-                     { field: 'matterClient', displayName: 'Client', enableCellEdit: true, width: "200", headerCellTemplate: '../app/matter/MatterTemplates/ClientHeaderTemplate.html' },
-                     { field: 'matterClientId', displayName: 'Client.MatterID', width: "150", headerCellTemplate: $templateCache.get('coldefheadertemplate.html'), cellTemplate: '<div class="ui-grid-cell-contents" >{{row.entity.matterClientId}}.{{row.entity.matterID}}</div>', enableCellEdit: true, },
-                     { field: 'matterModifiedDate', displayName: 'Modified Date', width: "195", cellTemplate: '<div class="ui-grid-cell-contents"  datefilter date="{{row.entity.matterModifiedDate}}"></div>', headerCellTemplate: '../app/matter/MatterTemplates/ModifiedDateTemplate.html' },
-                     { field: 'matterResponsibleAttorney', headerCellTemplate: '../app/matter/MatterTemplates/ResponsibleAttorneyHeaderTemplate.html', width: "250", displayName: 'Responsible attorney', visible: false },
-                     { field: 'matterSubAreaOfLaw', headerCellTemplate: '../app/matter/MatterTemplates/AreaofLawHeaderTemplate.html', width: "210", displayName: 'Sub area of law', visible: false },
-                     { field: 'matterCreatedDate', headerCellTemplate: '../app/matter/MatterTemplates/OpenDateTemplate.html', width: "170", displayName: 'Open date', cellTemplate: '<div class="ui-grid-cell-contents" datefilter date="{{row.entity.matterCreatedDate}}"></div>', visible: false },
+                     { field: 'matterClient', displayName: 'Client', headerCellClass: 'gridclass', cellClass: 'gridclass', enableCellEdit: true, width: "200", headerCellTemplate: '../app/matter/MatterTemplates/ClientHeaderTemplate.html' },
+                     { field: 'matterClientId', displayName: 'Client.MatterID', headerCellClass: 'gridclass', cellClass: 'gridclass', width: "150", headerCellTemplate: $templateCache.get('coldefheadertemplate.html'), cellTemplate: '<div class="ui-grid-cell-contents" >{{row.entity.matterClientId}}.{{row.entity.matterID}}</div>', enableCellEdit: true, },
+                     { field: 'matterModifiedDate', displayName: 'Modified Date', width: "195", headerCellClass: 'gridclass', cellClass: 'gridclass', cellTemplate: '<div class="ui-grid-cell-contents"  datefilter date="{{row.entity.matterModifiedDate}}"></div>', headerCellTemplate: '../app/matter/MatterTemplates/ModifiedDateTemplate.html' },
+                     { field: 'matterResponsibleAttorney', headerCellClass: 'gridclass', cellClass: 'gridclass', headerCellTemplate: '../app/matter/MatterTemplates/ResponsibleAttorneyHeaderTemplate.html', width: "250", displayName: 'Responsible attorney', visible: false },
+                     { field: 'matterSubAreaOfLaw', headerCellClass: 'gridclass', cellClass: 'gridclass', headerCellTemplate: '../app/matter/MatterTemplates/AreaofLawHeaderTemplate.html', width: "210", displayName: 'Sub area of law', visible: false },
+                     { field: 'matterCreatedDate', headerCellClass: 'gridclass', cellClass: 'gridclass', headerCellTemplate: '../app/matter/MatterTemplates/OpenDateTemplate.html', width: "170", displayName: 'Open date', cellTemplate: '<div class="ui-grid-cell-contents" datefilter date="{{row.entity.matterCreatedDate}}"></div>', visible: false },
                 ],
                 enableColumnMenus: false,
                 onRegisterApi: function (gridApi) {
@@ -87,6 +109,7 @@
                     $scope.sortChanged($scope.gridApi.grid, [vm.gridOptions.columnDefs[1]]);
                     $scope.$watch('gridApi.grid.isScrollingVertically', vm.watchFuncscroll);
                     gridApi.infiniteScroll.on.needLoadMoreData($scope, vm.watchFunc);
+                    vm.setColumns();
                 }
             };
 
@@ -102,6 +125,25 @@
             }
 
 
+            //#region for setting the classes for ui-grid based on size
+            vm.setColumns = function () {
+                if ($window.innerWidth < 360) {
+                    $interval(function () {
+                        angular.element('#mattergrid .ui-grid-viewport').addClass('viewport');
+                        angular.element('#mattergrid .ui-grid-viewport').removeClass('viewportlg');
+                    }, 1000, 2);
+                } else {
+                    $interval(function () {
+                        angular.element('#mattergrid .ui-grid-viewport').removeClass('viewport');
+                        angular.element('#mattergrid .ui-grid-viewport').addClass('viewportlg');
+                    }, 1000, 2);
+                }
+            }
+            //#endregion
+
+
+            //#region functionality for infinite scroll
+            //start
             vm.pagenumber = 1;
             vm.responseNull = false;
             vm.watchFunc = function () {
@@ -127,12 +169,23 @@
                 }
                 return promise.promise;
             }
+            //#endregion
 
             //#region for setting the dynamic width to grid
+            var screenHeight = 0;
+            vm.searchResultsLength=0;
             vm.setWidth = function () {
                 var width = $window.innerWidth;
                 angular.element(".ui-grid-viewport").css('max-width', width);
                 angular.element(".ui-grid-render-container").css('max-width', width);
+                screenHeight = $window.screen.availHeight;
+                if (screenHeight <= 768) {
+                    vm.searchResultsLength = 17;
+                } else if (screenHeight <= 1024 && screenHeight >= 769) {
+                    vm.searchResultsLength = 38;
+                } else if (screenHeight <= 1080 && screenHeight >= 1025) {
+                    vm.searchResultsLength = 42;
+                }
             };
 
             vm.setWidth();
@@ -389,9 +442,9 @@
                                     vm.uploadedFiles.push(response.data[i]);
                                     tempFile.push(response.data[i]);
                                     vm.oUploadGlobal.successBanner = (tempFile.length == sourceFiles.length) ? true : false;
-                                        vm.ducplicateSourceFile = vm.ducplicateSourceFile.filter(function (item) {
-                                            return item.fileName !== response.data[i].fileName;
-                                        });
+                                    vm.ducplicateSourceFile = vm.ducplicateSourceFile.filter(function (item) {
+                                        return item.fileName !== response.data[i].fileName;
+                                    });
                                 } else {
                                     if (response.data[i].code == "DuplicateDocument" || response.data[i].code == "IdenticalContent") {
                                         vm.IsDupliacteDocument = true;
@@ -416,7 +469,7 @@
                                             }
                                         }
 
-                                    }                                   
+                                    }
                                     else {
                                         vm.IsDupliacteDocument = true;
                                         response.data[i].ok = "True";
@@ -811,13 +864,25 @@
 
             vm.createMailPopup = function () {
                 var sImageChunk = "", nIDCounter = 0;
-                var attachmentName = "", sAttachmentFileName = "", bHasEML = false, attachmentType = "", sContentType = "", sExtension = "", iconSrc = "";
+                var attachmentName = "", mailSubject = "", sAttachmentFileName = "", bHasEML = false, attachmentType = "", sContentType = "", sExtension = "", iconSrc = "";
                 vm.allAttachmentDetails = []
                 var individualAttachment = {};
                 //For just email
                 individualAttachment.attachmentId = Office.context.mailbox.item.itemId;
                 individualAttachment.counter = nIDCounter;
-                individualAttachment.attachmentFileName = Office.context.mailbox.item.subject;
+                console.log("mailSubject");
+                //var mailSubject = checkEmptyorWhitespace(Office.context.mailbox.item.subject);
+                //mailSubject = mailSubject.replace(oUploadGlobal.regularExtraSpace, "").replace(oUploadGlobal.regularInvalidCharacter, "").replace(oUploadGlobal.regularInvalidRule, ".").replace(oUploadGlobal.regularStartEnd, "");
+                mailSubject = vm.checkEmptyorWhitespace(Office.context.mailbox.item.subject);
+                console.log(mailSubject);
+                mailSubject = mailSubject.replace(vm.oUploadGlobal.regularExtraSpace, "")
+                                            .replace(vm.oUploadGlobal.regularInvalidCharacter, "")
+                                            .replace(vm.oUploadGlobal.regularInvalidRule, ".")
+                                            .replace(vm.oUploadGlobal.regularStartEnd, "");
+                console.log(mailSubject);
+                vm.subject = mailSubject;
+                //Office.context.mailbox.item.subject=mailSubject;
+                individualAttachment.attachmentFileName = mailSubject;
                 individualAttachment.isEmail = true;
                 individualAttachment.uploadSuccess = false;
                 vm.allAttachmentDetails.push(individualAttachment);
@@ -878,12 +943,21 @@
                     ItemsPerPage: "17",
                     SearchTerm: "",
                     Filters: {
-                        AOLList: "",
+                        AOLList: [],
+                        ClientName: "",
                         ClientsList: [],
-                        FilterByMe: 0,
+                        DateFilters: {
+                            CreatedFromDate: "", CreatedToDate: "", ModifiedFromDate: "", ModifiedToDate: "", OpenDateFrom: "", OpenDateTo: ""
+                        },
+                        DocumentAuthor: "",
+                        DocumentCheckoutUsers: "",
+                        FilterByMe: 1,
                         FromDate: "",
-                        PGList: "",
-                        ToDate: "",
+                        Name: "",
+                        PGList: [],
+                        ResponsibleAttorneys: "",
+                        SubareaOfLaw: "",
+                        ToDate: ""
                     },
                     Sort:
                             {
@@ -910,6 +984,8 @@
             }
 
             vm.search = function () {
+                vm.lazyloader = false;
+                vm.divuigrid = false;
                 vm.matterid = 1;
                 vm.mattername = "All Matters";
                 vm.pagenumber = 1;
@@ -936,10 +1012,10 @@
                         vm.divuigrid = true;
                         vm.nodata = true;
                     } else {
+                        vm.gridOptions.data = response;
                         vm.divuigrid = true;
                         vm.nodata = false;
                         vm.lazyloader = true;
-                        vm.gridOptions.data = response;
                     }
                 });
             }
@@ -957,29 +1033,61 @@
             //#region for searching matter by property and searchterm
             vm.mattersearch = function (term, property, bool) {
                 vm.lazyloader = false;
+                vm.filternodata = false;
+                searchRequest.SearchObject.PageNumber = 1;
                 searchRequest.SearchObject.SearchTerm = term;
                 searchRequest.SearchObject.Sort.ByProperty = property;
+                searchRequest.SearchObject.Sort.Direction = 0;
                 if (bool) {
-                    searchRequest.SearchObject.Sort.Direction = 1;
+                    vm.matterheader = true;
+                    vm.divuigrid = false;
+                    searchRequest.SearchObject.SearchTerm = "";
+                    searchRequest.SearchObject.ItemsPerPage = 17;
                     if (property == "MCResponsibleAttorney") {
                         vm.attorneyproperty = term;
-                        searchRequest.SearchObject.SearchTerm = "";
                         searchRequest.SearchObject.Filters.ResponsibleAttorneys = term;
-                    } else if (property == "MCSubAreaofLaw") {
-                        searchRequest.SearchObject.SearchTerm = "";
-                        searchRequest.SearchObject.Filters.SubareaOfLaw = term;
+                        vm.attorneyfilter = true;
                     }
-                    else {
-                        searchRequest.SearchObject.Filters.ResponsibleAttorneys = "";
-                        searchRequest.SearchObject.Filters.SubareaOfLaw = "";
+                    else if (property == "MCSubAreaofLaw") {
+                        searchRequest.SearchObject.Filters.SubareaOfLaw = term;
+                        vm.areafilter = true;
+                    }
+                    else if (property == "MCMatterName") {
+                        searchRequest.SearchObject.Filters.Name = term;
+                        searchRequest.SearchObject.Sort.ByProperty = "LastModifiedTime";
+                        vm.matterfilter = true;
+                    }
+                    else if (property == "MCClientName") {
+                        searchRequest.SearchObject.Filters.ClientName = term;
+                        searchRequest.SearchObject.Sort.ByProperty = "LastModifiedTime";
+                        vm.clientfilter = true;
+                    }
+                } else {
+                    searchRequest.SearchObject.ItemsPerPage = 50;
+                    if (property == "MCResponsibleAttorney") {
+                        searchRequest.SearchObject.Sort.ByProperty = "MCResponsibleAttorney";
+                        searchRequest.SearchObject.Sort.Direction = 0;
+                    } else if (property == "MCSubAreaofLaw") {
+                        searchRequest.SearchObject.Sort.ByProperty = "MCSubAreaofLaw";
+                        searchRequest.SearchObject.Sort.Direction = 0;
+                    } else {
+                        searchRequest.SearchObject.Sort.ByProperty = "LastModifiedTime";
+                        searchRequest.SearchObject.Sort.Direction = 1;
                     }
                 }
                 get(searchRequest, function (response) {
                     if (response == "") {
-                        vm.gridOptions.data = response;
+                        if (bool) {
+                            vm.gridOptions.data = response;
+                            vm.nodata = true;
+                        } else {
+                            vm.details = response;
+                            vm.nodata = false;
+                            vm.filternodata = true;
+                        }
                         vm.lazyloader = true;
                         vm.divuigrid = true;
-                        vm.nodata = true;
+
                     } else {
                         vm.divuigrid = true;
                         vm.nodata = false;
@@ -987,15 +1095,12 @@
                         if (bool) {
                             vm.gridOptions.data = response;
                             vm.details = [];
-                            if(!$scope.$$phase){
+                            if (!$scope.$$phase) {
                                 $scope.$apply();
                             }
                         } else {
                             vm.details = response;
-                            $scope.$broadcast('setFilter', response);
-                            if (!$scope.$$phase) {
-                                $scope.$apply();
-                            }
+                            vm.filternodata = false;
                         }
                         searchRequest.SearchObject.SearchTerm = "";
                         searchRequest.SearchObject.Sort.ByProperty = "";
@@ -1007,41 +1112,24 @@
 
             //#region Code for filtering ModifiedDate
             //start
-            vm.FilterModifiedDate = function () {
+            vm.FilterModifiedDate = function (name) {
                 vm.lazyloader = false;
                 vm.divuigrid = false;
-                var ModifiedDateRequest =
-                  {
-                      Client: {
-                          Url: configs.global.repositoryUrl
-                      },
-                      SearchObject: {
-                          PageNumber: 1,
-                          ItemsPerPage: 10,
-                          SearchTerm: "",
-                          Filters: {
-                              AOLList: "",
-                              ClientName: "",
-                              ClientsList: [],
-                              DateFilters: { CreatedFromDate: "", CreatedToDate: "", ModifiedFromDate: "05/02/2016", ModifiedToDate: "05/06/2016", OpenDateFrom: "", OpenDateTo: "" },
-                              DocumentAuthor: [],
-                              DocumentCheckoutUsers: [],
-                              FilterByMe: 1,
-                              FromDate: "",
-                              Name: "",
-                              PGList: "",
-                              ResponsibleAttorneys: [],
-                              SubareaOfLaw: "",
-                              ToDate: ""
-                          },
-                          Sort:
-                                  {
-                                      ByProperty: "LastModifiedTime",
-                                      Direction: 0
-                                  }
-                      }
-                  };
-                get(ModifiedDateRequest, function (response) {
+                searchRequest.SearchObject.PageNumber = 1;
+                searchRequest.SearchObject.SearchTerm = "";
+                if (name == "Modified Date") {
+                    searchRequest.SearchObject.Filters.DateFilters.ModifiedFromDate = vm.modstartdate.format("yyyy-MM-ddT00:00:00Z");
+                    searchRequest.SearchObject.Filters.DateFilters.ModifiedToDate = vm.modenddate.format("yyyy-MM-ddT23:59:59Z");
+                    vm.moddatefilter = true;
+                }
+                if (name == "Open Date") {
+                    searchRequest.SearchObject.Filters.DateFilters.OpenDateFrom = vm.startdate.format("yyyy-MM-ddT00:00:00Z");
+                    searchRequest.SearchObject.Filters.DateFilters.OpenDateTo = vm.enddate.format("yyyy-MM-ddT23:59:59Z");
+                    vm.opendatefilter = true;
+                }
+                searchRequest.SearchObject.Sort.ByProperty = "LastModifiedTime";
+                searchRequest.SearchObject.Sort.Direction = 1;
+                get(searchRequest, function (response) {
                     if (response == "") {
                         vm.gridOptions.data = response;
                         vm.lazyloader = true;
@@ -1052,11 +1140,74 @@
                         vm.nodata = false;
                         vm.lazyloader = true;
                         vm.gridOptions.data = response;
-                        vm.startDate = "";
-                        vm.endDate = "";
                     }
                 });
 
+            }
+
+            //#endregion
+
+            //#region clearing all filters
+            vm.clearFilters = function (property) {
+                vm.matterdateheader = true;
+                vm.matterheader = true;
+                vm.lazyloader = false;
+                vm.divuigrid = false;
+                vm.nodata = false;
+                searchRequest.SearchObject.PageNumber = 1;
+                searchRequest.SearchObject.ItemsPerPage = 17;
+                searchRequest.SearchObject.Sort.ByProperty = "LastModifiedTime";
+                searchRequest.SearchObject.Sort.Direction = 1;
+                if (property == "Responsible Attorney") {
+                    vm.attorneySearchTerm = "";
+                    searchRequest.SearchObject.Filters.ResponsibleAttorneys = "";
+                    vm.attorneyfilter = false;
+                }
+                else if (property == "Area of Law") {
+                    vm.areaSearchTerm = "";
+                    searchRequest.SearchObject.Filters.SubareaOfLaw = "";
+                    vm.areafilter = false;
+                }
+                else if (property == "Matter") {
+                    vm.searchTerm = "";
+                    searchRequest.SearchObject.SearchTerm = "";
+                    searchRequest.SearchObject.Filters.Name = "";
+                    searchRequest.SearchObject.Sort.ByProperty = "LastModifiedTime";
+                    vm.matterfilter = false;
+                }
+                else if (property == "Client") {
+                    vm.clientSearchTerm = ""
+                    searchRequest.SearchObject.Filters.ClientName = "";
+                    searchRequest.SearchObject.Sort.ByProperty = "LastModifiedTime";
+                    vm.clientfilter = false;
+                }
+                else if (property == "Modified Date") {
+                    searchRequest.SearchObject.Filters.DateFilters.ModifiedFromDate = "";
+                    searchRequest.SearchObject.Filters.DateFilters.ModifiedToDate = "";
+                    vm.modstartdate = "";
+                    vm.modenddate = "";
+                    vm.moddatefilter = false;
+                } else {
+                    searchRequest.SearchObject.Filters.DateFilters.OpenDateFrom = "";
+                    searchRequest.SearchObject.Filters.DateFilters.OpenDateTo = "";
+                    vm.startDate = "";
+                    vm.endDate = "";
+                    vm.opendatefilter = false;
+                }
+
+                get(searchRequest, function (response) {
+                    if (response == "") {
+                        vm.gridOptions.data = response;
+                        vm.lazyloader = true;
+                        vm.divuigrid = true;
+                        vm.nodata = true;
+                    } else {
+                        vm.divuigrid = true;
+                        vm.nodata = false;
+                        vm.lazyloader = true;
+                        vm.gridOptions.data = response;
+                    }
+                });
             }
 
             //#endregion
@@ -1318,9 +1469,50 @@
             }
 
             //#region Angular Datepicker Starts here
-            //Start
-            vm.dateOptions = {
+            //Start for modified date 
+            vm.moddateOptions = {
+                formatYear: 'yy',
+                maxDate: new Date()
+            };
 
+
+            vm.modenddateOptions = {
+                formatYear: 'yy',
+                maxDate: new Date()
+            }
+
+            $scope.$watch('vm.modstartdate', function (newval, oldval) {
+                vm.modenddateOptions.minDate = newval;
+            });
+
+
+            vm.modStartDate = function ($event) {
+                if ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+                }
+                this.modifiedStartDate = true;
+            };
+            vm.modEndDate = function ($event) {
+                if ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+                }
+                this.modifiedenddate = true;
+            };
+
+            vm.modifiedStartDate = false;
+            vm.modifiedenddate = false;
+
+            vm.disabled = function (date, mode) {
+                return (mode === 'day' && (date.getDay() != 0));
+            };
+
+            //End
+
+
+            //Start for open date options
+            vm.dateOptions = {
                 formatYear: 'yy',
                 maxDate: new Date()
             };
@@ -1331,7 +1523,7 @@
                 maxDate: new Date()
             }
 
-            $scope.$watch('startdate', function (newval, oldval) {
+            $scope.$watch('vm.startdate', function (newval, oldval) {
                 vm.enddateOptions.minDate = newval;
             });
 
@@ -1635,45 +1827,13 @@
             //#region setting the grid options when window is resized
 
             angular.element($window).bind('resize', function () {
+                angular.element('#mattergrid .ui-grid').css('height', $window.innerHeight - 110);
                 if ($window.innerWidth < 360) {
-                    vm.gridOptions.enableHorizontalScrollbar = false;
-                    vm.gridOptions.enablePaginationControls = false;
-                    vm.gridOptions.columnDefs = [{ field: 'matterName', displayName: 'Matter', enableHiding: false, width: "275", cellTemplate: '../app/matter/MatterTemplates/MatterCellTemplate.html', headerCellTemplate: '../app/matter/MatterTemplates/MatterHeaderTemplate.html' }];
-                    $scope.$apply();
+                    angular.element('#mattergrid .ui-grid-viewport').addClass('viewport');
+                    angular.element('#mattergrid .ui-grid-viewport').removeClass('viewportlg');
                 } else {
-                    //vm.gridOptions = {
-                    //    //paginationPageSizes: [10, 50, 100],
-                    //    //paginationPageSize: 10,
-                    //    enableHorizontalScrollbar: 0,
-                    //    enableVerticalScrollbar: 1,
-                    //    enableGridMenu: true,
-                    //    enableRowHeaderSelection: false,
-                    //    enableRowSelection: true,
-                    //    enableSelectAll: false,
-                    //    multiSelect: false,
-                    //    columnDefs: [
-                    //         { field: 'matterName', displayName: 'Matter', enableHiding: false, width: "245", cellTemplate: '../app/matter/MatterTemplates/MatterCellTemplate.html', headerCellTemplate: '../app/matter/MatterTemplates/MatterHeaderTemplate.html' },
-                    //         { field: 'matterClient', displayName: 'Client', enableCellEdit: true, width: "200", headerCellTemplate: '../app/matter/MatterTemplates/ClientHeaderTemplate.html' },
-                    //         { field: 'matterClientId', displayName: 'Client.MatterID', width: "150", headerCellTemplate: $templateCache.get('coldefheadertemplate.html'), cellTemplate: '<div class="ui-grid-cell-contents" >{{row.entity.matterClientId}}.{{row.entity.matterID}}</div>', enableCellEdit: true, },
-                    //         { field: 'matterModifiedDate', displayName: 'Modified Date', width: "195", cellTemplate: '<div class="ui-grid-cell-contents"  datefilter date="{{row.entity.matterModifiedDate}}"></div>', headerCellTemplate: '../app/matter/MatterTemplates/ModifiedDateTemplate.html' },
-                    //         { field: 'matterResponsibleAttorney', headerCellTemplate: '../app/matter/MatterTemplates/ResponsibleAttorneyHeaderTemplate.html', width: "250", displayName: 'Responsible attorney', visible: false },
-                    //         { field: 'matterSubAreaOfLaw', headerCellTemplate: '../app/matter/MatterTemplates/AreaofLawHeaderTemplate.html', width: "210", displayName: 'Sub area of law', visible: false },
-                    //         { field: 'matterCreatedDate', headerCellTemplate: '../app/matter/MatterTemplates/OpenDateTemplate.html', width: "170", displayName: 'Open date', cellTemplate: '<div class="ui-grid-cell-contents" datefilter date="{{row.entity.matterCreatedDate}}"></div>', visible: false },
-                    //    ],
-                    //    enableColumnMenus: false,
-                    //    onRegisterApi: function (gridApi) {
-                    //        $scope.gridApi = gridApi;
-                    //        gridApi.core.on.columnVisibilityChanged($scope, function (changedColumn) {
-                    //            $scope.columnChanged = { name: changedColumn.colDef.name, visible: changedColumn.colDef.visible };
-                    //        });
-                    //        gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-                    //            vm.selectedRow = row.entity
-                    //        });
-                    //        $scope.gridApi.core.on.sortChanged($scope, $scope.sortChanged);
-                    //        $scope.sortChanged($scope.gridApi.grid, [vm.gridOptions.columnDefs[1]]);
-                    //        $scope.$watch('gridApi.grid.isScrollingVertically', vm.watchFunc);
-                    //    }
-                    //};
+                    angular.element('#mattergrid .ui-grid-viewport').removeClass('viewport');
+                    angular.element('#mattergrid .ui-grid-viewport').addClass('viewportlg');
                 }
             });
 
@@ -1716,6 +1876,8 @@
             vm.closealldrops = function () {
                 vm.mattersdrop = false;
                 vm.mattersdropinner = true;
+                vm.matterheader = true;
+                vm.matterdateheader = true;
             }
 
             //#endregion
@@ -1896,9 +2058,6 @@
                 vm.oUploadGlobal.successBanner = false;
             }
 
-            $scope.testFunction = function () {
-                console.log("Clicked");
-            }
 
             $scope.errorImage = function (image) {
                 "use strict";
@@ -1907,6 +2066,104 @@
                 }
             }
 
+
+            //#region For displaying and setting the position of the filters name wise
+            vm.matterheader = true;
+            vm.matterdateheader = true;
+            vm.searchexp = "";
+            vm.filtername = "";
+
+            vm.openMatterHeader = function ($event, name) {
+                vm.filternodata = false;
+                vm.details = [];
+                var dimensions = $event.target.getBoundingClientRect();
+                var top = dimensions.top + 30;
+                var left = dimensions.left - 224;
+                angular.element('.matterheader').css({ 'top': top, 'left': left });
+                angular.element('.matterheaderdates').css({ 'top': top, 'left': left });
+                if (name == "matter") {
+                    vm.searchexp = "MCMatterName";
+                    vm.filtername = "Matter";
+                }
+                if (name == "client") {
+                    vm.searchexp = "MCClientName";
+                    vm.filtername = "Client";
+                }
+                if (name == "Attorney") {
+                    vm.searchexp = "MCResponsibleAttorney";
+                    vm.filtername = "Responsible Attorney";
+                }
+                if (name == "AreaOfLaw") {
+                    vm.searchexp = "MCSubAreaofLaw";
+                    vm.filtername = "Area of Law";
+                }
+                if (name == "ModifiedDate") {
+                    vm.filtername = "Modified Date";
+                }
+                if (name == "OpenDate") {
+                    vm.filtername = "Open Date";
+                }
+                $timeout(function () {
+                    if (name == 'ModifiedDate' || name == 'OpenDate') {
+                        vm.matterdateheader = false;
+                    }
+                    else {
+                        vm.matterheader = false;
+                    }
+                },
+                500);
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
+            }
+            //#endregion
+
+            //#region filtering the values as per the name
+            //start
+            vm.filtermatter = function (value) {
+                var searchTerm = "";
+                if (vm.filtername == "Matter") {
+                    searchTerm = vm.searchTerm.toLowerCase();
+                }
+                else if (vm.filtername == "Client") {
+                    searchTerm = vm.clientSearchTerm.toLowerCase();
+                }
+                else if (vm.filtername == "Responsible Attorney") {
+                    searchTerm = vm.attorneySearchTerm.toLowerCase();
+                }
+                else if (vm.filtername == "Area of Law") {
+                    searchTerm = vm.areaSearchTerm.toLowerCase();
+                }
+                var arrayItem = value.split(';');
+                var arrelements = [];
+                angular.forEach(arrayItem, function (item) {
+                    var lowerItem = item.toLowerCase();
+                    if (-1 !== lowerItem.indexOf(searchTerm)) {
+                        arrelements.push(item);
+                    }
+                });
+                return arrelements.toString();
+            }
+
+            //end
+            //#endregion
+
         }]);
+    app.filter('unique', function () {
+        return function (collection, keyname) {
+            var output = [],
+                keys = [];
+
+            angular.forEach(collection, function (item) {
+                var key = item[keyname];
+                if (keys.indexOf(key) === -1) {
+                    keys.push(key);
+                    output.push(item);
+                }
+            });
+            return output;
+        };
+    });
+
 })();
 

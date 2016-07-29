@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.Legal.MatterCenter.Models;
 using Microsoft.Legal.MatterCenter.Repository;
 using Microsoft.Legal.MatterCenter.Utility;
@@ -30,10 +31,12 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
         private ListNames listNames;
         private SearchSettings searchSettings;
         private IUserRepository userRepositoy;
+        private IExternalSharing externalSharing;
+        private IConfigurationRoot configuration;
         public MatterProvision(IMatterRepository matterRepositoy, IOptionsMonitor<MatterSettings> matterSettings, IOptionsMonitor<ErrorSettings> errorSettings,
             ISPOAuthorization spoAuthorization, IEditFunctions editFunctions, IValidationFunctions validationFunctions,
             ICustomLogger customLogger, IOptionsMonitor<LogTables> logTables, IOptionsMonitor<MailSettings> mailSettings, IOptionsMonitor<CamlQueries> camlQueries, IOptionsMonitor<ListNames> listNames,
-            IOptionsMonitor<SearchSettings> searchSettings, IUserRepository userRepositoy
+            IOptionsMonitor<SearchSettings> searchSettings, IUserRepository userRepositoy, IExternalSharing externalSharing, IConfigurationRoot configuration
             )
         {
             this.matterRepositoy = matterRepositoy;
@@ -49,6 +52,8 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
             this.listNames = listNames.CurrentValue;
             this.searchSettings = searchSettings.CurrentValue;
             this.userRepositoy = userRepositoy;
+            this.externalSharing = externalSharing;
+            this.configuration = configuration;
         }
 
         public async Task<int> GetAllCounts(SearchRequestVM searchRequestVM)
@@ -111,6 +116,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                         MatterData matterData = new MatterData();
                         foreach (var key in searchResult.Keys)
                         {
+
                             switch (key.ToLower())
                             {
                                 case "mcmattername":
@@ -166,6 +172,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                     }
                     catch (Exception ex)
                     {
+
                     }
                 }
                 searchResultsVM.MatterDataList = matterDataList;
@@ -200,7 +207,13 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                     return ServiceUtility.GenericResponse(errorSettings.IncorrectInputSelfPermissionRemoval,
                         errorSettings.ErrorEditMatterMandatoryPermission);
                 }
+
+
                 genericResponse = matterRepositoy.UpdateMatter(matterInformation);
+                //As part of final step in matter creation, check whether any assigned users are external to the 
+                //organization and if yes, send notification to that user to accepct the
+                //inviotation so that he can access matter center
+                externalSharing.ShareMatter(matterInformation);
 
             }
             catch (Exception ex)
@@ -216,7 +229,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                 matterRepositoy.RevertMatterUpdates(client, matter, clientContext, matterRevertListObject, loggedInUserName,
                     userPermissionOnLibrary, listItemId, isEditMode);
             }
-            return ServiceUtility.GenericResponse("9999999", "Error in updating matter information");
+            return null;
         }
 
 
@@ -235,6 +248,16 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                 PropertyValues matterStampedProperties = matterRepositoy.GetStampedProperties(clientContext, matter.Name);
                 Dictionary<string, string> propertyList = SetStampProperty(client, matter, matterDetails);
                 matterRepositoy.SetPropertBagValuesForList(clientContext, matterStampedProperties, matter.Name, propertyList);
+                MatterInformationVM matterInfo = new MatterInformationVM()
+                {
+                    Client = matterMetadata.Client,
+                    Matter = matterMetadata.Matter,
+                    MatterDetails = matterMetadata.MatterDetails
+                };
+                //As part of final step in matter creation, check whether any assigned users are external to the 
+                //organization and if yes, send notification to that user to accepct the
+                //inviotation so that he can access matter center
+                externalSharing.ShareMatter(matterInfo);
                 if (matterMetadata.MatterProvisionFlags.SendEmailFlag)
                 {
                     returnFlag = ShareMatter(matterMetadata, matterMetadata.MatterProvisionFlags.MatterLandingFlag);
@@ -304,17 +327,20 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
             }
         }
 
-        public PropertyValues GetStampedProperties(MatterVM matterVM)
+        public MatterStampedDetails GetStampedProperties(MatterVM matterVM)
         {
             var matter = matterVM.Matter;
             var client = matterVM.Client;
             ClientContext clientContext = null;
+            MatterStampedDetails matterStampedDetails = null;
             PropertyValues matterStampedProperties = null;
+
             try
             {
                 clientContext = spoAuthorization.GetClientContext(matterVM.Client.Url);
                 matterStampedProperties = matterRepositoy.GetStampedProperties(clientContext, matter.Name);
                 Dictionary<string, object> stampedPropertyValues = matterStampedProperties.FieldValues;
+
                 if (stampedPropertyValues.Count > 0)
                 {
                     string matterCenterUsers = GetStampPropertyValue(stampedPropertyValues, matterSettings.StampedPropertyMatterCenterUsers);
@@ -330,12 +356,13 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                         matterCenterUserEmailsCollection = GetMatterAssignedUsers(matterCenterUserEmails);
                     }
 
-                    MatterStampedDetails matterStampedDetails = new MatterStampedDetails()
+                    matterStampedDetails = new MatterStampedDetails()
                     {
                         IsNewMatter = stampedPropertyValues.ContainsKey(matterSettings.StampedPropertyIsConflictIdentified) ? ServiceConstants.TRUE : ServiceConstants.FALSE,
                         MatterObject = new Matter()
                         {
                             Id = GetStampPropertyValue(stampedPropertyValues, matterSettings.StampedPropertyMatterID),
+                            MatterGuid = GetStampPropertyValue(stampedPropertyValues, matterSettings.StampedPropertyMatterGUID),
                             Name = GetStampPropertyValue(stampedPropertyValues, matterSettings.StampedPropertyMatterName),
                             Description = GetStampPropertyValue(stampedPropertyValues, matterSettings.StampedPropertyMatterDescription),
                             DefaultContentType = GetStampPropertyValue(stampedPropertyValues, matterSettings.StampedPropertyDefaultContentType),
@@ -369,7 +396,7 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                 customLogger.LogError(ex, MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name, logTables.SPOLogTable);
                 throw;
             }
-            return matterStampedProperties;
+            return matterStampedDetails;
         }
 
         public GenericResponseVM AssignUserPermissions(MatterMetdataVM matterMetadataVM)
@@ -384,6 +411,8 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
             GenericResponseVM genericResponseVM = null;
             using (clientContext = spoAuthorization.GetClientContext(client.Url))
             {
+
+
                 MatterInformationVM matterInfo = new MatterInformationVM()
                 {
                     Client = matterMetadataVM.Client,
@@ -400,6 +429,9 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
                 }
                 if (!string.IsNullOrWhiteSpace(matter.Name))
                 {
+
+
+
                     //Assign permission for Matter library
                     matterRepositoy.SetPermission(clientContext, matter.AssignUserEmails, matter.Permissions, matter.Name);
                     //Assign permission for OneNote library 
@@ -808,15 +840,34 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
         /// <returns>Matter details from matter library property bag</returns>
         internal MatterDetails ExtractMatterDetails(Dictionary<string, object> stampedPropertyValues)
         {
-            MatterDetails matterDetails = new MatterDetails()
+            MatterDetails matterDetails = new MatterDetails();
+
+            matterDetails.ResponsibleAttorney = GetStampPropertyValue(stampedPropertyValues, matterSettings.StampedPropertyResponsibleAttorney);
+            matterDetails.TeamMembers = GetStampPropertyValue(stampedPropertyValues, matterSettings.StampedPropertyTeamMembers);
+            matterDetails.UploadBlockedUsers =
+                GetStampPropertyValue(stampedPropertyValues, matterSettings.StampedPropertyBlockedUploadUsers).Split(new string[] { ServiceConstants.SEMICOLON },
+                StringSplitOptions.RemoveEmptyEntries).ToList();
+
+
+            /*
+             * All the managed columns need to be read from the appsettings.json file. In old implementation
+             * all the managed columns are hardcoded and that hardcoding has been removed, by reading the
+             * column names from appsettings.json file
+             */
+            //Get the number of levels from Taxonomy Settings
+            int levels = int.Parse(configuration.GetSection("Taxonomy")["Levels"].ToString());
+            IDictionary<string, ManagedColumn> managedColumns = new Dictionary<string, ManagedColumn>();
+            for (int i = 1; i <= levels; i++)
             {
-                PracticeGroup = GetStampPropertyValue(stampedPropertyValues, matterSettings.StampedPropertyPracticeGroup),
-                AreaOfLaw = GetStampPropertyValue(stampedPropertyValues, matterSettings.StampedPropertyAreaOfLaw),
-                SubareaOfLaw = GetStampPropertyValue(stampedPropertyValues, matterSettings.StampedPropertySubAreaOfLaw),
-                ResponsibleAttorney = GetStampPropertyValue(stampedPropertyValues, matterSettings.StampedPropertyResponsibleAttorney),
-                TeamMembers = GetStampPropertyValue(stampedPropertyValues, matterSettings.StampedPropertyTeamMembers),
-                UploadBlockedUsers = GetStampPropertyValue(stampedPropertyValues, matterSettings.StampedPropertyBlockedUploadUsers).Split(new string[] { ServiceConstants.SEMICOLON }, StringSplitOptions.RemoveEmptyEntries).ToList()
-            };
+                //Get all the managed columns from "ContentType" settings from appsettings.json file
+                string columnName = configuration.GetSection("ContentTypes").GetSection("ManagedColumns")["ColumnName" + i];
+                string managedColumnValue = GetStampPropertyValue(stampedPropertyValues, columnName);
+                ManagedColumn managedColumn = new ManagedColumn();
+                managedColumn.TermName = managedColumnValue;
+                managedColumns.Add(columnName, managedColumn);
+
+            }
+            matterDetails.ManagedColumnTerms = managedColumns;
             return matterDetails;
         }
 
@@ -942,7 +993,8 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
         /// <param name="subAreaOfLawList">String contains all sub area of law</param>
         /// <param name="mailListURL">URL contains list of mail recipients</param>
         /// <returns>Result of operation: Matter Shared successfully or not</returns>        
-        internal GenericResponseVM ShareMatterUtility(Client client, Matter matter, MatterDetails matterDetails, string mailSiteURL, string centralMailListURL, string matterLandingFlag, MatterConfigurations matterConfigurations)
+        internal GenericResponseVM ShareMatterUtility(Client client, Matter matter, MatterDetails matterDetails, string mailSiteURL,
+            string centralMailListURL, string matterLandingFlag, MatterConfigurations matterConfigurations)
         {
             bool shareFlag = false;
             string mailListName = centralMailListURL.Substring(centralMailListURL.LastIndexOf(ServiceConstants.FORWARD_SLASH, StringComparison.OrdinalIgnoreCase) + 1);
@@ -1117,42 +1169,50 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
             string matterCenterRoles = string.Join(ServiceConstants.DOLLAR + ServiceConstants.PIPE + ServiceConstants.DOLLAR, matter.Roles);
             string documentTemplateCount = string.Join(ServiceConstants.DOLLAR + ServiceConstants.PIPE + ServiceConstants.DOLLAR, matter.DocumentTemplateCount);
             string matterCenterUsers = string.Empty;
+            string matterCenterUserEmails = string.Empty;
             string separator = string.Empty;
             foreach (IList<string> userNames in matter.AssignUserNames)
             {
                 matterCenterUsers += separator + string.Join(ServiceConstants.SEMICOLON, userNames.Where(user => !string.IsNullOrWhiteSpace(user)));
                 separator = ServiceConstants.DOLLAR + ServiceConstants.PIPE + ServiceConstants.DOLLAR;
             }
+
+            foreach (IList<string> userEmails in matter.AssignUserEmails)
+            {
+                matterCenterUserEmails += string.Join(ServiceConstants.SEMICOLON, userEmails.Where(user => !string.IsNullOrWhiteSpace(user))) + separator;
+            }
+            // Removed $|$ from end of the string 
+            matterCenterUserEmails = matterCenterUserEmails.Substring(0, matterCenterUserEmails.Length - separator.Length);
+
             List<string> keys = new List<string>();
             Dictionary<string, string> propertyList = new Dictionary<string, string>();
-            keys.Add(matterSettings.StampedPropertyPracticeGroup);
-            keys.Add(matterSettings.StampedPropertyAreaOfLaw);
-            keys.Add(matterSettings.StampedPropertySubAreaOfLaw);
-            keys.Add(matterSettings.StampedPropertyMatterName);
-            keys.Add(matterSettings.StampedPropertyMatterID);
-            keys.Add(matterSettings.StampedPropertyClientName);
-            keys.Add(matterSettings.StampedPropertyClientID);
-            keys.Add(matterSettings.StampedPropertyResponsibleAttorney);
-            keys.Add(matterSettings.StampedPropertyTeamMembers);
-            keys.Add(matterSettings.StampedPropertyIsMatter);
-            keys.Add(matterSettings.StampedPropertyOpenDate);
-            keys.Add(matterSettings.StampedPropertySecureMatter);
-            keys.Add(matterSettings.StampedPropertyBlockedUploadUsers);
-            keys.Add(matterSettings.StampedPropertyMatterDescription);
-            keys.Add(matterSettings.StampedPropertyConflictCheckDate);
-            keys.Add(matterSettings.StampedPropertyConflictCheckBy);
-            keys.Add(matterSettings.StampedPropertyMatterCenterRoles);
-            keys.Add(matterSettings.StampedPropertyMatterCenterPermissions);
-            keys.Add(matterSettings.StampedPropertyMatterCenterUsers);
-            keys.Add(matterSettings.StampedPropertyDefaultContentType);
-            keys.Add(matterSettings.StampedPropertyIsConflictIdentified);
-            keys.Add(matterSettings.StampedPropertyDocumentTemplateCount);
-            keys.Add(matterSettings.StampedPropertyBlockedUsers);
-            keys.Add(matterSettings.StampedPropertyMatterGUID);
-
-            propertyList.Add(matterSettings.StampedPropertyPracticeGroup, WebUtility.HtmlEncode(matterDetails.PracticeGroup));
-            propertyList.Add(matterSettings.StampedPropertyAreaOfLaw, WebUtility.HtmlEncode(matterDetails.AreaOfLaw));
-            propertyList.Add(matterSettings.StampedPropertySubAreaOfLaw, WebUtility.HtmlEncode(matterDetails.SubareaOfLaw));
+            //Get all the matter stamped properties from the appsettings.json file
+            var matterStampedProperties = configuration.GetSection("Matter").GetChildren();
+            foreach (var key in matterStampedProperties)
+            {
+                //Assuming that all the keys for the matter property bag keys will start with "StampedProperty"
+                if (key.Key.ToString().ToLower().StartsWith("stampedproperty"))
+                {
+                    keys.Add(key.Key);
+                }
+            }
+            /*
+             * All the managed columns need to be read from the appsettings.json file. In old implementation
+             * all the managed columns are hardcoded and that hardcoding has been removed, by reading the
+             * column names from appsettings.json file
+             */
+            //Get the number of levels from Taxonomy Settings
+            int levels = int.Parse(configuration.GetSection("Taxonomy")["Levels"].ToString());
+            for (int i = 1; i <= levels; i++)
+            {
+                //Get all the managed columns from "ContentType" settings from appsettings.json file
+                string columnName = configuration.GetSection("ContentTypes").GetSection("ManagedColumns")["ColumnName" + i];
+                ManagedColumn managedColumn = matterDetails.ManagedColumnTerms[columnName];
+                //Add all the managed columns values to the property list of the matter document library             
+                propertyList.Add(columnName, WebUtility.HtmlEncode(managedColumn.TermName));
+                //Add all the managed columns to the Indexed Property keys of the matter document library
+                keys.Add(columnName);
+            }
             propertyList.Add(matterSettings.StampedPropertyMatterName, WebUtility.HtmlEncode(matter.Name));
             propertyList.Add(matterSettings.StampedPropertyMatterID, WebUtility.HtmlEncode(matter.Id));
             propertyList.Add(matterSettings.StampedPropertyClientName, WebUtility.HtmlEncode(client.Name));
@@ -1177,12 +1237,10 @@ namespace Microsoft.Legal.MatterCenter.Web.Common
             propertyList.Add(matterSettings.StampedPropertyBlockedUsers, WebUtility.HtmlEncode(string.Join(";", matter.BlockUserNames)));
             propertyList.Add(matterSettings.StampedPropertyMatterGUID, WebUtility.HtmlEncode(matter.MatterGuid));
             propertyList.Add(matterSettings.StampedPropertySuccess, ServiceConstants.TRUE);
+            propertyList.Add(matterSettings.StampedPropertyMatterCenterUserEmails, WebUtility.HtmlEncode(matterCenterUserEmails));
+            propertyList.Add(matterSettings.StampedPropertyResponsibleAttorneyEmail, WebUtility.HtmlEncode(matterDetails.ResponsibleAttorneyEmail));
             return propertyList;
         }
-
-
-
-
         #endregion
     }
 }

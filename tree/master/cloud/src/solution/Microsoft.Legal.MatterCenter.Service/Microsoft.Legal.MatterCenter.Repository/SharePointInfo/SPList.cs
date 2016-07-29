@@ -49,6 +49,7 @@ namespace Microsoft.Legal.MatterCenter.Repository
         private MailSettings mailSettings;
         private IHostingEnvironment hostingEnvironment;
         private ErrorSettings errorSettings;
+        private IUsersDetails userDetails;        
         #endregion
 
         /// <summary>
@@ -57,10 +58,15 @@ namespace Microsoft.Legal.MatterCenter.Repository
         /// <param name="spoAuthorization"></param>
         /// <param name="generalSettings"></param>
         public SPList(ISPOAuthorization spoAuthorization,
-            IOptionsMonitor<CamlQueries> camlQueries, IOptionsMonitor<ErrorSettings> errorSettings,
+            IOptionsMonitor<CamlQueries> camlQueries, 
+            IOptionsMonitor<ErrorSettings> errorSettings,
             IOptionsMonitor<SearchSettings> searchSettings,
             IOptionsMonitor<ContentTypesConfig> contentTypesConfig,
-            ICustomLogger customLogger, IOptionsMonitor<LogTables> logTables, IOptionsMonitor<MailSettings> mailSettings, IHostingEnvironment hostingEnvironment)
+            ICustomLogger customLogger, 
+            IOptionsMonitor<LogTables> logTables, 
+            IOptionsMonitor<MailSettings> mailSettings,           
+            IHostingEnvironment hostingEnvironment, 
+            IUsersDetails userDetails)
         {
             this.searchSettings = searchSettings.CurrentValue;
             this.camlQueries = camlQueries.CurrentValue;
@@ -70,7 +76,55 @@ namespace Microsoft.Legal.MatterCenter.Repository
             this.mailSettings = mailSettings.CurrentValue;
             this.hostingEnvironment = hostingEnvironment;
             this.errorSettings = errorSettings.CurrentValue;
+            this.userDetails = userDetails;
         }
+
+
+        /// <summary>
+        /// Converts the project users emails in a form that can be stamped to library.
+        /// </summary>
+        /// <param name="clientContext">ClientContext object</param>
+        /// <param name="matter">Matter object</param>
+        /// <returns>Users that can be stamped</returns>
+        public string GetMatterAssignedUsersEmail(ClientContext clientContext, Matter matter)
+        {
+            string currentUsers = string.Empty;
+            string separator = string.Empty;
+            if (null != matter && 0 < matter.AssignUserEmails.Count)
+            {
+                foreach (IList<string> userNames in matter.AssignUserEmails)
+                {
+                    List<string> userEmails = new List<string>();
+                    if (null != clientContext && null != userNames)
+                    {
+                        foreach (string userName in userNames)
+                        {
+                            if (!string.IsNullOrWhiteSpace(userName))
+                            {
+                                if (Regex.IsMatch(userName.Trim(), "^[\\s]*\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*[\\s]*$", RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250)))
+                                {
+                                    userEmails.Add(userName);
+                                }
+                                else
+                                {
+                                    User user = clientContext.Web.EnsureUser(userName.Trim());
+                                    ///// Only Fetch the User ID which is required
+                                    clientContext.Load(user, u => u.Email);
+                                    clientContext.ExecuteQuery();
+                                    ///// Add the user to the first element of the FieldUserValue array.
+                                    userEmails.Add(user.Email);
+                                }
+                            }
+                        }
+                        currentUsers += separator + string.Join(ServiceConstants.SEMICOLON, userEmails);
+                        separator = ServiceConstants.DOLLAR + ServiceConstants.PIPE + ServiceConstants.DOLLAR;
+                    }
+                }
+            }
+
+            return currentUsers;
+        }
+
 
         public bool CreateList(ClientContext clientContext, ListInformation listInfo)
         {
@@ -1013,6 +1067,12 @@ namespace Microsoft.Legal.MatterCenter.Repository
             
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="clientContext"></param>
+        /// <param name="libraryname"></param>
+        /// <returns></returns>
         public IEnumerable<RoleAssignment> FetchUserPermissionForLibrary(ClientContext clientContext, string libraryname)
         {
             IEnumerable<RoleAssignment> userPermissionCollection = null;
@@ -1069,16 +1129,21 @@ namespace Microsoft.Legal.MatterCenter.Repository
                                 RoleDefinition roleDefinition = clientContext.Web.RoleDefinitions.GetByName(roleName);
                                 foreach (string user in userName)
                                 {
-                                    if (!string.IsNullOrWhiteSpace(user))
+                                    //check whether is present in the organization before giving permissiosn to him
+                                    if (!string.IsNullOrWhiteSpace(user) && 
+                                        userDetails.CheckUserPresentInMatterCenter(clientContext, user))
                                     {
-                                        /////get the user object
-                                        Principal userPrincipal = clientContext.Web.EnsureUser(user.Trim());
-                                        /////create the role definition binding collection
-                                        RoleDefinitionBindingCollection roleDefinitionBindingCollection = new RoleDefinitionBindingCollection(clientRuntimeContext);
-                                        /////add the role definition to the collection
-                                        roleDefinitionBindingCollection.Add(roleDefinition);
-                                        /////create a RoleAssigment with the user and role definition
-                                        list.RoleAssignments.Add(userPrincipal, roleDefinitionBindingCollection);
+                                        if (!string.IsNullOrWhiteSpace(user))
+                                        {
+                                            /////get the user object
+                                            Principal userPrincipal = clientContext.Web.EnsureUser(user.Trim());
+                                            /////create the role definition binding collection
+                                            RoleDefinitionBindingCollection roleDefinitionBindingCollection = new RoleDefinitionBindingCollection(clientRuntimeContext);
+                                            /////add the role definition to the collection
+                                            roleDefinitionBindingCollection.Add(roleDefinition);
+                                            /////create a RoleAssigment with the user and role definition
+                                            list.RoleAssignments.Add(userPrincipal, roleDefinitionBindingCollection);
+                                        }
                                     }
                                 }
                                 /////execute the query to add everything
@@ -1119,7 +1184,8 @@ namespace Microsoft.Legal.MatterCenter.Repository
                     ListItem listItem = clientContext.Web.Lists.GetByTitle(listName).GetItemById(listItemId);
                     clientContext.Load(listItem, item => item.HasUniqueRoleAssignments);
                     clientContext.ExecuteQuery();
-                    if (listItem.HasUniqueRoleAssignments && null != permissions && null != assignUserName && permissions.Count == assignUserName.Count)
+                    if (listItem.HasUniqueRoleAssignments && null != permissions && 
+                        null != assignUserName && permissions.Count == assignUserName.Count)
                     {
                         int position = 0;
                         foreach (string roleName in permissions)
@@ -1131,7 +1197,8 @@ namespace Microsoft.Legal.MatterCenter.Repository
                                 foreach (string user in userName)
                                 {
 
-                                    if (!string.IsNullOrWhiteSpace(user))
+                                    if (!string.IsNullOrWhiteSpace(user) && 
+                                        userDetails.CheckUserPresentInMatterCenter(clientContext, user))
                                     {
                                         /////get the user object
                                         Principal userPrincipal = clientContext.Web.EnsureUser(user.Trim());

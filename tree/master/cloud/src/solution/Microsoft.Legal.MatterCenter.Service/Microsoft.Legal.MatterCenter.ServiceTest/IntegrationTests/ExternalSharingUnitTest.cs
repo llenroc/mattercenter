@@ -60,7 +60,7 @@ namespace Microsoft.Legal.MatterCenter.ServiceTest
             {
                 Client = new Client
                 {
-                    Url = "https://lcadms.sharepoint.com/sites/microsoft",
+                    Url = "https://msmatter.sharepoint.com/sites/microsoft",
                     Id = "100001",
                     Name = "Microsoft"
                 },

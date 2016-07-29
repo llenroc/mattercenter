@@ -1,9 +1,9 @@
 ﻿(function () {
     'use strict';
     var app = angular.module("matterMain");
-    app.controller('homeController', ['$scope', '$state', '$stateParams', '$rootScope', 'api', 'homeResource',
+    app.controller('homeController', ['$scope', '$state', '$stateParams', '$rootScope', 'api', 'homeResource', '$window', '$location',
             'adalAuthenticationService',
-        function ($scope, $state, $stateParams, $rootScope, api, homeResource, adalService) {
+        function ($scope, $state, $stateParams, $rootScope, api, homeResource, $window, $location, adalService) {
             var vm = this;
             //header
             vm.userName = adalService.userInfo.userName
@@ -13,6 +13,10 @@
             vm.smallPictureUrl = 'Images/MC_Profile_Switcher.png';
             vm.largePictureUrl = 'Images/MC_Profile_Switcher.png';
             vm.userProfileObjectId = adalService.userInfo.profile.oid;
+            vm.contextualHelpHeader = uiconfigs.Home.ContextualHelpHeader;
+            vm.ContextualHelpBottomText = uiconfigs.Home.ContextualHelpBottomText;
+            vm.MatterCenterSupportLinkText = uiconfigs.Home.MatterCenterSupportLinkText;
+
 
             //Callback function for help 
             function getHelp(options, callback) {
@@ -82,7 +86,7 @@
             vm.getUserProfilePicture = function () {
 
                 var client = {
-                    Url: "https://lcadms.sharepoint.com"
+                    Url: configs.uri.SPOsiteURL
                 }
 
                 getUserProfilePicture(client, function (response) {
@@ -98,7 +102,7 @@
                 var helpRequestModel = {
                     Client:
                     {
-                        Url: "https://lcadms.sharepoint.com/sites/catalog"
+                        Url: configs.global.repositoryUrl
                     },
                     SelectedPage: $rootScope.pageIndex
                 };
@@ -107,6 +111,53 @@
                 });
             }
             //#endregion
+
+            //#region showing and hiding hamburger icon
+            vm.showHamburger = true;
+            vm.showClose = false;
+            vm.showHeaderFlyout = false;
+            vm.showHeaderBackground = false;
+            vm.showHamburgerIcon = function () {
+                vm.showHamburger = true;
+                vm.showClose = false;
+                vm.showHeaderFlyout = false;
+                vm.showHeaderBackground = false;
+            }
+
+            vm.showCloseIcon = function () {
+                vm.showHamburger = true;
+                vm.showClose = true;
+                vm.showHeaderFlyout = true;
+                vm.showHeaderBackground = true;
+            }
+
+            //#endregion
+
+            //#region navigating to the url based on menu click
+            vm.navigateUrl = function (data) {
+                if (data != "Settings") {
+                    $window.top.parent.location.href = configs.uri.SPOsiteURL + "/SitePages/MatterCenterHomev1.aspx?" + data;
+                } else {
+                    $window.top.parent.location.href = configs.uri.SPOsiteURL + "/SitePages/" + data + ".aspx";
+                }
+            }
+
+            //#endregion
+
+            vm.mainheadersearch = "";
+            //#region navigates to the url with the input entered in the main search as parameter
+            vm.mainHeaderClick = function () {
+                if (vm.mainheadersearch != "") {
+                    $window.top.parent.location.href = configs.uri.SPOsiteURL + "/search/Pages/results.aspx?k=" + vm.mainheadersearch;
+                }
+            }
+            //#endregion
+
+            //#region setting the current year
+            var date = new Date();
+            vm.currentyear = date.getFullYear();
+            //#endregion
+
         }]);
 
     app.factory("commonFunctions", function () {
@@ -119,8 +170,8 @@
                         var sPropertyName = arrTerm[0].trim(); // Removal of White Space
                         searchTerm = "(" + sPropertyName + ":\"" + sManagedProperty + "*\")";
                     }
-                    return searchTerm
                 }
+                return searchTerm;
             }
         }
     });

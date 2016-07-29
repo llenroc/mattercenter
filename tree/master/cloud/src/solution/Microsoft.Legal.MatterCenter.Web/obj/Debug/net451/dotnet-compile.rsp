@@ -9,6 +9,7 @@
 --platform:x64
 --optimize:False
 --emit-entry-point:True
+--generate-xml-documentation:True
 --output-name:Microsoft.Legal.MatterCenter.Web
 --file-version:1.0.0.0
 --version:1.0.0.0
@@ -207,6 +208,7 @@ C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Up
 C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Upload\IUploadHelperFunctionsUtility.cs
 C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Upload\UploadHelperFunctions.cs
 C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Upload\UploadHelperFunctionsUtility.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\ConfigController.cs
 C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\DocumentController.cs
 C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\EmailController.cs
 C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\MatterController.cs

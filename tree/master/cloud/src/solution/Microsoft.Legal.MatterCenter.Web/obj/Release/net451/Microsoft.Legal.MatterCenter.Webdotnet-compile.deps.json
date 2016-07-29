@@ -11,7 +11,8 @@
     ],
     "platform": "x64",
     "optimize": true,
-    "emitEntryPoint": true
+    "emitEntryPoint": true,
+    "xmlDoc": true
   },
   "targets": {
     ".NETFramework,Version=v4.5.1": {
