@@ -49,10 +49,11 @@
     <script src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.js"></script>
 </head>
-<body ng-app="matterMain" ng-controller="createMatterController" menuclose class="{{$root.bodyclass}}">
+<body ng-app="matterMain"  menuclose class="{{$root.bodyclass}}">
     <div ui-view="mainView" style=""></div>
     <script src="app/app.js"></script>
     <script src="app/config.js"></script>
+    <script src="app/uiconfig.js"></script>
     <script src="app/directives/heading.directive.js"></script>
     <script src="app/directives/common.directive.js"></script>
     <script src="app/home.controller.js"></script>
@@ -62,6 +63,7 @@
     <script src="app/matter/matter.resources.js"></script>
     <script src="app/matter/matters.controller.js"></script>
     <script src="app/matter/createMatter.controller.js"></script>
+    <script src="app/matter/matterusers.controller.js"></script>
     <script src="app/dashboard/documentdashboard.resources.js"></script>
     <script src="app/dashboard/documentdashboard.controller.js"></script>
     <script src="app/dashboard/matterdashboard.resources.js"></script>
@@ -72,6 +74,7 @@
     <script src="app/directives/drag.directive.js"></script>
     <script src="app/directives/drop.directive.js"></script>
     <script src="app/home.resources.js"></script>
+    <script src="app/uiconfig.js"></script>
     <!--
     To collect end-user usage analytics about your application,
     insert the following script into each page you want to track.

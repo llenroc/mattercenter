@@ -1,20 +1,19 @@
 ﻿(function () {
     'use strict;'
     var app = angular.module("matterMain");
-    app.controller('DocumentDashBoardController', ['$scope', '$state', '$stateParams', 'documentDashBoardResource', 'api', '$interval', 'uiGridConstants', 'commonFunctions', '$timeout', '$rootScope','$http','$location',
-    function documentDashBoardController($scope, $state, $stateParams, documentDashBoardResource, api, $interval, uiGridConstants, commonFunctions, $timeout, $rootScope, $http, $location) {
-        var vm = this;
-
-         vm.selected = undefined;
+    app.controller('DocumentDashBoardController', ['$scope', '$state', '$interval', '$stateParams', 'api', '$timeout', 'documentDashBoardResource', '$rootScope', 'uiGridConstants', '$location', '$http', 'commonFunctions', '$window',
+        function documentDashBoardController($scope, $state, $interval, $stateParams, api, $timeout, documentDashBoardResource, $rootScope, uiGridConstants, $location, $http, commonFunctions, $window) {
+            var vm = this;
+            vm.selected = undefined;
             vm.selectedAuthor = undefined;
             //#region Global Variables
             vm.documentdrop = false;
-
             vm.downwarddrop = true;
             vm.upwarddrop = false;
             vm.loadLocation = false;
             vm.AuthornoResults = false;
             vm.clientdrop = false;
+            vm.lazyloaderdocumentclient = true;
             vm.clientdropvisible = false;
             vm.checkClient = false;
             vm.sortbydrop = false;
@@ -23,6 +22,9 @@
             vm.documentsCheckedCount = 0;
             vm.enable = true;
             vm.totalrecords = 0;
+            $rootScope.bodyclass = "bodymain";
+            $rootScope.profileClass="hide";
+            vm.nodata = false;
             //#endregion
 
             //#region Variable to show document count
@@ -35,7 +37,9 @@
 
             //#region closing all dropdowns on click of page
             vm.closealldrops = function ($event) {
-                $event.stopPropagation();
+                if ($event !== null) {
+                    $event.stopPropagation();
+                }
                 vm.searchdrop = false;
                 vm.downwarddrop = true;
                 vm.upwarddrop = false;
@@ -43,6 +47,7 @@
                 vm.clientdropvisible = false;
                 vm.sortbydrop = false;
                 vm.sortbydropvisible = false;
+                angular.element('.popcontent').css('display', 'none');
             }
             //#endregion
 
@@ -55,7 +60,7 @@
             //#endregion
 
             var gridOptions = {
-                paginationPageSize: 6,
+                paginationPageSize: 28,
                 enableGridMenu: false,
                 enableRowHeaderSelection: false,
                 enableRowSelection: true,
@@ -81,7 +86,7 @@
                 enableFiltering: gridOptions.enableFiltering,
                 columnDefs: [
                     { field: 'checker', displayName: 'checked', width: '2%', cellTemplate: '/app/dashboard/cellCheckboxTemplate.html', headerCellTemplate: '/app/dashboard/headerCheckboxTemplate.html', enableColumnMenu: false },
-                    { field: 'documentIconUrl', displayName: 'Icon', width: '2%', cellTemplate: '<div class="ui-grid-cell-contents"><img src="{{row.entity.documentIconUrl}}"/></div>', headerCellTemplate: '<div class="ui-grid-cell-contents"><img class="docTypeIconHeader" id="docTypeIcon" style="padding:0" alt="Document type icon" src="https://lcadms.sharepoint.com/_layouts/15/images/generaldocument.png"></div>', enableColumnMenu: false },
+                    { field: 'documentIconUrl', displayName: 'Icon', width: '2%', cellTemplate: '<div class="ui-grid-cell-contents"><img src="{{row.entity.documentIconUrl}}"/></div>', headerCellTemplate: '<div class="ui-grid-cell-contents"><img class="docTypeIconHeader" id="docTypeIcon" style="padding:0" alt="Document type icon" src="' + configs.uri.SPOsiteURL + '/_layouts/15/images/generaldocument.png"></div>', enableColumnMenu: false },
     	            { field: 'documentName', displayName: 'Document', width: '20%', cellTemplate: '/app/dashboard/DocumentDashboardCellTemplate.html', enableColumnMenu: false },
                     { field: 'documentClientId', displayName: 'Client', width: '15%', cellTemplate: '<div class="ui-grid-cell-contents" >{{row.entity.documentClientId}}</div>', enableColumnMenu: false },
                     { field: 'documentOwner', displayName: 'Author', width: '14%', enableColumnMenu: false },
@@ -102,7 +107,7 @@
             //#region for client taxonomy
             var optionsForClientGroup = {
                 Client: {
-                    Url: "https://lcadms.sharepoint.com/sites/microsoft"
+                    Url: configs.global.repositoryUrl
                 },
                 TermStoreDetails: {
                     TermGroup: "MatterCenterTerms",
@@ -331,6 +336,29 @@
 
             //#endregion
 
+            //Callback function for document assets 
+            function GetAssets(options, callbackOnSuccess, callbackOnError) {
+                api({
+                    resource: 'documentDashBoardResource',
+                    method: 'getassets',
+                    data: options,
+                    success: callbackOnSuccess,
+                    error: callbackOnError
+                });
+            }
+            //#endregion
+
+            //Callback function for document assets 
+            function getUsers(optionsForUsers, callback) {
+                api({
+                    resource: 'documentDashBoardResource',
+                    method: 'getUsers',
+                    data: optionsForUsers,
+                    success: callback
+                });
+            }
+            //#endregion
+
             //#region request object
             var documentRequest = {
                 Client: {
@@ -359,23 +387,115 @@
             //#endregion
 
 
+            vm.selected = "";
+            vm.search = function () {
+                vm.pagenumber = 1;
+                vm.displaypagination = false;
+                vm.documentname = 'All Documents'
+                vm.documentid = 1;
+                vm.lazyloaderdashboard = false;
+                vm.divuigrid = false;
+                vm.responseNull = false;
+                var searchToText = '';
+                var finalSearchText = '';
+                if (vm.selected != "") {
+                    if (-1 !== vm.selected.indexOf(":")) {
+                        finalSearchText = commonFunctions.searchFilter(vm.selected);
+                    } else {
+                        finalSearchText = '("' + vm.selected + '*" OR FileName:"' + vm.selected + '*" OR dlcDocIdOWSText:"' + vm.selected + '*" OR MCDocumentClientName:"' + vm.selected + '*")';
+                    }
+                }
+                documentRequest.SearchObject.PageNumber = vm.pagenumber;
+                documentRequest.SearchObject.SearchTerm = finalSearchText;
+                documentRequest.SearchObject.Sort.ByProperty = "FileName";
+                documentRequest.SearchObject.Sort.Direction = 0;
+                get(documentRequest, function (response) {
+                    if (response == "") {
+                        vm.nodata = true;
+                        vm.totalrecords = response.length;
+                        vm.getDocumentCounts();
+                        vm.documentGridOptions.data = response;
+                        vm.lazyloaderdashboard = true;
+                        vm.divuigrid = false;
+                    } else {
+                        vm.nodata = false;
+                        vm.getDocumentCounts();
+                        vm.totalrecords = response.length;
+                        vm.documentGridOptions.data = response;
+                        vm.lazyloaderdashboard = true;
+                        vm.divuigrid = true;
+                        documentRequest.SearchObject.Sort.ByProperty = "MCModifiedDate";
+                    }
+                });
+            }
+
+
+            //#region request object
+            vm.searchDocument = function (val) {
+                var searchUserRequest = {
+                    Client: {
+                        Url: configs.global.repositoryUrl
+                    },
+                    SearchObject: {
+                        SearchTerm: val
+                    }
+                };
+
+                return documentDashBoardResource.getUsers(searchUserRequest).$promise;
+            }
+            //#endregion
+
+
+            vm.searchDocumentFile = function (val) {
+                var finalSearchText = "";
+                if (val != "") {
+                    finalSearchText = "(FileName:" + val + "* OR dlcDocIdOWSText:" + val + "*)"
+                }
+                vm.pagenumber = 1;
+                documentRequest.SearchObject.PageNumber = vm.pagenumber;
+                documentRequest.SearchObject.SearchTerm = finalSearchText;
+                documentRequest.SearchObject.Sort.ByProperty = "FileName";
+                documentRequest.SearchObject.Sort.Direction = 0;
+                return documentDashBoardResource.get(documentRequest).$promise;
+            }
+
+            //#region
+            vm.typeheadselect = function (index, selected) {
+                vm.documentname = 'All Documents'
+                vm.documentid = 1;
+                var searchToText = '';
+                var finalSearchText = "";
+                if (selected != "") {
+                    searchToText = selected.replace("(", ",")
+                    searchToText = searchToText.replace(")", "")
+                    var firstText = searchToText.split(',')[0]
+                    var secondText = searchToText.split(',')[1]
+                    var finalSearchText = '(FileName:"' + firstText.trim() + '" OR dlcDocIdOWSText:"' + firstText.trim() + '"OR MCDocumentClientName:"' + firstText.trim() + '")';
+                }
+                documentRequest.SearchObject.SearchTerm = finalSearchText;
+                documentRequest.SearchObject.Sort.Direction = 0;
+                vm.FilterByType();
+            }
+
+            //#endregion
+
             //#reion This function will get counts for all matters, my matters and pinned matters
             vm.getDocumentCounts = function () {
                 vm.lazyloaderdashboard = false;
-                documentRequest.SearchObject.PageNumber = 1;
-                documentRequest.SearchObject.Filters.FilterByMe = 0;
-                documentRequest.SearchObject.ItemsPerPage = gridOptions.paginationPageSize;
-                documentRequest.SearchObject.SearchTerm = "";
+                vm.displaypagination = false;
+                //vm.divuigrid = false;
                 getDocumentCounts(documentRequest, function (response) {
                     vm.allDocumentCount = response.allDocumentCounts;
                     vm.myDocumentCount = response.myDocumentCounts;
                     vm.pinDocumentCount = response.pinnedDocumentCounts;
-                    vm.lazyloaderdashboard = true;
                     vm.totalrecords = response.allDocumentCounts;
                     if (!$scope.$$phase) {
                         $scope.$apply();
                     }
                     vm.pagination();
+                    //vm.divuigrid = true;
+                    vm.displaypagination = true;
+                    vm.lazyloaderdashboard = true;
                 });
             }
             //#endregion
@@ -385,7 +505,10 @@
 
             //#region function to get the documents based on search term
             vm.getDocuments = function () {
-
+                vm.lazyloaderdashboard = false;
+                vm.divuigrid = false;
+                vm.nodata = false;
+                vm.displaypagination = false;
                 var pinnedDocumentsRequest = {
                     Url: configs.global.repositoryUrl
                 }
@@ -419,6 +542,8 @@
                             vm.totalrecords = vm.allDocumentCount;
                             vm.pagination();
                         }
+                        vm.lazyloaderdashboard = true;
+                        vm.divuigrid = true;
                     });
 
                 });
@@ -427,6 +552,10 @@
 
             //#region function to get the documents which are pinned by user
             vm.getPinnedDocuments = function () {
+                vm.displaypagination = false;
+                vm.lazyloaderdashboard = false;
+                vm.divuigrid = false;
+                vm.nodata = false;
                 var client = {
                     //ToDo: Need to read from config.js
                     Url: configs.global.repositoryUrl
@@ -438,6 +567,8 @@
                         //vm.pinDocumentCount = response.length;
                         vm.totalrecords = vm.pinDocumentCount;
                         vm.pagination();
+                        vm.lazyloaderdashboard = true;
+                        vm.divuigrid = true;
                     }
                 });
             }
@@ -445,26 +576,40 @@
 
             //#region function to get the documents based on login user
             vm.getMyDocuments = function () {
+                vm.lazyloaderdashboard = false;
+                vm.displaypagination = false;
+                vm.divuigrid = false;                
+                vm.nodata = false;
                 documentRequest.SearchObject.PageNumber = 1;
                 documentRequest.SearchObject.Filters.FilterByMe = 1;
                 documentRequest.SearchObject.ItemsPerPage = gridOptions.paginationPageSize;
                 documentRequest.SearchObject.SearchTerm = "";
                 get(documentRequest, function (response) {
-                    vm.documentGridOptions.data = response;
-                    //vm.myDocumentCount = response.length;
-                    vm.totalrecords = vm.myDocumentCount;
-                    vm.pagination();
+                    if (response == "") {
+                        vm.lazyloaderdashboard = true;
+                        vm.divuigrid = false;
+                        vm.nodata = true;
+                        vm.totalrecords = response.length;
+                        vm.pagination();
+                    } else {
+                        vm.documentGridOptions.data = response;
+                        //vm.myDocumentCount = response.length;
+                        vm.totalrecords = vm.myDocumentCount;
+                        vm.pagination();
+                        vm.lazyloaderdashboard = true;
+                        vm.divuigrid = true;
+                        vm.nodata = false;
+                    }
                 });
             }
             //#endregion
 
             //$timeout(vm.getDocumentCounts(), 800);
             $interval(function () { vm.getDocumentCounts() }, 800, 3);
-            $timeout(vm.getDocuments(), 700);
+            $interval(function () { vm.getDocuments() }, 700, 3);
 
             //#region This function will pin or unpin the document based on the image button clicked
             vm.pinorunpin = function (e, currentRowData) {
-
                 if (e.currentTarget.src.toLowerCase().indexOf("images/pin-666.png") > 0) {
                     e.currentTarget.src = "../Images/loadingGreen.gif";
                     var pinRequest = {
@@ -489,6 +634,7 @@
                             documentMatterUrl: currentRowData.documentMatterUrl,
                             documentParentUrl: currentRowData.documentParentUrl,
                             documentID: currentRowData.documentID,
+                            documentIconUrl: currentRowData.documentIconUrl,
                             pinType: 'unpin'
                         }
                     }
@@ -575,9 +721,9 @@
                 maxDate: new Date()
             }
 
-            //$scope.$watch('vm.startdate', function (newval, oldval) {
-            //    vm.enddateOptions.minDate = newval;
-            //});
+            $scope.$watch('vm.startdate', function (newval, oldval) {
+                vm.enddateOptions.minDate = newval;
+            });
 
 
             vm.openStartDate = function ($event) {
@@ -604,76 +750,90 @@
                 $event.stopPropagation();
                 if (!vm.clientdropvisible) {
                     if (vm.clients === undefined) {
+                        vm.lazyloaderdocumentclient = false;
                         getTaxonomyDetailsForClient(optionsForClientGroup, function (response) {
                             vm.clients = response.clientTerms;
+                            vm.clientdrop = true;
+                            vm.clientdropvisible = true;
+                            if (vm.selectedClients !== undefined && vm.selectedClients.length > 0) {
+                                vm.customSelection('client');
+                            }
+                            vm.lazyloaderdocumentclient = true;
                         });
                     }
-                    vm.clientdrop = true;
-                    vm.clientdropvisible = true;
+                    else {
+                        if (vm.selectedClients !== undefined && vm.selectedClients.length > 0) {
+                            vm.customSelection('client');
+                        }
+                        vm.clientdrop = true;
+                        vm.clientdropvisible = true;
+                    }
+                } else if (vm.clientdropvisible && $event.type === "keyup") {
+                    vm.customSelection('client');
                 } else {
                     vm.clientdrop = false;
                     vm.clientdropvisible = false;
+                    vm.lazyloaderdocumentclient = true;
                 }
             }
-
-
+            //#Region : Function handle the keyup events in advanced search to check and unchecked user selection.
+            vm.customSelection = function (type) {
+                if (type !== undefined && type === 'client') {
+                var selectdClients = vm.selectedClients.split(',');
+                    angular.forEach(vm.clients, function (client) {
+                    client.Selected = false;
+                        angular.forEach(selectdClients, function (clientInput) {
+                            if (clientInput.toString().length > 0 && client.name.toString().toLowerCase().indexOf(clientInput.toString().toLowerCase()) !== -1) {
+                                client.Selected = true;
+                            }
+                        })
+                    });
+                }
+            }
+            //#endRegion
+            //#region This event is going to fire when the user clicks on "Cancel" button in the filter panel
+            vm.filterSearchCancel = function (type) {
+                if (vm.selectedClientsForCancel !== undefined && vm.selectedClientsForCancel.toString().length > 0) {
+                    vm.selectedClients = vm.selectedClientsForCancel;
+                    angular.forEach(vm.clients, function (client) {
+                        if (vm.selectedClients.indexOf(client.name) > 0) {
+                            client.Selected = true;
+                        }
+                    });
+                }
+                vm.clientdrop = false;
+                vm.clientdropvisible = false;
+                vm.lazyloaderdocumentclient = true;
+            }
             //#endregion
 
+
             //#region For Sorting by Alphebatical or Created date
-            var SortRequest = {
-                Client: {
-                    Id: "123456",
-                    Name: "Microsoft",
-                    Url: "https://lcadms.sharepoint.com/sites/catalog"
-                },
-                SearchObject: {
-                    PageNumber: 1,
-                    ItemsPerPage: gridOptions.paginationPageSize,
-                    SearchTerm: "",
-                    Filters: {
-                        ClientName: "",
-                        ClientsList: [],
-                        PGList: [],
-                        AOLList: [],
-                        DateFilters: {
-                            CreatedFromDate: "",
-                            CreatedToDate: "",
-                            ModifiedFromDate: "",
-                            ModifiedToDate: "",
-                            OpenDateFrom: "",
-                            OpenDateTo: ""
-                        },
-                        DocumentAuthor: "",
-                        DocumentCheckoutUsers: "",
-                        FilterByMe: 0,
-                        FromDate: "",
-                        Name: "",
-                        ResponsibleAttorneys: "",
-                        SubareaOfLaw: "",
-                        ToDate: ""
-                    },
-                    Sort:
-                            {
-                                ByProperty: 'LastModifiedTime',
-                                Direction: 1
-                            }
-                }
-            }
 
             vm.FilterByType = function () {
-                get(SortRequest, function (response) {
+                vm.lazyloaderdashboard = false;
+                vm.divuigrid = false;               
+                vm.nodata = false;
+                get(documentRequest, function (response) {
                     vm.lazyloader = true;
                     if (response.errorCode == "404") {
+                        vm.lazyloaderdashboard = true;
                         vm.divuigrid = false;
                         vm.nodata = true;
+                        vm.displaypagination = false;
                         vm.errorMessage = response.message;
+                        vm.getDocumentCounts();
+                        vm.totalrecords = response.length;
                     } else {
-                        vm.divuigrid = true;
-                        vm.nodata = false;
+                        vm.getDocumentCounts();
+                        vm.totalrecords = response.length;
                         vm.documentGridOptions.data = response;
                         if (!$scope.$$phase) {
                             $scope.$apply();
                         }
+                        vm.lazyloaderdashboard = true;                        
+                        vm.divuigrid = true;
+                        vm.nodata = false;
                     }
                 });
             }
@@ -683,43 +843,43 @@
                 vm.sortbytext = data;
                 vm.sortbydrop = false;
                 if (sortexp == 'AlphabeticalUp') {
-                    vm.lazyloader = false;
-                    SortRequest.SearchObject.Sort.ByProperty = "FileName";
-                    SortRequest.SearchObject.Sort.Direction = 0;
+
+                    documentRequest.SearchObject.Sort.ByProperty = "FileName";
+                    documentRequest.SearchObject.Sort.Direction = 0;
                     vm.FilterByType();
                 } else if (sortexp == 'AlphabeticalDown') {
-                    vm.lazyloader = false;
-                    SortRequest.SearchObject.Sort.ByProperty = "FileName";
-                    SortRequest.SearchObject.Sort.Direction = 1;
+
+                    documentRequest.SearchObject.Sort.ByProperty = "FileName";
+                    documentRequest.SearchObject.Sort.Direction = 1;
                     vm.FilterByType();
                 } else if (sortexp == 'CreateddateUp') {
-                    vm.lazyloader = false;
-                    SortRequest.SearchObject.Sort.ByProperty = "Created";
-                    SortRequest.SearchObject.Sort.Direction = 0;
+
+                    documentRequest.SearchObject.Sort.ByProperty = "Created";
+                    documentRequest.SearchObject.Sort.Direction = 0;
                     vm.FilterByType();
                 }
                 else if (sortexp == 'CreateddateDown') {
-                    vm.lazyloader = false;
-                    SortRequest.SearchObject.Sort.ByProperty = "Created";
-                    SortRequest.SearchObject.Sort.Direction = 1;
+
+                    documentRequest.SearchObject.Sort.ByProperty = "Created";
+                    documentRequest.SearchObject.Sort.Direction = 1;
                     vm.FilterByType();
                 }
                 else if (sortexp == 'ModifieddateUp') {
-                    vm.lazyloader = false;
-                    SortRequest.SearchObject.Sort.ByProperty = "MCModifiedDate";
-                    SortRequest.SearchObject.Sort.Direction = 0;
+
+                    documentRequest.SearchObject.Sort.ByProperty = "MCModifiedDate";
+                    documentRequest.SearchObject.Sort.Direction = 0;
                     vm.FilterByType();
                 }
                 else if (sortexp == 'ModifieddateDown') {
-                    vm.lazyloader = false;
-                    SortRequest.SearchObject.Sort.ByProperty = "MCModifiedDate";
-                    SortRequest.SearchObject.Sort.Direction = 1;
+
+                    documentRequest.SearchObject.Sort.ByProperty = "MCModifiedDate";
+                    documentRequest.SearchObject.Sort.Direction = 1;
                     vm.FilterByType();
                 }
                 else {
-                    vm.lazyloader = false;
-                    SortRequest.SearchObject.Sort.ByProperty = "LastModifiedTime";
-                    SortRequest.SearchObject.Sort.Direction = 1;
+
+                    documentRequest.SearchObject.Sort.ByProperty = "LastModifiedTime";
+                    documentRequest.SearchObject.Sort.Direction = 1;
                     vm.FilterByType();
                 }
             }
@@ -736,6 +896,7 @@
             vm.displaypagination = false;
 
             vm.pagination = function () {
+                vm.divuigrid = false;
                 vm.first = 1;
                 vm.last = gridOptions.paginationPageSize;
                 vm.total = 0;
@@ -746,7 +907,7 @@
                 if (vm.totalrecords > gridOptions.paginationPageSize) {
                     vm.fromtopage = vm.first + " - " + vm.last;
                 }
-                else;{
+                else {
                     if (vm.total < gridOptions.paginationPageSize) { vm.fromtopage = vm.first + " - " + vm.totalrecords; } else {
                         vm.fromtopage = vm.first + " - " + vm.last;
                     }
@@ -754,7 +915,9 @@
 
                 if (vm.totalrecords == 0) {
                     vm.displaypagination = false;
+                    vm.divuigrid = false;
                 } else {
+                    vm.divuigrid = true;
                     vm.displaypagination = true;
                 }
                 if (!$scope.$$phase) {
@@ -763,11 +926,13 @@
             };
 
             vm.next = function () {
+                vm.lazyloaderdashboard = false;
+                vm.divuigrid = false;               
                 if (vm.last < vm.totalrecords) {
                     vm.first = vm.first + gridOptions.paginationPageSize;
                     vm.last = vm.last + gridOptions.paginationPageSize;
                     vm.total = vm.totalrecords - gridOptions.paginationPageSize;
-                    if (vm.total < gridOptions.paginationPageSize) {
+                    if (vm.last > vm.totalrecords) {
                         vm.fromtopage = vm.first + " - " + vm.totalrecords;
                     } else {
                         vm.fromtopage = vm.first + " - " + vm.last;
@@ -778,6 +943,7 @@
                     get(documentRequest, function (response) {
                         vm.lazyloader = true;
                         if (response.errorCode == "404") {
+                            vm.lazyloaderdashboard = true;
                             vm.divuigrid = false;
                             vm.nodata = true;
                             vm.errorMessage = response.message;
@@ -788,6 +954,7 @@
                             if (!$scope.$$phase) {
                                 $scope.$apply();
                             }
+                            vm.lazyloaderdashboard = true;                        
                         }
                     });
                 } else {
@@ -798,6 +965,8 @@
             };
 
             vm.prev = function () {
+                vm.lazyloaderdashboard = false;
+                vm.divuigrid = false;             
                 if (vm.last > gridOptions.paginationPageSize) {
                     vm.first = vm.first - gridOptions.paginationPageSize;
                     vm.last = vm.last - gridOptions.paginationPageSize;
@@ -806,11 +975,11 @@
                     documentRequest.SearchObject.PageNumber = vm.pagenumber;
                     documentRequest.SearchObject.ItemsPerPage = gridOptions.paginationPageSize;
                     get(documentRequest, function (response) {
-                        vm.lazyloader = true;
                         if (response.errorCode == "404") {
                             vm.divuigrid = false;
                             vm.nodata = true;
                             vm.errorMessage = response.message;
+                            vm.lazyloaderdashboard = true;
                         } else {
                             vm.divuigrid = true;
                             vm.nodata = false;
@@ -818,6 +987,7 @@
                             if (!$scope.$$phase) {
                                 $scope.$apply();
                             }
+                            vm.lazyloaderdashboard = true;                          
                         }
                     });
                 } else {
@@ -828,19 +998,106 @@
             };
 
             //#endregion
-        
 
+            //#region This event is going to fire when the user clicks on "OK" button in the filter panel
+            vm.filterSearchOK = function (type) {
+                if (type === 'client') {
+                    vm.selectedClients = '';
+                    angular.forEach(vm.clients, function (client) {
+                        if (client.Selected) {
+                            vm.selectedClients = vm.selectedClients + client.name + ","
+                        }
+                    });
+                    vm.selectedClients = vm.selectedClients.slice(0, vm.selectedClients.length - 1);
+                    vm.selectedClientsForCancel = vm.selectedClients;
+                    vm.clientdrop = false;
+                    vm.clientdropvisible = false;
+                }
+            }
+            //#endregion
 
+            //#region calling the document assets api
+            vm.assetsuccess = false;
+            vm.getDocumentAssets = function (row) {
+                vm.assetsuccess = false;
+                vm.closealldrops(null);
+                var Client = {
+                    Id: row.entity.documentUrl.replace("https://lcadms.sharepoint.com", ""),
+                    Name: row.entity.documentMatterUrl.replace("https://lcadms.sharepoint.com", ""),
+                    Url: row.entity.documentClientUrl
+                }
+                GetAssets(Client, function (response) {
+                    vm.listguid = response.listInternalName;
+                    vm.docguid = response.documentGuid;
+                    vm.assetsuccess = true;
+                },function (data) {
+                    vm.listguid = "";
+                    vm.docguid = "";
+                    vm.assetsuccess = true;
+                });
+            }
+            //#endregion
 
+            vm.gotoDocumentUrl = function (url) {
+                if (vm.assetsuccess) {
+                    $window.open(configs.global.repositoryUrl + "/SitePages/documentDetails.aspx?client=" + url.replace("https://msmatter.sharepoint.com", "") + "&listguid=" + vm.listguid + "&docguid=" + vm.docguid, "_blank");
+                } else {
+                    $timeout(function () { $window.open(configs.global.repositoryUrl + "/SitePages/documentDetails.aspx?client=" + url.replace("https://msmatter.sharepoint.com", "") + "&listguid=" + vm.listguid + "&docguid=" + vm.docguid, "_blank"); }, 1500);
+                }
+            }
 
-
-
-
-
-
-
-
-
+            vm.getSearchResults = function () {
+                angular.element('#allDocuments').addClass("active");
+                angular.element('#myDocuments').removeClass("active");
+                angular.element('#pinDocuments').removeClass("active");
+                vm.lazyloaderdashboard = false;
+                vm.divuigrid = false;
+                vm.searchdrop = false;
+                vm.displaypagination = false;
+                vm.nodata = false;
+                var clientArray = [];
+                var author = "";
+                var startdate = "";
+                var enddate = "";
+                if (vm.selectedClients != "" && vm.selectedClients != undefined) {
+                    clientArray = vm.selectedClients.split(',');
+                }
+                if (vm.startdate != "" && vm.startdate != undefined) {
+                    startdate = vm.startdate.format("yyyy-MM-ddT00:00:00Z");
+                }
+                if (vm.enddate != "" && vm.enddate != undefined) {
+                    enddate = vm.enddate.format("yyyy-MM-ddT23:59:59Z");
+                }
+                if (vm.selectedAuthor != "" && vm.selectedAuthor != undefined) {
+                    author = vm.selectedAuthor;
+                }
+                documentRequest.SearchObject.Filters.ClientsList = clientArray;
+                documentRequest.SearchObject.Filters.DocumentAuthor = author;
+                documentRequest.SearchObject.Filters.FromDate = startdate;
+                documentRequest.SearchObject.Filters.ToDate = enddate;
+                get(documentRequest, function (response) {
+                    if (response == "") {
+                        vm.divuigrid = false;
+                        vm.nodata = true;
+                        vm.lazyloaderdashboard = true;
+                        vm.errorMessage = response.message;
+                        vm.totalrecords = response.length;
+                        vm.getDocumentCounts();
+                        vm.pagination();
+                    } else {
+                        vm.divuigrid = true;
+                        vm.nodata = false;
+                        vm.documentGridOptions.data = response;
+                        vm.getDocumentCounts();                      
+                        vm.lazyloaderdashboard = true;
+                        vm.totalrecords = response.length;
+                        vm.pagination();
+                        if (!$scope.$$phase) {
+                            $scope.$apply();
+                        }
+                    }
+                });
+            }
         }
     ]);
 }

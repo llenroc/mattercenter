@@ -26,6 +26,10 @@ using Microsoft.Extensions.Options;
 using Microsoft.Legal.MatterCenter.Models;
 using Microsoft.Legal.MatterCenter.Utility;
 using Microsoft.Legal.MatterCenter.Repository.Extensions;
+using System.Text;
+using Newtonsoft.Json;
+using System.IO;
+using Microsoft.Extensions.Configuration;
 #endregion
 
 namespace Microsoft.Legal.MatterCenter.Repository
@@ -38,12 +42,16 @@ namespace Microsoft.Legal.MatterCenter.Repository
 
         #region Properties
         private GeneralSettings generalSettings;
+        private ContentTypesConfig contentTypeSettings;
         private LogTables logTables;
         private readonly TaxonomySettings taxonomySettings;
         private ISPOAuthorization spoAuthorization;
         private ClientContext clientContext;
         private TaxonomyResponseVM taxonomyResponseVM;
         private ICustomLogger customLogger;
+        private IConfigurationRoot configuration;
+        //Initialize the minimum number of taxonomy levels. By default minimum levels will be 2
+        private int level = 3;
         #endregion
 
         /// <summary>
@@ -55,16 +63,21 @@ namespace Microsoft.Legal.MatterCenter.Repository
         /// <param name="spoAuthorization"></param>
         /// <param name="customLogger"></param>
         public Taxonomy(IOptionsMonitor<GeneralSettings> generalSettings, 
-            IOptionsMonitor<TaxonomySettings> taxonomySettings, 
+            IOptionsMonitor<TaxonomySettings> taxonomySettings,
+            IOptionsMonitor<ContentTypesConfig> contentTypeSettings,
             IOptionsMonitor<LogTables> logTables,
-            ISPOAuthorization spoAuthorization, ICustomLogger customLogger)
+            ISPOAuthorization spoAuthorization, ICustomLogger customLogger, 
+            IConfigurationRoot configuration)
         {
             this.generalSettings = generalSettings.CurrentValue;
             this.taxonomySettings = taxonomySettings.CurrentValue;
+            this.contentTypeSettings = contentTypeSettings.CurrentValue;
+            this.logTables = logTables.CurrentValue;
             this.spoAuthorization = spoAuthorization;
             taxonomyResponseVM = new TaxonomyResponseVM();
             this.customLogger = customLogger;
-            this.logTables = logTables.CurrentValue;
+            
+            this.configuration = configuration;
         }       
 
         /// <summary>
@@ -176,7 +189,7 @@ namespace Microsoft.Legal.MatterCenter.Repository
                         //This condition is if the UI is requesting practice group terms
                         if (termStoreDetails.TermSetName == taxonomySettings.PracticeGroupTermSetName)
                         {
-                            taxonomyResponseVM.TermSets = GetPracticeGroupTermSetHierarchy(clientContext, termSet, termStoreDetails);
+                            taxonomyResponseVM.TermSets = GetManagedTermSetHierarchy(clientContext, termSet, termStoreDetails);
                         }
                         //This condition is if the UI is requesting client terms and the clients are defined as term set and not terms
                         else if (termStoreDetails.TermSetName == taxonomySettings.ClientTermSetName && 
@@ -213,174 +226,211 @@ namespace Microsoft.Legal.MatterCenter.Repository
 
 
 
+
         /// <summary>
-        /// Gets the practice group term set hierarchy.
+        /// Gets the managed term set hierarchy with generic code using JSONWriter
         /// </summary>
         /// <param name="termSet">Term set object holding Practice Group terms</param>
         /// <param name="termStoreDetails">Term Store object containing Term store data</param>
         /// <returns>Serialized Object of Term Set</returns>
-        private TermSets GetPracticeGroupTermSetHierarchy(ClientContext clientContext, TermSet termSet, TermStoreDetails termStoreDetails)
+        private string GetManagedTermSetHierarchy(ClientContext clientContext, TermSet termSet, TermStoreDetails termStoreDetails)
         {
-            TermSets tempTermSet = new TermSets();
-            try
-            {
-                tempTermSet.Name = termSet.Name;
-                ////Retrieve the Terms - level 1
-                tempTermSet.PGTerms = new List<PracticeGroupTerm>();
-                TermCollection termColl = termSet.Terms;
-                foreach (Term term in termColl)
+            StringBuilder sb = new StringBuilder();
+            JsonWriter jw = new JsonTextWriter(new StringWriter(sb));
+            jw.Formatting = Formatting.Indented;
+            jw.WriteStartObject();
+            jw.WritePropertyName("name");
+            jw.WriteValue(termSet.Name);
+            jw.WritePropertyName("levels");
+            jw.WriteValue(taxonomySettings.Levels);
+            jw.WritePropertyName(taxonomySettings.Level1Name);
+            jw.WriteStartArray();
+            TermCollection termColl = termSet.Terms;
+            foreach (Term term in termColl)
+            {                
+                jw.WriteStartObject();
+                //Create level1 terms - Practice Groups
+                jw.WritePropertyName("termName");
+                jw.WriteValue(term.Name);
+                jw.WritePropertyName("id");
+                jw.WriteValue(Convert.ToString(term.Id, CultureInfo.InvariantCulture));
+                jw.WritePropertyName("parentTermName");
+                jw.WriteValue(termSet.Name);
+                jw.WritePropertyName("siteColumnName");
+                jw.WriteValue(configuration.GetSection("ContentTypes").GetSection("ManagedColumns")["ColumnName1"]);
+                foreach (KeyValuePair<string, string> customProperty in term.CustomProperties)
                 {
-                    PracticeGroupTerm tempTermPG = new PracticeGroupTerm();
-                    tempTermPG.TermName = term.Name;
-                    tempTermPG.Id = Convert.ToString(term.Id, CultureInfo.InvariantCulture);
-                    tempTermPG.ParentTermName = termSet.Name;
-                    /////Retrieve the custom property for Terms at level 1
-                    foreach (KeyValuePair<string, string> customProperty in term.CustomProperties)
+                    if (customProperty.Key.Equals(taxonomySettings.PracticeGroupCustomPropertyFolderNames, StringComparison.Ordinal))
                     {
-                        if (customProperty.Key.Equals(taxonomySettings.PracticeGroupCustomPropertyFolderNames, StringComparison.Ordinal))
-                        {
-                            tempTermPG.FolderNames = customProperty.Value;
-                        }
-                    }
-                    //Add Level 1 to the term collection
-                    tempTermSet.PGTerms.Add(tempTermPG);
-                    if (term.TermsCount > 0)
-                    {
-                        TermCollection termCollLevel2 = term.LoadTerms(clientContext);
-                        tempTermPG.AreaTerms = new List<AreaTerm>();
-                        foreach (Term termLevel2 in termCollLevel2)
-                        {
-                            AreaTerm tempTermArea = new AreaTerm();
-                            tempTermArea.TermName = termLevel2.Name;
-                            tempTermArea.Id = Convert.ToString(termLevel2.Id, CultureInfo.InvariantCulture);
-                            tempTermArea.ParentTermName = term.Name;
-                            /////Retrieve the custom property for Terms at level 2
-                            foreach (KeyValuePair<string, string> customProperty in termLevel2.CustomProperties)
-                            {
-                                if (customProperty.Key.Equals(taxonomySettings.AreaCustomPropertyFolderNames, StringComparison.Ordinal))
-                                {
-                                    tempTermArea.FolderNames = customProperty.Value;
-                                }
-                            }
-                            //Add Level 2 to the term collection
-                            tempTermPG.AreaTerms.Add(tempTermArea);
-                            if (termLevel2.TermsCount > 0)
-                            {
-                                TermCollection termCollLevel3 = termLevel2.LoadTerms(clientContext);
-                                //Add Level 3 to the term collection
-                                tempTermArea.SubareaTerms = UpdateTermWithCustomProperties(termCollLevel3, termStoreDetails, termLevel2);
-
-                                int termCount = 0;
-                                foreach (Term termLevel3 in termCollLevel3)
-                                {
-                                    if (termLevel3.TermsCount > 0)
-                                    {
-                                        TermCollection termCollLevel4 = termLevel3.LoadTerms(clientContext);
-                                        //Add Level 4 to the term collection
-                                        tempTermArea.SubareaTerms[termCount].SubareaTerms = 
-                                            UpdateTermWithCustomProperties(termCollLevel4, termStoreDetails, termLevel3);
-                                        int termCount1 = 0;
-                                        foreach (Term termLevel4 in termCollLevel4)
-                                        {
-                                            if (termLevel4.TermsCount > 0)
-                                            {
-                                                TermCollection termCollLevel5 = termLevel4.LoadTerms(clientContext);
-                                                //Add Level 5 to the term collection
-                                                tempTermArea.SubareaTerms[termCount].SubareaTerms[termCount1].SubareaTerms =
-                                                    UpdateTermWithCustomProperties(termCollLevel5, termStoreDetails, termLevel4);
-                                            }
-                                            termCount1 = termCount1 + 1;
-                                        }
-                                    }
-                                    termCount = termCount + 1;
-                                }
-                            }
-                        }
+                        jw.WritePropertyName("folderNames");
+                        jw.WriteValue(customProperty.Value);                        
                     }
                 }
-
+                //Create level 2 terms - Area Of Law
+                jw.WritePropertyName(taxonomySettings.Level2Name);                
+                if (term.TermsCount > 0)
+                {
+                    jw.WriteStartArray();
+                    TermCollection termCollLevel2 = term.LoadTerms(clientContext);
+                    foreach (Term termLevel2 in termCollLevel2)
+                    {
+                        if (termLevel2.Name != taxonomySettings.ClientTermSetName)
+                        {
+                            jw.WriteStartObject();
+                            jw.WritePropertyName("termName");
+                            jw.WriteValue(termLevel2.Name);
+                            jw.WritePropertyName("id");
+                            jw.WriteValue(Convert.ToString(termLevel2.Id, CultureInfo.InvariantCulture));
+                            jw.WritePropertyName("parentTermName");
+                            jw.WriteValue(term.Name);
+                            jw.WritePropertyName("siteColumnName");
+                            jw.WriteValue(configuration.GetSection("ContentTypes").GetSection("ManagedColumns")["ColumnName2"]);
+                            foreach (KeyValuePair<string, string> customProperty in term.CustomProperties)
+                            {
+                                if (customProperty.Key.Equals(taxonomySettings.PracticeGroupCustomPropertyFolderNames, StringComparison.Ordinal))
+                                {
+                                    jw.WritePropertyName("folderNames");
+                                    jw.WriteValue(customProperty.Value);
+                                }
+                            }
+                            //If the number of levels that are configured are more than 2, try to get the 
+                            //3rd level hierarchy
+                            if (taxonomySettings.Levels > 2)
+                            {                                
+                                //Create level 3 terms - Sub Area Of LAW
+                                if (termLevel2.TermsCount > 0)
+                                {
+                                    jw.WritePropertyName(taxonomySettings.Level3Name);
+                                    jw.WriteStartArray();
+                                    TermCollection termCollLevel3 = termLevel2.LoadTerms(clientContext);
+                                    string siteColumnName = configuration.GetSection("ContentTypes").GetSection("ManagedColumns")["ColumnName3"];
+                                    int termLevelHierarchyPosition = 0;
+                                    GetChildTermsWithCustomProperties(termCollLevel3, termStoreDetails, termLevel2, jw, 
+                                        siteColumnName, termLevelHierarchyPosition);
+                                    jw.WriteEndArray();
+                                }
+                                jw.WriteEndObject();
+                            }
+                        }
+                    }
+                    jw.WriteEndArray();
+                } 
+                jw.WriteEndObject();
             }
-            catch (Exception ex)
-            {
-                customLogger.LogError(ex, MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name, logTables.SPOLogTable);
-                throw;
-            }
-
-            return tempTermSet;
+            jw.WriteEndArray();
+            jw.WriteEndObject();
+            return sb.ToString();            
         }
 
-
         /// <summary>
-        /// This method will update the taxonomy hierarchy object with custom properties that needs to be send to client
+        /// This method will update the taxonomy hierarchy object with custom properties that needs to be send to client. This is a recursive function
+        /// and it will loop until a term does not have any child terms
         /// </summary>
         /// <param name="termCollection">The Term Collection object to which terms will be added</param>
         /// <param name="termStoreDetails">The term store details which the client has sent</param>
         /// <param name="parentTerm">The parent term from where the custom properties are read and assign to its child terms</param>
         /// <returns></returns>
-        private List<SubareaTerm> UpdateTermWithCustomProperties(TermCollection termCollection, TermStoreDetails termStoreDetails, Term parentTerm)
+        private void GetChildTermsWithCustomProperties(TermCollection termCollection, 
+            TermStoreDetails termStoreDetails, Term parentTerm, JsonWriter jw, string siteColumnName, int termLevelHierarchyPosition)
         {
             try
             {
-                var subAreaTerms = new List<SubareaTerm>();
+                //var subAreaTerms = new List<SubareaTerm>();
                 foreach (Term term in termCollection)
                 {
-                    SubareaTerm tempTermSubArea = new SubareaTerm();
-                    tempTermSubArea.TermName = term.Name;
-                    tempTermSubArea.Id = Convert.ToString(term.Id, CultureInfo.InvariantCulture);
-                    tempTermSubArea.ParentTermName = parentTerm.Name;
-                    IDictionary<string, string> childCustomProperties = term.CustomProperties;
-                    IDictionary<string, string> parentCustomProperties = parentTerm.CustomProperties;
-
-                    foreach (KeyValuePair<string, string> parentProperty in parentTerm.CustomProperties)
+                    if (term.Name != taxonomySettings.ClientTermSetName)
                     {
-                        //if the key is present in the parent and not in the child, add that key value to the child custom properties
-                        if (!childCustomProperties.Keys.Contains(parentProperty.Key))
+                        jw.WriteStartObject();
+                        jw.WritePropertyName("termName");
+                        jw.WriteValue(term.Name);
+                        jw.WritePropertyName("id");
+                        jw.WriteValue(Convert.ToString(term.Id, CultureInfo.InvariantCulture));
+                        jw.WritePropertyName("parentTermName");
+                        jw.WriteValue(parentTerm.Name);
+                        jw.WritePropertyName("siteColumnName");
+                        jw.WriteValue(siteColumnName);
+                        IDictionary<string, string> childCustomProperties = term.CustomProperties;
+                        IDictionary<string, string> parentCustomProperties = parentTerm.CustomProperties;
+                        foreach (KeyValuePair<string, string> parentProperty in parentTerm.CustomProperties)
                         {
-                            if (parentProperty.Key.Equals(termStoreDetails.CustomPropertyName, StringComparison.Ordinal))
+                            //if the key is present in the parent and not in the child, add that key value to the child custom properties
+                            if (!childCustomProperties.Keys.Contains(parentProperty.Key))
                             {
-                                childCustomProperties.Add(parentProperty.Key, parentProperty.Value);
+                                if (parentProperty.Key.Equals(termStoreDetails.CustomPropertyName, StringComparison.Ordinal))
+                                {
+                                    childCustomProperties.Add(parentProperty.Key, parentProperty.Value);
+                                }
+                                else if (parentProperty.Key.Equals(taxonomySettings.SubAreaOfLawDocumentTemplates, StringComparison.Ordinal))
+                                {
+                                    childCustomProperties.Add(parentProperty.Key, parentProperty.Value);
+                                }
+                                else
+                                {
+                                    childCustomProperties.Add(parentProperty.Key, parentProperty.Value);
+                                }
                             }
-                            else if (parentProperty.Key.Equals(taxonomySettings.SubAreaOfLawDocumentTemplates, StringComparison.Ordinal))
+
+                            //If the key is present in both and parent and child and if child value is empty and the parent value is not empty,
+                            //update the child value with the parent value for the same key
+                            if (childCustomProperties.Keys.Contains(parentProperty.Key) && childCustomProperties[parentProperty.Key] == string.Empty)
                             {
-                                childCustomProperties.Add(parentProperty.Key, parentProperty.Value);
-                            }
-                            else
-                            {
-                                childCustomProperties.Add(parentProperty.Key, parentProperty.Value);
+                                childCustomProperties[parentProperty.Key] = parentProperty.Value;
                             }
                         }
 
-                        //If the key is present in both and parent and, child value is empty and the parent value is not empty,
-                        //update the child value with the parent value for the same key
-                        if (childCustomProperties.Keys.Contains(parentProperty.Key) && childCustomProperties[parentProperty.Key] == string.Empty)
+                        //Add the custom properties to the subAreaTerms list collection
+                        foreach (KeyValuePair<string, string> customProperty in childCustomProperties)
                         {
-                            childCustomProperties[parentProperty.Key] = parentProperty.Value;
-                        }
-                    }
+                            if (customProperty.Key.Equals(termStoreDetails.CustomPropertyName, StringComparison.Ordinal))
+                            {
+                                jw.WritePropertyName("documentTemplates");
+                                jw.WriteValue(customProperty.Value);
+                            }
+                            else if (customProperty.Key.Equals(taxonomySettings.SubAreaCustomPropertyFolderNames, StringComparison.Ordinal))
+                            {
 
-                    //Add the custom properties to the subAreaTerms list collection
-                    foreach (KeyValuePair<string, string> customProperty in childCustomProperties)
-                    {
-                        if (customProperty.Key.Equals(termStoreDetails.CustomPropertyName, StringComparison.Ordinal))
-                        {
-                            tempTermSubArea.DocumentTemplates = customProperty.Value;
+                                jw.WritePropertyName("folderNames");
+                                jw.WriteValue(customProperty.Value);
+                            }
+                            else if (customProperty.Key.Equals(taxonomySettings.SubAreaCustomPropertyisNoFolderStructurePresent, StringComparison.Ordinal))
+                            {
+
+                                jw.WritePropertyName("isNoFolderStructurePresent");
+                                jw.WriteValue(customProperty.Value);
+                            }
+                            else if (customProperty.Key.Equals(taxonomySettings.SubAreaOfLawDocumentTemplates, StringComparison.Ordinal))
+                            {
+                                jw.WritePropertyName("documentTemplateNames");
+                                jw.WriteValue(customProperty.Value);
+                            }
                         }
-                        else if (customProperty.Key.Equals(taxonomySettings.SubAreaCustomPropertyFolderNames, StringComparison.Ordinal))
+                        //Increment the level
+                        level = level + 1;
+                        //Check if we need to get more terms.
+                        if (level <= taxonomySettings.Levels)
                         {
-                            tempTermSubArea.FolderNames = customProperty.Value;
+                            if (term.TermsCount > 0)
+                            {
+                                if(level==4)
+                                {
+                                    jw.WritePropertyName(taxonomySettings.Level4Name);
+                                }
+                                //The app will support upto five level of hierarchy
+                                if (level == 5)
+                                {
+                                    jw.WritePropertyName(taxonomySettings.Level5Name);
+                                }
+                                jw.WriteStartArray();
+                                TermCollection termCollLevel4 = term.LoadTerms(clientContext);
+                                siteColumnName = configuration.GetSection("ContentTypes").GetSection("ManagedColumns")["ColumnName"+ level];
+                                //Recursive function which will call it self until a given term does not have any child terms
+                                GetChildTermsWithCustomProperties(termCollLevel4, termStoreDetails, term, jw, siteColumnName, termLevelHierarchyPosition);
+                                jw.WriteEndArray();
+                            }
                         }
-                        else if (customProperty.Key.Equals(taxonomySettings.SubAreaCustomPropertyisNoFolderStructurePresent, StringComparison.Ordinal))
-                        {
-                            tempTermSubArea.IsNoFolderStructurePresent = customProperty.Value;
-                        }
-                        else if (customProperty.Key.Equals(taxonomySettings.SubAreaOfLawDocumentTemplates, StringComparison.Ordinal))
-                        {
-                            tempTermSubArea.DocumentTemplateNames = customProperty.Value;
-                        }
+                        jw.WriteEndObject();
                     }
-                    subAreaTerms.Add(tempTermSubArea);
-                }
-                return subAreaTerms;
+                }             
             }
             catch (Exception ex)
             {
@@ -388,6 +438,9 @@ namespace Microsoft.Legal.MatterCenter.Repository
                 throw;
             }
         }
+
+
+        
 
         /// <summary>
         /// This method will be called if the clients are defined as terms and not as term sets

@@ -100,6 +100,7 @@ C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Micro
 C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Models\Shared\HelpRequestModel.cs
 C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Models\Taxonomy\AreaTerm.cs
 C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Models\Taxonomy\ClientTermSets.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Models\Taxonomy\ManagedColumn.cs
 C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Models\Taxonomy\PracticeGroupTerm.cs
 C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Models\Taxonomy\SubAreaTerm.cs
 C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Models\Taxonomy\TaxonomyResponseVM.cs

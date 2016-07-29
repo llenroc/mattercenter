@@ -5,6 +5,7 @@
 -nowarn:CS1702
 -nowarn:CS1705
 -platform:x64
+-doc:"C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\bin\Debug\net451\Microsoft.Legal.MatterCenter.Web.xml"
 -debug:full
 -nostdlib
 -nologo
@@ -203,6 +204,7 @@
 "C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Upload\IUploadHelperFunctionsUtility.cs"
 "C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Upload\UploadHelperFunctions.cs"
 "C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Upload\UploadHelperFunctionsUtility.cs"
+"C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\ConfigController.cs"
 "C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\DocumentController.cs"
 "C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\EmailController.cs"
 "C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\MatterController.cs"

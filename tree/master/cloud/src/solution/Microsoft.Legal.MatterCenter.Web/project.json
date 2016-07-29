@@ -1,4 +1,4 @@
-﻿{
+{
   "dependencies": {
     "Swashbuckle.SwaggerUi": "6.0.0-beta9",
     "Swashbuckle.SwaggerGen": "6.0.0-beta9",
@@ -31,13 +31,14 @@
   },
   "frameworks": {
     "net451": {
-     
+
     }
   },
 
   "buildOptions": {
     "emitEntryPoint": true,
-    "preserveCompilationContext": true
+    "preserveCompilationContext": true,
+    "xmlDoc": true
   },
 
   "runtimeOptions": {
