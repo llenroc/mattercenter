@@ -262,7 +262,7 @@ describe('DocumentDashboard Controller test suite', function () {
             $scope.$apply = function () { };
             dm.totalrecords = 16;
             dm.pagination();
-            expect(dm.fromtopage).toBe("1 - 6");
+            expect(dm.fromtopage).toBe("1 - 16");
             expect(dm.displaypagination).toBe(true);
 
         });
