@@ -185,63 +185,16 @@ describe('CreateMatter Controller test suite', function () {
 
     beforeEach(module('matterMain'));
     beforeEach(module('matterMain', function ($provide) {
-        $provide.factory("api", ['matterResource', 'documentResource', 'documentDashBoardResource', 'matterDashBoardResource', 'homeResource', mockapi]);
+       $provide.factory("api", ['matterResource', 'documentResource', 'documentDashBoardResource', 'matterDashBoardResource', 'homeResource', mockapi]);
     }));
 
     beforeEach(module('ui.router'));
     beforeEach(module('ui.bootstrap'));
 
-    //angular.mock.inject(function ($injector) {     
-    //    api = $injector.get('api');
-    //    matterResource = $injector.get('matterResource');
-    //})
-    //})
-
     beforeEach(inject(function ($controller, $injector, $rootScope) {
         rootScope = $rootScope.$new();
         vm = $controller('createMatterController as vm', { $scope: $scope, $rootScope: rootScope, $state: $state, $stateParams: $stateParams, matterResource: mockmatterResourceService, api: mockapi });
     }));
-
-    //beforeEach(inject(function ($controller, $injector, $rootScope) {
-    //    rootScope = $rootScope.$new();
-    //    //var inj = angular.injector(['matterMain']);
-    //    //api = inj.get('api');
-    //    //matterResource = inj.get('matterResource');
-    //    //api = $cacheFactory.get('api');
-    //    //matterResource = $cacheFactory.get('matterResource');
-    //    api = $injector.get('api');
-    //    matterResource = $injector.get('matterResource');
-    //    vm = $controller('createMatterController as vm', { $scope: $scope, $state: $state, $stateParams: $stateParams, api: api, matterResource: matterResource, $rootScope: rootScope });
-    //}));
-
-    //beforeEach(inject(function (api) {
-    //    api = _api_;
-    //}));
-
-    //beforeEach(inject(function (matterResource) {
-    //    matterResource = _matterResource_;
-    //}));
-
-
-
-    //describe("Check if matter already exist (POC Spec)", function () {
-    //    beforeEach(function () {
-
-    //        vm.matterName = "abcrtawc";
-    //        vm.clientUrl = "https://lcadms.sharepoint.com/sites/AdventureWorksCycles";
-
-    //    });
-
-    //    it("should return a failing Ajax Response", function () {
-    //        var val = vm.checkValidMatterName();
-    //        vm.checkValidMatterName();
-    //        console.log(val);
-    //        expect(val).toBe(undefined);
-    //    });
-    //});
-  
-
-   
 
     describe('Verification of clearpopup function', function () {
         it('errorPopUpBlock should be set to false', function () {
@@ -301,11 +254,11 @@ describe('CreateMatter Controller test suite', function () {
             vm.selectedPracticeGroup = selectedPracticeGroup;
             vm.getSelectedPracticeGroupValue();
 
-            expect(vm.areaOfLawTerms).not.toBe(null);
-            expect(vm.subAreaOfLawTerms).not.toBe(null);
-            expect(vm.activeSubAOLTerm.termName).toBe("Advertising, Marketing ＆Promotions");
-            expect(vm.activeAOLTerm.folderNames).toBe("Email;Lorem;Ipsum");
-            expect(vm.errorPopUp).toBe(false);
+                expect(vm.areaOfLawTerms).not.toBe(null);
+                expect(vm.subAreaOfLawTerms).not.toBe(null);
+                expect(vm.activeSubAOLTerm.termName).toBe("Advertising, Marketing ＆Promotions");
+                expect(vm.activeAOLTerm.folderNames).toBe("Email;Lorem;Ipsum");
+                expect(vm.errorPopUp).toBe(false);
 
         });
 
@@ -313,8 +266,8 @@ describe('CreateMatter Controller test suite', function () {
             vm.selectedPracticeGroup = null;
             vm.getSelectedPracticeGroupValue();
 
-            expect(vm.areaOfLawTerms).toBe(null);
-            expect(vm.subAreaOfLawTerms).toBe(null);
+                expect(vm.areaOfLawTerms).toBe(null);
+                expect(vm.subAreaOfLawTerms).toBe(null);
         });
 
     });
@@ -416,18 +369,55 @@ describe('CreateMatter Controller test suite', function () {
 
     describe('Verification of onSelect function', function () {
 
-        it('Should return the conflicted ensured user', function () {
-            vm.removeDTItem = false;
-            vm.onSelect(item, "MAQ User", "MAQ Use", "conflictcheckuser");
-            expect(vm.selectedConflictCheckUser).toBe("MAQ User(MAQUser@LCADMS.onmicrosoft.com)");
+        //it('Should return the conflicted ensured user', function () {
+        //    vm.removeDTItem = false;
+        //    vm.onSelect(item, "MAQ User", "MAQ User", "conflictcheckuser");
+        //    expect(vm.selectedConflictCheckUser).toBe("MAQ User(MAQUser@LCADMS.onmicrosoft.com)");
 
+        //});
+
+        //it('Should return the blocked ensured user', function () {
+        //    vm.removeDTItem = false;
+        //    vm.onSelect(item, "MAQ User", "MAQ User", "blockuser");
+        //    expect(vm.blockedUserName).toBe("MAQ User(MAQUser@LCADMS.onmicrosoft.com)");
+
+        //});
+
+        it('Should return the conflicted user', function () {
+            $model = {};
+            $label = { "assignedUser": "" };
+            vm.onSelect(item, $model, $label, "conflictcheckuser", "on-blurr", event, item.name);
+            expect(vm.oSiteUsers).toBeDefined();
+            expect(vm.selectedConflictCheckUser).toBe("MAQ User(MAQUser@LCADMS.onmicrosoft.com)");
         });
 
-        it('Should return the blocked ensured user', function () {
-            vm.removeDTItem = false;
-            vm.onSelect(item, "MAQ User", "MAQ User", "blockuser");
+        it('Should return the blocked user', function () {
+            $model = {};
+            $label = { "assignedUser": "" };
+            vm.onSelect(item, $model, $label, "blockuser", "on-blurr", event, item.name);
+            expect(vm.oSiteUsers).toBeDefined();
             expect(vm.blockedUserName).toBe("MAQ User(MAQUser@LCADMS.onmicrosoft.com)");
+        });
 
+        it('Should return the team member', function () {
+            $model = {};
+            $label = { "assignedUser": "" };
+            vm.onSelect(item, $model, $label, "team", "on-blurr", event, item.name);
+            expect(vm.oSiteUsers).toBeDefined();
+            expect(vm.typehead).toBe(false);
+            expect(vm.notificationPopUpBlock).toBe(false);
+            expect($label.assignedUser).toBe("MAQ User(MAQUser@LCADMS.onmicrosoft.com)");
+        });
+
+        it('Should return the assigned user', function () {
+            $item = {
+                "email": "",
+                "name": "No results found"
+            };
+            $model = {};
+            $label = { "assignedUser": "" };
+            vm.onSelect($item, $model, $label, "team", "on-blurr", event, item.name);
+            expect(vm.user).toBe("MAQ User");
         });
 
     });
@@ -521,12 +511,12 @@ describe('CreateMatter Controller test suite', function () {
     //        expect(tape.navigateToSecondSection).toThrow(e);
     //        vm.iCurrentPage = 1;
     //        vm.NextClick();
-
+            
     //    });
     //});
 
     describe('Verification of CheckPopUp function', function () {
-
+        
         it('Should display the CheckPopUp', function () {
             vm.CheckPopUp(true);
             expect(vm.errorPopUpBlock).toBe(false);
@@ -534,7 +524,7 @@ describe('CreateMatter Controller test suite', function () {
         });
 
     });
-
+    
     describe('Verification of closesuccessbanner function', function () {
 
         it('Should set the successbanner as false', function () {

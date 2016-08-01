@@ -1,8 +1,8 @@
 ﻿(function () {
     'use strict;'
     var app = angular.module("matterMain");
-    app.controller('DocumentDashBoardController', ['$scope', '$state', '$interval', '$stateParams', 'api', '$timeout', 'documentDashBoardResource', '$rootScope', 'uiGridConstants', '$location', '$http', 'commonFunctions', '$window',
-        function documentDashBoardController($scope, $state, $interval, $stateParams, api, $timeout, documentDashBoardResource, $rootScope, uiGridConstants, $location, $http, commonFunctions, $window) {
+    app.controller('DocumentDashBoardController', ['$scope', '$state', '$stateParams', 'documentDashBoardResource', 'api', '$interval', 'uiGridConstants', 'commonFunctions', '$timeout', '$rootScope','$http','$location',
+function documentDashBoardController($scope, $state, $stateParams, documentDashBoardResource, api, $interval, uiGridConstants, commonFunctions, $timeout, $rootScope, $http, $location) {
             var vm = this;
             vm.selected = undefined;
             vm.selectedAuthor = undefined;
@@ -721,9 +721,9 @@
                 maxDate: new Date()
             }
 
-            $scope.$watch('vm.startdate', function (newval, oldval) {
-                vm.enddateOptions.minDate = newval;
-            });
+            //$scope.$watch('vm.startdate', function (newval, oldval) {
+            //    vm.enddateOptions.minDate = newval;
+            //});
 
 
             vm.openStartDate = function ($event) {

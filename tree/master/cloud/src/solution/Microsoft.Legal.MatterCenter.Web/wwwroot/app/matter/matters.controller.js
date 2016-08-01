@@ -17,7 +17,7 @@
             vm.mattersdrop = false;
             vm.mattersdropinner = true;
             $rootScope.bodyclass = "bodymain";
-            $rootScope.profileClass="";
+            $rootScope.profileClass = "";
             //This value is for displaying the help
             $rootScope.pageIndex = "1";
             //#region Onload show ui grid and hide error div
@@ -173,7 +173,7 @@
 
             //#region for setting the dynamic width to grid
             var screenHeight = 0;
-            vm.searchResultsLength=0;
+            vm.searchResultsLength = 0;
             vm.setWidth = function () {
                 var width = $window.innerWidth;
                 angular.element(".ui-grid-viewport").css('max-width', width);
@@ -1481,9 +1481,9 @@
                 maxDate: new Date()
             }
 
-            $scope.$watch('vm.modstartdate', function (newval, oldval) {
-                vm.modenddateOptions.minDate = newval;
-            });
+            //$scope.$watch('vm.modstartdate', function (newval, oldval) {
+            //    vm.modenddateOptions.minDate = newval;
+            //});
 
 
             vm.modStartDate = function ($event) {
@@ -1523,9 +1523,9 @@
                 maxDate: new Date()
             }
 
-            $scope.$watch('vm.startdate', function (newval, oldval) {
-                vm.enddateOptions.minDate = newval;
-            });
+            //$scope.$watch('vm.startdate', function (newval, oldval) {
+            //    vm.enddateOptions.minDate = newval;
+            //});
 
 
             vm.openStartDate = function ($event) {
@@ -2164,6 +2164,22 @@
             return output;
         };
     });
-
 })();
 
+//setWidth
+//editAttachment
+//saveAttachment
+//closeNotificationDialog
+//attachmentTokenCallbackEmailClient
+//getIconSource
+//checkEmptyorWhitespace
+//hideBreadCrumb
+//$watch
+//disabled
+//showSortExp
+//showmatterdrop
+//closealldrops
+//overwriteConfiguration
+//contentCheckNotification
+//abortContentCheck
+//closeSuccessBanner

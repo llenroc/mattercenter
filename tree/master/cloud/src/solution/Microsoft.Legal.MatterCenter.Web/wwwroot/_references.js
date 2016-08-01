@@ -40,9 +40,10 @@
 /// <reference path="demo/controller.js" />
 /// <reference path="demo/spec.js" />
 /// <reference path="fabric-0.6.0/js/jquery.components-0.6.0.min.js" />
-/// <reference path="JasmineTest/CreateMatterController - Copy.spec.js" />
-/// <reference path="JasmineTest/CreateMatterController.spec.js" />
+/// <reference path="jasminetest/createmattercontrollerjscall.spec.js" />
+/// <reference path="jasminetest/createmattercontrollerservicecall.spec.js" />
 /// <reference path="JasmineTest/DocumentDashboardController.spec.js" />
+/// <reference path="jasminetest/mattercontroller.spec.js" />
 /// <reference path="JasmineTest/MatterDashboardController.spec.js" />
 /// <reference path="JasmineTest/object.js" />
 /// <reference path="JasmineTest/ObjectCollection.js" />

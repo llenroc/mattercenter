@@ -175,7 +175,8 @@ describe('MatterDashBoard Controller test suite', function () {
             pm.filterSearchOK("client");
             expect(pm.clientdrop).toBe(false);
             expect(pm.clientdropvisible).toBe(false);
-            expect(pm.selectedClients).toBe("A. Datum Corporation,");
+            expect(pm.selectedClientsForCancel).toBe("A. Datum Corporation");
+            expect(pm.selectedClients).toBe("A. Datum Corporation");
         });
 
         it('It should return selected practice group', function () {
@@ -184,7 +185,8 @@ describe('MatterDashBoard Controller test suite', function () {
             pm.filterSearchOK("pg");
             expect(pm.pgdropvisible).toBe(false);
             expect(pm.pgdrop).toBe(false);
-            expect(pm.selectedPGs).toBe("Advertising, Marketing ＆ Promotions,");
+            expect(pm.selectedPGsForCancel).toBe("Advertising, Marketing ＆ Promotions");
+            expect(pm.selectedPGs).toBe("Advertising, Marketing ＆ Promotions");
 
         });
         it('It should return selected AOL', function () {
@@ -193,7 +195,8 @@ describe('MatterDashBoard Controller test suite', function () {
             pm.filterSearchOK("aol");
             expect(pm.aoldropvisible).toBe(false);
             expect(pm.aoldrop).toBe(false);
-            expect(pm.selectedAOLs).toBe("Advertising, Marketing ＆ Promotions,");
+            expect(pm.selectedAOLsForCancel).toBe("Advertising, Marketing ＆ Promotions");
+            expect(pm.selectedAOLs).toBe("Advertising, Marketing ＆ Promotions");
         });
     });
 
@@ -259,7 +262,7 @@ describe('MatterDashBoard Controller test suite', function () {
             $scope.$apply = function () { };
             pm.totalrecords = 16;
             pm.pagination();
-            expect(pm.fromtopage).toBe("1 - 10");
+            expect(pm.fromtopage).toBe("1 - 16");
             expect(pm.displaypagination).toBe(true);
 
         });
