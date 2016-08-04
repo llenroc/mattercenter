@@ -54,7 +54,7 @@ namespace Microsoft.Legal.MatterCenter.ServiceTest.IntegrationTests
 
             var matterClient = new Client()
             {
-                Url = "https://lcadms.sharepoint.com/sites/microsoft"
+                Url = "https://msmatter.sharepoint.com/sites/microsoft"
             };
 
 
@@ -155,7 +155,7 @@ namespace Microsoft.Legal.MatterCenter.ServiceTest.IntegrationTests
 
             var matterClient = new Client()
             {
-                Url = "https://lcadms.sharepoint.com/sites/microsoft"
+                Url = "https://msmatter.sharepoint.com/sites/microsoft"
             };
 
 

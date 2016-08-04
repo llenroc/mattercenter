@@ -1,8 +1,8 @@
 ﻿(function () {
     'use strict;'
     var app = angular.module("matterMain");
-    app.controller('DocumentDashBoardController', ['$scope', '$state', '$stateParams', 'documentDashBoardResource', 'api', '$interval', 'uiGridConstants', 'commonFunctions', '$timeout', '$rootScope','$http','$location',
-function documentDashBoardController($scope, $state, $stateParams, documentDashBoardResource, api, $interval, uiGridConstants, commonFunctions, $timeout, $rootScope, $http, $location) {
+    app.controller('DocumentDashBoardController', ['$scope', '$state', '$interval', '$stateParams', 'api', '$timeout', 'documentDashBoardResource', '$rootScope', 'uiGridConstants', '$location', '$http', 'commonFunctions', '$window',
+        function documentDashBoardController($scope, $state, $interval, $stateParams, api, $timeout, documentDashBoardResource, $rootScope, uiGridConstants, $location, $http, commonFunctions, $window) {
             var vm = this;
             vm.selected = undefined;
             vm.selectedAuthor = undefined;
@@ -721,9 +721,9 @@ function documentDashBoardController($scope, $state, $stateParams, documentDashB
                 maxDate: new Date()
             }
 
-            //$scope.$watch('vm.startdate', function (newval, oldval) {
-            //    vm.enddateOptions.minDate = newval;
-            //});
+            $scope.$watch('vm.startdate', function (newval, oldval) {
+                vm.enddateOptions.minDate = newval;
+            });
 
 
             vm.openStartDate = function ($event) {
@@ -1040,9 +1040,9 @@ function documentDashBoardController($scope, $state, $stateParams, documentDashB
 
             vm.gotoDocumentUrl = function (url) {
                 if (vm.assetsuccess) {
-                    $window.open(configs.global.repositoryUrl + "/SitePages/documentDetails.aspx?client=" + url.replace("https://msmatter.sharepoint.com", "") + "&listguid=" + vm.listguid + "&docguid=" + vm.docguid, "_blank");
+                    $window.open(configs.global.repositoryUrl + "/SitePages/documentDetails.aspx?client=" + url.replace("https://lcadms.sharepoint.com", "") + "&listguid=" + vm.listguid + "&docguid=" + vm.docguid, "_blank");
                 } else {
-                    $timeout(function () { $window.open(configs.global.repositoryUrl + "/SitePages/documentDetails.aspx?client=" + url.replace("https://msmatter.sharepoint.com", "") + "&listguid=" + vm.listguid + "&docguid=" + vm.docguid, "_blank"); }, 1500);
+                    $timeout(function () { $window.open(configs.global.repositoryUrl + "/SitePages/documentDetails.aspx?client=" + url.replace("https://lcadms.sharepoint.com", "") + "&listguid=" + vm.listguid + "&docguid=" + vm.docguid, "_blank"); }, 1500);
                 }
             }
 

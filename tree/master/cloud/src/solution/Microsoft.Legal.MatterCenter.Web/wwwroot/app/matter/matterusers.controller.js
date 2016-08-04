@@ -30,7 +30,7 @@
 
         if (cm.clientUrl === "" && cm.matterName === "") {
             cm.matterName = "E2ETesting2";
-            cm.clientUrl = "https://msmatter.sharepoint.com/sites/microsoft";
+            cm.clientUrl = "https://lcadms.sharepoint.com/sites/microsoft";
             cm.isEdit = "true";
         }
 

@@ -11,11 +11,11 @@
     "Microsoft.SharePointOnline.CSOM": "16.1.5026.1200",
     "Microsoft.Azure.WebJobs": "1.1.2",
     "Microsoft.Azure.WebJobs.Extensions": "1.0.1",
-    "Microsoft.Legal.MatterCenter.Models": "1.0.0-*",
     "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.9.302261508-alpha",
-    "Microsoft.Net.Http": "2.2.22",
-    "Microsoft.AspNetCore.Hosting": "1.0.0-rc2-final",
-    "Microsoft.Extensions.Configuration.Json": "1.0.0-rc2-final"
+    "Microsoft.Net.Http": "2.2.28",
+    "Microsoft.AspNetCore.Hosting": "1.0.0",
+    "Microsoft.Extensions.Configuration.Json": "1.0.0",
+    "Microsoft.Legal.MatterCenter.Models": "1.0.0-*"
   },
 
   "commands": {
@@ -23,7 +23,7 @@
   },
 
   "frameworks": {
-    "net451": { }
+    "net46": {}
   }
 }
 

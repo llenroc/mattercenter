@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular.module("matterMain")
@@ -28,7 +28,11 @@
             vm.welcomeheader = false;
             //#endregion
 
-            vm.emailsubject="CELA Project Center Feedback and Support request";
+            vm.emailsubject = "CELA Project Center Feedback and Support request";
 
+            //#region dynamic content
+            vm.navigationContent = uiconfigs.Navigation;
+            vm.learnmore = configs.uri.MainURL;
+            //#endregion
         }]);
 })();

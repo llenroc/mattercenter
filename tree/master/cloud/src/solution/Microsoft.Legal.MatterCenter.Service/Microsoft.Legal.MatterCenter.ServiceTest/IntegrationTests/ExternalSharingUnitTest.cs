@@ -28,7 +28,7 @@ namespace Microsoft.Legal.MatterCenter.ServiceTest
 
             var assignUserEmails = new List<IList<string>>();
             var userEmails = new List<string>();
-            userEmails.Add("matteradmin@MSmatter.onmicrosoft.com");
+            userEmails.Add("matteradmin@lcadms.onmicrosoft.com");
             assignUserEmails.Add(userEmails);
 
             userEmails = new List<string>();
@@ -60,7 +60,7 @@ namespace Microsoft.Legal.MatterCenter.ServiceTest
             {
                 Client = new Client
                 {
-                    Url = "https://msmatter.sharepoint.com/sites/microsoft",
+                    Url = "https://lcadms.sharepoint.com/sites/microsoft",
                     Id = "100001",
                     Name = "Microsoft"
                 },
@@ -70,7 +70,7 @@ namespace Microsoft.Legal.MatterCenter.ServiceTest
                     Name = "vTest4",
                     BlockUserNames = new List<string>()
                     {
-                        "SaiG@MSmatter.onmicrosoft.com"
+                        "SaiG@lcadms.onmicrosoft.com"
                     },
                     AssignUserNames = assignUserNames,
                     AssignUserEmails = assignUserEmails,

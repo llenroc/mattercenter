@@ -347,7 +347,7 @@
     <Content Include="lib\jquery\MIT-LICENSE.txt" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\site.min.js" />
-    <Content Include="Specs\CreateMatter.spec.js" />
+    <Content Include="Specs\CreateMatterController.spec.js" />
     <Content Include="Specs\DocumentDashboardController.spec.js" />
     <Content Include="Specs\MatterController.spec.js" />
     <Content Include="Specs\MatterDashboardController.spec.js" />
