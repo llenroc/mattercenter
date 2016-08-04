@@ -64,26 +64,26 @@ namespace Microsoft.Legal.MatterCenter.Jobs
             bool isEditMode = matterInformation.EditMode;
             ClientContext clientContext = null;
             IEnumerable<RoleAssignment> userPermissionOnLibrary = null;
-            GenericResponseVM genericResponse = null;
+            //GenericResponseVM genericResponse = null;
             try
             {
                 clientContext = new ClientContext(matterInformation.Client.Url);
                 clientContext.Credentials = new SharePointOnlineCredentials(configuration["Settings:AdminUserName"], securePassword);
 
-                if (null != matter.Conflict && !string.IsNullOrWhiteSpace(matter.Conflict.Identified))
-                {
-                    if (Convert.ToBoolean(matter.Conflict.Identified, System.Globalization.CultureInfo.InvariantCulture))
-                    {
-                        genericResponse = CheckSecurityGroupInTeamMembers(clientContext, matter, matterInformation.UserIds);
-                    }
-                }
-                else
-                {
-                    //genericResponse = string.Format(System.Globalization.CultureInfo.InvariantCulture, ConstantStrings.ServiceResponse, TextConstants.IncorrectInputConflictIdentifiedCode, TextConstants.IncorrectInputConflictIdentifiedMessage);
-                    return;
-                }
-                if (genericResponse == null)
-                {
+                //if (null != matter.Conflict && !string.IsNullOrWhiteSpace(matter.Conflict.Identified))
+                //{
+                //    if (Convert.ToBoolean(matter.Conflict.Identified, System.Globalization.CultureInfo.InvariantCulture))
+                //    {
+                //        genericResponse = CheckSecurityGroupInTeamMembers(clientContext, matter, matterInformation.UserIds);
+                //    }
+                //}
+                //else
+                //{
+                //    //genericResponse = string.Format(System.Globalization.CultureInfo.InvariantCulture, ConstantStrings.ServiceResponse, TextConstants.IncorrectInputConflictIdentifiedCode, TextConstants.IncorrectInputConflictIdentifiedMessage);
+                //    return;
+                //}
+                //if (genericResponse == null)
+                //{
                     PropertyValues matterStampedProperties = SPList.GetListProperties(clientContext, matter.Name);
                     loggedInUserName = SPList.GetLoggedInUserDetails(clientContext).Name;
                     // Get matter library current permissions
@@ -116,9 +116,9 @@ namespace Microsoft.Legal.MatterCenter.Jobs
                         result = UpdatePermission(clientContext, matter, usersToRemove, loggedInUserName, true, "Site Pages", listItemId, isEditMode);
                     }
                     // Update matter metadata
-                    result = UpdateMatterStampedProperties(clientContext, matterDetails, matter, matterStampedProperties, isEditMode);
-                }
-                
+                    result = UpdateMatterStampedProperties(clientContext, matterDetails, matter, matterStampedProperties, isEditMode, configuration);
+                //}
+
             }
             catch (Exception ex)
             {
@@ -157,7 +157,7 @@ namespace Microsoft.Legal.MatterCenter.Jobs
         }
 
         public bool UpdateMatterStampedProperties(ClientContext clientContext, MatterDetails matterDetails, Matter matter, 
-            PropertyValues matterStampedProperties, bool isEditMode)
+            PropertyValues matterStampedProperties, bool isEditMode, IConfigurationRoot configuration)
         {
 
             try
@@ -167,14 +167,14 @@ namespace Microsoft.Legal.MatterCenter.Jobs
                     Dictionary<string, string> propertyList = new Dictionary<string, string>();
 
                     // Get existing stamped properties
-                    string stampedUsers = GetStampPropertyValue(matterStampedProperties.FieldValues, "MatterCenterUsers");
-                    string stampedUserEmails = GetStampPropertyValue(matterStampedProperties.FieldValues, "MatterCenterUserEmails");
-                    string stampedPermissions = GetStampPropertyValue(matterStampedProperties.FieldValues, "MatterCenterPermissions");
-                    string stampedRoles = GetStampPropertyValue(matterStampedProperties.FieldValues, "MatterCenterRoles");
-                    string stampedResponsibleAttorneys = GetStampPropertyValue(matterStampedProperties.FieldValues, "ResponsibleAttorney");
-                    string stampedResponsibleAttorneysEmail = GetStampPropertyValue(matterStampedProperties.FieldValues, "ResponsibleAttorneyEmail");
-                    string stampedTeamMembers = GetStampPropertyValue(matterStampedProperties.FieldValues, "TeamMembers");
-                    string stampedBlockedUploadUsers = GetStampPropertyValue(matterStampedProperties.FieldValues, "BlockedUploadUsers");
+                    string stampedUsers = GetStampPropertyValue(matterStampedProperties.FieldValues, configuration["Matter:StampedPropertyMatterCenterUsers"]);
+                    string stampedUserEmails = GetStampPropertyValue(matterStampedProperties.FieldValues, configuration["Matter:StampedPropertyMatterCenterUserEmails"]);
+                    string stampedPermissions = GetStampPropertyValue(matterStampedProperties.FieldValues, configuration["Matter:StampedPropertyMatterCenterPermissions"]);
+                    string stampedRoles = GetStampPropertyValue(matterStampedProperties.FieldValues, configuration["Matter:StampedPropertyMatterCenterRoles"]);
+                    string stampedResponsibleAttorneys = GetStampPropertyValue(matterStampedProperties.FieldValues, configuration["Matter:StampedPropertyResponsibleAttorney"]);
+                    string stampedResponsibleAttorneysEmail = GetStampPropertyValue(matterStampedProperties.FieldValues, configuration["Matter:StampedPropertyResponsibleAttorneyEmail"]);
+                    string stampedTeamMembers = GetStampPropertyValue(matterStampedProperties.FieldValues, configuration["Matter:StampedPropertyTeamMembers"]);
+                    string stampedBlockedUploadUsers = GetStampPropertyValue(matterStampedProperties.FieldValues, configuration["Matter:StampedPropertyBlockedUploadUsers"]);
 
                     string currentPermissions = string.Join(ServiceConstants.DOLLAR + ServiceConstants.PIPE + ServiceConstants.DOLLAR, matter.Permissions.Where(user => !string.IsNullOrWhiteSpace(user)));
                     string currentRoles = string.Join(ServiceConstants.DOLLAR + ServiceConstants.PIPE + ServiceConstants.DOLLAR, matter.Roles.Where(user => !string.IsNullOrWhiteSpace(user)));
@@ -191,14 +191,14 @@ namespace Microsoft.Legal.MatterCenter.Jobs
                     string finalMatterCenterUserEmails = string.IsNullOrWhiteSpace(stampedUserEmails) || isEditMode ? currentUserEmails : string.Concat(stampedUserEmails, ServiceConstants.DOLLAR + ServiceConstants.PIPE + ServiceConstants.DOLLAR, currentUserEmails);
                     string finalResponsibleAttorneysEmail = string.IsNullOrWhiteSpace(stampedResponsibleAttorneysEmail) || isEditMode ? matterDetails.ResponsibleAttorneyEmail : string.Concat(stampedResponsibleAttorneysEmail, ServiceConstants.SEMICOLON, matterDetails.ResponsibleAttorneyEmail);
 
-                    propertyList.Add("ResponsibleAttorney", WebUtility.HtmlEncode(finalResponsibleAttorneys));
-                    propertyList.Add("ResponsibleAttorneyEmail", WebUtility.HtmlEncode(finalResponsibleAttorneysEmail));
-                    propertyList.Add("TeamMembers", WebUtility.HtmlEncode(finalTeamMembers));
-                    propertyList.Add("BlockedUploadUsers", WebUtility.HtmlEncode(finalBlockedUploadUsers));
-                    propertyList.Add("MatterCenterRoles", WebUtility.HtmlEncode(finalMatterRoles));
-                    propertyList.Add("MatterCenterPermissions", WebUtility.HtmlEncode(finalMatterPermissions));
-                    propertyList.Add("MatterCenterUsers", WebUtility.HtmlEncode(finalMatterCenterUsers));
-                    propertyList.Add("MatterCenterUserEmails", WebUtility.HtmlEncode(finalMatterCenterUserEmails));
+                    propertyList.Add(configuration["Matter:StampedPropertyResponsibleAttorney"], WebUtility.HtmlEncode(finalResponsibleAttorneys));
+                    propertyList.Add(configuration["Matter:StampedPropertyResponsibleAttorneyEmail"], WebUtility.HtmlEncode(finalResponsibleAttorneysEmail));
+                    propertyList.Add(configuration["Matter:StampedPropertyTeamMembers"], WebUtility.HtmlEncode(finalTeamMembers));
+                    propertyList.Add(configuration["Matter:StampedPropertyBlockedUploadUsers"], WebUtility.HtmlEncode(finalBlockedUploadUsers));
+                    propertyList.Add(configuration["Matter:StampedPropertyMatterCenterRoles"], WebUtility.HtmlEncode(finalMatterRoles));
+                    propertyList.Add(configuration["Matter:StampedPropertyMatterCenterPermissions"], WebUtility.HtmlEncode(finalMatterPermissions));
+                    propertyList.Add(configuration["Matter:StampedPropertyMatterCenterUsers"], WebUtility.HtmlEncode(finalMatterCenterUsers));
+                    propertyList.Add(configuration["Matter:StampedPropertyMatterCenterUserEmails"], WebUtility.HtmlEncode(finalMatterCenterUserEmails));
 
                     SPList.SetPropertBagValuesForList(clientContext, matterStampedProperties, matter.Name, propertyList);
                     return true;

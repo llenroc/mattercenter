@@ -48,29 +48,29 @@ namespace Microsoft.Legal.MatterCenter.Repository
         /// </summary>
         /// <param name="search"></param>
         public MatterRepository(ISearch search, 
-            IOptionsMonitor<MatterSettings> matterSettings, 
-            IOptionsMonitor<SearchSettings> searchSettings, 
-            IOptionsMonitor<ListNames> listNames, 
+            IOptions<MatterSettings> matterSettings, 
+            IOptions<SearchSettings> searchSettings, 
+            IOptions<ListNames> listNames, 
             ISPOAuthorization spoAuthorization, 
             ISPContentTypes spContentTypes,
             IExternalSharing extrnalSharing, 
             IUserRepository userRepositoy,
             ISPList spList, 
-            IOptionsMonitor<CamlQueries> camlQueries, 
+            IOptions<CamlQueries> camlQueries, 
             IUsersDetails userdetails, 
-            IOptionsMonitor<ErrorSettings> errorSettings, 
+            IOptions<ErrorSettings> errorSettings, 
             ISPPage spPage)
         {
             this.search = search;
-            this.matterSettings = matterSettings.CurrentValue;
-            this.searchSettings = searchSettings.CurrentValue;
-            this.listNames = listNames.CurrentValue;
+            this.matterSettings = matterSettings.Value;
+            this.searchSettings = searchSettings.Value;
+            this.listNames = listNames.Value;
             this.spList = spList;
-            this.camlQueries = camlQueries.CurrentValue;
+            this.camlQueries = camlQueries.Value;
             this.userdetails = userdetails;
             this.spoAuthorization = spoAuthorization;
             this.spPage = spPage;
-            this.errorSettings = errorSettings.CurrentValue;
+            this.errorSettings = errorSettings.Value;
             this.spContentTypes = spContentTypes;
             this.extrnalSharing = extrnalSharing;
             this.userRepositoy = userRepositoy;
@@ -256,7 +256,7 @@ namespace Microsoft.Legal.MatterCenter.Repository
                         //// Check whether the name entered by the user and the name resolved by SharePoint is same.
                         foreach (string teamMember in userNameList)
                         {
-                            if (!string.Equals(teamMember.Trim(), teamMemberPrincipalCollection[iCount].Title.Trim(), StringComparison.OrdinalIgnoreCase))
+                            if (!string.Equals(teamMember.Trim(), teamMemberPrincipalCollection[0].Title.Trim(), StringComparison.OrdinalIgnoreCase))
                             {
                                 genericResponse = new GenericResponseVM();
                                 //result = string.Format(CultureInfo.InvariantCulture, ConstantStrings.ServiceResponse, ServiceConstantStrings.IncorrectTeamMembersCode, ServiceConstantStrings.IncorrectTeamMembersMessage + ConstantStrings.DOLLAR + ConstantStrings.Pipe + ConstantStrings.DOLLAR + userId[iCounter]);
