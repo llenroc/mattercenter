@@ -202,7 +202,14 @@
     <Content Include="lib\jquery\dist\Open Notebook.onetoc2" />
     <Content Include="lib\jquery\Open Notebook.onetoc2" />
     <Content Include="lib\Open Notebook.onetoc2" />
+    <Content Include="Scripts\app.js" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
+    <None Include="Properties\PublishProfiles\mattercenterjasmine - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\mattercenterjasmine - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\mattermaqdevsite - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\mattermaqdevsite - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\POCAPI - FTP %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\POCAPI - Web Deploy %282%29.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -348,6 +355,7 @@
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\site.min.js" />
     <Content Include="Specs\CreateMatterController.spec.js" />
+    <Content Include="Specs\CreateMatterControllerservicecall.spec.js" />
     <Content Include="Specs\DocumentDashboardController.spec.js" />
     <Content Include="Specs\MatterController.spec.js" />
     <Content Include="Specs\MatterDashboardController.spec.js" />

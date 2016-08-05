@@ -1,5 +1,5 @@
---temp-output:C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\obj\Release\net46\
---out:C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\bin\Release\net46\Microsoft.Legal.MatterCenter.Repository.dll
+--temp-output:C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\obj\Release\net46\
+--out:C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\bin\Release\net46\Microsoft.Legal.MatterCenter.Repository.dll
 --define:RELEASE
 --define:TRACE
 --define:NET46
@@ -154,8 +154,8 @@
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\Facades\System.Xml.ReaderWriter.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\Facades\System.Xml.XDocument.dll
 --reference:C:\Users\v-akdigh\.nuget\packages\WindowsAzure.Storage\7.1.3-preview\lib\net40\Microsoft.WindowsAzure.Storage.dll
---reference:C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Models\bin\Release\net46\Microsoft.Legal.MatterCenter.Models.dll
---reference:C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Utility\bin\Release\net46\Microsoft.Legal.MatterCenter.Utility.dll
+--reference:C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Models\bin\Release\net46\Microsoft.Legal.MatterCenter.Models.dll
+--reference:C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Utility\bin\Release\net46\Microsoft.Legal.MatterCenter.Utility.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\mscorlib.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.Core.dll
@@ -168,34 +168,34 @@
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.IO.Compression.FileSystem.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.Net.Http.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.Runtime.Serialization.dll
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\ICommonRepository.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Configs\ConfigRepository.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Configs\IconfigRepository.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Document\DocumentRepository.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Document\IDocumentRepository.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Matter\IMatterRepository.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Matter\MatterRepository.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Properties\AssemblyInfo.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Shared\ISharedRepository.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Shared\SharedRepository.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\ExternalSharing.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Search.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Site.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\SPContentTypes.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\SPList.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\SPPage.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Taxonomy.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\UsersDetails.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Extensions\TaxonomyExtensions.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Interfaces\IExternalSharing.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Interfaces\ISearch.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Interfaces\ISite.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Interfaces\ISPContentTypes.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Interfaces\ISPList.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Interfaces\ISPPage.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Interfaces\ITaxonomy.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Interfaces\IUsersDetails.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Taxonomy\ITaxonomyRepository.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Taxonomy\TaxonomyRepository.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\UserRepository\IUserRepository.cs
-C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\UserRepository\UserRepository.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\ICommonRepository.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Configs\ConfigRepository.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Configs\IconfigRepository.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Document\DocumentRepository.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Document\IDocumentRepository.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Matter\IMatterRepository.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Matter\MatterRepository.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Properties\AssemblyInfo.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Shared\ISharedRepository.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Shared\SharedRepository.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\ExternalSharing.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Search.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Site.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\SPContentTypes.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\SPList.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\SPPage.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Taxonomy.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\UsersDetails.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Extensions\TaxonomyExtensions.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Interfaces\IExternalSharing.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Interfaces\ISearch.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Interfaces\ISite.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Interfaces\ISPContentTypes.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Interfaces\ISPList.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Interfaces\ISPPage.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Interfaces\ITaxonomy.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\SharePointInfo\Interfaces\IUsersDetails.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Taxonomy\ITaxonomyRepository.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\Taxonomy\TaxonomyRepository.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\UserRepository\IUserRepository.cs
+C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\UserRepository\UserRepository.cs
