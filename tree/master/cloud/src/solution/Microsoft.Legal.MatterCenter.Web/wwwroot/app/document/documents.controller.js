@@ -10,6 +10,12 @@
     function ($scope, $state, $interval, $stateParams, api, $timeout,
         documentResource, $rootScope, uiGridConstants, $location, $http, $templateCache, $window, $q, $filter, commonFunctions) {
         var vm = this;
+
+          vm.sum = function () {
+                vm.z = vm.x + vm.y;
+            }
+
+
         vm.selected = undefined;
         //#region dynamic content
         vm.navigationContent = uiconfigs.Navigation;
@@ -960,9 +966,9 @@
             maxDate: new Date()
         }
 
-        $scope.$watch('vm.modstartdate', function (newval, oldval) {
-            vm.modenddateOptions.minDate = newval;
-        });
+        //$scope.$watch('vm.modstartdate', function (newval, oldval) {
+        //    vm.modenddateOptions.minDate = newval;
+        //});
 
 
         vm.modStartDate = function ($event) {
@@ -1002,9 +1008,9 @@
             maxDate: new Date()
         }
 
-        $scope.$watch('vm.startdate', function (newval, oldval) {
-            vm.enddateOptions.minDate = newval;
-        });
+        //$scope.$watch('vm.startdate', function (newval, oldval) {
+        //    vm.enddateOptions.minDate = newval;
+        //});
 
 
         vm.openStartDate = function ($event) {
