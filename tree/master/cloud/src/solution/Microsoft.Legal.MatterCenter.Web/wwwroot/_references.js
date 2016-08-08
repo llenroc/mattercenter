@@ -49,6 +49,7 @@
 /// <reference path="jasminetest/object.js" />
 /// <reference path="jasminetest/ObjectCollection.js" />
 /// <reference path="jasminetest/Test.js" />
+/// <reference path="jasminetest/uploadverification.js" />
 /// <reference path="js/site.js" />
 /// <reference path="lib/adal-angular/dist/adal.min.js" />
 /// <reference path="lib/adal-angular/dist/adal-angular.min.js" />

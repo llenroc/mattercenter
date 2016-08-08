@@ -11,11 +11,6 @@
         documentResource, $rootScope, uiGridConstants, $location, $http, $templateCache, $window, $q, $filter, commonFunctions) {
         var vm = this;
 
-          vm.sum = function () {
-                vm.z = vm.x + vm.y;
-            }
-
-
         vm.selected = undefined;
         //#region dynamic content
         vm.navigationContent = uiconfigs.Navigation;

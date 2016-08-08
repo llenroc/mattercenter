@@ -138,13 +138,6 @@ describe('MattersController Controller test suite', function () {
         cm = $controller('mattersController as cm', { $scope: $scope, $state: $state, $stateParams: $stateParams, matterResource: mockmatterResource, api: mockapi, $rootScope: rootScope, $http: $http, $location: $location, $q: $q });
     }));
 
-    describe('Verification of setWidth function', function () {
-        it('It should set width of screen', function () {
-            cm.setWidth();
-            expect(cm.searchResultsLength).toBe(42);
-        });
-    });
-
 
     describe('Verification of closeNotificationDialog function', function () {
         it('It should close notification dialog box', function () {
