@@ -4,12 +4,7 @@
     angular.module("matterMain")
         .controller('navigationController', ['$state', '$stateParams', 'api', '$rootScope',
         function ($state, $stateParams, api, $rootScope) {
-
             var vm = this;
-            vm.sum = function () {
-                vm.z = vm.x + vm.y;
-            }
-
             $rootScope.pageIndex = "0";
             vm.SPOHomePage = configs.uri.SPOsiteURL + '/SitePages/MatterCenterHomev1.aspx?section=1';
             vm.menuClick = function () {
