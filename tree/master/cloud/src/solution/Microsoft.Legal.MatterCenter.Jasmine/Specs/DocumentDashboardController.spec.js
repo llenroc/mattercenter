@@ -128,7 +128,7 @@ describe('DocumentDashboard Controller test suite', function () {
 
     beforeEach(module('matterMain'));
     beforeEach(module('matterMain', function ($provide) {
-        $provide.factory("api", ['matterResource', 'documentResource', 'documentDashBoardResource', 'matterDashBoardResource', 'homeResource', mockapi]);
+       $provide.factory("api", ['matterResource', 'documentResource', 'documentDashBoardResource', 'matterDashBoardResource', 'homeResource', mockapi]);
     }));
 
     beforeEach(module('ui.router'));
@@ -141,7 +141,7 @@ describe('DocumentDashboard Controller test suite', function () {
 
     describe('Verification of closealldrops function', function () {
         it('It should set all drop down value as false with click on page', function () {
-
+     
             dm.closealldrops(event);
             expect(dm.searchdrop).toBe(false);
             expect(dm.downwarddrop).toBe(true);
@@ -188,7 +188,7 @@ describe('DocumentDashboard Controller test suite', function () {
         });
         it('It should return the cartelement count as zero', function () {
             dm.cartelements = {};
-            dm.cartelements.length = 0
+            dm.cartelements.length=0
             dm.removeAttachment(obj[0]);
             expect(dm.cartelements.length).toBe(0);
             expect(dm.documentsCheckedCount).not.toBeLessThan(0);
@@ -198,7 +198,7 @@ describe('DocumentDashboard Controller test suite', function () {
 
     describe('Verification of toggleCheckerAll function', function () {
         it('It should select all the document simultaneously', function () {
-            dm.documentGridOptions.data = obj
+            dm.documentGridOptions.data=obj
             dm.documentsCheckedCount = 3;
             dm.toggleCheckerAll(true);
             expect(dm.cartelements.length).toBeDefined();
@@ -225,30 +225,30 @@ describe('DocumentDashboard Controller test suite', function () {
 
     describe('Verification of showdownward function', function () {
         it('It should show downward dropdown box', function () {
-            dm.showdownward(event);
-            expect(dm.searchdrop).toBe(false);
-            expect(dm.upwarddrop).toBe(false);
-            expect(dm.downwarddrop).toBe(true);
+             dm.showdownward(event);
+             expect(dm.searchdrop).toBe(false);
+             expect(dm.upwarddrop).toBe(false);
+             expect(dm.downwarddrop).toBe(true);
 
-        });
-    });
+         });
+     });
 
     describe('Verification of showsortby function', function () {
         it('It should show sortby box', function () {
             dm.sortbydropvisible = false
-            dm.showsortby(event);
-
-            expect(dm.sortbydrop).toBe(true);
-            expect(dm.sortbydropvisible).toBe(true);
-        });
-        it('It should not show sortby box', function () {
-            dm.sortbydropvisible = true
-            dm.showsortby(event);
-
-            expect(dm.sortbydrop).toBe(false);
-            expect(dm.sortbydropvisible).toBe(false);
-        });
-    });
+             dm.showsortby(event);
+            
+             expect(dm.sortbydrop).toBe(true);
+             expect(dm.sortbydropvisible).toBe(true);
+         });
+         it('It should not show sortby box', function () {
+             dm.sortbydropvisible = true
+             dm.showsortby(event);
+             
+             expect(dm.sortbydrop).toBe(false);
+             expect(dm.sortbydropvisible).toBe(false);
+         });
+     });
 
     describe('Verification of pagination function', function () {
         it('It should not display pagination on page', function () {
