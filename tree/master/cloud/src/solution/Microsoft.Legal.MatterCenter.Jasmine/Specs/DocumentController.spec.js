@@ -235,7 +235,7 @@ describe('documents Controller test suite', function () {
             om.gridOptions.data = obj;
             om.toggleCheckerAll(true);
             expect(om.gridOptions.data[0].checker).toBe(true);
-            expect(om.documentsCheckedCount).toBe(1);
+            expect(om.documentsCheckedCount).toBe(2);
             expect(om.selectedRows).toBe(obj);
         });
         it('It should not check checkboxes inside grid', function () {

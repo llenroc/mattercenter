@@ -119,17 +119,6 @@ describe('DocumentDashboard Controller test suite', function () {
         });
     });
 
-    describe('Verification of getPinnedDocuments function', function () {
-        it('It should return the all pinned documents', function () {
-            dm.getPinnedDocuments();
-            expect(dm.documentGridOptions.data).not.toBe(null);
-            expect(dm.documentGridOptions.data.length).toBeGreaterThan(1);
-            expect(dm.totalrecords).toBe(0);
-            expect(dm.lazyloaderdashboard).toBe(true);
-            expect(dm.divuigrid).toBe(true);
-        });
-    });
-
     describe('Verification of getMyDocuments function', function () {
         it('It should return the My documents', function () {
             dm.getMyDocuments();
@@ -139,14 +128,121 @@ describe('DocumentDashboard Controller test suite', function () {
             expect(dm.nodata).toBe(false);
         });
     });
+
+    describe('Verification of getDocuments function', function () {
+        it('It should get the Documents', function () {
+            dm.getDocuments();
+            expect(dm.lazyloaderdashboard).toBe(true);
+            expect(dm.displaypagination).toBe(false);
+            expect(dm.divuigrid).toBe(true);
+            expect(dm.nodata).toBe(false);
+            expect(dm.pinDocumentCount).toBeGreaterThan(0);
+            expect(dm.documentGridOptions.data.length).toBeGreaterThan(1);
+            expect(dm.totalrecords).toBe(0);
+            expect(dm.pinDocumentCount).toBeGreaterThan(0);
+            expect(dm.nodata).toBe(false);
+
+        });
+    });
+
+    describe('Verification of showclientdrop function', function () {
+        it('It should show clientdrop', function () {
+            dm.clientdropvisible = false;
+            dm.clients = undefined;
+            dm.showclientdrop(event);
+            expect(dm.clients).toBeDefined();
+            expect(dm.clientdrop).toBe(true);
+            expect(dm.clientdropvisible).toBe(true);
+            expect(dm.lazyloaderdocumentclient).toBe(true);
+
+        });
+
+        it('It should not show clientdrop', function () {
+            dm.clientdropvisible = true;
+            dm.showclientdrop(event);
+            expect(dm.clientdrop).toBe(false);
+            expect(dm.clientdropvisible).toBe(false);
+            expect(dm.lazyloaderdocumentclient).toBe(true);
+
+        });
+    });
+
+
+    describe('Verification of FilterByType function', function () {
+        it('It should show FilterByType', function () {
+            dm.FilterByType();
+            expect(dm.totalrecords).toBeGreaterThan(0);
+            expect(dm.documentGridOptions.data.length).toBeGreaterThan(0);
+            expect(dm.lazyloader).toBe(true);
+            expect(dm.nodata).toBe(false);
+            expect(dm.divuigrid).toBe(true);
+            expect(dm.lazyloaderdashboard).toBe(true);
+        });
+    });
+
+    describe('Verification of sortyby function', function () {
+        it('It should show sortyby', function () {
+            var sortexp = "AlphabeticalUp";
+            dm.sortyby(sortexp,"Searchkeyword");
+            expect(dm.totalrecords).toBeGreaterThan(0);
+            expect(dm.documentGridOptions.data.length).toBeGreaterThan(0);
+            expect(dm.lazyloader).toBe(true);
+            expect(dm.nodata).toBe(false);
+            expect(dm.divuigrid).toBe(true);
+            expect(dm.lazyloaderdashboard).toBe(true);
+        });
+    });
+
+    describe('Verification of next function', function () {
+        it('It should show next', function () {
+            dm.last = 5;
+            dm.totalrecords = 30;
+            dm.next();
+            expect(dm.first).toBeGreaterThan(0);
+            expect(dm.last).toBeGreaterThan(0);
+            expect(dm.total).toBeGreaterThan(0);
+            expect(dm.pagenumber).toBeGreaterThan(0);
+            expect(dm.fromtopage).toBe(dm.first + " - " + dm.totalrecords);
+            expect(dm.lazyloader).toBe(true);
+            expect(dm.documentGridOptions.data.length).toBeGreaterThan(0);
+            expect(dm.nodata).toBe(false);
+            expect(dm.divuigrid).toBe(true);
+            expect(dm.lazyloaderdashboard).toBe(true);
+        });
+    });
+
+    describe('Verification of prev function', function () {
+        it('It should show prev', function () {
+            dm.last = 50;
+            dm.first = 50;
+            dm.prev();
+            expect(dm.first).toBeGreaterThan(0);
+            expect(dm.last).toBeGreaterThan(0);
+            expect(dm.pagenumber).toBe(0);
+            expect(dm.documentGridOptions.data.length).toBeGreaterThan(0);
+            expect(dm.fromtopage).toBe(dm.first + " - " + dm.last);
+            expect(dm.nodata).toBe(false);
+            expect(dm.divuigrid).toBe(true);
+            expect(dm.lazyloaderdashboard).toBe(true);
+        });
+    });
+
+    //describe('Verification of downloadEmailAsAttachment function', function () {
+    //    it('It should download email with attachment', function () {
+    //        dm.cartelements = [{ documentClientUrl: "https://lcadms.sharepoint.com/sites/skype", selected: true, documentName: "Skype Litigation.txt", documentUrl: "https://lcadms.sharepoint.com/sites/skype/9694be04f87b22e8d238d69df9e29ff2/Skype Litigation.txt" }];
+    //        dm.downloadEmailAsAttachment(true);
+
+    //    });
+    //});
+
 });
 
-//downloadEmailAsAttachment
+//downloadEmailAsAttachment----
 //getDocumentCounts
 //getDocuments
 //getPinnedDocuments
 //getMyDocuments
-//pinorunpin
+//pinorunpin---
 //showclientdrop
 //FilterByType
 //sortyby
