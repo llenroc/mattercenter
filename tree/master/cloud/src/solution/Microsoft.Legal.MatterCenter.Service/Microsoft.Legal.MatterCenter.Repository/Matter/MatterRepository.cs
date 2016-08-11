@@ -43,6 +43,8 @@ namespace Microsoft.Legal.MatterCenter.Repository
         private ISPContentTypes spContentTypes;
         private IExternalSharing extrnalSharing;
         private IUserRepository userRepositoy;
+        private GeneralSettings generalSettings;
+        
         /// <summary>
         /// Constructory which will inject all the related dependencies related to matter
         /// </summary>
@@ -56,9 +58,11 @@ namespace Microsoft.Legal.MatterCenter.Repository
             IExternalSharing extrnalSharing, 
             IUserRepository userRepositoy,
             ISPList spList, 
-            IOptions<CamlQueries> camlQueries, 
+            IOptions<CamlQueries> camlQueries,
+            IOptions<GeneralSettings> generalSettings,
             IUsersDetails userdetails, 
-            IOptions<ErrorSettings> errorSettings, 
+            IOptions<ErrorSettings> errorSettings,
+            
             ISPPage spPage)
         {
             this.search = search;
@@ -71,9 +75,79 @@ namespace Microsoft.Legal.MatterCenter.Repository
             this.spoAuthorization = spoAuthorization;
             this.spPage = spPage;
             this.errorSettings = errorSettings.Value;
+            this.generalSettings = generalSettings.Value;
             this.spContentTypes = spContentTypes;
             this.extrnalSharing = extrnalSharing;
             this.userRepositoy = userRepositoy;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="clientContext"></param>
+        /// <param name="matterConfigurations"></param>
+        /// <returns></returns>
+        public GenericResponseVM SaveConfigurations(ClientContext clientContext, MatterConfigurations matterConfigurations)
+        {
+            GenericResponseVM genericResponse = null;
+            try
+            {
+                string listQuery = string.Format(CultureInfo.InvariantCulture, camlQueries.MatterConfigurationsListQuery,
+                    searchSettings.ManagedPropertyTitle, searchSettings.MatterConfigurationTitleValue);
+                ListItemCollection collection = spList.GetData(clientContext, listNames.MatterConfigurationsList, listQuery);
+                // Set the default value for conflict check flag
+                matterConfigurations.IsContentCheck = matterSettings.IsContentCheck;
+                if (0 == collection.Count)
+                {
+                    List<string> columnNames = new List<string>() { searchSettings.MatterConfigurationColumn,
+                        searchSettings.ManagedPropertyTitle };
+                    List<object> columnValues = new List<object>() { WebUtility.HtmlEncode(JsonConvert.SerializeObject(matterConfigurations)),
+                        searchSettings.MatterConfigurationTitleValue };
+                    Web web = clientContext.Web;
+                    List list = web.Lists.GetByTitle(listNames.MatterConfigurationsList);
+                    spList.AddItem(clientContext, list, columnNames, columnValues);
+                }
+                else
+                {
+                    bool response = spList.CheckItemModified(collection, matterConfigurations.CachedItemModifiedDate);
+                    if (response)
+                    {
+                        foreach (ListItem item in collection)
+                        {
+                            item[searchSettings.MatterConfigurationColumn] = WebUtility.HtmlEncode(JsonConvert.SerializeObject(matterConfigurations));
+                            item.Update();
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        genericResponse = new GenericResponseVM()
+                        {
+                            Code = errorSettings.IncorrectTeamMembersCode,
+                            Value = errorSettings.IncorrectTeamMembersMessage
+                        };
+                    }
+                }
+                if (genericResponse == null)
+                {
+                    clientContext.ExecuteQuery();                    
+                }
+            }
+            catch (Exception exception)
+            {
+                //result = Logger.LogError(exception, MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name, ServiceConstantStrings.LogTableName);
+            }
+            return genericResponse;
+        }
+
+        /// <summary>
+        /// This method will check whether login user can create matter or not
+        /// </summary>
+        /// <param name="client">The sharepoint site collection in which we need to check whether the login user is present in the sharepoint group or not</param>
+        /// <returns></returns>
+        public bool CanCreateMatter(Client client)
+        {
+            return spList.CheckPermissionOnList(client, matterSettings.SendMailListName, PermissionKind.EditListItems);
         }
 
         public GenericResponseVM UpdateMatter(MatterInformationVM matterInformation)
@@ -518,7 +592,7 @@ namespace Microsoft.Legal.MatterCenter.Repository
 
         public IList<string> RoleCheck(string url, string listName, string columnName)
         {
-            ListItemCollection collListItem = spList.GetData(matterSettings.CentralRepositoryUrl,
+            ListItemCollection collListItem = spList.GetData(generalSettings.CentralRepositoryUrl,
                 listNames.DMSRoleListName,
                 camlQueries.DMSRoleQuery);
             IList<string> roles = new List<string>();
@@ -853,7 +927,8 @@ namespace Microsoft.Legal.MatterCenter.Repository
 
         
 
-        public bool UpdateMatterStampedProperties(ClientContext clientContext, MatterDetails matterDetails, Matter matter, PropertyValues matterStampedProperties, bool isEditMode)
+        public bool UpdateMatterStampedProperties(ClientContext clientContext, MatterDetails matterDetails, 
+            Matter matter, PropertyValues matterStampedProperties, bool isEditMode)
         {
             
             try
@@ -893,7 +968,10 @@ namespace Microsoft.Legal.MatterCenter.Repository
                     var finalMatterRolesList = finalMatterRoles.Replace("$|$", "$").Split('$').ToList();
                     var finalMatterCenterUserEmailsList = finalMatterCenterUserEmails.Replace("$|$", "$").Split('$').ToList();
                     var finalResponsibleAttorneysEmailList = finalResponsibleAttorneysEmail.Replace("$|$", "$").Split('$').ToList();
+                    var finalResponsibleAttorneysUsersList = finalResponsibleAttorneys.Replace(";;", "$").Split('$').ToList();
 
+                    #region Remove all the external users from the request object so that only internal users are added to the matter
+                    //Once the external users accepted the invitation, those external users will be added to the matter by azure web app job
                     List<int> itemsToRemove = new List<int>();
 
                     for(int i=0; i< finalMatterUsersList.Count; i++)
@@ -908,13 +986,24 @@ namespace Microsoft.Legal.MatterCenter.Repository
                     {
                         for (int i = 0; i < itemsToRemove.Count; i++)
                         {
-                            finalMatterUsersList.RemoveAt(itemsToRemove[i]);
-                            finalTeamMembersList.RemoveAt(itemsToRemove[i]);
-                            finalMatterPermissionsList.RemoveAt(itemsToRemove[i]);
-                            finalMatterRolesList.RemoveAt(itemsToRemove[i]);
-                            finalMatterCenterUserEmailsList.RemoveAt(itemsToRemove[i]);
-                            finalResponsibleAttorneysEmailList.RemoveAt(itemsToRemove[i]);
+                            finalMatterUsersList[itemsToRemove[i]] = string.Empty;
+                            finalTeamMembersList[itemsToRemove[i]] = string.Empty;
+                            finalMatterPermissionsList[itemsToRemove[i]] = string.Empty;
+                            finalMatterRolesList[itemsToRemove[i]] = string.Empty;
+                            finalMatterCenterUserEmailsList[itemsToRemove[i]] = string.Empty;
+                            if (finalResponsibleAttorneysEmailList.Count > itemsToRemove[i] && finalResponsibleAttorneysEmailList[itemsToRemove[i]] != null)
+                            {
+                                finalResponsibleAttorneysEmailList[itemsToRemove[i]] = string.Empty;
+                                finalResponsibleAttorneysUsersList[itemsToRemove[i]] = string.Empty;
+                            }
+                                
                         }
+                        finalMatterUsersList = finalMatterUsersList.Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                        finalTeamMembersList = finalTeamMembersList.Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                        finalMatterPermissionsList = finalMatterPermissionsList.Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                        finalMatterRolesList = finalMatterRolesList.Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                        finalResponsibleAttorneysEmailList = finalResponsibleAttorneysEmailList.Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                        finalResponsibleAttorneysUsersList = finalResponsibleAttorneysUsersList.Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
 
                         var finalMatterUsersArray = finalMatterUsersList.ToArray();
                         var finalTeamMembersArray = finalTeamMembersList.ToArray();
@@ -922,6 +1011,7 @@ namespace Microsoft.Legal.MatterCenter.Repository
                         var finalMatterRolesArray = finalMatterRolesList.ToArray();
                         var finalMatterCenterUserEmailsArray = finalMatterCenterUserEmailsList.ToArray();
                         var finalResponsibleAttorneysEmailArray = finalResponsibleAttorneysEmailList.ToArray();
+                        var finalResponsibleAttorneysUsersArray = finalResponsibleAttorneysUsersList.ToArray();
 
                         finalMatterCenterUsers = string.Join("$|$", finalMatterUsersArray);
                         finalTeamMembers = string.Join(";;", finalTeamMembersArray);
@@ -929,7 +1019,9 @@ namespace Microsoft.Legal.MatterCenter.Repository
                         finalMatterPermissions = string.Join("$|$", finalMatterPermissionsArray);
                         finalMatterRoles = string.Join("$|$", finalMatterRolesArray);
                         finalResponsibleAttorneysEmail = string.Join("$|$", finalResponsibleAttorneysEmailArray);
+                        finalResponsibleAttorneys = string.Join("$|$", finalResponsibleAttorneysUsersArray);
                     }
+                    #endregion
 
                     propertyList.Add(matterSettings.StampedPropertyResponsibleAttorney, WebUtility.HtmlEncode(finalResponsibleAttorneys));
                     propertyList.Add(matterSettings.StampedPropertyResponsibleAttorneyEmail, WebUtility.HtmlEncode(finalResponsibleAttorneysEmail));
@@ -939,12 +1031,82 @@ namespace Microsoft.Legal.MatterCenter.Repository
                     propertyList.Add(matterSettings.StampedPropertyMatterCenterPermissions, WebUtility.HtmlEncode(finalMatterPermissions));
                     propertyList.Add(matterSettings.StampedPropertyMatterCenterUsers, WebUtility.HtmlEncode(finalMatterCenterUsers));
                     propertyList.Add(matterSettings.StampedPropertyMatterCenterUserEmails, WebUtility   .HtmlEncode(finalMatterCenterUserEmails));
-
                     spList.SetPropertBagValuesForList(clientContext, matterStampedProperties, matter.Name, propertyList);
+
+                    #region Update matter and matterdetails object to have only external users so that notification can be send to those external users
+                    //For each external user, an entry will be created in the azure table storage and that entry will contain only the information related to the
+                    //external user, such as his role, his permission etc
+                    itemsToRemove.Clear();
+                    List<int> itemsToRemoveAttorneys = new List<int>();
+                    
+                    int l = 0;
+                    finalResponsibleAttorneysEmailList = matterDetails.ResponsibleAttorneyEmail.Split(';').ToList();
+                    finalResponsibleAttorneysUsersList = matterDetails.ResponsibleAttorney.Split(';').ToList();
+                    foreach (string userName in finalResponsibleAttorneysUsersList)
+                    {
+                        if (!string.IsNullOrWhiteSpace(userName) && userdetails.CheckUserPresentInMatterCenter(clientContext, userName) == true)
+                        {
+                            itemsToRemoveAttorneys.Add(l);
+                        }
+                        l = l + 1;
+                    }
+                    if (itemsToRemoveAttorneys.Count > 0)
+                    {
+                        for (int k = 0; k < itemsToRemoveAttorneys.Count; k++)
+                        {
+                            if (finalResponsibleAttorneysEmailList.Count > itemsToRemoveAttorneys[k] && 
+                                finalResponsibleAttorneysEmailList[itemsToRemoveAttorneys[k]] != null)
+                            {
+                                finalResponsibleAttorneysUsersList[itemsToRemoveAttorneys[k]] = string.Empty;
+                                finalResponsibleAttorneysEmailList[itemsToRemoveAttorneys[k]] = string.Empty;
+                            }
+                        }
+                        finalResponsibleAttorneysUsersList = finalResponsibleAttorneysUsersList.Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                        finalResponsibleAttorneysEmailList = finalResponsibleAttorneysEmailList.Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                    }
+                    l = 0;
+
+                    //Check if any of the assigned team member is not an external user?
+                    foreach (IList<string> userNames in matter.AssignUserNames)
+                    {
+                        if (userdetails.CheckUserPresentInMatterCenter(clientContext, 
+                            userNames.Where(user => !string.IsNullOrWhiteSpace(user)).SingleOrDefault()) == true)
+                        {
+                            itemsToRemove.Add(l);
+                        }
+                        l = l + 1;
+                    }
+                    finalTeamMembersList = matterDetails.TeamMembers.Replace(";;", "$").Split('$').ToList();
+                    if (itemsToRemove.Count > 0)
+                    {
+                        for (int k = 0; k < itemsToRemove.Count; k++)
+                        {
+                            matter.Permissions[itemsToRemove[k]] = string.Empty;
+                            matter.Roles[itemsToRemove[k]] = string.Empty;
+                            matter.AssignUserEmails[itemsToRemove[k]] = null;
+                            matter.AssignUserNames[itemsToRemove[k]] = null;
+                            finalTeamMembersList[itemsToRemove[k]] = string.Empty;
+                        }
+                    }
+
+                    matter.Permissions = matter.Permissions.Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                    matter.Roles = matter.Roles.Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                    finalTeamMembersList = finalTeamMembersList.Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                    matter.AssignUserEmails = matter.AssignUserEmails.Where(s => s != null).ToList();
+                    matter.AssignUserNames = matter.AssignUserNames.Where(s => s != null).ToList();
+
+
+                    matterDetails.ResponsibleAttorneyEmail = string.Empty;
+                    matterDetails.ResponsibleAttorney = string.Empty;
+                    matterDetails.TeamMembers = string.Join(";;", finalTeamMembersList.ToArray());
+                    matterDetails.ResponsibleAttorneyEmail = string.Join(";", finalResponsibleAttorneysEmailList.ToArray());
+                    matterDetails.ResponsibleAttorney = string.Join(";", finalResponsibleAttorneysUsersList.ToArray());
+                    #endregion
+
                     return true;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw; //// This will transfer control to catch block of parent function.
             }

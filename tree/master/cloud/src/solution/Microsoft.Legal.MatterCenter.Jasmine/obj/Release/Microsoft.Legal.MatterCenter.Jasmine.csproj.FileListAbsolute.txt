@@ -13,8 +13,6 @@ C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Jasmine\bin\r
 C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Jasmine\bin\Microsoft.Legal.MatterCenter.Jasmine.dll.config
 C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Jasmine\bin\Microsoft.Legal.MatterCenter.Jasmine.dll
 C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Jasmine\bin\Microsoft.Legal.MatterCenter.Jasmine.pdb
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Jasmine\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Jasmine\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Jasmine\obj\Release\Microsoft.Legal.MatterCenter.Jasmine.csprojResolveAssemblyReference.cache
 C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Jasmine\obj\Release\Microsoft.Legal.MatterCenter.Jasmine.dll
 C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Jasmine\obj\Release\Microsoft.Legal.MatterCenter.Jasmine.pdb

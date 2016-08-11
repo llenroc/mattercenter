@@ -222,20 +222,26 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 padtop20">
+            <div class="col-xs-6 col-sm-8 padtop20">
                 <ul class="nav nav-tabs" toggletab>
                     <li id="myMatters"><a href="#MyMatters" data-toggle="tab" ng-click="vm.myMatters()">My matters ({{vm.myMatterCount}})</a></li>
                     <li id="allMatters" class="active cursor"><a data-toggle="tab" ng-click="vm.search()">All matters ({{vm.allMatterCount}})</a></li>
                     <li id="pinMatters"><a href="#PinnedMatters" data-toggle="tab" ng-click="vm.getMatterPinned()">Pinned matters ({{vm.pinMatterCount}})</a></li>
                 </ul>
             </div>
-            <div class="col-xs-offset-9 col-xs-3 sortby">
-                <div class="col-xs-offset-4 col-xs-8 text-right pad0">
+            <div class="col-xs-offset-6 col-xs-6 sortby">
+                <div class="col-xs-offset-0 col-xs-8 col-sm-offset-3 col-sm-5 col-md-offset-4 col-sm-5 pad0">
+                    <span class="img-xls" ng-click="vm.export()">
+                        <img alt="export" src="../../images/icxlsx.png" />
+                    </span>
+                    <button ng-click="vm.export()" class="btn btn-primary pull-right">Export</button>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-3 text-right pad0">
                     <span>Sort by: </span>
                     <span>{{vm.sortbytext}}</span>
                     <img alt="Sort By" class="" ng-click="vm.showsortby($event)" title="Sort By" src="../Images/icon-combobox.png" />
                 </div>
-                <div class="col-xs-offset-7 col-xs-5" ng-if="vm.sortbydrop">
+                <div class="col-xs-offset-7 col-xs-5 col-sm-offset-9 col-sm-3" ng-if="vm.sortbydrop">
                     <ul>
                         <li ng-click="vm.sortyby('Relevant','None')">None</li>
                         <li ng-click="vm.sortyby('AlphabeticalUp','Alphabetical ↑')">Alphabetical ↑</li>
@@ -244,6 +250,10 @@
                         <li ng-click="vm.sortyby('CreateddateDown','Created date ↓')">Created date ↓</li>
                     </ul>
                 </div>
+            </div>
+            <div class="custom-csv-link-location">
+                <!--<label>Your CSV will show below:</label>-->
+                <span class="ui-grid-exporter-csv-link">&nbsp</span>
             </div>
             <div class="col-xs-12">
                 <div class="tab-content">                    
@@ -453,7 +463,7 @@
                                             <li ng-if="child.parentURL" data-client="" data-foldername="{{child.url}}" data-parentname="{{child.parentURL}}" class="childNode"
                                                 style="display: inline-block; width: 90%; padding:0;">
                                                 <div class="treeNodes" title="Documents" droppable drop="handleDrop()" folder="folder" id="folder{{$index}}">
-                                                    <img class="folderIcon" src="https://lcadms.sharepoint.com/_layouts/15/images/folder.gif" align="center" alt="Documents"
+                                                    <img class="folderIcon" src="https://msmatter.sharepoint.com/_layouts/15/images/folder.gif" align="center" alt="Documents"
                                                          data-foldername="{{folder.url}}" data-parentname="{{folder.parentURL}}">
                                                     {{folder.name}}
                                                 </div>
@@ -483,4 +493,29 @@
     <div class="row text-center" style="" ng-hide="vm.lazyloaderdashboard">
         Please wait while the Matters load.
     </div>
+</div>
+
+<!--For the export Data-->
+<div id="exportable" class="hide">
+    <table width="100%">
+        <thead>
+            <tr>
+                <th>Matter</th>
+                <th>Client</th>
+                <th>Client.Matter ID</th>
+                <th>Modified Date</th>
+                <th>Responsible attorney</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in vm.exportDate">
+                <td>{{item.matterName}}</td>
+                <td>{{item.matterClient}}</td>
+                <td>{{item.matterClientId}}</td>
+                <td>{{item.matterModifiedDate}}</td>
+                <td>{{item.matterResponsibleAttorney}}</td>
+            </tr>
+        </tbody>
+    </table>
+
 </div>

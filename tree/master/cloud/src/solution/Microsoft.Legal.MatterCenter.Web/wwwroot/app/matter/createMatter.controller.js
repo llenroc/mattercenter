@@ -11,6 +11,8 @@
             $rootScope.bodyclass = "";
             cm.blockedUserName = undefined;
             cm.defaultConfilctCheck = false;
+            cm.createContent = uiconfigs.CreateMatter;
+            cm.header = uiconfigs.Header;
             cm.chkConfilctCheck = undefined;
             cm.conflictRadioCheck = true;
             cm.iShowSuccessMessage = 0;
@@ -367,7 +369,7 @@
                 });
             }
 
-           // getTaxonomyData();
+            getTaxonomyData();
 
 
 
@@ -705,7 +707,6 @@
                             cm.errorBorder = "mattername"; showErrorNotification("mattername");
                             cm.errorPopUpBlock = true;
                             oPageOneState.oValidMatterName = false;
-                            cm.checkValidMatterName = false;
                             return false;
                         } else {
                             //  alert("success");
@@ -713,7 +714,6 @@
                             if (oPageOneState.isNextClick) {
                                 cm.navigateToSecondSection(oPageOneState.sectionClickName);
                             }
-                            cm.checkValidMatterName = true;
                             return true;
                         }
                     });

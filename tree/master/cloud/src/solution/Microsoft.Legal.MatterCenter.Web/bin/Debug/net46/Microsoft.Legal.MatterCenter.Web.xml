@@ -46,6 +46,27 @@
             <param name="matter">Matter object</param>
             <returns>Status of Full Control permission</returns>
         </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.MatterProvision.SaveConfigurations(Microsoft.Legal.MatterCenter.Models.MatterConfigurations)">
+            <summary>
+            This method will save matter configurations in sharepoint list
+            </summary>
+            <param name="matterConfigurations"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.MatterProvision.CanCreateMatter(Microsoft.Legal.MatterCenter.Models.Client)">
+            <summary>
+            This method will check whether login user can create matter or not
+            </summary>
+            <param name="client">The sharepoint site collection in which we need to check whether the login user is present in the sharepoint group or not</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.MatterProvision.TrimMatterNameForOneNoteTitle(System.String)">
+            <summary>
+            Function to prepare OneNote URL based on threshold set for OneNote title
+            </summary>
+            <param name="matterName">Project name</param>
+            <returns>OneNote title for provided Project name</returns>
+        </member>
         <member name="M:Microsoft.Legal.MatterCenter.Web.Common.MatterProvision.CopyRoleAssignment(System.String,System.String)">
             <summary>
             Checks whether to retain previous users while breaking permission
@@ -121,7 +142,14 @@
             <param name="matterDetails">Matter details object which has data of properties to be stamped</param>
             <returns>returns dictionary object</returns>
         </member>
-        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.ValidationFunctions.#ctor(Microsoft.Legal.MatterCenter.Repository.ISPList,Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.MatterSettings},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.ErrorSettings},Microsoft.Legal.MatterCenter.Repository.IMatterRepository,Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.ListNames},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.CamlQueries})">
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.MatterProvision.ShareMatterToExtUser(Microsoft.Legal.MatterCenter.Models.MatterInformationVM)">
+            <summary>
+            This method will loop for all external users in the matterinformation object and
+            will send notification to that external user
+            </summary>
+            <param name="matterInformation">Contains information about all external users, his roles and permissions</param>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.ValidationFunctions.#ctor(Microsoft.Legal.MatterCenter.Repository.ISPList,Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.MatterSettings},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.ErrorSettings},Microsoft.Legal.MatterCenter.Repository.IMatterRepository,Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.ListNames},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.CamlQueries},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.GeneralSettings})">
             <summary>
             Do validation stuff
             </summary>
@@ -212,6 +240,116 @@
             </summary>
             <param name="matter">Matter object</param>
             <returns>Status of Full Control permission</returns>
+        </member>
+        <member name="T:Microsoft.Legal.MatterCenter.Web.Common.IMatterProvision">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.IMatterProvision.UpdateMatter(Microsoft.Legal.MatterCenter.Models.MatterInformationVM)">
+            <summary>
+            
+            </summary>
+            <param name="matterInformation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.IMatterProvision.UpdateMatterMetadata(Microsoft.Legal.MatterCenter.Models.MatterMetdataVM)">
+            <summary>
+            
+            </summary>
+            <param name="matterMetadata"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.IMatterProvision.DeleteMatter(Microsoft.Legal.MatterCenter.Models.MatterVM)">
+            <summary>
+            
+            </summary>
+            <param name="matterVM"></param>
+            <returns></returns>   
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.IMatterProvision.SavConfigurations(Microsoft.Legal.MatterCenter.Models.SaveConfigurationsVM)">
+            <summary>
+            
+            </summary>
+            <param name="saveConfigurationsVM"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.IMatterProvision.GetStampedProperties(Microsoft.Legal.MatterCenter.Models.MatterVM)">
+            <summary>
+            
+            </summary>
+            <param name="matterVM"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.IMatterProvision.AssignUserPermissions(Microsoft.Legal.MatterCenter.Models.MatterMetdataVM)">
+            <summary>
+            
+            </summary>
+            <param name="matterMetadata"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.IMatterProvision.AssignContentType(Microsoft.Legal.MatterCenter.Models.MatterMetadata)">
+            <summary>
+            
+            </summary>
+            <param name="matterMetadata"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.IMatterProvision.GetMatters(Microsoft.Legal.MatterCenter.Models.SearchRequestVM)">
+            <summary>
+            
+            </summary>
+            <param name="searchRequestVM"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.IMatterProvision.CheckMatterExists(Microsoft.Legal.MatterCenter.Models.MatterMetdataVM)">
+            <summary>
+            
+            </summary>
+            <param name="matterMetadataVM"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.IMatterProvision.CheckSecurityGroupExists(Microsoft.Legal.MatterCenter.Models.MatterInformationVM)">
+            <summary>
+            
+            </summary>
+            <param name="matterInformationVM"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.IMatterProvision.CreateMatter(Microsoft.Legal.MatterCenter.Models.MatterMetdataVM)">
+            <summary>
+            
+            </summary>
+            <param name="matterMetadataVM"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.IMatterProvision.CreateMatterLandingPage(Microsoft.Legal.MatterCenter.Models.MatterMetdataVM)">
+            <summary>
+            
+            </summary>
+            <param name="matterMetadataVM"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.IMatterProvision.ShareMatterToExternalUser(Microsoft.Legal.MatterCenter.Models.MatterInformationVM)">
+            <summary>
+            
+            </summary>
+            <param name="matterInformation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.IMatterProvision.CanCreateMatter(Microsoft.Legal.MatterCenter.Models.Client)">
+            <summary>
+            
+            </summary>
+            <param name="client"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.IMatterProvision.SaveConfigurations(Microsoft.Legal.MatterCenter.Models.MatterConfigurations)">
+            <summary>
+            The implementatioon of this method will save matter configutations in sharepoint list
+            </summary>
+            <param name="matterConfigurations"></param>
+            <returns></returns>
         </member>
         <member name="T:Microsoft.Legal.MatterCenter.Web.Common.IUploadHelperFunctions">
             <summary>
@@ -793,6 +931,22 @@
             </summary>
             <param name="searchRequestVM"></param>
             <returns>searchResponseVM</returns>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Service.MatterController.SaveConfigurations(Microsoft.Legal.MatterCenter.Models.MatterConfigurations)">
+            <summary>
+            Save configurations for a selected client
+            </summary>        
+            <param name="matterConfigurations">Client object containing Client data</param>        
+            <returns>Returns JSON object to the client</returns>        
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Service.MatterController.CanCreateMatter(Microsoft.Legal.MatterCenter.Models.Client)">
+            <summary>
+            This method will check whether the current login user can create a matter or not
+            This method will check whether the user is present in the sharepoint group called "Provision Matter User"
+            If the user is not present in the group, then "Create Matter" link should not be visible to the user
+            </summary>
+            <param name="client"></param>
+            <returns></returns>
         </member>
         <member name="M:Microsoft.Legal.MatterCenter.Service.MatterController.CheckMatterExists(Microsoft.Legal.MatterCenter.Models.MatterMetdataVM)">
             <summary>
