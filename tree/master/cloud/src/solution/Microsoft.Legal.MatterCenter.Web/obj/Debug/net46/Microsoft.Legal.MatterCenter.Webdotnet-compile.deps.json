@@ -3724,7 +3724,7 @@
     "MailKit/1.3.0-beta7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-LalD+6uE97WdfZ9Ohmz2ZeYbPXzql4VNazGO/e9PLMENKNPwENc4eSr8v/r+mHY3EsRsAH34DCkub8rA4Zwyrw=="
+      "sha512": "sha512-xO66P+XLWyo3/POInJpkCsA0bFI3XmDxsdR+rSXCm9d7kbPU6kFBgvXT4AxW0TaWYUcsaxJEcZdhMgOODWu/ew=="
     },
     "Microsoft.ApplicationInsights/2.1.0": {
       "type": "package",
@@ -4239,7 +4239,7 @@
     "MimeKit/1.3.0-beta7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-M7F4OnPXfcI4AljQUdvok29vz3DEruiqIBDIn6zGVdFQpNpaVbmrp80YLX9SH2hJO+8fSOX6/k3ScUXqZheFSQ=="
+      "sha512": "sha512-vWNZ2pDJXTFRHiErdZW6bOPej+sikIOjf8LlZSSiZXgYE2s4raQeHVQtvyGVpoQvx/PKXKoACzJDCkm9hr/OQQ=="
     },
     "NETStandard.Library/1.6.0": {
       "type": "package",

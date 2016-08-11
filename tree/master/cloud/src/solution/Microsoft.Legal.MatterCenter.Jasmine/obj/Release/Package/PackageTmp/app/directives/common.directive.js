@@ -285,6 +285,33 @@
         };
     }
 
+    'use strict'
+    function uiGridMenuButton($window, $timeout) {
+        return {
+            restrict: 'AE',
+            link: function (scope, element, attrs) {
+                element.find('.ui-grid-icon-menu').addClass('showExpandIcon');
+                
+                $(element).on("click", function (e) {
+                    e.stopPropagation();
+                    $timeout(function () {
+                        if (element.find('.ng-isolate-scope').html() != "<!-- ngIf: shown -->") {
+                            element.find('.ui-grid-icon-menu').removeClass('showExpandIcon');
+                            element.find('.ui-grid-icon-menu').addClass('closeColumnPicker');
+                        } else {
+                            element.find('.ui-grid-icon-menu').addClass('showExpandIcon');
+                            element.find('.ui-grid-icon-menu').removeClass('closeColumnPicker');
+                        }
+                    }, 200)
+
+                    if (element.find('.ui-grid-menu-mid')) {
+                        element.find('.ui-grid-menu-mid').css('height', $window.innerHeight - 160);
+                    }
+                });
+            }
+        }
+    }
+
     var app = angular.module('matterMain');
     app.directive('onload', ['$timeout', onload]);
     app.directive('showbreadcrumb', [showbreadcrumb]);
@@ -294,7 +321,8 @@
     app.directive('matterflyout', ['$compile', '$templateCache', matterflyout]);
     app.directive('documentflyout', ['$http', '$compile', '$templateCache', documentflyout]);
     app.directive('fallbacksrc', [fallbacksrc]);
-    app.directive('myEnter', [myEnter])
+    app.directive('myEnter', [myEnter]);
+    app.directive('uiGridMenuButton', ['$window', '$timeout', uiGridMenuButton]);
 })();
 
 

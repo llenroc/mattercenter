@@ -1,6 +1,6 @@
 ﻿//Test suite
 describe('MattersController Controller test suite', function () {
-    var $scope = {};
+    var $scope = { $watch: function () { } };
     var cm;
     var api;
     var matterResource;
@@ -13,6 +13,7 @@ describe('MattersController Controller test suite', function () {
     var $location;
     var $q = {};
     $q.defer = function () { };
+    var $animate = { enabled: function () { } };
 
     var mockmatterResource = function ($resource, auth) {
         return $resource(null, null,
@@ -135,7 +136,7 @@ describe('MattersController Controller test suite', function () {
 
     beforeEach(inject(function ($controller, $rootScope) {
         rootScope = $rootScope.$new();
-        cm = $controller('mattersController as cm', { $scope: $scope, $state: $state, $stateParams: $stateParams, matterResource: mockmatterResource, api: mockapi, $rootScope: rootScope, $http: $http, $location: $location, $q: $q });
+        cm = $controller('mattersController as cm', { $scope: $scope, $state: $state, $stateParams: $stateParams, matterResource: mockmatterResource, api: mockapi, $rootScope: rootScope, $http: $http, $location: $location, $q: $q, $animate: $animate });
     }));
 
 

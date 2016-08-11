@@ -1,6 +1,6 @@
 ﻿//Test suite
 describe('MatterDashBoard Controller test suite', function () {
-    var $scope = {};
+    var $scope = { $watch: function () { } };
     var pm;
     var api;
     var matterResource;

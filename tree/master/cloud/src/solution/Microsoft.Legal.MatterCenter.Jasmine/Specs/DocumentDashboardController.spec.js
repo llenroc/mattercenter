@@ -1,6 +1,6 @@
 ﻿//Test suite
 describe('DocumentDashboard Controller test suite', function () {
-    var $scope = {};
+    var $scope = { $watch: function () { } };
     var dm;
     var api;
     var matterResource;

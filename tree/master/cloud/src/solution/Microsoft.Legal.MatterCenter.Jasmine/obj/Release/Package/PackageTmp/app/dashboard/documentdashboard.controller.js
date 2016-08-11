@@ -721,9 +721,9 @@
                 maxDate: new Date()
             }
 
-            //$scope.$watch('vm.startdate', function (newval, oldval) {
-            //    vm.enddateOptions.minDate = newval;
-            //});
+            $scope.$watch('vm.startdate', function (newval, oldval) {
+                vm.enddateOptions.minDate = newval;
+            });
 
 
             vm.openStartDate = function ($event) {

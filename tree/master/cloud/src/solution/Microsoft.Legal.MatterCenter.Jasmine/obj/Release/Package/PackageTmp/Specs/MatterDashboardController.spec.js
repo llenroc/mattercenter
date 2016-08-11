@@ -1,6 +1,6 @@
 ﻿//Test suite
 describe('MatterDashBoard Controller test suite', function () {
-    var $scope = {};
+    var $scope = { $watch: function () { } };
     var pm;
     var api;
     var matterResource;
@@ -127,7 +127,7 @@ describe('MatterDashBoard Controller test suite', function () {
 
     beforeEach(module('matterMain'));
     beforeEach(module('matterMain', function ($provide) {
-        $provide.factory("api", ['matterResource', 'documentResource', 'documentDashBoardResource', 'matterDashBoardResource', 'homeResource', mockapi]);
+       $provide.factory("api", ['matterResource', 'documentResource', 'documentDashBoardResource', 'matterDashBoardResource', 'homeResource', mockapi]);
     }));
 
     beforeEach(module('ui.router'));
@@ -135,7 +135,7 @@ describe('MatterDashBoard Controller test suite', function () {
 
     beforeEach(inject(function ($controller, $rootScope) {
         rootScope = $rootScope.$new();
-        pm = $controller('MatterDashBoardController as pm', { $scope: $scope, $state: $state, $stateParams: $stateParams, matterDashBoardResource: mockmatterDashBoardResource, api: mockapi, $rootScope: rootScope, $http: $http, $location: $location, $q: $q });
+        pm = $controller('MatterDashBoardController as pm', { $scope: $scope, $state: $state, $stateParams: $stateParams, matterDashBoardResource: mockmatterDashBoardResource, api: mockapi, $rootScope: rootScope, $http: $http, $location: $location ,$q: $q });
     }));
 
     describe('Verification of closealldrops function', function () {
@@ -164,7 +164,7 @@ describe('MatterDashBoard Controller test suite', function () {
             expect(pm.pgdropvisible).toBe(false);
             expect(pm.aoldrop).toBe(false);
             expect(pm.aoldropvisible).toBe(false);
-
+           
         });
     });
 
@@ -236,19 +236,19 @@ describe('MatterDashBoard Controller test suite', function () {
     describe('Verification of showsortby function', function () {
         it('It should show sortby box', function () {
             pm.sortbydropvisible = false
-            pm.showsortby(event);
-
-            expect(pm.sortbydrop).toBe(true);
-            expect(pm.sortbydropvisible).toBe(true);
-        });
-        it('It should not show sortby box', function () {
-            pm.sortbydropvisible = true
-            pm.showsortby(event);
-
-            expect(pm.sortbydrop).toBe(false);
-            expect(pm.sortbydropvisible).toBe(false);
-        });
-    });
+             pm.showsortby(event);
+            
+             expect(pm.sortbydrop).toBe(true);
+             expect(pm.sortbydropvisible).toBe(true);
+         });
+         it('It should not show sortby box', function () {
+             pm.sortbydropvisible = true
+             pm.showsortby(event);
+             
+             expect(pm.sortbydrop).toBe(false);
+             expect(pm.sortbydropvisible).toBe(false);
+         });
+     });
 
     describe('Verification of pagination function', function () {
         it('It should not display pagination on page', function () {
@@ -279,18 +279,18 @@ describe('MatterDashBoard Controller test suite', function () {
     describe('Verification of contentCheckNotification function', function () {
         it('It should set file parameter', function () {
             pm.file = {};
-            pm.contentCheckNotification(pm.file, true);
+            pm.contentCheckNotification(pm.file,true);
             expect(pm.file.contentCheck).toBe("contentCheck");
             expect(pm.file.saveLatestVersion).toBe("False");
             expect(pm.file.cancel).toBe("False");
         });
-
+        
     });
 
     describe('Verification of abortContentCheck function', function () {
         it('It should set file parameter while aborting the content check', function () {
             pm.file = {};
-            pm.file.value = "This";
+            pm.file.value="This";
             pm.abortContentCheck(pm.file, false);
             expect(pm.file.contentCheck).toBe(null);
             expect(pm.file.saveLatestVersion).toBe("True");
@@ -310,7 +310,7 @@ describe('MatterDashBoard Controller test suite', function () {
 
 
 
-
+   
 });
 
 //closealldrops
@@ -325,4 +325,3 @@ describe('MatterDashBoard Controller test suite', function () {
 //contentCheckNotification
 //abortContentCheck
 //closeSuccessBanner
-
