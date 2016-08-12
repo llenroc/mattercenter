@@ -1,41 +1,8 @@
 ﻿//Test suite
 describe('documents Controller test suite', function () {
-    var $scope = {};
-    var dm;
-    var api;
-    var matterResource;
-    var rootScope = {};
-    var $state = { go: function () { } };
-    var $stateParams;
-    var $interval = { go: function () { } };
-    var $watch;
-    var $http;
-    var $location = {
-        absUrl: function () {
-            var url = "https://mattermaqdevsite.azurewebsites.net&test=1&attempt=2|jasminetest.html";
-            return url;
-        }
-    };
-    var $q = {};
-    $q.defer = function () { return { resolve: function () { } } };
-    $scope.$apply = function () { };
-
-    var mockdocumentResource = {
-        'get': '/api/v1/document/getdocuments',
-        'getPinnedDocuments': '/api/v1/document/getpinneddocuments',
-        'unPinDocument': '/api/v1/document/unpindocument',
-        'pinDocument': '/api/v1/document/pindocument',
-        'getassets': '/api/v1/document/getassets'
-    };
 
     var documentapi = function (documentDashBoardResource) {
-        var mockdocumentResource = {
-            'get': '/api/v1/document/getdocuments',
-            'getPinnedDocuments': '/api/v1/document/getpinneddocuments',
-            'unPinDocument': '/api/v1/document/unpindocument',
-            'pinDocument': '/api/v1/document/pindocument',
-            'getassets': '/api/v1/document/getassets'
-        };
+
         var url = "http://mattermaqdevsite.azurewebsites.net" + mockdocumentResource[documentDashBoardResource.method];
         function IsJsonString(str) {
             try {
@@ -56,8 +23,6 @@ describe('documents Controller test suite', function () {
             } else {
                 postdata = documentDashBoardResource.data;
             }
-
-
 
             http.open("POST", url, false);
             var accessToken = "Bearer " + sessionStorage.getItem('adal.idtoken');
@@ -93,7 +58,7 @@ describe('documents Controller test suite', function () {
 
     beforeEach(inject(function ($controller, $rootScope) {
         rootScope = $rootScope.$new();
-        dm = $controller('documentsController as dm', { $scope: $scope, $state: $state, $stateParams: $stateParams, documentResource: mockdocumentResource, api: documentapi, $rootScope: rootScope, $http: $http, $location: $location, $q: $q });
+        dm = $controller('documentsController as dm', { $scope: $scope, $state: $state, $stateParams: $stateParams, documentResource: mockdocumentResource, api: documentapi, $rootScope: rootScope, $http: $http, $location: $location, $q: $q, $animate: $animate });
     }));
 
     describe('Verification of watchFunc function', function () {

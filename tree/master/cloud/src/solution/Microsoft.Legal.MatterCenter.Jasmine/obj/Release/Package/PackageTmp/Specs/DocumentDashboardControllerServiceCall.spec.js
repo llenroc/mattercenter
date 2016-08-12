@@ -1,16 +1,5 @@
 ﻿//Test suite
 describe('DocumentDashboard Controller test suite', function () {
-    var $scope = {};
-    var dm;
-    var api;
-    var matterResource;
-    var rootScope = {};
-    var $state = { go: function () { } };
-    var $stateParams;
-    var $interval = { go: function () { } };
-    var $watch;
-    var $http;
-    var $location;
 
     var mockdocumentDashBoardResource = {
         'get': '/api/v1/document/getdocuments',

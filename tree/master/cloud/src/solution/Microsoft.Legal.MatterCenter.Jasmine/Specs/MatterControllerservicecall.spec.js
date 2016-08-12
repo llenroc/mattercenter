@@ -1,75 +1,7 @@
 ﻿//Test suite
 describe('MattersController Controller test suite', function () {
-    var $scope = {
-        $apply: function () { },
-        "gridApi": { "infiniteScroll": { dataLoaded: function () { } } }
-    };
-    var cm;
-    var api;
-    var matterResource;
-    var rootScope = {};
-    var $state = { go: function () { } };
-    var $stateParams;
-    var $interval = { go: function () { } };
-    var $watch;
-    var $http;
-    var $location;
-    var $q = {};
-    $q.defer = function () { return { resolve: function () { } } };
-
-
-
-    var mockmatterResource = {
-        'get': '/api/v1/matter/get',
-        'getPinnedMatters': '/api/v1/matter/getpinned',
-        'UnpinMatters': '/api/v1/matter/unpin',
-        'PinMatters': '/api/v1/matter/pin',
-        'getTaxonomyDetails': '/api/v1/taxonomy/gettaxonomy',
-        'checkMatterExists': '/api/v1/matter/checkmatterexists',
-        'getDefaultMatterConfigurations': '/api/v1/matter/getconfigurations',
-        'getUsers': '/api/v1/user/getusers',
-        'getRoles': '/api/v1/user/getroles',
-        'getPermissionLevels': '/api/v1/user/getpermissionlevels',
-        'checkSecurityGroupExists': '/api/v1/matter/checksecuritygroupexists',
-        'getFolderHierarchy': '/api/v1/matter/getfolderhierarchy',
-        'createMatter': '/api/v1/matter/create',
-        'assignUserPermissions': '/api/v1/matter/assignuserpermissions',
-        'assignContentType': '/api/v1/matter/assigncontenttype',
-        'createLandingPage': '/api/v1/matter/createlandingpage',
-        'updateMatterMetadata': '/api/v1/matter/UpdateMetadata',
-        'getStampedProperties': '/api/v1/matter/getstampedproperties',
-        'uploadEmail': '/api/v1/document/UploadMail',
-        'uploadAttachment': '/api/v1/document/UploadAttachments',
-        'uploadfiles': '/api/v1/document/UploadAttachments',
-        'getHelp': '/api/v1/shared/help'
-    };
-
+    
     var mockapi = function (matterResource) {
-        var mockmatterResource = {
-            'get': '/api/v1/matter/get',
-            'getPinnedMatters': '/api/v1/matter/getpinned',
-            'UnpinMatters': '/api/v1/matter/unpin',
-            'PinMatters': '/api/v1/matter/pin',
-            'getTaxonomyDetails': '/api/v1/taxonomy/gettaxonomy',
-            'checkMatterExists': '/api/v1/matter/checkmatterexists',
-            'getDefaultMatterConfigurations': '/api/v1/matter/getconfigurations',
-            'getUsers': '/api/v1/user/getusers',
-            'getRoles': '/api/v1/user/getroles',
-            'getPermissionLevels': '/api/v1/user/getpermissionlevels',
-            'checkSecurityGroupExists': '/api/v1/matter/checksecuritygroupexists',
-            'getFolderHierarchy': '/api/v1/matter/getfolderhierarchy',
-            'createMatter': '/api/v1/matter/create',
-            'assignUserPermissions': '/api/v1/matter/assignuserpermissions',
-            'assignContentType': '/api/v1/matter/assigncontenttype',
-            'createLandingPage': '/api/v1/matter/createlandingpage',
-            'updateMatterMetadata': '/api/v1/matter/UpdateMetadata',
-            'getStampedProperties': '/api/v1/matter/getstampedproperties',
-            'uploadEmail': '/api/v1/document/UploadMail',
-            'uploadAttachment': '/api/v1/document/UploadAttachments',
-            'uploadfiles': '/api/v1/document/UploadAttachments',
-            'getHelp': '/api/v1/shared/help'
-        };
-
         var url = "http://mattermaqdevsite.azurewebsites.net" + mockmatterResource[matterResource.method];
         function IsJsonString(str) {
             try {
@@ -125,7 +57,7 @@ describe('MattersController Controller test suite', function () {
 
     beforeEach(inject(function ($controller, $rootScope) {
         rootScope = $rootScope.$new();
-        cm = $controller('mattersController as cm', { $scope: $scope, $state: $state, $stateParams: $stateParams, matterResource: mockmatterResource, api: mockapi, $rootScope: rootScope, $http: $http, $location: $location, $q: $q });
+        cm = $controller('mattersController as cm', { $scope: $scope, $state: $state, $stateParams: $stateParams, matterResource: mockmatterResource, api: mockapi, $rootScope: rootScope, $http: $http, $location: $location, $q: $q, $animate: $animate });
     }));
 
     describe('Verification of SetMatters function', function () {
@@ -201,7 +133,6 @@ describe('MattersController Controller test suite', function () {
             expect(cm.divuigrid).toBe(false);
             expect(cm.responseNull).toBe(false);
             expect(cm.nodata).toBe(false);
-            expect(cm.gridOptions.data.length).toBeGreaterThan(0);
             expect(cm.gridOptions.data).not.toBe(null);
 
         });
@@ -233,7 +164,6 @@ describe('MattersController Controller test suite', function () {
             expect(cm.divuigrid).toBe(false);
             expect(cm.responseNull).toBe(false);
             expect(cm.nodata).toBe(false);
-            expect(cm.gridOptions.data.length).toBeGreaterThan(0);
             expect(cm.gridOptions.data).not.toBe(null);
 
         });

@@ -1,15 +1,5 @@
 ﻿//Test suite
 describe('CreateMatter Controller test suite', function () {
-    var $scope = {};
-    var vm;
-    var api;
-    var matterResource;
-    var rootScope = {};
-    var $filter;
-    var $state = { go: function () { } };
-    var $stateParams;
-    var $window;
-    var data = { "name": "nikunj" };
 
     var mockmatterResourceService = {
 

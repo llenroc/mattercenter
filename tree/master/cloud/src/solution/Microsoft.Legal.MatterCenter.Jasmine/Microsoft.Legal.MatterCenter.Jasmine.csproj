@@ -43,29 +43,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="lib\adal-angular\dist\adal-angular.min.js" />
-    <Content Include="lib\adal-angular\dist\adal.min.js" />
-    <Content Include="lib\angular-bootstrap\ui-bootstrap-tpls.js" />
-    <Content Include="lib\angular-resource\angular-resource.js" />
-    <Content Include="lib\angular-route\angular-route.js" />
-    <Content Include="lib\angular-sanitize\angular-sanitize.js" />
-    <Content Include="lib\angular-ui-grid\ui-grid.min.js" />
-    <Content Include="lib\bootstrap\dist\js\bootstrap-popover.js" />
-    <Content Include="lib\bootstrap\dist\js\bootstrap-tooltip.js" />
-    <Content Include="lib\bootstrap\dist\js\bootstrap.js" />
-    <Content Include="lib\jasmine-2.4.1\boot.js" />
-    <Content Include="lib\jasmine-2.4.1\console.js" />
-    <Content Include="lib\jasmine-2.4.1\jasmine-html.js" />
-    <Content Include="lib\jasmine-2.4.1\jasmine.css" />
-    <Content Include="lib\jasmine-2.4.1\jasmine.js" />
-    <Content Include="lib\jasmine-2.4.1\jasmine_favicon.png" />
-    <Content Include="lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
-    <Content Include="lib\jquery-validation\dist\jquery.validate.js" />
-    <Content Include="lib\jquery\dist\jquery.js" />
     <Content Include="Object\ObjectCollection.js" />
     <Content Include="packages.config" />
     <Content Include="Scripts\app.js" />
     <Content Include="Open Notebook.onetoc2" />
+    <Content Include="bower.json" />
+    <Content Include=".bowerrc" />
+    <None Include=".bin\bower.cmd" />
+    <None Include=".bin\git.cmd" />
+    <None Include=".bin\node.cmd" />
     <None Include="Properties\PublishProfiles\mattercenterjasmine - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\mattercenterjasmine - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\mattermaqdevsite - FTP.pubxml" />
@@ -162,7 +148,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="lib\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

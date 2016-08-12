@@ -1,183 +1,6 @@
 ﻿//Test suite
 describe('CreateMatter Controller test suite', function () {
-    var $scope = {};
-    var vm;
-    var api;
-    var matterResource;
-    var rootScope = {};
-    var $filter;
-    var $state = { go: function () { } };
-    var $stateParams;
-    var $window;
-
-    var mockmatterResourceService = function ($resource, auth) {
-        return $resource(null, null,
-                {
-                    'get': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/matter/get',
-                        isArray: true
-                    }),
-                    'getPinnedMatters': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/matter/getpinned',
-                        isArray: true
-                    }),
-                    'UnpinMatters': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/matter/unpin'
-                    }),
-                    'PinMatters': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/matter/pin'
-                    }),
-                    'getTaxonomyDetails': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/taxonomy/gettaxonomy'
-                    }),
-                    'checkMatterExists': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/matter/checkmatterexists'
-                    }),
-                    'getDefaultMatterConfigurations': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/matter/getconfigurations'
-                    }),
-                    'getUsers': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/user/getusers',
-                        isArray: true
-                    }),
-                    'getRoles': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/user/getroles',
-                        isArray: true
-                    }),
-                    'getPermissionLevels': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/user/getpermissionlevels',
-                        isArray: true
-                    }),
-                    'checkSecurityGroupExists': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/matter/checksecuritygroupexists'
-
-                    }),
-                    'getFolderHierarchy': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/matter/getfolderhierarchy'
-
-                    }),
-                    'createMatter': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/matter/create'
-
-                    }),
-                    'assignUserPermissions': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/matter/assignuserpermissions'
-
-                    }),
-                    'assignContentType': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/matter/assigncontenttype'
-
-                    }),
-                    'createLandingPage': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/matter/createlandingpage'
-                    }),
-                    'updateMatterMetadata': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/matter/UpdateMetadata'
-                    }),
-                    'getStampedProperties': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/matter/getstampedproperties'
-                    }),
-                    'uploadEmail': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/document/UploadMail'
-                    }),
-                    'uploadAttachment': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/document/UploadAttachments'
-                    }),
-                    'uploadfiles': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/document/UploadAttachments'
-                    }),
-                    'getHelp': auth.attachCSRF({
-                        method: 'POST',
-                        url: '/api/v1/shared/help',
-                        isArray: true
-                    })
-                });
-    };
-
-    var mockapi = function (matterResource, documentResource, documentDashBoardResource, matterDashBoardResource, homeResource) {
-        var resources = {
-            'matterResource': matterResource,
-            'documentResource': documentResource,
-            'documentDashBoardResource': documentDashBoardResource,
-            'matterDashBoardResource': matterDashBoardResource,
-            'homeResource': homeResource
-        };
-
-        function callAPI(options) {
-
-            var resource = resources[options.resource];
-
-
-
-            resource[options.method](options.data)
-              .$promise.then(function (response) {
-
-                  options.success(response);
-              }).catch(function (e) {
-                  // $scope.$parent.vm.Error = true;
-                  //vm.Error = true;
-                  var message = 'oops something went wrong. ';
-                  if (e.data != null)
-                      if (e.data.Message != undefined)
-                          message = e.data.Message;
-                      else
-                          message = e.data;
-                  else
-                      message = e.message + e.description + e.stack + e.number;
-
-                  // alert(message);
-                  //$scope.$parent.vm.guid = "kdsjfl";
-                  // vm.guid = "kdsjfl";
-
-                  if (options.error) {
-                      options.error(e);
-                  } else {
-                      ////if (e.status === 500) {
-                      ////    window.location.href = "/Error/Index";
-                      ////}
-                      ////else {
-                      ////    //ErrorNotification.notifyError(e.status);
-                      ////}
-                  }
-              }).finally(function () {
-
-              });
-
-        }
-
-        return function (api_options) {
-            var apiOptions = api_options || {};
-            if (!api_options.resource || !resources.hasOwnProperty(api_options.resource) ||
-                !api_options.method || !api_options.success) {
-                throw new Error('Invalid request. API, method and success are required.');
-            }
-            api_options.data = api_options.data || {};
-            callAPI(apiOptions);
-        };
-
-    };
-
+   
     beforeEach(module('matterMain'));
     beforeEach(module('matterMain', function ($provide) {
         $provide.factory("matterResource", ['$resource', 'auth', mockmatterResourceService]);
@@ -369,20 +192,6 @@ describe('CreateMatter Controller test suite', function () {
 
     describe('Verification of onSelect function', function () {
 
-        //it('Should return the conflicted ensured user', function () {
-        //    vm.removeDTItem = false;
-        //    vm.onSelect(item, "MAQ User", "MAQ User", "conflictcheckuser");
-        //    expect(vm.selectedConflictCheckUser).toBe("MAQ User(MAQUser@LCADMS.onmicrosoft.com)");
-
-        //});
-
-        //it('Should return the blocked ensured user', function () {
-        //    vm.removeDTItem = false;
-        //    vm.onSelect(item, "MAQ User", "MAQ User", "blockuser");
-        //    expect(vm.blockedUserName).toBe("MAQ User(MAQUser@LCADMS.onmicrosoft.com)");
-
-        //});
-
         it('Should return the conflicted user', function () {
             $model = {};
             $label = { "assignedUser": "" };
@@ -504,17 +313,6 @@ describe('CreateMatter Controller test suite', function () {
 
     });
 
-
-    //describe('Verification of NextClick /PreviousClick function', function () {
-    //    it('navigateToSecondSection makes serivice call hence it need to be verify later', function () {
-    //        var tape = jasmine.createSpyObj('tape', ['navigateToSecondSection']);
-    //        expect(tape.navigateToSecondSection).toThrow(e);
-    //        vm.iCurrentPage = 1;
-    //        vm.NextClick();
-            
-    //    });
-    //});
-
     describe('Verification of CheckPopUp function', function () {
         
         it('Should display the CheckPopUp', function () {
@@ -532,6 +330,60 @@ describe('CreateMatter Controller test suite', function () {
             expect(vm.successMsg).toBe("");
             expect(vm.successBanner).toBe(false);
         });
+    });
+
+    describe('Verification of createMatterButton function', function () {
+        it('Successfully create matter button', function () {
+            vm.validateCurrentPage = function (id) { return true; };
+            validateCurrentPage = function (id) { return true; };
+            vm.chkConfilctCheck = true;
+            vm.conflictDate = "8/1/2016";
+            vm.createMatterButton(event);
+            expect(vm.sectionName).toBe("snConflictCheck");
+            expect(vm.iCurrentPage).toBe(2);
+        });
+    });
+
+    describe('Verification of navigateToSecondSection function', function () {
+        it('it should navigateToSecondSection', function () {
+            vm.iCurrentPage = 5;
+            vm.navigateToSecondSection("snOpenMatter");
+            expect(vm.sectionName).toBe("snOpenMatter");
+            expect(vm.iCurrentPage).toBe(1);
+            expect(localStorage.getItem('iLivePage')).toBe("1");
+            expect(vm.prevButtonDisabled).toBe(true);
+            expect(vm.nextButtonDisabled).toBe(false);
+        });
+    });
+
+
+    //describe('Verification of NextClick function', function () {
+    //    it('it should NextClick', function () {
+    //        vm.iCurrentPage = 1;
+    //        vm.NextClick(event)
+    //        expect(vm.NextClick(event)).not.toThrow(Error);
+    //    });
+    //    it('it should perform NextClick', function () {
+    //        vm.iCurrentPage = 2;
+    //        vm.NextClick(event)
+    //        expect(vm.NextClick(event)).not.toThrow(Error);
+    //    });
+    //});
+
+    describe('Verification of PreviousClick function', function () {
+        it('it should PreviousClick', function () {
+             vm.iCurrentPage = 2;
+            vm.PreviousClick(event)
+            expect(vm.iCurrentPage).toBe(1);
+            expect(localStorage.getItem('iLivePage')).toBe("1");
+            expect(vm.prevButtonDisabled).toBe(true);
+            expect(vm.nextButtonDisabled).toBe(false);
+        });
+        //it('it should perform PreviousClick', function () {
+        //    vm.iCurrentPage = 3;
+        //    vm.PreviousClick(event)
+        //    expect(vm.NextClick(event)).not.toThrow(Error);
+        //});
     });
 
 });

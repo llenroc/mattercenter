@@ -1,24 +1,5 @@
 ﻿//Test suite
 describe('MattersController Controller test suite', function () {
-    var $scope = {
-        $apply: function () { },
-        "gridApi": { "infiniteScroll": { dataLoaded: function () { } } }
-    };
-    var cm;
-    var api;
-    var matterResource;
-    var rootScope = {};
-    var $state = { go: function () { } };
-    var $stateParams;
-    var $interval = { go: function () { } };
-    var $watch;
-    var $http;
-    var $location;
-    var $q = {};
-    $q.defer = function () { return { resolve: function () { } } };
-
-
-
     var mockmatterResource = {
         'get': '/api/v1/matter/get',
         'getPinnedMatters': '/api/v1/matter/getpinned',

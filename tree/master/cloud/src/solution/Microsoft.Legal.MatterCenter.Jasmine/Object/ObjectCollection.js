@@ -1,4 +1,135 @@
-﻿var selectedPracticeGroup = {
+﻿var $scope = { $watch: function () { }, $apply: function () { }, gridApi: { infiniteScroll: { dataLoaded: function () { } } } };
+var vm;
+var om;
+var dm;
+var api;
+var cm;
+var pm;
+var xm;
+var matterResource;
+var $rootScope = { logEvent: function () { } };
+var rootScope = {};
+var $filter;
+var $state = { go: function () { }, current: { "name": "test" } };
+var $interval = { go: function () { } };
+var $stateParams;
+var $window;
+var $watch;
+var $animate = { enabled: function () { } };
+var $q = { defer: function () { return { resolve: function () { } } } };
+var $http;
+var $location = {
+    absUrl: function () {
+        var url = "https://mattermaqdevsite.azurewebsites.net&test=1&attempt=2|jasminetest.html";
+        return url;
+    }
+};
+var adalService = {
+    "userInfo": {
+        "userName": "MAQUser@LCADMS.onmicrosoft.com",
+        "profile": {
+            "family_name": "LCADMS",
+            "oid": 786
+        },
+        "isAuthenticated": true
+    },
+    logOut: function () { dm.status = true; }
+};
+
+var mockapi = function () {
+};
+
+var mockmatterDashBoardResource = {
+    'get': '/api/v1/matter/get',
+    'getPinnedMatters': '/api/v1/matter/getpinned',
+    'getMyMatters': '/api/v1/matter/getpinned',
+    'getTaxonomyDetails': '/api/v1/taxonomy/gettaxonomy',
+    'UnpinMatter': '/api/v1/matter/unpin',
+    'PinMatter': '/api/v1/matter/pin',
+    'getFolderHierarchy': '/api/v1/matter/getfolderhierarchy',
+    'getMatterCounts': '/api/v1/matter/getmattercounts',
+    'getDefaultMatterConfigurations': '/api/v1/matter/getconfigurations'
+};
+
+var mockmatterResource = {
+    'get': '/api/v1/matter/get',
+    'getPinnedMatters': '/api/v1/matter/getpinned',
+    'UnpinMatters': '/api/v1/matter/unpin',
+    'PinMatters': '/api/v1/matter/pin',
+    'getTaxonomyDetails': '/api/v1/taxonomy/gettaxonomy',
+    'checkMatterExists': '/api/v1/matter/checkmatterexists',
+    'getDefaultMatterConfigurations': '/api/v1/matter/getconfigurations',
+    'getUsers': '/api/v1/user/getusers',
+    'getRoles': '/api/v1/user/getroles',
+    'getPermissionLevels': '/api/v1/user/getpermissionlevels',
+    'checkSecurityGroupExists': '/api/v1/matter/checksecuritygroupexists',
+    'getFolderHierarchy': '/api/v1/matter/getfolderhierarchy',
+    'createMatter': '/api/v1/matter/create',
+    'assignUserPermissions': '/api/v1/matter/assignuserpermissions',
+    'assignContentType': '/api/v1/matter/assigncontenttype',
+    'createLandingPage': '/api/v1/matter/createlandingpage',
+    'updateMatterMetadata': '/api/v1/matter/UpdateMetadata',
+    'getStampedProperties': '/api/v1/matter/getstampedproperties',
+    'uploadEmail': '/api/v1/document/UploadMail',
+    'uploadAttachment': '/api/v1/document/UploadAttachments',
+    'uploadfiles': '/api/v1/document/UploadAttachments',
+    'getHelp': '/api/v1/shared/help'
+};
+
+var mockhomeResource = {
+    'getHelp': '/api/v1/shared/help',
+    'getUserProfilePicture': '/api/v1/user/getuserprofilepicture'
+};
+
+var data = { "name": "nikunj" };
+var mockdocumentDashBoardResource = {
+    'get': '/api/v1/document/getdocuments',
+    'getPinnedDocuments': '/api/v1/document/getpinneddocuments',
+    'getMyDocuments': '/api/v1/document/getdocuments',
+    'getTaxonomyDetails': '/api/v1/taxonomy/gettaxonomy',
+    'unPinDocument': '/api/v1/document/unpindocument',
+    'pinDocument': '/api/v1/document/pindocument',
+    'downloadattachmentsasstream': '/api/v1/email/downloadattachmentsasstream',
+    'downloadAttachments': '/api/v1/email/downloadattachments',
+    'getDocumentCounts': '/api/v1/document/getdocumentcounts'
+};
+
+
+var mockdocumentResource = {
+    'get': '/api/v1/document/getdocuments',
+    'getPinnedDocuments': '/api/v1/document/getpinneddocuments',
+    'unPinDocument': '/api/v1/document/unpindocument',
+    'pinDocument': '/api/v1/document/pindocument',
+    'getassets': '/api/v1/document/getassets'
+};
+
+
+var mockmatterResourceService = {
+    'get': '/api/v1/matter/get',
+    'getPinnedMatters': '/api/v1/matter/getpinned',
+    'UnpinMatters': '/api/v1/matter/unpin',
+    'PinMatters': '/api/v1/matter/pin',
+    'getTaxonomyDetails': '/api/v1/taxonomy/gettaxonomy',
+    'checkMatterExists': '/api/v1/matter/checkmatterexists',
+    'getDefaultMatterConfigurations': '/api/v1/matter/getconfigurations',
+    'getUsers': '/api/v1/user/getusers',
+    'getRoles': '/api/v1/user/getroles',
+    'getPermissionLevels': '/api/v1/user/getpermissionlevels',
+    'checkSecurityGroupExists': '/api/v1/matter/checksecuritygroupexists',
+    'getFolderHierarchy': '/api/v1/matter/getfolderhierarchy',
+    'createMatter': '/api/v1/matter/create',
+    'assignUserPermissions': '/api/v1/matter/assignuserpermissions',
+    'assignContentType': '/api/v1/matter/assigncontenttype',
+    'createLandingPage': '/api/v1/matter/createlandingpage',
+    'updateMatterMetadata': '/api/v1/matter/UpdateMetadata',
+    'getStampedProperties': '/api/v1/matter/getstampedproperties',
+    'uploadEmail': '/api/v1/document/UploadMail',
+    'uploadAttachment': '/api/v1/document/UploadAttachments',
+    'uploadfiles': '/api/v1/document/UploadAttachments',
+    'getHelp': '/api/v1/shared/help'
+};
+
+var selectedPracticeGroup = {
     "termName": "Advertising, Marketing ＆ Promotions",
     "parentTermName": "Practice Groups",
     "folderNames": "Email;Lorem;Ipsum",
