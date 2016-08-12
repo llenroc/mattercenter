@@ -1,19 +1,5 @@
 ﻿//Test suite
 describe('MatterDashBoard Controller test suite', function () {
-    var $scope = {};
-    var pm;
-    var api;
-    var matterResource;
-    var rootScope = {};
-    var $state = { go: function () { } };
-    var $stateParams;
-    var $interval = { go: function () { } };
-    var $watch;
-    var $http;
-    var $location;
-    var $q = {};
-    $q.defer = function () { };
-    $scope.$apply = function () { };
 
     var mockmatterDashBoardResource = {
         'get': '/api/v1/matter/get',

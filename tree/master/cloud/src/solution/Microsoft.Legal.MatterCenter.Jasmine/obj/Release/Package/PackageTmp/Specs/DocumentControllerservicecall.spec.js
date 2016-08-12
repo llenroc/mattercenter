@@ -1,24 +1,5 @@
 ﻿//Test suite
 describe('documents Controller test suite', function () {
-    var $scope = {};
-    var dm;
-    var api;
-    var matterResource;
-    var rootScope = {};
-    var $state = { go: function () { } };
-    var $stateParams;
-    var $interval = { go: function () { } };
-    var $watch;
-    var $http;
-    var $location = {
-        absUrl: function () {
-            var url = "https://mattermaqdevsite.azurewebsites.net&test=1&attempt=2|jasminetest.html";
-            return url;
-        }
-    };
-    var $q = {};
-    $q.defer = function () { return { resolve: function () { } } };
-    $scope.$apply = function () { };
 
     var mockdocumentResource = {
         'get': '/api/v1/document/getdocuments',

@@ -1,30 +1,7 @@
 ﻿//Test suite
 describe('Home Controller test suite', function () {
-    var $scope = {};
-    var dm;
-    var api;
-    var matterResource;
-    var rootScope = {};
-    var $state = {"current":{"name":"test"},
-        go: function () { }
-    };
-    var $stateParams;
-    var $interval = { go: function () { } };
-    var $watch;
-    var $location;
-    var adalService = {
-        "userInfo": {
-            "userName": "MAQUser@LCADMS.onmicrosoft.com",
-            "profile": {
-                "family_name": "LCADMS",
-                "oid":786
-            },
-            "isAuthenticated":true
-        },
-        logOut:function(){  dm.status=true;}
-    };
 
-   var mockhomeResource = {
+    var mockhomeResource = {
         'getHelp': '/api/v1/shared/help',
         'getUserProfilePicture': '/api/v1/user/getuserprofilepicture'
     };

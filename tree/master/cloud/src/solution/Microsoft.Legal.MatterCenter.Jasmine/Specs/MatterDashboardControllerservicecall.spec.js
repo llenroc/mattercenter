@@ -1,43 +1,7 @@
 ﻿//Test suite
 describe('MatterDashBoard Controller test suite', function () {
-    var $scope = {};
-    var pm;
-    var api;
-    var matterResource;
-    var rootScope = {};
-    var $state = { go: function () { } };
-    var $stateParams;
-    var $interval = { go: function () { } };
-    var $watch;
-    var $http;
-    var $location;
-    var $q = {};
-    $q.defer = function () { };
-    $scope.$apply = function () { };
 
-    var mockmatterDashBoardResource = {
-        'get': '/api/v1/matter/get',
-        'getPinnedMatters': '/api/v1/matter/getpinned',
-        'getMyMatters': '/api/v1/matter/getpinned',
-        'getTaxonomyDetails': '/api/v1/taxonomy/gettaxonomy',
-        'UnpinMatter': '/api/v1/matter/unpin',
-        'PinMatter': '/api/v1/matter/pin',
-        'getFolderHierarchy': '/api/v1/matter/getfolderhierarchy',
-        'getMatterCounts': '/api/v1/matter/getmattercounts'
-    };
     var mockapi = function (matterDashBoardResource) {
-        var mockmatterDashBoardResource = {
-            'get': '/api/v1/matter/get',
-            'getPinnedMatters': '/api/v1/matter/getpinned',
-            'getMyMatters': '/api/v1/matter/getpinned',
-            'getTaxonomyDetails': '/api/v1/taxonomy/gettaxonomy',
-            'UnpinMatter': '/api/v1/matter/unpin',
-            'PinMatter': '/api/v1/matter/pin',
-            'getFolderHierarchy': '/api/v1/matter/getfolderhierarchy',
-            'getMatterCounts': '/api/v1/matter/getmattercounts',
-            'getDefaultMatterConfigurations': '/api/v1/matter/getconfigurations'
-        };
-
         var url = "http://mattermaqdevsite.azurewebsites.net" + mockmatterDashBoardResource[matterDashBoardResource.method];
         function IsJsonString(str) {
             try {
