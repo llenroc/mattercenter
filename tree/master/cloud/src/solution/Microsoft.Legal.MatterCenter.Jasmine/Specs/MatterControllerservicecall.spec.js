@@ -1,50 +1,14 @@
 ﻿//Test suite
 describe('MattersController Controller test suite', function () {
-    
+
     var mockapi = function (matterResource) {
-        var url = "http://mattermaqdevsite.azurewebsites.net" + mockmatterResource[matterResource.method];
-        function IsJsonString(str) {
-            try {
-                JSON.parse(str);
-            } catch (e) {
-                return false;
-            }
-            return true;
-        }
-        callAPI(matterResource.success);
-        function callAPI(callback) {
-
-            var http = new XMLHttpRequest();
-            var postdata;
-
-            if (!IsJsonString(matterResource.data)) {
-                postdata = JSON.stringify(matterResource.data);
-            } else {
-                postdata = matterResource.data;
-            }
-
-            http.open("POST", url, false);
-            var accessToken = "Bearer " + sessionStorage.getItem('adal.idtoken');
-            //Send the proper header information along with the request
-            http.setRequestHeader("Content-type", "application/json");
-            http.setRequestHeader("Accept", "application/json");
-            http.setRequestHeader("Authorization", accessToken);
-            http.send(postdata);
-
-            if (http.status === 200) {// That's HTTP for 'ok'
-                console.log(http.responseText);
-                if (callback)
-                    callback(JSON.parse(http.responseText));
-                else
-                    return JSON.parse(http.responseText);
-            }
-        }
+        getData(matterResource, mockMatterResource);
 
     };
 
     beforeEach(module('matterMain'));
     beforeEach(module('matterMain', function ($provide) {
-        $provide.factory("matterResource", ['$resource', 'auth', mockmatterResource]);
+        $provide.factory("matterResource", ['$resource', 'auth', mockMatterResource]);
     }));
 
     beforeEach(module('matterMain'));
@@ -57,27 +21,27 @@ describe('MattersController Controller test suite', function () {
 
     beforeEach(inject(function ($controller, $rootScope) {
         rootScope = $rootScope.$new();
-        cm = $controller('mattersController as cm', { $scope: $scope, $state: $state, $stateParams: $stateParams, matterResource: mockmatterResource, api: mockapi, $rootScope: rootScope, $http: $http, $location: $location, $q: $q, $animate: $animate });
+        vm = $controller('mattersController as vm', { $scope: $scope, $state: $state, $stateParams: $stateParams, matterResource: mockMatterResource, api: mockapi, $rootScope: rootScope, $http: $http, $location: $location, $q: $q, $animate: $animate });
     }));
 
     describe('Verification of SetMatters function', function () {
         it('matter name should be added in dropdown', function () {
-            cm.SetMatters(1, "All Matters");
-            expect(cm.divuigrid).toBe(false);
-            expect(cm.responseNull).toBe(false);
-            expect(cm.nodata).toBe(false);
-            expect(cm.gridOptions.data.length).toBeGreaterThan(0);
-            expect(cm.gridOptions.data).not.toBe(null);
+            vm.SetMatters(1, "All Matters");
+            expect(vm.divuigrid).toBe(false);
+            expect(vm.responseNull).toBe(false);
+            expect(vm.nodata).toBe(false);
+            expect(vm.gridOptions.data.length).toBeGreaterThan(0);
+            expect(vm.gridOptions.data).not.toBe(null);
         });
     });
 
     describe('Verification of GetMatters function', function () {
         it('matter name should be added in dropdown', function () {
-            cm.GetMatters(3);
-            expect(cm.divuigrid).toBe(true);
-            expect(cm.nodata).toBe(false);
-            expect(cm.gridOptions.data.length).toBeGreaterThan(0);
-            expect(cm.gridOptions.data).not.toBe(null);
+            vm.GetMatters(3);
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.nodata).toBe(false);
+            expect(vm.gridOptions.data.length).toBeGreaterThan(0);
+            expect(vm.gridOptions.data).not.toBe(null);
         });
     });
 
@@ -85,13 +49,13 @@ describe('MattersController Controller test suite', function () {
         it('It should search related matter', function () {
             var term = "MCMatterName:Test*(MCMatterName:* OR MCMatterID:* OR MCClientName:*)";
             var property = "MCMatterName";
-            cm.mattersearch(term, property, false);
-            expect(cm.divuigrid).toBe(true);
-            expect(cm.nodata).toBe(false);
-            expect(cm.lazyloader).toBe(true);
-            expect(cm.filternodata).toBe(false);
-            expect(cm.details.length).toBeGreaterThan(0);
-            expect(cm.details).not.toBe(null);
+            vm.mattersearch(term, property, false);
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.nodata).toBe(false);
+            expect(vm.lazyloader).toBe(true);
+            expect(vm.filternodata).toBe(false);
+            expect(vm.details.length).toBeGreaterThan(0);
+            expect(vm.details).not.toBe(null);
 
         });
 
@@ -99,10 +63,10 @@ describe('MattersController Controller test suite', function () {
 
     describe('Verification of FilterModifiedDate function', function () {
         it('Data should be filtered based on modified date', function () {
-            cm.modstartdate = new Date("08/01/2016");
-            cm.modenddate = new Date("08/10/2016");
-            cm.FilterModifiedDate("Modified Date");
-            expect(cm.moddatefilter).toBe(true);
+            vm.modstartdate = new Date("08/01/2016");
+            vm.modenddate = new Date("08/10/2016");
+            vm.FilterModifiedDate("Modified Date");
+            expect(vm.moddatefilter).toBe(true);
         });
 
     });
@@ -110,30 +74,14 @@ describe('MattersController Controller test suite', function () {
     describe('Verification of PinMatter function', function () {
         it('It should be added in pinned list', function () {
             var currentRowData = {
-                entity: {
-                    matterName: "Default Matter",
-                    matterDescription: "Test Matter",
-                    matterCreatedDate: "19/08/2016",
-                    matterUrl: "https://lcadms.sharepoint.com/sites/subsiteclient/SitePages/6cbca4ab447c87302d3a1f0e3c32985a.aspx",
-                    matterPracticeGroup: "Business Transactions",
-                    matterAreaOfLaw: "Family Business",
-                    matterSubAreaOfLaw: "Family Business",
-                    matterClientUrl: "https://lcadms.sharepoint.com/sites/subsiteclient",
-                    matterClient: "Microsoft",
-                    matterClientId: "578cfafb-59eb-4f4c-b219-47886c61e384",
-                    hideUpload: true,
-                    matterID: "1516561262162",
-                    matterResponsibleAttorney: "CELA",
-                    matterModifiedDate: "19/08/2016",
-                    matterGuid: "578cfafb-59eb-4f4c-b219-47886c61e384",
-                    pinType: 'unpin'
-                }
+                entity: oTestConfiguration.oMatterObject
             };
-            cm.PinMatter(currentRowData);
-            expect(cm.divuigrid).toBe(false);
-            expect(cm.responseNull).toBe(false);
-            expect(cm.nodata).toBe(false);
-            expect(cm.gridOptions.data).not.toBe(null);
+            vm.PinMatter(currentRowData);
+            expect(vm.divuigrid).toBe(false);
+            expect(vm.responseNull).toBe(false);
+            expect(vm.nodata).toBe(false);
+            expect(vm.gridOptions.data.length).not.toBeLessThan(0);
+            expect(vm.gridOptions.data).not.toBe(null);
 
         });
     });
@@ -141,141 +89,121 @@ describe('MattersController Controller test suite', function () {
     describe('Verification of UnpinMatter function', function () {
         it('It should be removed from pinned list', function () {
             var pinObject = {
-                entity: {
-                    matterName: "Default Matter",
-                    matterDescription: "Test Matter",
-                    matterCreatedDate: "19/08/2016",
-                    matterUrl: "https://lcadms.sharepoint.com/sites/subsiteclient/SitePages/6cbca4ab447c87302d3a1f0e3c32985a.aspx",
-                    matterPracticeGroup: "Business Transactions",
-                    matterAreaOfLaw: "Family Business",
-                    matterSubAreaOfLaw: "Family Business",
-                    matterClientUrl: "https://lcadms.sharepoint.com/sites/subsiteclient",
-                    matterClient: "Microsoft",
-                    matterClientId: "578cfafb-59eb-4f4c-b219-47886c61e384",
-                    hideUpload: true,
-                    matterID: "1516561262162",
-                    matterResponsibleAttorney: "CELA",
-                    matterModifiedDate: "19/08/2016",
-                    matterGuid: "578cfafb-59eb-4f4c-b219-47886c61e384",
-                    pinType: 'unpin'
-                }
+                entity: oTestConfiguration.oMatterObject
             };
-            cm.UnpinMatter(pinObject);;
-            expect(cm.divuigrid).toBe(false);
-            expect(cm.responseNull).toBe(false);
-            expect(cm.nodata).toBe(false);
-            expect(cm.gridOptions.data).not.toBe(null);
+            vm.UnpinMatter(pinObject);;
+            expect(vm.divuigrid).toBe(false);
+            expect(vm.responseNull).toBe(false);
+            expect(vm.nodata).toBe(false);
+            expect(vm.gridOptions.data.length).not.toBeLessThan(0);
+            expect(vm.gridOptions.data).not.toBe(null);
 
         });
     });
 
     describe('Verification of sortChanged function', function () {
         it('documents should be sort based on matter name', function () {
-            $scope.gridApi = { infiniteScroll: { dataLoaded: function () { }, resetScroll: function () { } } };
             var sortColumns = [{ "field": "matterName", "name": "matterName", "sort": "asc" }];
-            cm.gridOptions.columnDefs[0] = { "field": "matterName", "displayName": "Matter", "enableHiding": false, "width": "275", "cellTemplate": "../app/matter/MatterTemplates/MatterCellTemplate.html", "headerCellTemplate": "../app/matter/MatterTemplates/MatterHeaderTemplate.html", "name": "matterName", "type": "string" };
+            vm.gridOptions.columnDefs[0] = { "field": "matterName", "displayName": "Matter", "enableHiding": false, "width": "275", "cellTemplate": "../app/matter/MatterTemplates/MatterCellTemplate.html", "headerCellTemplate": "../app/matter/MatterTemplates/MatterHeaderTemplate.html", "name": "matterName", "type": "string" };
             $scope.sortChanged(null, sortColumns);
-            expect(cm.MatterNameSort).toBe("desc");
-            expect(cm.sortby).toBe("asc");
-            expect(cm.sortexp).toBe("matterName");
+            expect(vm.MatterNameSort).toBe("desc");
+            expect(vm.sortby).toBe("asc");
+            expect(vm.sortexp).toBe("matterName");
         });
     });
 
 
     describe('Verification of typeheadselect function', function () {
         it('selected document result should be displayed', function () {
-            $scope.gridApi = { infiniteScroll: { dataLoaded: function () { }, resetScroll: function () { } } };
             var selected = "Default Matter (11111)";
-            cm.typeheadselect(null, selected);
-            expect(selected).toContain(cm.gridOptions.data[0].matterName);
+            vm.typeheadselect(null, selected);
+            expect(selected).toContain(vm.gridOptions.data[0].matterName);
         });
     });
 
 
     describe('Verification of watchFunc function', function () {
         it('It should watchFunc', function () {
-            cm.responseNull = false;
-            cm.watchFunc();
-            expect(cm.lazyloader).toBe(true);
-            expect(cm.pagenumber).toBeGreaterThan(0);
-            expect(cm.lazyloader).toBe(true);
-            expect(cm.gridOptions.data.length).toBeGreaterThan(0);
+            vm.responseNull = false;
+            vm.watchFunc();
+            expect(vm.lazyloader).toBe(true);
+            expect(vm.pagenumber).toBeGreaterThan(0);
+            expect(vm.lazyloader).toBe(true);
+            expect(vm.gridOptions.data.length).toBeGreaterThan(0);
         });
     });
 
     describe('Verification of getFolderHierarchy function', function () {
         it('It should show getFolderHierarchy', function () {
-
-            cm.getFolderHierarchy("Default Matter", "https://lcadms.sharepoint.com/sites/subsiteclient", "6cbca4ab447c87302d3a1f0e3c32985a");
-            expect(cm.oUploadGlobal.bAllowContentCheck).toBe(true);
-            expect(cm.foldersList.length).toBeGreaterThan(0);
-            expect(cm.showSelectedFolderTree).not.toBe(null);
-            expect(cm.lazyloader).toBe(true);
+            vm.getFolderHierarchy("Default Matter", "https://lcadms.sharepoint.com/sites/subsiteclient", "6cbca4ab447c87302d3a1f0e3c32985a");
+            expect(vm.oUploadGlobal.bAllowContentCheck).toBe(true);
+            expect(vm.foldersList.length).toBeGreaterThan(0);
+            expect(vm.showSelectedFolderTree).not.toBe(null);
+            expect(vm.lazyloader).toBe(true);
         });
     });
 
     describe('Verification of search function', function () {
         it('It should search related matter', function () {
-            cm.selected = "Test Matter";
-            cm.search();
-            expect(cm.divuigrid).toBe(true);
-            expect(cm.nodata).toBe(false);
-            expect(cm.gridOptions.data.length).toBeGreaterThan(0);
-            expect(cm.gridOptions.data).not.toBe(null);
+            vm.selected = "Test Matter";
+            vm.search();
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.nodata).toBe(false);
+            expect(vm.gridOptions.data.length).toBeGreaterThan(0);
+            expect(vm.gridOptions.data).not.toBe(null);
         });
     });
 
     describe('Verification of FilterByType function', function () {
         it('It should show FilterByType', function () {
-            cm.FilterByType();
-            expect(cm.gridOptions.data.length).toBeGreaterThan(0);
-            expect(cm.nodata).toBe(false);
-            expect(cm.divuigrid).toBe(true);
+            vm.FilterByType();
+            expect(vm.gridOptions.data.length).toBeGreaterThan(0);
+            expect(vm.nodata).toBe(false);
+            expect(vm.divuigrid).toBe(true);
         });
     });
 
     describe('Verification of Openuploadmodal function', function () {
         it('It should show Openuploadmodal', function () {
-
-            cm.Openuploadmodal("Default Matter", "https://lcadms.sharepoint.com/sites/subsiteclient", "6cbca4ab447c87302d3a1f0e3c32985a");
-            expect(cm.oUploadGlobal.successBanner).toBe(false);
-            expect(cm.isLoadingFromDesktopStarted).toBe(false);
+            vm.Openuploadmodal("Default Matter", "https://lcadms.sharepoint.com/sites/subsiteclient", "6cbca4ab447c87302d3a1f0e3c32985a");
+            expect(vm.oUploadGlobal.successBanner).toBe(false);
+            expect(vm.isLoadingFromDesktopStarted).toBe(false);
         });
     });
 
     describe('Verification of localOverWriteDocument function', function () {
         it('It should show localOverWriteDocument', function () {
-            cm.ducplicateSourceFile = {
+            vm.ducplicateSourceFile = {
                 pop: function ()
                 { return true; },
                 filter: function () {
                     return true;
                 }
             }
-            cm.oUploadGlobal = {
+            vm.oUploadGlobal = {
                 "arrFiles": {
                     pop: function ()
                     { return obj; }
                 }
             };
-            cm.ducplicateSourceFile.length = 1;
+            vm.ducplicateSourceFile.length = 1;
             var duplicateFile = { "cancel": null, "fileType": "remotefile" };
-            cm.localOverWriteDocument(duplicateFile, "ignore");
-            expect(cm.files).toBeDefined();
+            vm.localOverWriteDocument(duplicateFile, "ignore");
+            expect(vm.files).toBeDefined();
         });
-        
+
         it('It should show localOverWriteDocument', function () {
-            cm.ducplicateSourceFile = {
+            vm.ducplicateSourceFile = {
                 pop: function ()
                 { return true; },
                 filter: function () {
                     return true;
                 }
             }
-           
+
             var duplicateFile = { "cancel": null, "fileType": "" };
-            cm.localOverWriteDocument(duplicateFile, "overwrite");
-            expect(cm.ducplicateSourceFile).toBe(true);
+            vm.localOverWriteDocument(duplicateFile, "overwrite");
+            expect(vm.ducplicateSourceFile).toBe(true);
         });
 
     });
@@ -286,58 +214,18 @@ describe('MattersController Controller test suite', function () {
             var folder = {
                 "parentURL": "https://lcadms.sharepoint.com/sites/subsiteclient",
                 "active": true,
-                "children": { "child": { "active": true }}
+                "children": { "child": { "active": true } }
             };
-            cm.showSelectedFolderTree(folder);
-            expect(cm.showSelectedFolderTree).not.toThrow(Error);
+            vm.showSelectedFolderTree(folder);
+            expect(vm.showSelectedFolderTree).not.toThrow(Error);
         });
     });
 
     describe('Verification of getContentCheckConfigurations function', function () {
         it('It should show getContentCheckConfigurations', function () {
 
-            cm.getContentCheckConfigurations("https://lcadms.sharepoint.com/sites/subsiteclient");
-            expect(cm.oUploadGlobal.bAllowContentCheck).toBe(true);
+            vm.getContentCheckConfigurations("https://lcadms.sharepoint.com/sites/subsiteclient");
+            expect(vm.oUploadGlobal.bAllowContentCheck).toBe(true);
         });
     });
 });
-
-
-//FilterByType
-//search
-//Openuploadmodal
-//getFolderHierarchy
-//localOverWriteDocument
-//showSelectedFolderTree
-//getContentCheckConfigurations
-
-
-
-
-//watchFunc
-//getFolderHierarchy
-//handleOutlookDrop
-//GetMatters
-//UnpinMatter
-//PinMatter
-//FilterByType
-//sortChanged
-//typeheadselect
-//handleDesktopDrop
-//getContentCheckConfigurations
-//Openuploadmodal
-//oUploadGlobal
-
-//initOutlook
-//createMailPopup
-//searchMatter
-//search
-//SetMatters
-//mattersearch
-//FilterModifiedDate
-//ducplicateSourceFile
-//showSelectedFolderTree
-//localOverWriteDocument
-//uploadEmail
-//uploadAttachment
-//overWriteDocument

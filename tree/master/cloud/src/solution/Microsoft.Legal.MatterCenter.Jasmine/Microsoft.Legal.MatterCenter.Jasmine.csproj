@@ -129,6 +129,7 @@
     <Content Include="JasmineTest.html" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\site.min.js" />
+    <Content Include="Scripts\TestConfig.js" />
     <Content Include="Specs\CreateMatterController.spec.js" />
     <Content Include="Specs\CreateMatterControllerservicecall.spec.js" />
     <Content Include="Specs\DocumentController.spec.js" />
@@ -150,6 +151,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="lib\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
