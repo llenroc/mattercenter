@@ -707,6 +707,7 @@
                             cm.errorBorder = "mattername"; showErrorNotification("mattername");
                             cm.errorPopUpBlock = true;
                             oPageOneState.oValidMatterName = false;
+                            cm.checkValidMatterName = false;
                             return false;
                         } else {
                             //  alert("success");
@@ -714,6 +715,7 @@
                             if (oPageOneState.isNextClick) {
                                 cm.navigateToSecondSection(oPageOneState.sectionClickName);
                             }
+                            cm.checkValidMatterName = true;
                             return true;
                         }
                     });

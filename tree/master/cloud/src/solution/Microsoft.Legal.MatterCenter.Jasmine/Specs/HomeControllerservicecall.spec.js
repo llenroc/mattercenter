@@ -1,51 +1,14 @@
 ﻿//Test suite
 describe('Home Controller test suite', function () {
-    var root = { logEvent: function (test) { } };
 
     var mockapi = function (homeResource) {
-        var url = "http://mattermaqdevsite.azurewebsites.net" + mockhomeResource[homeResource.method];
-        function IsJsonString(str) {
-            try {
-                JSON.parse(str);
-            } catch (e) {
-                return false;
-            }
-            return true;
-        }
-        callAPI(homeResource.success);
-        function callAPI(callback) {
+        getData(homeResource, mockHomeResource);
 
-            var http = new XMLHttpRequest();
-            var postdata;
-
-            if (!IsJsonString(homeResource.data)) {
-                postdata = JSON.stringify(homeResource.data);
-            } else {
-                postdata = homeResource.data;
-            }
-
-            http.open("POST", url, false);
-            var accessToken = "Bearer " + sessionStorage.getItem('adal.idtoken');
-            //Send the proper header information along with the request
-            http.setRequestHeader("Content-type", "application/json");
-            http.setRequestHeader("Accept", "application/json");
-            http.setRequestHeader("Authorization", accessToken);
-            http.send(postdata);
-
-            if (http.status === 200) {// That's HTTP for 'ok'
-                console.log(http.responseText);
-                if (callback)
-                    callback(JSON.parse(http.responseText));
-                else
-                    return JSON.parse(http.responseText);
-            }
-
-        }
     };
 
     beforeEach(module('matterMain'));
     beforeEach(module('matterMain', function ($provide) {
-        $provide.factory("homeResource", ['$resource', 'auth', mockhomeResource]);
+        $provide.factory("homeResource", ['$resource', 'auth', mockHomeResource]);
     }));
 
     beforeEach(module('matterMain'));
@@ -58,23 +21,23 @@ describe('Home Controller test suite', function () {
 
     beforeEach(inject(function ($controller, $rootScope) {
         rootScope = $rootScope.$new();
-        dm = $controller('homeController as dm', { $scope: $scope, $state: $state, $stateParams: $stateParams, homeResource: mockhomeResource, api: mockapi, $rootScope: root, $location: $location, adalAuthenticationService: adalService });
+        vm = $controller('homeController as vm', { $scope: $scope, $state: $state, $stateParams: $stateParams, homeResource: mockHomeResource, api: mockapi, $rootScope: rootScope, $location: $location, adalAuthenticationService: adalService });
     }));
 
     describe('Verification of getUserProfilePicture function', function () {
         it('It should get User ProfilePicture', function () {
-            dm.getUserProfilePicture();
-            expect(dm.smallPictureUrl).toBe("https://lcadms-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/maquser_lcadms_onmicrosoft_com_SThumb.jpg");
-            expect(dm.largePictureUrl).toBe("https://lcadms-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/maquser_lcadms_onmicrosoft_com_MThumb.jpg");
+            vm.getUserProfilePicture();
+            expect(vm.smallPictureUrl).toBe("https://lcadms-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/maquser_lcadms_onmicrosoft_com_SThumb.jpg");
+            expect(vm.largePictureUrl).toBe("https://lcadms-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/maquser_lcadms_onmicrosoft_com_MThumb.jpg");
 
         });
     });
 
     describe('Verification of help function', function () {
         it('It should set help', function () {
-            dm.help();
-            expect(dm.helpData.length).toBeGreaterThan(0);
-            expect(dm.helpData).toBeDefined();
+            vm.help();
+            expect(vm.helpData.length).toBeGreaterThan(0);
+            expect(vm.helpData).toBeDefined();
 
         });
     });
@@ -82,17 +45,10 @@ describe('Home Controller test suite', function () {
 
     describe('Verification of signOut function', function () {
         it('It should signOut', function () {
-            dm.signOut();
-            expect(dm.status).toBe(true);
+            vm.signOut();
+            expect(vm.status).toBe(true);
         });
     });
-    //signOut
-    //getUserProfilePicture
-    //help
-
-
-
-
 });
 
 

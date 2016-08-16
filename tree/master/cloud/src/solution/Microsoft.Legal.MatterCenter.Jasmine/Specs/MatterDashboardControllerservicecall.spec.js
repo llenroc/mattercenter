@@ -2,49 +2,12 @@
 describe('MatterDashBoard Controller test suite', function () {
 
     var mockapi = function (matterDashBoardResource) {
-        var url = "http://mattermaqdevsite.azurewebsites.net" + mockmatterDashBoardResource[matterDashBoardResource.method];
-        function IsJsonString(str) {
-            try {
-                JSON.parse(str);
-            } catch (e) {
-                return false;
-            }
-            return true;
-        }
-        callAPI(matterDashBoardResource.success);
-        function callAPI(callback) {
-
-            var http = new XMLHttpRequest();
-            var postdata;
-
-            if (!IsJsonString(matterDashBoardResource.data)) {
-                postdata = JSON.stringify(matterDashBoardResource.data);
-            } else {
-                postdata = matterDashBoardResource.data;
-            }
-
-            http.open("POST", url, false);
-            var accessToken = "Bearer " + sessionStorage.getItem('adal.idtoken');
-            //Send the proper header information along with the request
-            http.setRequestHeader("Content-type", "application/json");
-            http.setRequestHeader("Accept", "application/json");
-            http.setRequestHeader("Authorization", accessToken);
-            http.send(postdata);
-
-            if (http.status === 200) {// That's HTTP for 'ok'
-                console.log(http.responseText);
-                if (callback)
-                    callback(JSON.parse(http.responseText));
-                else
-                    return JSON.parse(http.responseText);
-            }
-        }
-
+        getData(matterDashBoardResource, mockMatterDashBoardResource);
     };
 
     beforeEach(module('matterMain'));
     beforeEach(module('matterMain', function ($provide) {
-        $provide.factory("matterDashBoardResource", ['$resource', 'auth', mockmatterDashBoardResource]);
+        $provide.factory("matterDashBoardResource", ['$resource', 'auth', mockMatterDashBoardResource]);
     }));
 
     beforeEach(module('matterMain'));
@@ -57,44 +20,42 @@ describe('MatterDashBoard Controller test suite', function () {
 
     beforeEach(inject(function ($controller, $rootScope) {
         rootScope = $rootScope.$new();
-        pm = $controller('MatterDashBoardController as pm', { $scope: $scope, $state: $state, $stateParams: $stateParams, matterDashBoardResource: mockmatterDashBoardResource, api: mockapi, $rootScope: rootScope, $http: $http, $location: $location, $q: $q });
+        vm = $controller('MatterDashBoardController as vm', { $scope: $scope, $state: $state, $stateParams: $stateParams, matterDashBoardResource: mockMatterDashBoardResource, api: mockapi, $rootScope: rootScope, $http: $http, $location: $location, $q: $q });
     }));
 
 
     describe('Verification of getMatterCounts function', function () {
         it('It should show MatterCounts', function () {
-            $scope.$apply = function () { };
-            pm.getMatterCounts();
-            expect(pm.allMatterCount).toBeGreaterThan(0);
-            expect(pm.myMatterCount).toBeGreaterThan(0);
-            expect(pm.pinMatterCount).toBeGreaterThan(0);
-            expect(pm.totalrecords).toBeGreaterThan(0);
-            expect(pm.lazyloaderdashboard).toBe(true);
+            vm.getMatterCounts();
+            expect(vm.allMatterCount).toBeGreaterThan(0);
+            expect(vm.myMatterCount).toBeGreaterThan(0);
+            expect(vm.pinMatterCount).toBeGreaterThan(0);
+            expect(vm.totalrecords).toBeGreaterThan(0);
+            expect(vm.lazyloaderdashboard).toBe(true);
         });
     });
 
     describe('Verification of getMatterPinned function', function () {
         it('It should get MatterPinned', function () {
-            $scope.$apply = function () { };
-            pm.getMatterPinned();
-            expect(pm.pinnedResponse).not.toBe(null);
-            expect(pm.Pinnedobj.length).toBeDefined();
-            expect(pm.matterGridOptions.data).toBeDefined();
-            expect(pm.pinMatterCount).toBeDefined();
-            expect(pm.totalrecords).toBeDefined();
-            expect(pm.nodata).toBe(false);
-            expect(pm.divuigrid).toBe(true);
-            expect(pm.lazyloaderdashboard).toBe(true);
-            expect(pm.displaypagination).toBe(true);
+            vm.getMatterPinned();
+            expect(vm.pinnedResponse).not.toBe(null);
+            expect(vm.Pinnedobj.length).toBeDefined();
+            expect(vm.matterGridOptions.data).toBeDefined();
+            expect(vm.pinMatterCount).toBeDefined();
+            expect(vm.totalrecords).toBeDefined();
+            expect(vm.nodata).toBe(false);
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.lazyloaderdashboard).toBe(true);
+            expect(vm.displaypagination).toBe(true);
         });
 
     });
 
     //describe('Verification of searchMatters function', function () {
     //    it('It should get searchMatters', function () {
-    //        pm.searchMatters("test");
-    //        expect(pm.pagenumber).toBe(1);
-            
+    //        vm.searchMatters("test");
+    //        expect(vm.pagenumber).toBe(1);
+
     //    });
 
     //});
@@ -102,14 +63,14 @@ describe('MatterDashBoard Controller test suite', function () {
 
     describe('Verification of myMatters function', function () {
         it('It should get myMatters', function () {
-            pm.searchText = "test";
-            pm.myMatterCount = 5;
-            pm.myMatters();
-            expect(pm.matterGridOptions.data.length).toBeGreaterThan(0);
-            expect(pm.totalrecords).toBeGreaterThan(1);
-            expect(pm.nodata).toBe(false);
-            expect(pm.divuigrid).toBe(true);
-            expect(pm.lazyloaderdashboard).toBe(true);
+            vm.searchText = "test";
+            vm.myMatterCount = 5;
+            vm.myMatters();
+            expect(vm.matterGridOptions.data.length).toBeGreaterThan(0);
+            expect(vm.totalrecords).toBeGreaterThan(1);
+            expect(vm.nodata).toBe(false);
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.lazyloaderdashboard).toBe(true);
 
         });
 
@@ -118,30 +79,30 @@ describe('MatterDashBoard Controller test suite', function () {
 
     describe('Verification of showClientDrop function', function () {
         it('It should show clientdrop', function () {
-            pm.clientdropvisible = false;
-            pm.clients = undefined;
-            pm.showClientDrop(event);
-            expect(pm.clients).toBeDefined();
-            expect(pm.clientdrop).toBe(true);
-            expect(pm.clientdropvisible).toBe(true);
-            expect(pm.lazyloaderclient).toBe(true);
-            expect(pm.pgdrop).toBe(false);
-            expect(pm.pgdropvisible).toBe(false);
-            expect(pm.aoldrop).toBe(false);
-            expect(pm.aoldropvisible).toBe(false);
+            vm.clientdropvisible = false;
+            vm.clients = undefined;
+            vm.showClientDrop(event);
+            expect(vm.clients).toBeDefined();
+            expect(vm.clientdrop).toBe(true);
+            expect(vm.clientdropvisible).toBe(true);
+            expect(vm.lazyloaderclient).toBe(true);
+            expect(vm.pgdrop).toBe(false);
+            expect(vm.pgdropvisible).toBe(false);
+            expect(vm.aoldrop).toBe(false);
+            expect(vm.aoldropvisible).toBe(false);
 
         });
 
         it('It should not show clientdrop', function () {
-            pm.clientdropvisible = true;
-            pm.showClientDrop(event);
-            expect(pm.clientdrop).toBe(false);
-            expect(pm.clientdropvisible).toBe(false);
-            expect(pm.lazyloaderclient).toBe(true);
-            expect(pm.pgdrop).toBe(false);
-            expect(pm.pgdropvisible).toBe(false);
-            expect(pm.aoldrop).toBe(false);
-            expect(pm.aoldropvisible).toBe(false);
+            vm.clientdropvisible = true;
+            vm.showClientDrop(event);
+            expect(vm.clientdrop).toBe(false);
+            expect(vm.clientdropvisible).toBe(false);
+            expect(vm.lazyloaderclient).toBe(true);
+            expect(vm.pgdrop).toBe(false);
+            expect(vm.pgdropvisible).toBe(false);
+            expect(vm.aoldrop).toBe(false);
+            expect(vm.aoldropvisible).toBe(false);
 
         });
     });
@@ -150,14 +111,14 @@ describe('MatterDashBoard Controller test suite', function () {
 
     describe('Verification of myMatters function', function () {
         it('It should get myMatters', function () {
-            pm.searchText = "test";
-            pm.myMatterCount = 5;
-            pm.myMatters();
-            expect(pm.matterGridOptions.data.length).toBeGreaterThan(0);
-            expect(pm.totalrecords).toBeGreaterThan(1);
-            expect(pm.nodata).toBe(false);
-            expect(pm.divuigrid).toBe(true);
-            expect(pm.lazyloaderdashboard).toBe(true);
+            vm.searchText = "test";
+            vm.myMatterCount = 5;
+            vm.myMatters();
+            expect(vm.matterGridOptions.data.length).toBeGreaterThan(0);
+            expect(vm.totalrecords).toBeGreaterThan(1);
+            expect(vm.nodata).toBe(false);
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.lazyloaderdashboard).toBe(true);
 
         });
 
@@ -166,101 +127,101 @@ describe('MatterDashBoard Controller test suite', function () {
 
     describe('Verification of FilterByType function', function () {
         it('It should show FilterByType', function () {
-            pm.FilterByType();
-            expect(pm.totalrecords).toBeGreaterThan(0);
-            expect(pm.matterGridOptions.data.length).toBeGreaterThan(0);
-            expect(pm.lazyloader).toBe(true);
-            expect(pm.nodata).toBe(false);
-            expect(pm.divuigrid).toBe(true);
-            expect(pm.lazyloaderdashboard).toBe(true);
+            vm.FilterByType();
+            expect(vm.totalrecords).toBeGreaterThan(0);
+            expect(vm.matterGridOptions.data.length).toBeGreaterThan(0);
+            expect(vm.lazyloader).toBe(true);
+            expect(vm.nodata).toBe(false);
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.lazyloaderdashboard).toBe(true);
         });
     });
 
     describe('Verification of sortyby function', function () {
         it('It should show sortyby', function () {
             var sortexp = "AlphabeticalUp";
-            pm.sortyby(sortexp, "Searchkeyword");
-            expect(pm.nodata).toBe(true);
-            expect(pm.divuigrid).toBe(false);
-            expect(pm.lazyloaderdashboard).toBe(true);
+            vm.sortyby(sortexp, "Searchkeyword");
+            expect(vm.nodata).toBe(true);
+            expect(vm.divuigrid).toBe(false);
+            expect(vm.lazyloaderdashboard).toBe(true);
         });
     });
 
     describe('Verification of next function', function () {
         it('It should show next', function () {
-            pm.last = 5;
-            pm.totalrecords = 30;
-            
-            pm.next();
-            expect(pm.first).toBeGreaterThan(0);
-            expect(pm.last).toBeGreaterThan(0);
-            expect(pm.total).toBeGreaterThan(0);
-            expect(pm.pagenumber).toBeGreaterThan(0);
-            expect(pm.fromtopage).toBe(pm.first + " - " + pm.totalrecords);
-            expect(pm.displaypagination).toBe(true);
-            expect(pm.matterGridOptions.data.length).toBeGreaterThan(0);
-            expect(pm.nodata).toBe(false);
-            expect(pm.divuigrid).toBe(true);
-            expect(pm.lazyloaderdashboard).toBe(true);
+            vm.last = 5;
+            vm.totalrecords = 30;
+
+            vm.next();
+            expect(vm.first).toBeGreaterThan(0);
+            expect(vm.last).toBeGreaterThan(0);
+            expect(vm.total).toBeGreaterThan(0);
+            expect(vm.pagenumber).toBeGreaterThan(0);
+            expect(vm.fromtopage).toBe(vm.first + " - " + vm.totalrecords);
+            expect(vm.displaypagination).toBe(true);
+            expect(vm.matterGridOptions.data.length).toBeGreaterThan(0);
+            expect(vm.nodata).toBe(false);
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.lazyloaderdashboard).toBe(true);
         });
     });
 
     describe('Verification of prev function', function () {
         it('It should show prev', function () {
-            pm.last = 50;
-            pm.first = 50;
-            pm.prev();
-            expect(pm.first).toBeGreaterThan(0);
-            expect(pm.last).toBeGreaterThan(0);
-            expect(pm.pagenumber).toBe(0);
-            expect(pm.matterGridOptions.data.length).toBeGreaterThan(0);
-            expect(pm.fromtopage).toBe(pm.first + " - " + pm.last);
-            expect(pm.nodata).toBe(false);
-            expect(pm.divuigrid).toBe(true);
-            expect(pm.lazyloaderdashboard).toBe(true);
+            vm.last = 50;
+            vm.first = 50;
+            vm.prev();
+            expect(vm.first).toBeGreaterThan(0);
+            expect(vm.last).toBeGreaterThan(0);
+            expect(vm.pagenumber).toBe(0);
+            expect(vm.matterGridOptions.data.length).toBeGreaterThan(0);
+            expect(vm.fromtopage).toBe(vm.first + " - " + vm.last);
+            expect(vm.nodata).toBe(false);
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.lazyloaderdashboard).toBe(true);
         });
     });
 
 
     describe('verification of showPracticegroupDrop function', function () {
         it('It should show PracticegroupDrop', function () {
-            pm.pgdropvisible = false;
-            pm.practiceGroups = undefined;
-            pm.aolTerms = undefined;
-            
-            pm.showPracticegroupDrop(event);
-            expect(pm.practiceGroups).toBeDefined();
-            expect(pm.lazyloaderpg).toBe(true);
-            expect(pm.pgdrop).toBe(true);
-            expect(pm.pgdropvisible).toBe(true);
+            vm.pgdropvisible = false;
+            vm.practiceGroups = undefined;
+            vm.aolTerms = undefined;
+
+            vm.showPracticegroupDrop(event);
+            expect(vm.practiceGroups).toBeDefined();
+            expect(vm.lazyloaderpg).toBe(true);
+            expect(vm.pgdrop).toBe(true);
+            expect(vm.pgdropvisible).toBe(true);
 
         });
 
         it('It should not show PracticegroupDrop', function () {
-            pm.pgdropvisible = false;
-            pm.practiceGroups = "data";
-            pm.aolTerms = "test";
+            vm.pgdropvisible = false;
+            vm.practiceGroups = "data";
+            vm.aolTerms = "test";
 
-            pm.showPracticegroupDrop(event);
-            expect(pm.clientdrop).toBe(false);
-            expect(pm.clientdropvisible).toBe(false);
-            expect(pm.pgdrop).toBe(true);
-            expect(pm.pgdropvisible).toBe(true);
-            expect(pm.aoldrop).toBe(false);
-            expect(pm.aoldropvisible).toBe(false);
+            vm.showPracticegroupDrop(event);
+            expect(vm.clientdrop).toBe(false);
+            expect(vm.clientdropvisible).toBe(false);
+            expect(vm.pgdrop).toBe(true);
+            expect(vm.pgdropvisible).toBe(true);
+            expect(vm.aoldrop).toBe(false);
+            expect(vm.aoldropvisible).toBe(false);
 
         });
 
         it('It should not showPracticegroupDrop', function () {
-            pm.clientdropvisible = true;
-            pm.showClientDrop(event);
-            expect(pm.clientdrop).toBe(false);
-            expect(pm.clientdropvisible).toBe(false);
-            expect(pm.lazyloaderpg).toBe(true);
-            expect(pm.pgdrop).toBe(false);
-            expect(pm.pgdropvisible).toBe(false);
-            expect(pm.aoldrop).toBe(false);
-            expect(pm.aoldropvisible).toBe(false);
+            vm.clientdropvisible = true;
+            vm.showClientDrop(event);
+            expect(vm.clientdrop).toBe(false);
+            expect(vm.clientdropvisible).toBe(false);
+            expect(vm.lazyloaderpg).toBe(true);
+            expect(vm.pgdrop).toBe(false);
+            expect(vm.pgdropvisible).toBe(false);
+            expect(vm.aoldrop).toBe(false);
+            expect(vm.aoldropvisible).toBe(false);
 
         });
 
@@ -269,39 +230,39 @@ describe('MatterDashBoard Controller test suite', function () {
 
     describe('Verification of getFolderHierarchy function', function () {
         it('It should show getFolderHierarchy', function () {
-           
-            pm.getFolderHierarchy("Default Matter", "https://lcadms.sharepoint.com/sites/subsiteclient", "6cbca4ab447c87302d3a1f0e3c32985a");
-            expect(pm.oUploadGlobal.bAllowContentCheck).toBe(true);
-            expect(pm.foldersList.length).toBeGreaterThan(0);
-            expect(pm.showSelectedFolderTree).not.toBe(null);
-            expect(pm.lazyloader).toBe(true);
+
+            vm.getFolderHierarchy("Default Matter", "https://lcadms.sharepoint.com/sites/subsiteclient", "6cbca4ab447c87302d3a1f0e3c32985a");
+            expect(vm.oUploadGlobal.bAllowContentCheck).toBe(true);
+            expect(vm.foldersList.length).toBeGreaterThan(0);
+            expect(vm.showSelectedFolderTree).not.toBe(null);
+            expect(vm.lazyloader).toBe(true);
         });
     });
 
     describe('Verification of Openuploadmodal function', function () {
         it('It should show Openuploadmodal', function () {
 
-            pm.Openuploadmodal("Default Matter", "https://lcadms.sharepoint.com/sites/subsiteclient", "6cbca4ab447c87302d3a1f0e3c32985a");
-            expect(pm.oUploadGlobal.successBanner).toBe(false);
-            expect(pm.isLoadingFromDesktopStarted).toBe(false);
+            vm.Openuploadmodal("Default Matter", "https://lcadms.sharepoint.com/sites/subsiteclient", "6cbca4ab447c87302d3a1f0e3c32985a");
+            expect(vm.oUploadGlobal.successBanner).toBe(false);
+            expect(vm.isLoadingFromDesktopStarted).toBe(false);
         });
     });
 
     describe('Verification of showclients function', function () {
         it('It should show showclients', function () {
-            pm.client = undefined;
-            pm.showclients(event);
-            expect(pm.clients).toBeDefined();
-            expect(pm.clientdrop).toBe(true);
-            expect(pm.clientdropvisible).toBe(true);
+            vm.client = undefined;
+            vm.showclients(event);
+            expect(vm.clients).toBeDefined();
+            expect(vm.clientdrop).toBe(true);
+            expect(vm.clientdropvisible).toBe(true);
         });
     });
 
     describe('Verification of getContentCheckConfigurations function', function () {
         it('It should show getContentCheckConfigurations', function () {
 
-            pm.getContentCheckConfigurations("https://lcadms.sharepoint.com/sites/subsiteclient");
-            expect(pm.oUploadGlobal.bAllowContentCheck).toBe(true);
+            vm.getContentCheckConfigurations("https://lcadms.sharepoint.com/sites/subsiteclient");
+            expect(vm.oUploadGlobal.bAllowContentCheck).toBe(true);
         });
     });
 
@@ -310,125 +271,83 @@ describe('MatterDashBoard Controller test suite', function () {
             var folder = {
                 "parentURL": "https://lcadms.sharepoint.com/sites/subsiteclient",
                 "active": true,
-                "children":{"active":true}
+                "children": { "active": true }
             };
-            pm.showSelectedFolderTree(folder);
-            expect(pm.showSelectedFolderTree).not.toThrow(Error);
+            vm.showSelectedFolderTree(folder);
+            expect(vm.showSelectedFolderTree).not.toThrow(Error);
         });
     });
 
     describe('Verification of localOverWriteDocument function', function () {
         it('It should show localOverWriteDocument', function () {
-            pm.ducplicateSourceFile = {
+            vm.ducplicateSourceFile = {
                 pop: function ()
                 { return true; }
             }
-            pm.oUploadGlobal = {
+            vm.oUploadGlobal = {
                 "arrFiles": {
                     pop: function ()
                     { return obj; }
                 }
             };
-            pm.ducplicateSourceFile.length = 1;
-            var duplicateFile = { "cancel":null };
-            pm.localOverWriteDocument(duplicateFile, "ignore");
-            expect(pm.files).toBeDefined();
+            vm.ducplicateSourceFile.length = 1;
+            var duplicateFile = { "cancel": null };
+            vm.localOverWriteDocument(duplicateFile, "ignore");
+            expect(vm.files).toBeDefined();
         });
     });
 
     describe('Verification of search function', function () {
         it('It should show search', function () {
-            pm.search("Test");
-            expect(pm.Pinnedobj).toBeDefined();
-            expect(pm.pinMatterCount).toBeGreaterThan(0);
-            expect(pm.matterGridOptions.data).toBeDefined();
-            expect(pm.totalrecords).toBe(0);
-            expect(pm.lazyloaderdashboard).toBe(true);
-            expect(pm.divuigrid).toBe(true);
-            
+            vm.search("Test");
+            expect(vm.Pinnedobj).toBeDefined();
+            expect(vm.pinMatterCount).toBeGreaterThan(0);
+            expect(vm.matterGridOptions.data).toBeDefined();
+            expect(vm.totalrecords).toBe(0);
+            expect(vm.lazyloaderdashboard).toBe(true);
+            expect(vm.divuigrid).toBe(true);
+
         });
     });
 
     describe('Verification of showAreaofLawDrop function', function () {
         it('It should show showAreaofLawDrop', function () {
-            pm.aoldropvisible = false;
-            pm.practiceGroups = undefined;
-            pm.aolTerms = undefined;
-            pm.showAreaofLawDrop(event);
-            expect(pm.clientdrop).toBe(false);
-            expect(pm.clientdropvisible).toBe(false);
-            expect(pm.lazyloaderaol).toBe(true);
-            expect(pm.pgdrop).toBe(false);
-            expect(pm.pgdropvisible).toBe(false);
+            vm.aoldropvisible = false;
+            vm.practiceGroups = undefined;
+            vm.aolTerms = undefined;
+            vm.showAreaofLawDrop(event);
+            expect(vm.clientdrop).toBe(false);
+            expect(vm.clientdropvisible).toBe(false);
+            expect(vm.lazyloaderaol).toBe(true);
+            expect(vm.pgdrop).toBe(false);
+            expect(vm.pgdropvisible).toBe(false);
         });
 
         it('It should not show showAreaofLawDrop', function () {
-            pm.clientdropvisible = true;
-            pm.showClientDrop(event);
-            expect(pm.clientdrop).toBe(false);
-            expect(pm.clientdropvisible).toBe(false);
-            expect(pm.lazyloaderaol).toBe(true);
-            expect(pm.pgdrop).toBe(false);
-            expect(pm.pgdropvisible).toBe(false);
-            expect(pm.aoldrop).toBe(false);
-            expect(pm.aoldropvisible).toBe(false);
+            vm.clientdropvisible = true;
+            vm.showClientDrop(event);
+            expect(vm.clientdrop).toBe(false);
+            expect(vm.clientdropvisible).toBe(false);
+            expect(vm.lazyloaderaol).toBe(true);
+            expect(vm.pgdrop).toBe(false);
+            expect(vm.pgdropvisible).toBe(false);
+            expect(vm.aoldrop).toBe(false);
+            expect(vm.aoldropvisible).toBe(false);
 
         });
     });
 
     describe('Verification of pinorunpin function', function () {
         it('It should be added in pinned list and removed from pinned list', function () {
-            var currentRowData = {
-                matterName: "Default Matter",
-                matterDescription: "Test Matter",
-                matterCreatedDate: "19/08/2016",
-                matterUrl: "https://lcadms.sharepoint.com/sites/subsiteclient/SitePages/6cbca4ab447c87302d3a1f0e3c32985a.aspx",
-                matterPracticeGroup: "Business Transactions",
-                matterAreaOfLaw: "Family Business",
-                matterSubAreaOfLaw: "Family Business",
-                matterClientUrl: "https://lcadms.sharepoint.com/sites/subsiteclient",
-                matterClient: "Microsoft",
-                matterClientId: "578cfafb-59eb-4f4c-b219-47886c61e384",
-                hideUpload: true,
-                matterID: "1516561262162",
-                matterResponsibleAttorney: "CELA",
-                matterModifiedDate: "19/08/2016",
-                matterGuid: "578cfafb-59eb-4f4c-b219-47886c61e384",
-                pinType: 'unpin'
-            };
-            var count = pm.pinMatterCount;
+           
+            var count = vm.pinMatterCount;
             count = count + 1;
-            var event = {};
-            event.currentTarget = {};
             event.currentTarget.src = "../images/pin-666.png";
-
-            pm.pinorunpin(event, currentRowData);
+            vm.pinorunpin(event, oTestConfiguration.oMatterObject);
             expect(count).toBeGreaterThan(0);
-            expect(pm.lazyloaderdashboard).toBe(true);
-            
+            expect(vm.lazyloaderdashboard).toBe(true);
+
         });
     });
 
 });
-
-//search***
-//showAreaofLawDrop**
-//pinorunpin**
-//searchMatters##
-
-    //FilterByType
-    //showClientDrop
-    //sortyby
-    //next
-    //prev
-    //getMatterCounts
-    //getMatterPinned
-    //myMatters
-    //showPracticegroupDrop
-    //Openuploadmodal
-    //getFolderHierarchy
-    //handleDesktopDrop
-    //showclients
-    //getContentCheckConfigurations
-    //showSelectedFolderTree
-    //localOverWriteDocument

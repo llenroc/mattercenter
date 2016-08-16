@@ -17,7 +17,7 @@
             vm.navigation = uiconfigs.Navigation;
             vm.header = uiconfigs.Header;
 
-            $rootScope.logEvent('navigation view')
+            //$rootScope.logEvent('navigation view')
 
 
             //Callback function for help 

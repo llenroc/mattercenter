@@ -1,29 +1,24 @@
-﻿var $scope = { $watch: function () { }, $apply: function () { }, gridApi: { infiniteScroll: { dataLoaded: function () { } } } };
-var vm;
-var om;
-var dm;
-var api;
-var cm;
-var pm;
-var xm;
-var matterResource;
+﻿var vm, matterResource, $filter, $window, $watch, $http, $stateParams;
 var $rootScope = { logEvent: function () { } };
 var rootScope = {};
-var $filter;
-var $state = { go: function () { }, current: { "name": "test" } };
+var $model = {};
+var $label = { assignedUser: "" };
+var $item = {
+    email: "",
+    name: "No results found"
+};
+var $state = { go: function () { }, current: { "name": "" } };
 var $interval = { go: function () { } };
-var $stateParams;
-var $window;
-var $watch;
 var $animate = { enabled: function () { } };
 var $q = { defer: function () { return { resolve: function () { } } } };
-var $http;
+var $scope = { $watch: function () { }, $apply: function () { }, gridApi: { infiniteScroll: { dataLoaded: function () { } }, selection: { selectAllRows: function () { }, clearSelectedRows: function () { } } } };
 var $location = {
     absUrl: function () {
         var url = "https://mattermaqdevsite.azurewebsites.net&test=1&attempt=2|jasminetest.html";
         return url;
     }
 };
+
 var adalService = {
     "userInfo": {
         "userName": "MAQUser@LCADMS.onmicrosoft.com",
@@ -33,13 +28,13 @@ var adalService = {
         },
         "isAuthenticated": true
     },
-    logOut: function () { dm.status = true; }
+    logOut: function () { vm.status = true; }
 };
 
 var mockapi = function () {
 };
 
-var mockmatterDashBoardResource = {
+var mockMatterDashBoardResource = {
     'get': '/api/v1/matter/get',
     'getPinnedMatters': '/api/v1/matter/getpinned',
     'getMyMatters': '/api/v1/matter/getpinned',
@@ -51,7 +46,7 @@ var mockmatterDashBoardResource = {
     'getDefaultMatterConfigurations': '/api/v1/matter/getconfigurations'
 };
 
-var mockmatterResource = {
+var mockMatterResource = {
     'get': '/api/v1/matter/get',
     'getPinnedMatters': '/api/v1/matter/getpinned',
     'UnpinMatters': '/api/v1/matter/unpin',
@@ -76,13 +71,14 @@ var mockmatterResource = {
     'getHelp': '/api/v1/shared/help'
 };
 
-var mockhomeResource = {
+var mockHomeResource = {
     'getHelp': '/api/v1/shared/help',
     'getUserProfilePicture': '/api/v1/user/getuserprofilepicture'
 };
 
-var data = { "name": "nikunj" };
-var mockdocumentDashBoardResource = {
+var data = { "name": "" };
+
+var mockDocumentDashBoardResource = {
     'get': '/api/v1/document/getdocuments',
     'getPinnedDocuments': '/api/v1/document/getpinneddocuments',
     'getMyDocuments': '/api/v1/document/getdocuments',
@@ -95,7 +91,7 @@ var mockdocumentDashBoardResource = {
 };
 
 
-var mockdocumentResource = {
+var mockDocumentResource = {
     'get': '/api/v1/document/getdocuments',
     'getPinnedDocuments': '/api/v1/document/getpinneddocuments',
     'unPinDocument': '/api/v1/document/unpindocument',
@@ -104,7 +100,7 @@ var mockdocumentResource = {
 };
 
 
-var mockmatterResourceService = {
+var mockMatterResourceService = {
     'get': '/api/v1/matter/get',
     'getPinnedMatters': '/api/v1/matter/getpinned',
     'UnpinMatters': '/api/v1/matter/unpin',
@@ -140,7 +136,7 @@ var selectedPracticeGroup = {
         "folderNames": "Email;Lorem;Ipsum",
         "subareaTerms": [
         {
-            "termName": "Advertising, Marketing ＆Promotions",
+            "termName": "Advertising, Marketing ＆ Promotions",
             "parentTermName": "Advertising, Marketing ＆ Promotions",
             "folderNames": "Email;Lorem;Ipsum",
             "isNoFolderStructurePresent": "false",
@@ -183,7 +179,7 @@ var documentTemplateTypeLawTerm = {
 
 var subareaTerms =
        [{
-           "termName": "Advertising, Marketing ＆Promotions",
+           "termName": "Advertising, Marketing ＆ Promotions",
            "parentTermName": "Advertising, Marketing ＆ Promotions",
            "folderNames": "Email;Lorem;Ipsum",
            "isNoFolderStructurePresent": "false",
@@ -280,8 +276,8 @@ var event = {
     isDefaultPrevented: function () { return this.defaultPrevented === true; },
     stopImmediatePropagation: function () { this.immediatePropagationStopped = true; },
     isImmediatePropagationStopped: function () { return this.immediatePropagationStopped === true; },
-    stopPropagation: function () { }
-
+    stopPropagation: function () { },
+    currentTarget: { src: "" }
 }
 
 var practicegroup = [
@@ -296,7 +292,7 @@ var practicegroup = [
 			    "folderNames": "Email;Lorem;Ipsum",
 			    "subareaTerms": [
 					{
-					    "termName": "Advertising, Marketing ＆Promotions",
+					    "termName": "Advertising, Marketing ＆ Promotions",
 					    "parentTermName": "Advertising, Marketing ＆ Promotions",
 					    "folderNames": "Email;Lorem;Ipsum",
 					    "isNoFolderStructurePresent": "false",
@@ -354,4 +350,41 @@ var gridrows = {
     "core": {
         getVisibleRows: function (data) { return 0; }
     }
+}
+
+function getData(objectData, resourceData) {
+    var sURL = oTestConfiguration.sSiteURL + resourceData[objectData.method];
+    var http = new XMLHttpRequest();
+    var sPostdata;
+
+    if (!IsJsonString(objectData.data)) {
+        sPostdata = JSON.stringify(objectData.data);
+    } else {
+        sPostdata = objectData.data;
+    }
+    http.open("POST", sURL, false);
+    var accessToken = "Bearer " + sessionStorage.getItem("adal.idtoken");
+    // Send the proper header information along with the request
+    http.setRequestHeader("Content-type", "application/json");
+    http.setRequestHeader("Accept", "application/json");
+    http.setRequestHeader("Authorization", accessToken);
+    http.send(sPostdata);
+
+    if (http.status === 200) {// That's HTTP for 'ok'
+        if (objectData.success) {
+            objectData.success(JSON.parse(http.responseText));
+        }
+        else {
+            return JSON.parse(http.responseText);
+        }
+    }
+}
+
+function IsJsonString(sValue) {
+    try {
+        JSON.parse(sValue);
+    } catch (exception) {
+        return false;
+    }
+    return true;
 }

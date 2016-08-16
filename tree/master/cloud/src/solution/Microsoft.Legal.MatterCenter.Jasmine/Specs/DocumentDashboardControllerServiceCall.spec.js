@@ -1,248 +1,179 @@
-﻿//Test suite
+﻿
+/// <disable> JS2074,JS3058,JS2085,JS3056,JS3116,JS3054,JS2064,JS2043,JS2073,JS2038 </disable>
+// Test suite
+
 describe('DocumentDashboard Controller test suite', function () {
-
     var mockDocumentapi = function (documentDashBoardResource) {
-        var url = "http://mattermaqdevsite.azurewebsites.net" + mockdocumentDashBoardResource[documentDashBoardResource.method];
-        function IsJsonString(str) {
-            try {
-                JSON.parse(str);
-            } catch (e) {
-                return false;
-            }
-            return true;
-        }
-        callAPI(documentDashBoardResource.success);
-        function callAPI(callback) {
-
-            var http = new XMLHttpRequest();
-            var postdata;
-
-            if (!IsJsonString(documentDashBoardResource.data)) {
-                postdata = JSON.stringify(documentDashBoardResource.data);
-            } else {
-                postdata = documentDashBoardResource.data;
-            }
-
-
-
-            http.open("POST", url, false);
-            var accessToken = "Bearer " + sessionStorage.getItem('adal.idtoken');
-            //Send the proper header information along with the request
-            http.setRequestHeader("Content-type", "application/json");
-            http.setRequestHeader("Accept", "application/json");
-            http.setRequestHeader("Authorization", accessToken);
-            http.send(postdata);
-
-            if (http.status === 200) {// That's HTTP for 'ok'
-                console.log(http.responseText);
-                if (callback)
-                    callback(JSON.parse(http.responseText));
-                else
-                    return JSON.parse(http.responseText);
-            }
-
-        }
+        getData(documentDashBoardResource, mockDocumentDashBoardResource);
     };
 
-    beforeEach(module('matterMain'));
-    beforeEach(module('matterMain', function ($provide) {
-        $provide.factory("documentDashBoardResource", ['$resource', 'auth', mockdocumentDashBoardResource]);
+    beforeEach(module("matterMain"));
+    beforeEach(module("matterMain", function ($provide) {
+        $provide.factory("documentDashBoardResource", ["$resource", "auth", mockDocumentDashBoardResource]);
     }));
 
-    beforeEach(module('matterMain'));
-    beforeEach(module('matterMain', function ($provide) {
-        $provide.factory("api", ['matterResource', 'documentResource', 'documentDashBoardResource', 'matterDashBoardResource', 'homeResource', mockDocumentapi]);
+    beforeEach(module("matterMain"));
+    beforeEach(module("matterMain", function ($provide) {
+        $provide.factory("api", ["matterResource", "documentResource", "documentDashBoardResource", "matterDashBoardResource", "homeResource", mockDocumentapi]);
     }));
 
-    beforeEach(module('ui.router'));
-    beforeEach(module('ui.bootstrap'));
+    beforeEach(module("ui.router"));
+    beforeEach(module("ui.bootstrap"));
 
     beforeEach(inject(function ($controller, $injector, $rootScope) {
         rootScope = $rootScope.$new();
-        dm = $controller('DocumentDashBoardController as dm', { $scope: $scope, $state: $state, $stateParams: $stateParams, documentDashBoardResource: mockdocumentDashBoardResource, api: mockDocumentapi, $rootScope: rootScope, $http: $http, $location: $location });
+        vm = $controller("DocumentDashBoardController as vm", { $scope: $scope, $state: $state, $stateParams: $stateParams, documentDashBoardResource: mockDocumentDashBoardResource, api: mockDocumentapi, $rootScope: rootScope, $http: $http, $location: $location });
     }));
 
-    describe('Verification of getDocumentCounts function', function () {
-        it('Documents count should be greater than or equal to 0', function () {
-            //var documentRequest = { "Client": { "Url": "https://lcadms.sharepoint.com/sites/catalog" }, "SearchObject": { "PageNumber": 1, "ItemsPerPage": 28, "SearchTerm": "", "Filters": { "ClientsList": [], "FromDate": "", "ToDate": "", "DocumentAuthor": "", "FilterByMe": 0 }, "Sort": { "ByProperty": "LastModifiedTime", "Direction": 1 } } };
-            $scope.$apply = function () { };
-            dm.getDocumentCounts();
-            expect(dm.allDocumentCount).not.toBeLessThan(0);
-            expect(dm.myDocumentCount).not.toBeLessThan(0);
-            expect(dm.pinDocumentCount).not.toBeLessThan(0);
-            expect(dm.totalrecords).not.toBeLessThan(0);
+    describe("Verification of getDocumentCounts function", function () {
+        it("Documents count should be greater than or equal to 0", function () {
+            vm.getDocumentCounts();
+            expect(vm.allDocumentCount).not.toBeLessThan(0);
+            expect(vm.myDocumentCount).not.toBeLessThan(0);
+            expect(vm.pinDocumentCount).not.toBeLessThan(0);
+            expect(vm.totalrecords).not.toBeLessThan(0);
         });
     });
 
-    describe('Verification of getPinnedDocuments function', function () {
-        it('It should return the all pinned documents', function () {
-            dm.getPinnedDocuments();
-            expect(dm.documentGridOptions.data).not.toBe(null);
-            expect(dm.documentGridOptions.data.length).toBeGreaterThan(1);
-            expect(dm.totalrecords).toBe(0);
-            expect(dm.lazyloaderdashboard).toBe(true);
-            expect(dm.divuigrid).toBe(true);
+    describe("Verification of getPinnedDocuments function", function () {
+        it("It should return the all pinned documents", function () {
+            vm.getPinnedDocuments();
+            expect(vm.documentGridOptions.data).not.toBe(null);
+            expect(vm.documentGridOptions.data.length).toBeGreaterThan(1);
+            expect(vm.totalrecords).toBe(0);
+            expect(vm.lazyloaderdashboard).toBe(true);
+            expect(vm.divuigrid).toBe(true);
         });
     });
 
-    describe('Verification of getMyDocuments function', function () {
-        it('It should return the My documents', function () {
-            dm.getMyDocuments();
-            expect(dm.lazyloaderdashboard).toBe(false);
-            expect(dm.displaypagination).toBe(false);
-            expect(dm.divuigrid).toBe(false);
-            expect(dm.nodata).toBe(false);
+    describe("Verification of getMyDocuments function", function () {
+        it("It should return the My documents", function () {
+            vm.getMyDocuments();
+            expect(vm.lazyloaderdashboard).toBe(false);
+            expect(vm.displaypagination).toBe(false);
+            expect(vm.divuigrid).toBe(false);
+            expect(vm.nodata).toBe(false);
         });
     });
 
-    describe('Verification of getDocuments function', function () {
-        it('It should get the Documents', function () {
-            dm.getDocuments();
-            expect(dm.lazyloaderdashboard).toBe(true);
-            expect(dm.displaypagination).toBe(false);
-            expect(dm.divuigrid).toBe(true);
-            expect(dm.nodata).toBe(false);
-            expect(dm.pinDocumentCount).toBeGreaterThan(0);
-            expect(dm.documentGridOptions.data.length).toBeGreaterThan(1);
-            expect(dm.totalrecords).toBe(0);
-            expect(dm.pinDocumentCount).toBeGreaterThan(0);
-            expect(dm.nodata).toBe(false);
-
-        });
-    });
-
-    describe('Verification of showclientdrop function', function () {
-        it('It should show clientdrop', function () {
-            dm.clientdropvisible = false;
-            dm.clients = undefined;
-            dm.showclientdrop(event);
-            expect(dm.clients).toBeDefined();
-            expect(dm.clientdrop).toBe(true);
-            expect(dm.clientdropvisible).toBe(true);
-            expect(dm.lazyloaderdocumentclient).toBe(true);
-
-        });
-
-        it('It should not show clientdrop', function () {
-            dm.clientdropvisible = true;
-            dm.showclientdrop(event);
-            expect(dm.clientdrop).toBe(false);
-            expect(dm.clientdropvisible).toBe(false);
-            expect(dm.lazyloaderdocumentclient).toBe(true);
+    describe("Verification of getDocuments function", function () {
+        it("It should get the Documents", function () {
+            vm.getDocuments();
+            expect(vm.lazyloaderdashboard).toBe(true);
+            expect(vm.displaypagination).toBe(false);
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.nodata).toBe(false);
+            expect(vm.pinDocumentCount).toBeGreaterThan(0);
+            expect(vm.documentGridOptions.data.length).toBeGreaterThan(1);
+            expect(vm.totalrecords).toBe(0);
+            expect(vm.pinDocumentCount).toBeGreaterThan(0);
+            expect(vm.nodata).toBe(false);
 
         });
     });
 
+    describe("Verification of showclientdrop function", function () {
+        it("It should show clientdrop", function () {
+            vm.clientdropvisible = false;
+            vm.clients = undefined;
+            vm.showclientdrop(event);
+            expect(vm.clients).toBeDefined();
+            expect(vm.clientdrop).toBe(true);
+            expect(vm.clientdropvisible).toBe(true);
+            expect(vm.lazyloaderdocumentclient).toBe(true);
 
-    describe('Verification of FilterByType function', function () {
-        it('It should show FilterByType', function () {
-            dm.FilterByType();
-            expect(dm.totalrecords).toBeGreaterThan(0);
-            expect(dm.documentGridOptions.data.length).toBeGreaterThan(0);
-            expect(dm.lazyloader).toBe(true);
-            expect(dm.nodata).toBe(false);
-            expect(dm.divuigrid).toBe(true);
-            expect(dm.lazyloaderdashboard).toBe(true);
+        });
+
+        it("It should not show clientdrop", function () {
+            vm.clientdropvisible = true;
+            vm.showclientdrop(event);
+            expect(vm.clientdrop).toBe(false);
+            expect(vm.clientdropvisible).toBe(false);
+            expect(vm.lazyloaderdocumentclient).toBe(true);
+
         });
     });
 
-    describe('Verification of sortyby function', function () {
-        it('It should show sortyby', function () {
+
+    describe("Verification of FilterByType function", function () {
+        it("It should show FilterByType", function () {
+            vm.FilterByType();
+            expect(vm.totalrecords).toBeGreaterThan(0);
+            expect(vm.documentGridOptions.data.length).toBeGreaterThan(0);
+            expect(vm.lazyloader).toBe(true);
+            expect(vm.nodata).toBe(false);
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.lazyloaderdashboard).toBe(true);
+        });
+    });
+
+    describe("Verification of sortyby function", function () {
+        it("It should show sortyby", function () {
             var sortexp = "AlphabeticalUp";
-            dm.sortyby(sortexp,"Searchkeyword");
-            expect(dm.totalrecords).toBeGreaterThan(0);
-            expect(dm.documentGridOptions.data.length).toBeGreaterThan(0);
-            expect(dm.lazyloader).toBe(true);
-            expect(dm.nodata).toBe(false);
-            expect(dm.divuigrid).toBe(true);
-            expect(dm.lazyloaderdashboard).toBe(true);
+            vm.sortyby(sortexp,"Searchkeyword");
+            expect(vm.totalrecords).toBeGreaterThan(0);
+            expect(vm.documentGridOptions.data.length).toBeGreaterThan(0);
+            expect(vm.lazyloader).toBe(true);
+            expect(vm.nodata).toBe(false);
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.lazyloaderdashboard).toBe(true);
         });
     });
 
-    describe('Verification of next function', function () {
-        it('It should show next', function () {
-            dm.last = 5;
-            dm.totalrecords = 30;
-            dm.next();
-            expect(dm.first).toBeGreaterThan(0);
-            expect(dm.last).toBeGreaterThan(0);
-            expect(dm.total).toBeGreaterThan(0);
-            expect(dm.pagenumber).toBeGreaterThan(0);
-            expect(dm.fromtopage).toBe(dm.first + " - " + dm.totalrecords);
-            expect(dm.lazyloader).toBe(true);
-            expect(dm.documentGridOptions.data.length).toBeGreaterThan(0);
-            expect(dm.nodata).toBe(false);
-            expect(dm.divuigrid).toBe(true);
-            expect(dm.lazyloaderdashboard).toBe(true);
+    describe("Verification of next function", function () {
+        it("It should show next", function () {
+            vm.last = 5;
+            vm.totalrecords = 30;
+            vm.next();
+            expect(vm.first).toBeGreaterThan(0);
+            expect(vm.last).toBeGreaterThan(0);
+            expect(vm.total).toBeGreaterThan(0);
+            expect(vm.pagenumber).toBeGreaterThan(0);
+            expect(vm.fromtopage).toBe(vm.first + " - " + vm.totalrecords);
+            expect(vm.lazyloader).toBe(true);
+            expect(vm.documentGridOptions.data.length).toBeGreaterThan(0);
+            expect(vm.nodata).toBe(false);
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.lazyloaderdashboard).toBe(true);
         });
     });
 
-    describe('Verification of prev function', function () {
-        it('It should show prev', function () {
-            dm.last = 50;
-            dm.first = 50;
-            dm.prev();
-            expect(dm.first).toBeGreaterThan(0);
-            expect(dm.last).toBeGreaterThan(0);
-            expect(dm.pagenumber).toBe(0);
-            expect(dm.documentGridOptions.data.length).toBeGreaterThan(0);
-            expect(dm.fromtopage).toBe(dm.first + " - " + dm.last);
-            expect(dm.nodata).toBe(false);
-            expect(dm.divuigrid).toBe(true);
-            expect(dm.lazyloaderdashboard).toBe(true);
+    describe("Verification of prev function", function () {
+        it("It should show prev", function () {
+            vm.last = 50;
+            vm.first = 50;
+            vm.prev();
+            expect(vm.first).toBeGreaterThan(0);
+            expect(vm.last).toBeGreaterThan(0);
+            expect(vm.pagenumber).toBe(0);
+            expect(vm.documentGridOptions.data.length).toBeGreaterThan(0);
+            expect(vm.fromtopage).toBe(vm.first + " - " + vm.last);
+            expect(vm.nodata).toBe(false);
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.lazyloaderdashboard).toBe(true);
         });
     });
 
-    //describe('Verification of downloadEmailAsAttachment function', function () {
-    //    it('It should download email with attachment', function () {
-    //        dm.cartelements = [{ documentClientUrl: "https://lcadms.sharepoint.com/sites/skype", selected: true, documentName: "Skype Litigation.txt", documentUrl: "https://lcadms.sharepoint.com/sites/skype/9694be04f87b22e8d238d69df9e29ff2/Skype Litigation.txt" }];
-    //        dm.downloadEmailAsAttachment(true);
-
-    //    });
-    //});
+    //// describe('Verification of downloadEmailAsAttachment function', function () {
+    ////    it('It should download email with attachment', function () {
+    ////        vm.cartelements = [{ documentClientUrl: "https://lcadms.sharepoint.com/sites/skype", selected: true, documentName: "Skype Litigation.txt", documentUrl: "https://lcadms.sharepoint.com/sites/skype/9694be04f87b22e8d238d69df9e29ff2/Skype Litigation.txt" }];
+    ////        vm.downloadEmailAsAttachment(true);
+    ////    });
+    //// });
 
     describe('Verification of pinorunpin function', function () {
-        it('It should be added in pinned list and removed from pinned list', function () {
-            var pinObject = {
-                documentCheckoutUser: "MAQ User",
-                documentClient: "Awesome Computers",
-                documentClientId: "0016763",
-                documentClientUrl: "https://lcadms.sharepoint.com/sites/awesomecomputers",
-                documentCreatedDate: "2/11/2016 10:55:43 AM",
-                documentExtension: "docx",
-                documentIconUrl: "https://lcadms.sharepoint.com/_layouts/15/images/icdocx.gif",
-                documentID: "17592407627949",
-                documentMatter: "Test GitHub build",
-                documentMatterId: "TGB001",
-                documentMatterUrl: "https://lcadms.sharepoint.com/sites/AwesomeComputers/727f57900ca2b473b99b25f9e36506d0/Forms",
-                documentModifiedDate: "2/8/2016 1:06:00 PM",
-                documentName: "Test Document.docx",
-                documentOWAUrl: "https://lcadms.sharepoint.com/sites/AwesomeComputers/_layouts/15/WopiFrame.aspx?sourcedoc={ADF55595-76D7-4131-8FE9-807989BA166D}&file=Test%20Document.docx&action=default&DefaultItemOpen=1",
-                documentOwner: "MAQ User",
-                documentParentUrl: "https://lcadms.sharepoint.com/sites/AwesomeComputers/727f57900ca2b473b99b25f9e36506d0/Forms/AllItems.aspx",
-                documentUrl: "https://lcadms.sharepoint.com/sites/AwesomeComputers/_layouts/15/WopiFrame.aspx?sourcedoc={ADF55595-76D7-4131-8FE9-807989BA166D}&file=Test%20Document.docx&action=default&DefaultItemOpen=1",
-                documentVersion: "2.0",
-                pinType: "Pin"
-            };
-            var count = dm.pinDocumentCount;
-            var event = {};
-            event.currentTarget = {};
+        it('It should be added in pinned list and removed from pinned list', function () {       
+            var iCount = vm.pinDocumentCount;
             event.currentTarget.src = "../images/pin-666.png";
-            
-            debugger;
-            dm.pinorunpin(event, pinObject);
-            count = count + 1;
-            expect(count).toBe(dm.pinDocumentCount);
+            vm.pinorunpin(event, oTestConfiguration.oDocumentObject);
+            iCount = iCount + 1;
+            expect(iCount).toBe(vm.pinDocumentCount);
             event.currentTarget.src = "../images/unpin-666.png";
-            count = count - 1;
-            dm.documentGridOptions.data = [];
-            dm.documentGridOptions.data[0] = pinObject;
-            dm.pinorunpin(event, pinObject);
-            expect(count).toBe(dm.pinDocumentCount);
+            iCount = iCount - 1;
+            vm.documentGridOptions.data = [];
+            vm.documentGridOptions.data[0] = oTestConfiguration.oDocumentObject;
+            vm.pinorunpin(event, oTestConfiguration.oDocumentObject);
+            expect(iCount).toBe(vm.pinDocumentCount);
         });
     });
-
-
 });
-
-
