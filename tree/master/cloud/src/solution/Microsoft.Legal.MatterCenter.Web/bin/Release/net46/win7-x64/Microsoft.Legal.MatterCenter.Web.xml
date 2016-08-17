@@ -116,6 +116,13 @@
             <param name="mailListURL">URL contains list of mail recipients</param>
             <returns>Result of operation: Matter Shared successfully or not</returns>        
         </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.MatterProvision.SerializeMatterToTableStorage(Microsoft.Legal.MatterCenter.Models.MatterInformationVM)">
+            <summary>
+            This method will store external requests information in Azure Table Storage
+            </summary>
+            <param name="externalSharingRequest"></param>
+            <returns></returns>
+        </member>
         <member name="M:Microsoft.Legal.MatterCenter.Web.Common.MatterProvision.GenerateMailList(Microsoft.Legal.MatterCenter.Models.Matter,Microsoft.Legal.MatterCenter.Models.Client,System.Collections.Generic.List{Microsoft.SharePoint.Client.FieldUserValue}@)">
             <summary>
             Generates list of users for sending email.
@@ -133,7 +140,7 @@
             <param name="mailBodyTeamInformation">Team members permission information</param>
             <returns>Team members permission information</returns>
         </member>
-        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.MatterProvision.SetStampProperty(Microsoft.Legal.MatterCenter.Models.Client,Microsoft.Legal.MatterCenter.Models.Matter,Microsoft.Legal.MatterCenter.Models.MatterDetails)">
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.MatterProvision.SetStampProperty(Microsoft.Legal.MatterCenter.Models.MatterMetdataVM)">
             <summary>
             Function to create dictionary object for stamp property 
             </summary>
@@ -149,7 +156,7 @@
             </summary>
             <param name="matterInformation">Contains information about all external users, his roles and permissions</param>
         </member>
-        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.ValidationFunctions.#ctor(Microsoft.Legal.MatterCenter.Repository.ISPList,Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.MatterSettings},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.ErrorSettings},Microsoft.Legal.MatterCenter.Repository.IMatterRepository,Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.ListNames},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.CamlQueries},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.GeneralSettings})">
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.ValidationFunctions.#ctor(Microsoft.Legal.MatterCenter.Repository.ISPList,Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.MatterSettings},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.ErrorSettings},Microsoft.Legal.MatterCenter.Repository.IMatterRepository,Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.ListNames},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.CamlQueries},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.GeneralSettings},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.TaxonomySettings})">
             <summary>
             Do validation stuff
             </summary>
@@ -267,7 +274,7 @@
             <param name="matterVM"></param>
             <returns></returns>   
         </member>
-        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.IMatterProvision.SavConfigurations(Microsoft.Legal.MatterCenter.Models.SaveConfigurationsVM)">
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.IMatterProvision.SavConfigurations(Microsoft.Legal.MatterCenter.Models.MatterConfigurations)">
             <summary>
             
             </summary>
@@ -834,7 +841,7 @@
         </member>
         <member name="M:Microsoft.Legal.MatterCenter.Web.UserController.#ctor(Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.ErrorSettings},Microsoft.Legal.MatterCenter.Web.Common.IMatterCenterServiceFunctions,Microsoft.Legal.MatterCenter.Repository.IUserRepository,Microsoft.Legal.MatterCenter.Utility.ICustomLogger,Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.LogTables},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.GeneralSettings})">
             <summary>
-            
+            constructor where are all the dependencies are injected
             </summary>
             <param name="errorSettings"></param>
             <param name="matterCenterServiceFunctions"></param>
@@ -848,14 +855,14 @@
             Get all the users that are configured for a given client
             </summary>
             <param name="searchRequestVM"></param>
-            <returns></returns>
+            <returns>IActionResult</returns>
         </member>
         <member name="M:Microsoft.Legal.MatterCenter.Web.UserController.UserProfilePicture(Microsoft.Legal.MatterCenter.Models.Client)">
             <summary>
-            
+            Api to get user profile picture for the login user
             </summary>
             <param name="client"></param>
-            <returns></returns>
+            <returns>IActionResult</returns>
         </member>
         <member name="M:Microsoft.Legal.MatterCenter.Web.UserController.GetRoles(Microsoft.Legal.MatterCenter.Models.Client)">
             <summary>
