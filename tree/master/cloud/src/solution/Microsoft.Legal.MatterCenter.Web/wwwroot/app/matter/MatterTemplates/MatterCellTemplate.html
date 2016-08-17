@@ -6,7 +6,7 @@
            style='text-align:left;text-decoration: none;' details={{row.entity}}> {{row.entity.matterName}} </a>
         <div class='popcontent' style="display:none;"></div>
     </div>
-    <div class='col-xs-5 col-sm-3 col-md-3 col-lg-3 text-right' id="matcoltemp">
+    <div class='col-xs-5 col-sm-3 col-md-3 col-lg-3 ' id="matcoltemp">
 
         <div class='dropdown'>
 
@@ -17,7 +17,7 @@
                 <li class='ms-ContextualMenu-item'><a class='ECBItem ms-ContextualMenu-link upload' ng-href='https://lcadms.sharepoint.com/sites/microsoft/SitePages/{{row.entity.matterGuid}}.aspx' target='_blank'> {{grid.appScope.vm.matterConfigContent.EllipsisLink2Text}}</a></li>
                 <li class='ms-ContextualMenu-item'>
 
-                    <a class='ECBItem ms-ContextualMenu-link upload' href='https://lcadms.sharepoint.com/sites/microsoft/_layouts/WopiFrame.aspx?sourcedoc=https://msmatter.sharepoint.com/sites/microsoft/{{row.entity.matterGuid}}_OneNote/{{row.entity.matterGuid}}/{{row.entity.matterGuid}}.onetoc2' target='_blank'>
+                    <a class='ECBItem ms-ContextualMenu-link upload' href='https://lcadms.sharepoint.com/sites/microsoft/_layouts/WopiFrame.aspx?sourcedoc=https://lcadms.sharepoint.com/sites/microsoft/{{row.entity.matterGuid}}_OneNote/{{row.entity.matterGuid}}/{{row.entity.matterGuid}}.onetoc2' target='_blank'>
                         {{grid.appScope.vm.matterConfigContent.EllipsisLink3Text}}
                     </a>
                 </li>

@@ -8310,7 +8310,7 @@
   "projectFileToolGroups": {
     ".NETCoreApp,Version=v1.0": [
       "Microsoft.AspNetCore.Razor.Tools >= 1.0.0-preview2-final",
-      "Microsoft.AspNetCore.Server.IISIntegration.Tools >= 1.0.0-*"
+      "Microsoft.AspNetCore.Server.IISIntegration.Tools >= 1.0.0-preview2-final"
     ]
   }
 }
