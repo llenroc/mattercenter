@@ -2,7 +2,7 @@
 /// <disable> JS2074,JS3058,JS2085,JS3056,JS3116,JS3054,JS2064,JS2043,JS2073,JS2038 </disable>
 // Test suite
 
-describe('DocumentDashboard Controller test suite', function () {
+describe('DocumentDashboard Controller service call test suite', function () {
     var mockDocumentapi = function (documentDashBoardResource) {
         getData(documentDashBoardResource, mockDocumentDashBoardResource);
     };
@@ -110,7 +110,7 @@ describe('DocumentDashboard Controller test suite', function () {
     describe("Verification of sortyby function", function () {
         it("It should show sortyby", function () {
             var sortexp = "AlphabeticalUp";
-            vm.sortyby(sortexp,"Searchkeyword");
+            vm.sortyby(sortexp, "Searchkeyword");
             expect(vm.totalrecords).toBeGreaterThan(0);
             expect(vm.documentGridOptions.data.length).toBeGreaterThan(0);
             expect(vm.lazyloader).toBe(true);
@@ -162,7 +162,7 @@ describe('DocumentDashboard Controller test suite', function () {
     //// });
 
     describe('Verification of pinorunpin function', function () {
-        it('It should be added in pinned list and removed from pinned list', function () {       
+        it('It should be added in pinned list and removed from pinned list', function () {
             var iCount = vm.pinDocumentCount;
             event.currentTarget.src = "../images/pin-666.png";
             vm.pinorunpin(event, oTestConfiguration.oDocumentObject);

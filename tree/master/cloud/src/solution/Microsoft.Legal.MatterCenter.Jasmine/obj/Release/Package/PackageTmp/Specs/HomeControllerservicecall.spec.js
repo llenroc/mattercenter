@@ -1,5 +1,5 @@
 ﻿//Test suite
-describe('Home Controller test suite', function () {
+describe('Home Controller service call test suite', function () {
 
     var mockapi = function (homeResource) {
         getData(homeResource, mockHomeResource);

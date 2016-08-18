@@ -1384,7 +1384,7 @@
                 UnpinMatters(unpinRequest, function (response) {
                     if (response.isMatterUnPinned) {
                         $timeout(vm.SetMatters(vm.matterid, vm.mattername), 500);
-                        alert("Success");
+                        //alert("Success");
                     }
                 });
             }
@@ -1420,7 +1420,7 @@
                 PinMatters(pinRequest, function (response) {
                     if (response.isMatterPinned) {
                         $timeout(vm.SetMatters(vm.matterid, vm.mattername), 500);
-                        alert("Success");
+                        //alert("Success");
                     }
                 });
             }

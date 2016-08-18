@@ -2,7 +2,7 @@
 // Test suite
 describe("CreateMatter Controller test suite", function () {
     "use strict";
-    
+
     var mockapi = function (matterResource, callback) {
         getData(matterResource, mockMatterResourceService);
     };
@@ -43,11 +43,13 @@ describe("CreateMatter Controller test suite", function () {
     describe("Verification of selectMatterType function", function () {
         it("Successfully get Practice Group, Area of law and SubArea of law", function () {
             vm.selectMatterType();
-            expect(vm.selectedPracticeGroup).toBe(vm.pracitceGroupList[0]);
-            expect(vm.areaOfLawTerms).toBe(vm.pracitceGroupList[0].areaTerms);
-            expect(vm.subAreaOfLawTerms).toBe(vm.pracitceGroupList[0].areaTerms[0].subareaTerms);
-            expect(vm.activeAOLTerm).toBe(vm.pracitceGroupList[0].areaTerms[0]);
-            expect(vm.activeSubAOLTerm).toBe(vm.pracitceGroupList[0].areaTerms[0].subareaTerms[0]);
+            //expect(vm.selectedPracticeGroup).toBe(vm.pracitceGroupList[0]);
+            //expect(vm.areaOfLawTerms).toBe(vm.pracitceGroupList[0].areaTerms);
+            //expect(vm.subAreaOfLawTerms).toBe(vm.pracitceGroupList[0].areaTerms[0].subareaTerms);
+            //expect(vm.activeAOLTerm).toBe(vm.pracitceGroupList[0].areaTerms[0]);
+            //expect(vm.activeSubAOLTerm).toBe(vm.pracitceGroupList[0].areaTerms[0].subareaTerms[0]);
+            expect(vm.popupContainerBackground).toBe("Show");
+            expect(vm.popupContainer).toBe("Show");
         });
     });
 

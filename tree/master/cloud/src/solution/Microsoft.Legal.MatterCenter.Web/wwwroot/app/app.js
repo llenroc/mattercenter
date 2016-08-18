@@ -164,5 +164,5 @@ angular.module('matterMain', [
         appInsights.trackEvent(eventName);
         appInsights.setAuthenticatedUserContext(configs.ADAL.authUserEmail)
     };
-})
-;
+
+});

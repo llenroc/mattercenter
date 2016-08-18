@@ -1,5 +1,5 @@
 ﻿// Test suite
-describe('documents Controller test suite', function () {
+describe('documents Controller service call test suite', function () {
 
     var documentapi = function (documentDashBoardResource) {
         getData(documentDashBoardResource, mockDocumentResource);

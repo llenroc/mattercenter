@@ -62,56 +62,56 @@ describe("CreateMatter Controller test suite", function () {
         });
     });
 
-    describe("Verification of getSelectedPracticeGroupValue function", function () {
-        it("It should return the selected PracticeGroup Value for all AOL and SAOL terms)", function () {
-            vm.selectedPracticeGroup = selectedPracticeGroup;
-            vm.getSelectedPracticeGroupValue();
-            expect(vm.areaOfLawTerms).not.toBe(null);
-            expect(vm.subAreaOfLawTerms).not.toBe(null);
-            expect(vm.activeSubAOLTerm.termName).toBe(oTestConfiguration.sActiveSubAreaOfLawTerm);
-            expect(vm.activeAOLTerm.folderNames).toBe(oTestConfiguration.sFolderNames);
-            expect(vm.errorPopUp).toBe(false);
-        });
+    //describe("Verification of getSelectedPracticeGroupValue function", function () {
+    //    it("It should return the selected PracticeGroup Value for all AOL and SAOL terms)", function () {
+    //        vm.selectedPracticeGroup = selectedPracticeGroup;
+    //        vm.getSelectedPracticeGroupValue();
+    //        expect(vm.areaOfLawTerms).not.toBe(null);
+    //        expect(vm.subAreaOfLawTerms).not.toBe(null);
+    //        expect(vm.activeSubAOLTerm.termName).toBe(oTestConfiguration.sActiveSubAreaOfLawTerm);
+    //        expect(vm.activeAOLTerm.folderNames).toBe(oTestConfiguration.sFolderNames);
+    //        expect(vm.errorPopUp).toBe(false);
+    //    });
 
-        it("It should return the null value for selected PracticeGroup for AOL and SAOL terms", function () {
-            vm.selectedPracticeGroup = null;
-            vm.getSelectedPracticeGroupValue();
-            expect(vm.areaOfLawTerms).toBe(null);
-            expect(vm.subAreaOfLawTerms).toBe(null);
-        });
-    });
+    //    it("It should return the null value for selected PracticeGroup for AOL and SAOL terms", function () {
+    //        vm.selectedPracticeGroup = null;
+    //        vm.getSelectedPracticeGroupValue();
+    //        expect(vm.areaOfLawTerms).toBe(null);
+    //        expect(vm.subAreaOfLawTerms).toBe(null);
+    //    });
+    //});
 
-    describe("Verification of selectAreaOfLawTerm function", function () {
-        it("It should return the sub area of law term on selection of area of law term", function () {
-            vm.selectAreaOfLawTerm(selectedPracticeGroup.areaTerms[0]);
-            expect(vm.subAreaOfLawTerms).not.toBe(null);
-            expect(vm.activeSubAOLTerm.termName).toBe(oTestConfiguration.sActiveSubAreaOfLawTerm);
-            expect(vm.errorPopUp).toBe(false);
-            expect(vm.activeAOLTerm).toBe(selectedPracticeGroup.areaTerms[0]);
-        });
+    //describe("Verification of selectAreaOfLawTerm function", function () {
+    //    it("It should return the sub area of law term on selection of area of law term", function () {
+    //        vm.selectAreaOfLawTerm(selectedPracticeGroup.areaTerms[0]);
+    //        expect(vm.subAreaOfLawTerms).not.toBe(null);
+    //        expect(vm.activeSubAOLTerm.termName).toBe(oTestConfiguration.sActiveSubAreaOfLawTerm);
+    //        expect(vm.errorPopUp).toBe(false);
+    //        expect(vm.activeAOLTerm).toBe(selectedPracticeGroup.areaTerms[0]);
+    //    });
 
-        it("It should defined sub area of law term on selection of area of law term", function () {
-            vm.selectAreaOfLawTerm(selectedPracticeGroup.areaTerms[0]);
-            expect(vm.subAreaOfLawTerms).not.toBeUndefined();
-            expect(vm.activeSubAOLTerm).not.toBeUndefined();
-            expect(vm.errorPopUp).not.toBeUndefined();
-            expect(vm.activeAOLTerm).not.toBeUndefined();
-        });
-    });
+    //    it("It should defined sub area of law term on selection of area of law term", function () {
+    //        vm.selectAreaOfLawTerm(selectedPracticeGroup.areaTerms[0]);
+    //        expect(vm.subAreaOfLawTerms).not.toBeUndefined();
+    //        expect(vm.activeSubAOLTerm).not.toBeUndefined();
+    //        expect(vm.errorPopUp).not.toBeUndefined();
+    //        expect(vm.activeAOLTerm).not.toBeUndefined();
+    //    });
+    //});
 
-    describe("Verification of selectSubAreaOfLawTerm function", function () {
-        it("It should return the sub area of law items", function () {
-            vm.selectSubAreaOfLawTerm(selectedPracticeGroup.areaTerms[0].subareaTerms[0]);
-            expect(vm.activeSubAOLTerm).toBe(selectedPracticeGroup.areaTerms[0].subareaTerms[0]);
-            expect(vm.errorPopUp).toBe(false);
-        });
+    //describe("Verification of selectSubAreaOfLawTerm function", function () {
+    //    it("It should return the sub area of law items", function () {
+    //        vm.selectSubAreaOfLawTerm(selectedPracticeGroup.areaTerms[0].subareaTerms[0]);
+    //        expect(vm.activeSubAOLTerm).toBe(selectedPracticeGroup.areaTerms[0].subareaTerms[0]);
+    //        expect(vm.errorPopUp).toBe(false);
+    //    });
 
-        it("It should not return undefined value for sub area of law items", function () {
-            vm.selectSubAreaOfLawTerm(selectedPracticeGroup.areaTerms[0].subareaTerms[0]);
-            expect(vm.activeSubAOLTerm).not.toBeUndefined();
-            expect(vm.errorPopUp).not.toBeUndefined();
-        });
-    });
+    //    it("It should not return undefined value for sub area of law items", function () {
+    //        vm.selectSubAreaOfLawTerm(selectedPracticeGroup.areaTerms[0].subareaTerms[0]);
+    //        expect(vm.activeSubAOLTerm).not.toBeUndefined();
+    //        expect(vm.errorPopUp).not.toBeUndefined();
+    //    });
+    //});
 
     describe("Verification of selectDocumentTemplateTypeLawTerm function", function () {
         it("It should not return null value for the document template type term", function () {
@@ -165,7 +165,7 @@ describe("CreateMatter Controller test suite", function () {
 
     describe("Verification of onSelect function", function () {
 
-        it("It should return the conflicted user", function () {           
+        it("It should return the conflicted user", function () {
             vm.onSelect(item, $model, $label, "conflictcheckuser", "on-blurr", event, item.name);
             expect(vm.oSiteUsers).toBeDefined();
             expect(vm.selectedConflictCheckUser).toBe("MAQ User(MAQUser@LCADMS.onmicrosoft.com)");

@@ -1,5 +1,5 @@
 ﻿var vm, matterResource, $filter, $window, $watch, $http, $stateParams;
-var $rootScope = { logEvent: function () { } };
+var $rootScope = { logEvent: function () { }, setAuthenticatedUserContext: function () { } };
 var rootScope = {};
 var $model = {};
 var $label = { assignedUser: "" };
@@ -23,6 +23,7 @@ var adalService = {
     "userInfo": {
         "userName": "MAQUser@LCADMS.onmicrosoft.com",
         "profile": {
+            "given_name": "MAQ",
             "family_name": "LCADMS",
             "oid": 786
         },
@@ -32,6 +33,10 @@ var adalService = {
 };
 
 var mockapi = function () {
+};
+
+var mocknavigationResource = {
+    'canCreateMatter': '/api/v1/matter/cancreate'
 };
 
 var mockMatterDashBoardResource = {
@@ -73,7 +78,8 @@ var mockMatterResource = {
 
 var mockHomeResource = {
     'getHelp': '/api/v1/shared/help',
-    'getUserProfilePicture': '/api/v1/user/getuserprofilepicture'
+    'getUserProfilePicture': '/api/v1/user/getuserprofilepicture',
+    'canCreateMatter': '/api/v1/matter/cancreate'
 };
 
 var data = { "name": "" };

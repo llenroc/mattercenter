@@ -2,7 +2,7 @@
 // Test suite
 describe("DocumentDashboard Controller test suite", function () {
     "use strict";
-    
+
     beforeEach(module("matterMain"));
     beforeEach(module("matterMain", function ($provide) {
         $provide.factory("documentDashBoardResource", ["$resource", "auth", mockDocumentDashBoardResource]);
@@ -20,6 +20,16 @@ describe("DocumentDashboard Controller test suite", function () {
         rootScope = $rootScope.$new();
         vm = $controller("DocumentDashBoardController as vm", { $scope: $scope, $state: $state, $stateParams: $stateParams, documentDashBoardResource: mockDocumentDashBoardResource, api: mockapi, $rootScope: rootScope, $http: $http, $location: $location });
     }));
+
+    //describe("Verification of closealldrops function", function () {
+    //    it("It should close all dropdowns on click of page", function () {
+    //        vm.x = 5;
+    //        vm.y = 2;
+    //        vm.sum();
+    //        expect(vm.z).toBe(7);
+
+    //    });
+    //});
 
     describe("Verification of closealldrops function", function () {
         it("It should close all dropdowns on click of page", function () {
