@@ -348,7 +348,9 @@
     <Content Include="lib\angulartics-google-analytics\bower.json" />
     <Content Include="lib\angulartics-google-analytics\LICENSE" />
     <Content Include="lib\angulartics-google-analytics\README.md" />
+    <None Include="Properties\PublishProfiles\mattercenterjasmine - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\mattercenterjasmine - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\mattercenterjasmine - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\mattercenterjasmine - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\mattermaqdevsite - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\mattermaqdevsite - Web Deploy.pubxml" />
@@ -428,6 +430,7 @@
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\site.min.js" />
     <Content Include="Scripts\TestConfig.js" />
+    <Content Include="Scripts\uiconfig.js" />
     <Content Include="Specs\CreateMatterController.spec.js" />
     <Content Include="Specs\CreateMatterControllerservicecall.spec.js" />
     <Content Include="Specs\DocumentController.spec.js" />

@@ -1,7 +1,10 @@
 ﻿/// <disable>JS2074, JS3058</disable>
 // Test suite
 describe("Navigation Controller test suite", function () {
-    "use strict";
+
+    var mockapi = function (navigationResource, callback) {
+        getData(navigationResource, mocknavigationResource);
+    };
     
     beforeEach(module("matterMain"));
     beforeEach(module("matterMain", function ($provide) {
@@ -16,13 +19,10 @@ describe("Navigation Controller test suite", function () {
         vm = $controller("navigationController as vm", { $scope: $scope, $state: $state, $stateParams: $stateParams, api: mockapi, $rootScope: rootScope });
     }));
 
-    describe("Verification of menuClick function", function () {
+    describe("Verification of canCreateMatter function", function () {
         it("It should display the navigation content", function () {
-            vm.menuClick();
-            expect(vm.welcomeheader).toBe(false);
-            expect(vm.emailsubject).toBe(oTestConfiguration.sEmailSubject);
-            expect(vm.navigationContent).toBeDefined();
-            expect(vm.learnmore).toBe(oTestConfiguration.sLearnMoreLink);
+            vm.canCreateMatter();
+            expect(vm.canLoginUserCreateMatter).toBe(true);
         });
     });
 });

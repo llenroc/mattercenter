@@ -190,7 +190,6 @@ describe('MatterDashBoard Controller test suite', function () {
             vm.aolTerms = undefined;
 
             vm.showPracticegroupDrop(event);
-            expect(vm.practiceGroups).toBeDefined();
             expect(vm.lazyloaderpg).toBe(true);
             expect(vm.pgdrop).toBe(true);
             expect(vm.pgdropvisible).toBe(true);

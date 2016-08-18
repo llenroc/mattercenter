@@ -24,52 +24,52 @@ describe('MattersController Controller test suite', function () {
         vm = $controller('mattersController as vm', { $scope: $scope, $state: $state, $stateParams: $stateParams, matterResource: mockMatterResource, api: mockapi, $rootScope: rootScope, $http: $http, $location: $location, $q: $q, $animate: $animate });
     }));
 
-    describe('Verification of SetMatters function', function () {
-        it('matter name should be added in dropdown', function () {
-            vm.SetMatters(1, "All Matters");
-            expect(vm.divuigrid).toBe(false);
-            expect(vm.responseNull).toBe(false);
-            expect(vm.nodata).toBe(false);
-            expect(vm.gridOptions.data.length).toBeGreaterThan(0);
-            expect(vm.gridOptions.data).not.toBe(null);
-        });
-    });
+    //describe('Verification of SetMatters function', function () {
+    //    it('matter name should be added in dropdown', function () {
+    //        vm.SetMatters(1, "All Matters");
+    //        expect(vm.divuigrid).toBe(false);
+    //        expect(vm.responseNull).toBe(false);
+    //        expect(vm.nodata).toBe(false);
+    //        expect(vm.gridOptions.data.length).toBeGreaterThan(0);
+    //        expect(vm.gridOptions.data).not.toBe(null);
+    //    });
+    //});
 
-    describe('Verification of GetMatters function', function () {
-        it('matter name should be added in dropdown', function () {
-            vm.GetMatters(3);
-            expect(vm.divuigrid).toBe(true);
-            expect(vm.nodata).toBe(false);
-            expect(vm.gridOptions.data.length).toBeGreaterThan(0);
-            expect(vm.gridOptions.data).not.toBe(null);
-        });
-    });
+    //describe('Verification of GetMatters function', function () {
+    //    it('matter name should be added in dropdown', function () {
+    //        vm.GetMatters(3);
+    //        expect(vm.divuigrid).toBe(true);
+    //        expect(vm.nodata).toBe(false);
+    //        expect(vm.gridOptions.data.length).toBeGreaterThan(0);
+    //        expect(vm.gridOptions.data).not.toBe(null);
+    //    });
+    //});
 
-    describe('Verification of mattersearch function', function () {
-        it('It should search related matter', function () {
-            var term = "MCMatterName:Test*(MCMatterName:* OR MCMatterID:* OR MCClientName:*)";
-            var property = "MCMatterName";
-            vm.mattersearch(term, property, false);
-            expect(vm.divuigrid).toBe(true);
-            expect(vm.nodata).toBe(false);
-            expect(vm.lazyloader).toBe(true);
-            expect(vm.filternodata).toBe(false);
-            expect(vm.details.length).toBeGreaterThan(0);
-            expect(vm.details).not.toBe(null);
+    //describe('Verification of mattersearch function', function () {
+    //    it('It should search related matter', function () {
+    //        var term = "MCMatterName:Test*(MCMatterName:* OR MCMatterID:* OR MCClientName:*)";
+    //        var property = "MCMatterName";
+    //        vm.mattersearch(term, property, false);
+    //        expect(vm.divuigrid).toBe(true);
+    //        expect(vm.nodata).toBe(false);
+    //        expect(vm.lazyloader).toBe(true);
+    //        expect(vm.filternodata).toBe(false);
+    //        expect(vm.details.length).toBeGreaterThan(0);
+    //        expect(vm.details).not.toBe(null);
 
-        });
+    //    });
 
-    });
+    //});
 
-    describe('Verification of FilterModifiedDate function', function () {
-        it('Data should be filtered based on modified date', function () {
-            vm.modstartdate = new Date("08/01/2016");
-            vm.modenddate = new Date("08/10/2016");
-            vm.FilterModifiedDate("Modified Date");
-            expect(vm.moddatefilter).toBe(true);
-        });
+    //describe('Verification of FilterModifiedDate function', function () {
+    //    it('Data should be filtered based on modified date', function () {
+    //        vm.modstartdate = new Date("08/01/2016");
+    //        vm.modenddate = new Date("08/10/2016");
+    //        vm.FilterModifiedDate("Modified Date");
+    //        expect(vm.moddatefilter).toBe(true);
+    //    });
 
-    });
+    //});
 
     describe('Verification of PinMatter function', function () {
         it('It should be added in pinned list', function () {
