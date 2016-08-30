@@ -1,5 +1,5 @@
 ﻿var vm, matterResource, $filter, $window, $watch, $http, $stateParams;
-var $rootScope = { logEvent: function () { } };
+var $rootScope = { logEvent: function () { }, setAuthenticatedUserContext: function () { } };
 var rootScope = {};
 var $model = {};
 var $label = { assignedUser: "" };
