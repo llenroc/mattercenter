@@ -1,5 +1,15 @@
-﻿// Test suite
-describe('documents Controller service call test suite', function () {
+﻿//// ***********************************************************************
+//// Author           : MAQ USER
+//// Created          : 31-08-2016
+////
+//// ***********************************************************************
+//// <copyright file="DocumentControllerservicecall.spec.js" company="MAQSoftware">
+////  Copyright (c) . All rights reserved.
+//// </copyright>
+//// <summary>Test suite for document controller for service call</summary>
+//// ***********************************************************************
+
+describe("documents Controller test suite for service call", function () {
 
     var documentapi = function (documentDashBoardResource) {
         getData(documentDashBoardResource, mockDocumentResource);
@@ -23,8 +33,8 @@ describe('documents Controller service call test suite', function () {
         vm = $controller('documentsController as vm', { $scope: $scope, $state: $state, $stateParams: $stateParams, documentResource: mockDocumentResource, api: documentapi, $rootScope: rootScope, $http: $http, $location: $location, $q: $q, $animate: $animate });
     }));
 
-    describe('Verification of watchFunc function', function () {
-        it('It should get all grid data', function () {
+    describe("Verification of watchFunc function", function () {
+        it("It should get all grid data", function () {
             $scope.gridApi = { infiniteScroll: { dataLoaded: function () { } } };
             // $scope.gridApi.infiniteScroll.dataLoaded();
             var promise = vm.watchFunc();
@@ -35,8 +45,8 @@ describe('documents Controller service call test suite', function () {
 
     });
 
-    describe('Verification of documentsearch function', function () {
-        it('It should search related document', function () {
+    describe("Verification of documentsearch function", function () {
+        it("It should search related document", function () {
             var term = "FileName:Test*(* OR FileName:* OR dlcDocIdOWSText:* OR MCDocumentClientName:*)";
             var property = "FileName";
             vm.documentsearch(term, property, false);
@@ -46,14 +56,14 @@ describe('documents Controller service call test suite', function () {
             expect(vm.filternodata).toBe(false);
             expect(vm.details.length).toBeGreaterThan(0);
             expect(vm.details).not.toBe(null);
-            //vm.documentsearch(term, property, true);
+           // //vm.documentsearch(term, property, true);
 
         });
 
     });
 
-    describe('Verification of FilterModifiedDate function', function () {
-        it('Data should be filtered based on modified date', function () {
+    describe("Verification of FilterModifiedDate function", function () {
+        it("It should filter data based on modified date", function () {
             vm.modstartdate = new Date("08/01/2016");
             vm.modenddate = new Date("08/10/2016");
             vm.FilterModifiedDate("Modified Date");
@@ -62,8 +72,8 @@ describe('documents Controller service call test suite', function () {
 
     });
 
-    describe('Verification of SetDocuments function', function () {
-        it('document name should be added in dropdown', function () {
+    describe("Verification of SetDocuments function", function () {
+        it("It should add document name in dropdown", function () {
             $scope.gridApi = { infiniteScroll: { dataLoaded: function () { } } };
             vm.SetDocuments(1, "All Documents");
             expect(true).toBe(true);
@@ -75,8 +85,8 @@ describe('documents Controller service call test suite', function () {
         });
     });
 
-    describe('Verification of GetDocuments function', function () {
-        it('document name should be added in dropdown', function () {
+    describe("Verification of GetDocuments function", function () {
+        it("It should add document name in dropdown", function () {
             $scope.gridApi = { infiniteScroll: { dataLoaded: function () { } } };
             vm.GetDocuments(3);
             expect(true).toBe(true);
@@ -87,8 +97,8 @@ describe('documents Controller service call test suite', function () {
         });
     });
 
-    describe('Verification of PinMatter function', function () {
-        it('It should be added in pinned list', function () {
+    describe("Verification of PinMatter function", function () {
+        it("It should be added in pinned list", function () {
             var pinObject = {
                 entity: oTestConfiguration.oDocumentObject
             };
@@ -104,8 +114,8 @@ describe('documents Controller service call test suite', function () {
         });
     });
 
-    describe('Verification of UnpinDocument function', function () {
-        it('It should be removed from pinned list', function () {
+    describe("Verification of UnpinDocument function", function () {
+        it("It should be removed from pinned list", function () {
             var pinObject = {
                 entity: oTestConfiguration.oDocumentObject
             };
@@ -121,8 +131,8 @@ describe('documents Controller service call test suite', function () {
         });
     });
 
-    describe('Verification of FilterByType function', function () {
-        it('document count should be greater than 0', function () {
+    describe("Verification of FilterByType function", function () {
+        it("It should filter data whose document count should be greater than 0", function () {
             vm.FilterByType();
             expect(vm.divuigrid).toBe(true);
             expect(vm.nodata).toBe(false);
@@ -131,8 +141,8 @@ describe('documents Controller service call test suite', function () {
         });
     });
 
-    describe('Verification of sortChangedDocument function', function () {
-        it('documents should be sort based on document name', function () {
+    describe("Verification of sortChangedDocument function", function () {
+        it("It should sort documents based on document name", function () {
             $scope.gridApi = { infiniteScroll: { dataLoaded: function () { }, resetScroll: function () { } } };
             var sortColumns = [{ "field": "documentName", "name": "documentName", "sort": "asc" }];
             vm.gridOptions.columnDefs[1] = { "field": "documentName", "displayName": "Document", "width": "278", "enableHiding": false, "cellTemplate": "../app/document/DocumentTemplates/DocumentCellTemplate.html", "headerCellTemplate": "../app/document/DocumentTemplates/DocumentHeaderTemplate.html", "name": "documentName", "type": "string" };
@@ -144,8 +154,8 @@ describe('documents Controller service call test suite', function () {
         });
     });
 
-    describe('Verification of typeheadselect function', function () {
-        it('selected document result should be displayed', function () {
+    describe("Verification of typeheadselect function", function () {
+        it("It should display the selected document", function () {
             $scope.gridApi = { infiniteScroll: { dataLoaded: function () { }, resetScroll: function () { } } };
             var selected = "All Attachments - image test.eml (280620050)";
             vm.typeheadselect(null, selected);
