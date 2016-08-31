@@ -1,5 +1,5 @@
---temp-output:C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\obj\Release\net46\
---out:C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\bin\Release\net46\Microsoft.Legal.MatterCenter.Web.exe
+--temp-output:C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\obj\Release\net46\
+--out:C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\bin\Release\net46\Microsoft.Legal.MatterCenter.Web.exe
 --define:RELEASE
 --define:TRACE
 --define:NET46
@@ -15,6 +15,7 @@
 --version:1.0.0.0
 --informational-version:1.0.0
 --target-framework:.NETFramework,Version=v4.6
+--reference:C:\Users\v-akdigh\.nuget\packages\Hyak.Common\1.0.2\lib\net45\Hyak.Common.dll
 --reference:C:\Users\v-akdigh\.nuget\packages\MailKit\1.3.0-beta7\lib\net451\MailKit.dll
 --reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.ApplicationInsights\2.1.0\lib\net46\Microsoft.ApplicationInsights.dll
 --reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.ApplicationInsights.Agent.Intercept\1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll
@@ -64,7 +65,13 @@
 --reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.AspNetCore.Server.Kestrel\1.0.0\lib\net451\Microsoft.AspNetCore.Server.Kestrel.dll
 --reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.AspNetCore.StaticFiles\1.0.0\lib\net451\Microsoft.AspNetCore.StaticFiles.dll
 --reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.AspNetCore.WebUtilities\1.0.0\lib\net451\Microsoft.AspNetCore.WebUtilities.dll
+--reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.Azure.Common\2.0.4\lib\net45\Microsoft.Azure.Common.NetFramework.dll
+--reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.Azure.Common\2.0.4\lib\net45\Microsoft.Azure.Common.dll
+--reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.Azure.KeyVault\1.0.0\lib\net45\Microsoft.Azure.KeyVault.dll
 --reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.Azure.KeyVault.Core\1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll
+--reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.Bcl.Async\1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll
+--reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.Bcl.Async\1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll
+--reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.Bcl.Async\1.0.168\lib\net40\Microsoft.Threading.Tasks.dll
 --reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.CodeAnalysis.Common\1.3.0\lib\net45\Microsoft.CodeAnalysis.dll
 --reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.CodeAnalysis.CSharp\1.3.0\lib\net45\Microsoft.CodeAnalysis.CSharp.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\Microsoft.CSharp.dll
@@ -113,6 +120,8 @@
 --reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.IdentityModel.Protocols\2.0.0\lib\net451\Microsoft.IdentityModel.Protocols.dll
 --reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.IdentityModel.Protocols.OpenIdConnect\2.0.0\lib\net451\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 --reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.IdentityModel.Tokens\5.0.0\lib\net451\Microsoft.IdentityModel.Tokens.dll
+--reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.Net.Http\2.2.22\lib\net45\System.Net.Http.Extensions.dll
+--reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.Net.Http\2.2.22\lib\net45\System.Net.Http.Primitives.dll
 --reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.Net.Http.Headers\1.0.0\lib\netstandard1.1\Microsoft.Net.Http.Headers.dll
 --reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.SharePointOnline.CSOM\16.1.5026.1200\lib\net45\Microsoft.Office.Client.Policy.dll
 --reference:C:\Users\v-akdigh\.nuget\packages\Microsoft.SharePointOnline.CSOM\16.1.5026.1200\lib\net45\Microsoft.Office.Client.TranslationServices.dll
@@ -211,9 +220,9 @@
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\Facades\System.Xml.ReaderWriter.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\Facades\System.Xml.XDocument.dll
 --reference:C:\Users\v-akdigh\.nuget\packages\WindowsAzure.Storage\7.1.3-preview\lib\net40\Microsoft.WindowsAzure.Storage.dll
---reference:C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Models\bin\Release\net46\Microsoft.Legal.MatterCenter.Models.dll
---reference:C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\bin\Release\net46\Microsoft.Legal.MatterCenter.Repository.dll
---reference:C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Utility\bin\Release\net46\Microsoft.Legal.MatterCenter.Utility.dll
+--reference:C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Models\bin\Release\net46\Microsoft.Legal.MatterCenter.Models.dll
+--reference:C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Repository\bin\Release\net46\Microsoft.Legal.MatterCenter.Repository.dll
+--reference:C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Service\Microsoft.Legal.MatterCenter.Utility\bin\Release\net46\Microsoft.Legal.MatterCenter.Utility.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\mscorlib.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.Core.dll
@@ -223,36 +232,38 @@
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.Xml.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.Xml.Linq.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.ComponentModel.DataAnnotations.dll
+--reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.Net.dll
+--reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.Net.Http.WebRequest.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.IO.Compression.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.IdentityModel.dll
---reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.Net.Http.WebRequest.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.ServiceModel.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.IO.Compression.FileSystem.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.Numerics.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.Runtime.Serialization.dll
---resource:"C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\obj\Release\net46\Microsoft.Legal.MatterCenter.Webdotnet-compile.deps.json",Microsoft.Legal.MatterCenter.Web.deps.json
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Program.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Startup.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\DocumentProvision.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\EditFunctions.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\MatterCenterServiceFunctions.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\MatterProvision.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\ValidationFunctions.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Interfaces\IDocumentProvision.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Interfaces\IEditFunctions.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Interfaces\IMatterCenterServiceFunctions.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Interfaces\IMatterProvision.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Interfaces\ISharedProvision.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Interfaces\IValidationFunctions.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Upload\IUploadHelperFunctions.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Upload\IUploadHelperFunctionsUtility.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Upload\UploadHelperFunctions.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Upload\UploadHelperFunctionsUtility.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\ConfigController.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\DocumentController.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\EmailController.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\MatterController.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\SharedController.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\TaxonomyController.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\UserController.cs
-C:\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Filters\MatterCenterExceptionFilter.cs
+--resource:"C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\obj\Release\net46\Microsoft.Legal.MatterCenter.Webdotnet-compile.deps.json",Microsoft.Legal.MatterCenter.Web.deps.json
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Program.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Startup.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\DocumentProvision.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\EditFunctions.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\KeyVaultHelper.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\MatterCenterServiceFunctions.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\MatterProvision.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\ValidationFunctions.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Interfaces\IDocumentProvision.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Interfaces\IEditFunctions.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Interfaces\IMatterCenterServiceFunctions.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Interfaces\IMatterProvision.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Interfaces\ISharedProvision.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Interfaces\IValidationFunctions.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Upload\IUploadHelperFunctions.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Upload\IUploadHelperFunctionsUtility.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Upload\UploadHelperFunctions.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Common\Upload\UploadHelperFunctionsUtility.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\ConfigController.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\DocumentController.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\EmailController.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\MatterController.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\SharedController.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\TaxonomyController.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Controllers\UserController.cs
+C:\Users\v-akdigh\Source\Workspaces\Matter Center\POC\MC2\tree\master\cloud\src\solution\Microsoft.Legal.MatterCenter.Web\Filters\MatterCenterExceptionFilter.cs

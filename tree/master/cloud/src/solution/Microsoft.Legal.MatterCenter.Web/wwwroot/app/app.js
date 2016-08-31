@@ -134,6 +134,7 @@ angular.module('matterMain', [
 
                 } else {
                     $(".AppMenuFlyout").slideUp();
+                    $(".topheader").css("z-index", "4");
                     $(".CloseSwitcher").addClass("hide");
                     $(".OpenSwitcher").removeClass("hide");
                     $(".MenuCaption").removeClass("hideMenuCaption");
@@ -153,15 +154,5 @@ angular.module('matterMain', [
         appInsights.setAuthenticatedUserContext(configs.ADAL.authUserEmail);
         
     };
-
-//.run(function ($rootScope) {
-//    $rootScope.logEvent = function (eventName) {
-
-//        var appType = configs.appInsights.appType;
-//        //var appType = 'test';
-//        eventName = appType + "/" + eventName;
-//        appInsights.trackEvent(eventName);
-//        appInsights.setAuthenticatedUserContext(configs.ADAL.authUserEmail)
-//    };
-
-});
+})
+;

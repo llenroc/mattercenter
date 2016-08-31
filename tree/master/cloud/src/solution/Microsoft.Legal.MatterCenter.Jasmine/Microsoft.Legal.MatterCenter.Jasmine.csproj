@@ -45,6 +45,7 @@
   <ItemGroup>
     <Content Include="js\angulartics-azure.js" />
     <Content Include="js\app.js" />
+    <Content Include="js\config.js" />
     <Content Include="js\site.js" />
     <Content Include="js\site.min.js" />
     <Content Include="lib\adal-angular\.bower.json" />
@@ -379,7 +380,7 @@
     <Content Include="..\Microsoft.Legal.MatterCenter.Web\wwwroot\app\services\auth.service.js">
       <Link>app\services\auth.service.js</Link>
     </Content>
-    <Content Include="JasmineTest.html" />
+    <Content Include="TestResults.html" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\site.min.js" />
     <Content Include="Scripts\TestConfig.js" />

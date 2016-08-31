@@ -1,5 +1,15 @@
 ﻿/// <disable>JS2074, JS3058</disable>
-// Test suite
+//// ***********************************************************************
+//// Author           : MAQ USER
+//// Created          : 31-08-2016
+////
+//// ***********************************************************************
+//// <copyright file="MatterDashboardController.spec.js" company="MAQSoftware">
+////  Copyright (c) . All rights reserved.
+//// </copyright>
+//// <summary>Test suite for Matter Dashboard Controller</summary>
+//// ***********************************************************************
+
 describe("MatterDashBoard Controller test suite", function () {
     "use strict";
 
@@ -65,17 +75,17 @@ describe("MatterDashBoard Controller test suite", function () {
         it("It should return selected practice group", function () {
             vm.selectedPGs = "";
             vm.practiceGroups = practicegroup;
-            vm.filterSearchOK("pg");
+            vm.filterSearchOK("level1");
             expect(vm.pgdropvisible).toBe(false);
             expect(vm.pgdrop).toBe(false);
             expect(vm.selectedPGsForCancel).toBe(oTestConfiguration.sSelectedPracticeGroup);
             expect(vm.selectedPGs).toBe(oTestConfiguration.sSelectedPracticeGroup);
-
         });
+
         it("It should return selected AOL", function () {
             vm.selectedAOLs = "";
             vm.aolTerms = practicegroup;
-            vm.filterSearchOK("aol");
+            vm.filterSearchOK("level2");
             expect(vm.aoldropvisible).toBe(false);
             expect(vm.aoldrop).toBe(false);
             expect(vm.selectedAOLsForCancel).toBe(oTestConfiguration.sSelectedAreaOfLaw);
@@ -180,4 +190,51 @@ describe("MatterDashBoard Controller test suite", function () {
             expect(vm.oUploadGlobal.successBanner).toBe(false);
         });
     });
+    /*
+      //-------------------------------------------------------------------------------------------------
+    describe("Verification of typeheadslect function", function () {
+        it("This should select the typehead", function () {
+            vm.typeheadselect("test", "test");
+            vm.FilterByType();
+            expect(vm.lazyloaderdashboard).toBe(false);
+            expect(vm.divuigrid).toBe(false);
+            expect(vm.displaypagination).toBe(false);
+            expect(vm.nodata).toBe(false);
+        });
+    });
+
+    describe("Verification of searchByTerm function", function () {
+        it("This should search by term", function () {
+            vm.searchByTerm();
+            expect(vm.lazyloaderdashboard).toBe(false);
+            expect(vm.divuigrid).toBe(false);
+            expect(vm.displaypagination).toBe(false);
+            expect(vm.matterid).toBe(1);
+            expect(vm.pagenumber).toBe(1);
+            expect(vm.mattername).toBe("All Matters");
+        });
+    });
+    describe("Verification of handleDesktopDrop function", function () {
+        it("This should handle desktop drop", function () {
+            vm.handleDesktopDrop("test", "test", "test");
+            vm.oUploadGlobal=
+            {
+                successBanner: null;
+            };
+            expect(vm.isLoadingFromDesktopStarted).toBe(true);
+            expect(vm.oUploadGlobal.successBanner).toBe(false);
+        });
+    });
+
+    describe("Verification of getSearchResults function", function () {
+        it("This should get search results", function () {
+            vm.getSearchResults();       
+            expect(vm.lazyloaderdashboard).toBe(false);
+            expect(vm.divuigrid).toBe(false);
+            expect(vm.displaypagination).toBe(false);
+            expect(vm.nodata).toBe(false);
+            expect(vm.searchdrop).toBe(false);       
+        });
+    });
+    */
 });

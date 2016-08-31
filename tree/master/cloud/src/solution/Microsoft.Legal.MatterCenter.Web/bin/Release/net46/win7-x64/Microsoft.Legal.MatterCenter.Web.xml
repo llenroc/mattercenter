@@ -46,6 +46,82 @@
             <param name="matter">Matter object</param>
             <returns>Status of Full Control permission</returns>
         </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.KeyVaultHelper.#ctor(Microsoft.Extensions.Configuration.IConfigurationRoot)">
+            <summary>
+            
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.KeyVaultHelper.GetKeyVaultSecretsCerticate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.KeyVaultHelper.GetKeyVaultSecretsSecret">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.KeyVaultHelper.retrieveSecrets(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.KeyVaultHelper.GetToken(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            Uses the Client Secret and ClientID to get a token to the AD
+            <param name="authority"></param>
+            <param name="resource"></param>
+            <param name="scope"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.KeyVaultHelper.GetCert(Microsoft.Extensions.Configuration.IConfiguration)">
+             <summary>
+            
+             </summary>
+             <param name="configurtaion"></param>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.KeyVaultHelper.GetAccessToken(System.String,System.String,System.String)">
+            <summary>
+            Uses the ClientId and Screet to get an AD tokenok
+            
+            </summary>
+            <param name="authority"></param>
+            <param name="resource"></param>
+            <param name="scope"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Legal.MatterCenter.Web.Common.MatterProvision">
+            <summary>
+            Matter Provision is a helper class which contains all methods related to matter such as matter search, matter provision, document upload to matter
+            functionality
+            </summary>
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Common.MatterProvision.#ctor(Microsoft.Legal.MatterCenter.Repository.IMatterRepository,Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.MatterSettings},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.ErrorSettings},Microsoft.Legal.MatterCenter.Utility.ISPOAuthorization,Microsoft.Legal.MatterCenter.Web.Common.IEditFunctions,Microsoft.Legal.MatterCenter.Web.Common.IValidationFunctions,Microsoft.Legal.MatterCenter.Utility.ICustomLogger,Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.LogTables},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.MailSettings},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.CamlQueries},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.ListNames},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.GeneralSettings},Microsoft.Extensions.Options.IOptions{Microsoft.Legal.MatterCenter.Utility.SearchSettings},Microsoft.Legal.MatterCenter.Repository.IUserRepository,Microsoft.Legal.MatterCenter.Repository.IExternalSharing,Microsoft.Extensions.Configuration.IConfigurationRoot,Microsoft.Legal.MatterCenter.Repository.IUsersDetails)">
+            <summary>
+            Constructor where all the dependencies are injected
+            </summary>
+            <param name="matterRepositoy"></param>
+            <param name="matterSettings"></param>
+            <param name="errorSettings"></param>
+            <param name="spoAuthorization"></param>
+            <param name="editFunctions"></param>
+            <param name="validationFunctions"></param>
+            <param name="customLogger"></param>
+            <param name="logTables"></param>
+            <param name="mailSettings"></param>
+            <param name="camlQueries"></param>
+            <param name="listNames"></param>
+            <param name="generalSettings"></param>
+            <param name="searchSettings"></param>
+            <param name="userRepositoy"></param>
+            <param name="externalSharing"></param>
+            <param name="configuration"></param>
+            <param name="userDetails"></param>
+        </member>
         <member name="M:Microsoft.Legal.MatterCenter.Web.Common.MatterProvision.SaveConfigurations(Microsoft.Legal.MatterCenter.Models.MatterConfigurations)">
             <summary>
             This method will save matter configurations in sharepoint list
@@ -640,11 +716,26 @@
             <param name="filter"></param>
             <returns></returns>
         </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Controllers.ConfigController.GetConfigsForSPO(System.String)">
+            <summary>
+            Returns all the entries for Configuring the UI for sharepoint online
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
         <member name="M:Microsoft.Legal.MatterCenter.Web.Controllers.ConfigController.InsertUpdate(System.String)">
             <summary>
             Returns all the entries for Configuring the UI
             </summary>
             <param name="configs">Request object for POST</param>   
+        </member>
+        <member name="M:Microsoft.Legal.MatterCenter.Web.Controllers.ConfigController.CreateConfig(System.Collections.Generic.List{Microsoft.WindowsAzure.Storage.Table.DynamicTableEntity},System.String,System.Boolean)">
+            <summary>
+            Helper method which will create uiconfig.js or uiconfigforspo.js file
+            </summary>
+            <param name="configs"></param>
+            <param name="fileName"></param>
+            <param name="includeSPOLabels"></param>
         </member>
         <member name="T:Microsoft.Legal.MatterCenter.Web.DocumentController">
             <summary>
