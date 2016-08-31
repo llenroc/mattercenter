@@ -73,7 +73,8 @@ var mockMatterResource = {
     'uploadEmail': '/api/v1/document/UploadMail',
     'uploadAttachment': '/api/v1/document/UploadAttachments',
     'uploadfiles': '/api/v1/document/UploadAttachments',
-    'getHelp': '/api/v1/shared/help'
+    'getHelp': '/api/v1/shared/help',
+    'userexists': '/api/v1/user/userexists'
 };
 
 var mockHomeResource = {
@@ -129,6 +130,15 @@ var mockMatterResourceService = {
     'uploadAttachment': '/api/v1/document/UploadAttachments',
     'uploadfiles': '/api/v1/document/UploadAttachments',
     'getHelp': '/api/v1/shared/help'
+};
+
+var mockSettingsResource = {
+    'getTaxonomyData': '/api/v1/taxonomy/gettaxonomy',
+    'getRoles': '/api/v1/user/getroles',
+    'getPermissionLevels': '/api/v1/user/getpermissionlevels',
+    'getUsers': '/api/v1/user/getusers',
+    'getDefaultConfigurations': '/api/v1/matter/getconfigurations',
+    'saveConfigurations': '/api/v1/matter/saveconfigurations'
 };
 
 var selectedPracticeGroup = {
