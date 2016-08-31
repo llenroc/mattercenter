@@ -1,5 +1,14 @@
 ﻿/// <disable>JS2074, JS3058</disable>
-// Test suite
+//// ***********************************************************************
+//// Author           : MAQ USER
+//// Created          : 31-08-2016
+////
+//// ***********************************************************************
+//// <copyright file="DocumentController.spec.js" company="MAQSoftware">
+////  Copyright (c) . All rights reserved.
+//// </copyright>
+//// <summary>Test suite for document controller</summary>
+//// ***********************************************************************
 describe("documents Controller test suite", function () {
     "use strict";
 
@@ -22,13 +31,14 @@ describe("documents Controller test suite", function () {
     }));
 
     describe("Verification of showdocdrop function", function () {
-        it("It should display document drop inner menu", function () {
+        it("It should display the matters dropdown in resposive ", function () {
             vm.docdropinner = true;
             vm.showdocdrop(event);
             expect(vm.documentsdrop).toBe(true);
             expect(vm.docdropinner).toBe(false);
         });
-        it("It should hide document drop inner menu", function () {
+
+        it("It should hide the matters dropdown in resposive ", function () {
             vm.docdropinner = false;
             vm.showdocdrop(event);
             expect(vm.documentsdrop).toBe(false);
@@ -53,6 +63,7 @@ describe("documents Controller test suite", function () {
             expect(oTableHeight).toBeDefined();
             expect(oTableHeight).not.toBe(null);
         });
+
         it("It should not set dynamic height of the grid", function () {
             vm.isOutlook = false;
             var oTableHeight = vm.getTableHeight();
@@ -60,6 +71,7 @@ describe("documents Controller test suite", function () {
             expect(oTableHeight).not.toBe(null);
         });
     });
+
     describe("Verification of isOutlookAsAttachment function", function () {
         it("It should show outlook as an attachment", function () {
             vm.isOutlookAsAttachment(true);
@@ -68,6 +80,7 @@ describe("documents Controller test suite", function () {
             expect(vm.enableAttachment).toBe(false);
         });
     });
+
     describe("Verification of closeNotification function", function () {
         it("It should close all the notifications", function () {
             vm.closeNotification();
@@ -116,6 +129,7 @@ describe("documents Controller test suite", function () {
             expect(vm.documentsCheckedCount).toBe(oTestConfiguration.nDocumentCheckCount);
             expect(vm.selectedRows).toBe(obj);
         });
+
         it("It should uncheck all the checkboxes inside grid", function () {
             vm.gridOptions.data = obj;
             vm.toggleCheckerAll(false);
@@ -125,4 +139,115 @@ describe("documents Controller test suite", function () {
             expect(vm.showErrorAttachmentInfo).toBe(false);
         });
     });
+
+    /*
+    //-------------------------------------------------------------------------
+    describe("Verification of sendDocumentAsAttachment function", function () {
+        // Test case to validate function.
+        it("It should send document as attachment", function () {
+            vm.sendDocumentAsAttachment();
+           //vm.selectedRows
+            //{
+             //   length: 5
+
+           // };
+        expect(vm.enableAttachment).toBe(true);
+        expect(vm.errorAttachDocument).toBe(false);
+        expect(vm.asyncCallCompleted).toBe(1);
+        expect(vm.showFailedAtachments).toBe(false);
+        expect(vm.showPopUpHolder).toBe(true);
+        expect(vm.attachedProgressPopUp).toBe(true);
+        });
+
+        it("It should not send document as attachment", function () {
+            vm.sendDocumentAsAttachment();
+          //vm.selectedRows
+                // {
+                //    length: 10
+    //             };
+            expect(vm.enableAttachment).toBe(false);
+            expect(vm.errorAttachDocument).toBe(true);
+        });
+    });
+     
+    describe("Verification of searchDocument function", function () {
+        it("Inside searchDocument function", function () {
+        vm.searchDocument("test");
+        expect(vm.pagenumber).toBe(1);
+    });
+ });
+
+    describe("Verification of FilterModifiedDate function", function () {
+        it("It should filter the modified date ", function () {
+         vm.FilterModifiedDate("test");
+         expect(vm.lazyloader).toBe(false);
+        expect(vm.divuigrid).toBe(false);
+    });
+
+    it("It should filter based on modified date ", function () {
+        vm.FilterModifiedDate("Modified Date");
+        expect(vm.moddatefilter).toBe(true);      
+    });
+
+    it("It should filter based on created date", function () {
+        vm.FilterModifiedDate("Modified Date");
+        expect(vm.createddatefilter).toBe(true);
+
+    });
+ });
+
+    describe("Verification of clearFilters function", function () {
+        it("It should clear all the filters", function () {
+        vm.clearFilters("Test");
+        expect(vm.documentheader).toBe(true);
+        expect(vm.documentdateheader).toBe(true);
+        expect(vm.lazyloader).toBe(false);
+        expect(vm.nodata).toBe(false);
+        expect(vm.pagenumber).toBe(1);
+    });
+
+    it("It should clearfilters based on LastModifiedTime and search term", function () {
+        vm.clearFilters("Test");
+        expect(vm.documentfilter).toBe(false);         
+    });
+
+    it("It should clear filters based on LastModified time and client name", function () {
+        vm.clearFilters("Test");
+        expect(vm.clientfilter).toBe(false);
+    });
+    it("It should clear filters based on search term", function () {
+        vm.clearFilters("Test");
+        expect(vm.checkoutfilter).toBe(false);
+    });
+
+    it("It should clear filters based on search term and document author", function () {
+        vm.clearFilters("Test");
+        expect(vm.authorfilter).toBe(false);
+    });
+
+    it("It should clear filters based on LastModified date", function () {
+        vm.clearFilters("Test");
+        expect(vm.moddatefilter).toBe(false);
+    });
+
+    it("It should clear filters based on CreatedDate ", function () {
+        vm.clearFilters("Test");
+        expect(vm.createddatefilter).toBe(false);
+    });
+});
+
+    describe("Verification of getDocumentAssets function", function () {
+        it("It should get all document assests", function () {
+        vm.searchDocument("test");
+        expect(vm.assetsuccess).toBe(false);
+    });
+});
+
+    describe("Verification of openDocumentHeader function", function () {
+        it("It should open the document author", function () {
+        //vm.openDocumentHeader("test");
+        expect(vm.filternodata).toBe(false);
+    });
+});
+    */
 });

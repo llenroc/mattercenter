@@ -17,7 +17,7 @@
             vm.navigation = uiconfigs.Navigation;
             vm.header = uiconfigs.Header;
             
-           // $rootScope.setAuthenticatedUserContext();
+            //$rootScope.setAuthenticatedUserContext();
 
             //Callback function for help 
             function getHelp(options, callback) {
@@ -146,7 +146,7 @@
             //#region navigating to the url based on menu click
             vm.navigateUrl = function (data) {
                 if (data != "Settings") {
-                    $window.top.parent.location.href = configs.uri.SPOsiteURL + "/SitePages/MatterCenterHomev1.aspx?" + data;
+                    $window.top.parent.location.href = configs.uri.SPOsiteURL + "/SitePages/MatterCenterHome.aspx?" + data;
                 } else {
                     $window.top.parent.location.href = configs.uri.SPOsiteURL + "/SitePages/" + data + ".aspx";
                 }
@@ -175,9 +175,11 @@
                     $(".OpenSwitcher").addClass("hide");
                     $(".CloseSwitcher").removeClass("hide");
                     $(".MenuCaption").addClass("hideMenuCaption");
+                    $(".topheader").css("z-index","8");
                     oAppMenuFlyout.slideDown();
                 } else {
                     oAppMenuFlyout.slideUp();
+                    $(".topheader").css("z-index", "4");
                     $(".CloseSwitcher").addClass("hide");
                     $(".OpenSwitcher").removeClass("hide");
                     $(".MenuCaption").removeClass("hideMenuCaption");

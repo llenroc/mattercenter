@@ -1,6 +1,15 @@
 ﻿/// <disable>JS2074, JS3058</disable>
-// Test suite
-describe("CreateMatter Controller test suite", function () {
+//// ***********************************************************************
+//// Author           : MAQ USER
+//// Created          : 31-08-2016
+////
+//// ***********************************************************************
+//// <copyright file="CreateMatterControllerservicecall.spec.js" company="MAQSoftware">
+////  Copyright (c) . All rights reserved.
+//// </copyright>
+//// <summary>Test suite for createMatter controller for service call</summary>
+//// ***********************************************************************
+describe("CreateMatter Controller test suite for service call", function () {
     "use strict";
 
     var mockapi = function (matterResource, callback) {
@@ -25,36 +34,25 @@ describe("CreateMatter Controller test suite", function () {
     }));
 
     describe("Verification of Check valid matter function", function () {
-        it("Should return true for new matter", function () {
+        it("It Should return true for new matter", function () {
             vm.matterName = oTestConfiguration.sValidMatterName;
             vm.clientUrl = oTestConfiguration.sValidMatterClientURL;
             vm.checkValidMatterName();
-            expect(vm.checkValidMatterName).toBe(true);
-        });
-
-        it("It should return false for new matter", function () {
-            vm.matterName = oTestConfiguration.sInvalidMatterName;
-            vm.clientUrl = oTestConfiguration.sInvalidMatterURL;
-            vm.checkValidMatterName();
-            expect(vm.checkValidMatterName).toBe(false);
+            expect(vm.errorPopUpBlock).toBe(false);
         });
     });
 
-    describe("Verification of selectMatterType function", function () {
-        it("Successfully get Practice Group, Area of law and SubArea of law", function () {
-            vm.selectMatterType();
-            //expect(vm.selectedPracticeGroup).toBe(vm.pracitceGroupList[0]);
-            //expect(vm.areaOfLawTerms).toBe(vm.pracitceGroupList[0].areaTerms);
-            //expect(vm.subAreaOfLawTerms).toBe(vm.pracitceGroupList[0].areaTerms[0].subareaTerms);
-            //expect(vm.activeAOLTerm).toBe(vm.pracitceGroupList[0].areaTerms[0]);
-            //expect(vm.activeSubAOLTerm).toBe(vm.pracitceGroupList[0].areaTerms[0].subareaTerms[0]);
-            expect(vm.popupContainerBackground).toBe("Show");
-            expect(vm.popupContainer).toBe("Show");
-        });
-    });
+    ////This function is removed in latest build of Microsoft
+    ////describe("Verification of selectMatterType function", function () {
+    ////    it("It should successfully get Practice Group, Area of law and SubArea of law", function () {
+    ////        vm.selectMatterType();
+    ////        expect(vm.popupContainerBackground).toBe("Show");
+    ////        expect(vm.popupContainer).toBe("Show");
+    ////    });
+    ////});
 
     describe("Verification of getSelectedClientValue function", function () {
-        it("Successfully get data from matter configuration list", function () {
+        it("It should successfully get data from matter configuration list", function () {
             vm.getSelectedClientValue(oTestConfiguration.oClientObj);
             expect(vm.secureMatterCheck).toBe(true);
             expect(vm.includeCalendar).toBe(true);
@@ -67,7 +65,7 @@ describe("CreateMatter Controller test suite", function () {
     });
 
     ////describe("Verification of createMatterButton function", function () {
-    ////    it("Successfully create matter button", function () {
+    ////    it("It should successfully create matter button", function () {
     ////        vm.chkConfilctCheck = true;
     ////        vm.conflictDate = "8/1/2016";
     ////        vm.createMatterButton(event);

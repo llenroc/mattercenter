@@ -1,5 +1,15 @@
 ﻿/// <disable>JS2074, JS3058</disable>
-// Test suite
+//// ***********************************************************************
+//// Author           : MAQ USER
+//// Created          : 31-08-2016
+////
+//// ***********************************************************************
+//// <copyright file="DocumentDashboardController.spec.js" company="MAQSoftware">
+////  Copyright (c) . All rights reserved.
+//// </copyright>
+//// <summary>Test suite for documentDashboard</summary>
+//// ***********************************************************************
+
 describe("DocumentDashboard Controller test suite", function () {
     "use strict";
 
@@ -20,16 +30,6 @@ describe("DocumentDashboard Controller test suite", function () {
         rootScope = $rootScope.$new();
         vm = $controller("DocumentDashBoardController as vm", { $scope: $scope, $state: $state, $stateParams: $stateParams, documentDashBoardResource: mockDocumentDashBoardResource, api: mockapi, $rootScope: rootScope, $http: $http, $location: $location });
     }));
-
-    //describe("Verification of closealldrops function", function () {
-    //    it("It should close all dropdowns on click of page", function () {
-    //        vm.x = 5;
-    //        vm.y = 2;
-    //        vm.sum();
-    //        expect(vm.z).toBe(7);
-
-    //    });
-    //});
 
     describe("Verification of closealldrops function", function () {
         it("It should close all dropdowns on click of page", function () {
@@ -150,4 +150,87 @@ describe("DocumentDashboard Controller test suite", function () {
             expect(vm.displaypagination).toBe(true);
         });
     });
+
+
+    /*
+      //-------------------------------------------------------------------
+
+    describe('Verification of search  function', function () {
+        it('It should execute a search', function () {
+            vm.search();
+            expect(vm.pagenumber ).toBe(1)
+            expect(vm.displaypagination ).toBe(false);
+            expect(vm.documentname).toBe("All Documents");
+            expect(vm.documentid).toBe(1);
+            expect(vm.lazyloaderdashboard).toBe(false);
+            expect(vm.divuigrid).toBe(false);
+            expect(vm.responseNull).toBe(false);
+        });    
+    });
+
+    describe('Verification of searchDocumentFile function', function () {
+        it('It should search a file in the document', function () {
+            vm.searchDocumentFile("test");
+            expect(vm.pagenumber).toBe(1)
+        });      
+    });
+
+    describe('Verification of typeheadselect function', function () {
+        it('It should select a typehead ', function () {
+            vm.typeheadselect("test","test");          
+            expect(vm.documentname).toBe("All Documents");
+            expect(vm.documentid).toBe(1);          
+            //check filterbytype
+        });       
+    });
+
+
+    describe('Verification of filterSearchCancel function', function () {
+        it('It should be triggered when a user clicks on cancel button in filter panel', function () {
+            vm.filterSearchCancel("test");
+            expect(vm.clientdrop).toBe(false);
+            expect(vm.clientdropvisible).toBe(false);
+            expect(vm.lazyloaderdocumentclient).toBe(true);
+            //check filterbytype
+        });
+     });
+
+    describe('Verification of filterSearchOK function', function () {
+        it('It should be triggered when a user clicks on ok button in filter panel', function () {
+            vm.filterSearchOK("test");
+            expect(vm.clientdrop).toBe(false);
+            expect(vm.clientdropvisible).toBe(false);
+            //expect(vm.selectedClientsForCancel).toBe(vm.selectedClients); 
+            //check filterbytype
+        });
+    });
+
+    describe('Verification of getDocumentAssets   function', function () {
+        it('It should get all the documents asset', function () {
+            vm.getDocumentAssets("test");
+            expect(vm.assetsuccess).toBe(false);
+        });
+
+        it("It should close all dropdowns on click of page", function () {
+            vm.closealldrops(event);
+            expect(vm.searchdrop).toBe(false);
+            expect(vm.downwarddrop).toBe(true);
+            expect(vm.upwarddrop).toBe(false);
+            expect(vm.clientdrop).toBe(false);
+            expect(vm.clientdropvisible).toBe(false);
+            expect(vm.sortbydrop).toBe(false);
+            expect(vm.sortbydropvisible).toBe(false);
+        });
+    });
+
+    describe('Verification of getSearchResults function', function () {
+        it('It should get the search results', function () {
+            vm.getSearchResults();
+            expect(vm.lazyloaderdashboard).toBe(false);
+            expect(vm.divuigrid).toBe(false);
+            expect(vm.searchdrop).toBe(false);
+            expect(vm.displaypagination).toBe(false);
+            expect(vm.nodata).toBe(false);       
+        });
+    });*/
 });

@@ -395,7 +395,7 @@
                 });
             }
 
-            getTaxonomyData();
+            //getTaxonomyData();
 
             //cm.popupContainerBackground = "Show";
             //cm.popupContainer = "Show";
@@ -917,6 +917,7 @@
                             cm.errorBorder = "mattername"; showErrorNotification("mattername");
                             cm.errorPopUpBlock = true;
                             oPageOneState.oValidMatterName = false;
+                            cm.checkValidMatterName = false;
                             return false;
                         } else {
                             //  alert("success");
@@ -924,7 +925,9 @@
                             if (oPageOneState.isNextClick) {
                                 cm.navigateToSecondSection(oPageOneState.sectionClickName);
                             }
+                            cm.checkValidMatterName = true;
                             return true;
+
                         }
                     });
                 }
@@ -2496,7 +2499,7 @@
                 localStorage.removeItem("oPageOneData");
                 localStorage.removeItem("oPageTwoData");
                 getMatterGUID();
-                getTaxonomyData();
+                // getTaxonomyData();
             }
 
             function storeMatterDataToLocalStorageFirstPage() {

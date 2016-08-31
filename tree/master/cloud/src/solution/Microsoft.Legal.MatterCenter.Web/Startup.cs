@@ -35,10 +35,10 @@ namespace Microsoft.Legal.MatterCenter.Web
         public IHostingEnvironment HostingEnvironment { get; }
         public ILoggerFactory LoggerFactory { get; }
         public IConfigurationRoot Configuration { get; set; }
-        
-        #endregion    
-        
-        public Startup(IHostingEnvironment env,  ILoggerFactory logger)
+
+        #endregion
+
+        public Startup(IHostingEnvironment env, ILoggerFactory logger)
         {
             this.HostingEnvironment = env;
             this.LoggerFactory = logger;
@@ -67,13 +67,13 @@ namespace Microsoft.Legal.MatterCenter.Web
             ConfigureSettings(services);
             services.AddCors();
             services.AddLogging();
-            
+
             ConfigureMvc(services, LoggerFactory);
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddMvcCore();
             ConfigureMatterPackages(services);
-            ConfigureSwagger(services); 
+            ConfigureSwagger(services);
         }
 
 
@@ -179,7 +179,7 @@ namespace Microsoft.Legal.MatterCenter.Web
                 else
                 {
                     app.UseExceptionHandler("/Home/Error");
-                }              
+                }
 
                 app.UseApplicationInsightsExceptionTelemetry();
                 app.UseDefaultFiles();
@@ -201,7 +201,7 @@ namespace Microsoft.Legal.MatterCenter.Web
                             await context.Response.WriteAsync(ex.StackTrace).ConfigureAwait(false);
                         });
 
-            } 
+            }
         }
 
         // Entry point for the application.       
@@ -220,9 +220,10 @@ namespace Microsoft.Legal.MatterCenter.Web
                     Title = "Matter Center API Version V1",
                     Description = "This matter center api is for V1 release",
                     TermsOfService = "None",
-                    Contact = new Contact() {
-                        Name="Matter Admin",
-                        Email= "maquser@lcadms.onmicrosoft.com",
+                    Contact = new Contact()
+                    {
+                        Name = "Matter Admin",
+                        Email = "maquser@lcadms.onmicrosoft.com",
                         Url = "https://www.microsoft.com/en-us/legal/productivity/mattercenter.aspx"
                     }
                 });
@@ -253,7 +254,7 @@ namespace Microsoft.Legal.MatterCenter.Web
             var instrumentationKey = this.Configuration.GetSection("ApplicationInsights").GetSection("InstrumentationKey").Value.ToString();
             builder.AddMvcOptions(o => { o.Filters.Add(new MatterCenterExceptionFilter(logger, instrumentationKey)); });
         }
-         
+
 
         private void ConfigureSettings(IServiceCollection services)
         {
@@ -270,7 +271,7 @@ namespace Microsoft.Legal.MatterCenter.Web
             services.Configure<SearchSettings>(this.Configuration.GetSection("Search"));
             services.Configure<CamlQueries>(this.Configuration.GetSection("CamlQueries"));
             services.Configure<ContentTypesConfig>(this.Configuration.GetSection("ContentTypes"));
-            services.Configure<MatterCenterApplicationInsights>(this.Configuration.GetSection("ApplicationInsights"));     
+            services.Configure<MatterCenterApplicationInsights>(this.Configuration.GetSection("ApplicationInsights"));
         }
 
         private void ConfigureMatterPackages(IServiceCollection services)
@@ -324,7 +325,7 @@ namespace Microsoft.Legal.MatterCenter.Web
                     //HTTP / 1.1 401 Unauthorized
                     //WWW - Authenticate: Bearer
                     AutomaticChallenge = true,
-                    
+
                     Authority = String.Format(CultureInfo.InvariantCulture,
                         this.Configuration.GetSection("General").GetSection("AADInstance").Value.ToString(),
                         this.Configuration.GetSection("General").GetSection("Tenant").Value.ToString()),
@@ -349,18 +350,18 @@ namespace Microsoft.Legal.MatterCenter.Web
                             //sent to the client
                             context.SkipToNextMiddleware();
                             return Task.FromResult(0);
-                        },                        
+                        },
                     }
                 });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
         }
 
         private void CreateConfig(IHostingEnvironment hostingEnvironment)
-        { 
+        {
             StringBuilder sb = new StringBuilder();
             JsonWriter jw = new JsonTextWriter(new StringWriter(sb));
             jw.Formatting = Formatting.Indented;
@@ -385,131 +386,131 @@ namespace Microsoft.Legal.MatterCenter.Web
             jw.WriteStartObject();
 
             jw.WritePropertyName("uri");
-                jw.WriteStartObject();
-                    jw.WritePropertyName("SPOsiteURL");
-                    jw.WriteValue(generalSettingsSection["SiteURL"]);
-                    jw.WritePropertyName("tenant");
-                    jw.WriteValue(generalSettingsSection["OrgDomainName"]);
-                    jw.WritePropertyName("MainURL");
-                    jw.WriteValue(generalSettingsSection["MainURL"]);
-                jw.WriteEndObject();
+            jw.WriteStartObject();
+            jw.WritePropertyName("SPOsiteURL");
+            jw.WriteValue(generalSettingsSection["SiteURL"]);
+            jw.WritePropertyName("tenant");
+            jw.WriteValue(generalSettingsSection["OrgDomainName"]);
+            jw.WritePropertyName("MainURL");
+            jw.WriteValue(generalSettingsSection["MainURL"]);
+            jw.WriteEndObject();
 
 
             jw.WritePropertyName("ADAL");
-                jw.WriteStartObject();
-                    jw.WritePropertyName("clientId");
-                    jw.WriteValue(generalSettingsSection["ClientId"]);
-                    jw.WritePropertyName("authUserEmail");
-                    jw.WriteValue("");
-                jw.WriteEndObject();
+            jw.WriteStartObject();
+            jw.WritePropertyName("clientId");
+            jw.WriteValue(generalSettingsSection["ClientId"]);
+            jw.WritePropertyName("authUserEmail");
+            jw.WriteValue("");
+            jw.WriteEndObject();
 
             jw.WritePropertyName("appInsights");
-                jw.WriteStartObject();
-                    jw.WritePropertyName("instrumentationKey");
-                    jw.WriteValue(appInsightsSections["InstrumentationKey"]);  
-                    jw.WritePropertyName("appType");
-                    jw.WriteValue("");                      
-                jw.WriteEndObject();
+            jw.WriteStartObject();
+            jw.WritePropertyName("instrumentationKey");
+            jw.WriteValue(appInsightsSections["InstrumentationKey"]);
+            jw.WritePropertyName("appType");
+            jw.WriteValue("");
+            jw.WriteEndObject();
 
             jw.WritePropertyName("global");
-                jw.WriteStartObject();
-                    jw.WritePropertyName("repositoryUrl");
-                    jw.WriteValue(generalSettingsSection["CentralRepositoryUrl"]);
-                jw.WriteEndObject();
+            jw.WriteStartObject();
+            jw.WritePropertyName("repositoryUrl");
+            jw.WriteValue(generalSettingsSection["CentralRepositoryUrl"]);
+            jw.WriteEndObject();
 
             jw.WritePropertyName("matter");
-                jw.WriteStartObject();
-                    foreach (var key in matterSettingsSection)
-                    {
-                        //Assuming that all the keys for the matter property bag keys will start with "StampedProperty"
-                        if (key.Key.ToString().ToLower().StartsWith("stampedproperty"))
-                        {
-                            jw.WritePropertyName(key.Key);
-                            jw.WriteValue(key.Value);
-                        }
-                    }
-                jw.WriteEndObject();
+            jw.WriteStartObject();
+            foreach (var key in matterSettingsSection)
+            {
+                //Assuming that all the keys for the matter property bag keys will start with "StampedProperty"
+                if (key.Key.ToString().ToLower().StartsWith("stampedproperty"))
+                {
+                    jw.WritePropertyName(key.Key);
+                    jw.WriteValue(key.Value);
+                }
+            }
+            jw.WriteEndObject();
 
             jw.WritePropertyName("taxonomy");
-                jw.WriteStartObject();
-                    jw.WritePropertyName("levels");
-                    jw.WriteValue(taxonomySettingsSection["Levels"]);
-                jw.WriteEndObject();
+            jw.WriteStartObject();
+            jw.WritePropertyName("levels");
+            jw.WriteValue(taxonomySettingsSection["Levels"]);
+            jw.WriteEndObject();
 
             jw.WritePropertyName("search");
-                jw.WriteStartObject();
-                    foreach (var key in searchSettingsSection)
-                    {
-                        //Assuming that all the keys for the matter property bag keys will start with "StampedProperty"
-                        if (key.Key.ToString().ToLower().StartsWith("managedproperty"))
-                        {
-                            jw.WritePropertyName(key.Key);
-                            jw.WriteValue(key.Value);
-                        }
-                    }
-                
-
-                
-                    jw.WritePropertyName("searchColumnsUIPickerForMatter");
-                        jw.WriteStartObject();
-                            foreach (var key in matterSearchColumnPickerSection)
-                            {                        
-                                jw.WritePropertyName(key.Key);
-                                jw.WriteValue(key.Value);                       
-                            }
-                        jw.WriteEndObject();
+            jw.WriteStartObject();
+            foreach (var key in searchSettingsSection)
+            {
+                //Assuming that all the keys for the matter property bag keys will start with "StampedProperty"
+                if (key.Key.ToString().ToLower().StartsWith("managedproperty"))
+                {
+                    jw.WritePropertyName(key.Key);
+                    jw.WriteValue(key.Value);
+                }
+            }
 
 
-                    jw.WritePropertyName("searchColumnsUIPickerForDocument");
-                        jw.WriteStartObject();
-                            foreach (var key in documentSearchColumnPickerSection)
-                            {
-                                jw.WritePropertyName(key.Key);
-                                jw.WriteValue(key.Value);
-                            }
-                        jw.WriteEndObject();
-                    jw.WriteEndObject();
+
+            jw.WritePropertyName("searchColumnsUIPickerForMatter");
+            jw.WriteStartObject();
+            foreach (var key in matterSearchColumnPickerSection)
+            {
+                jw.WritePropertyName(key.Key);
+                jw.WriteValue(key.Value);
+            }
+            jw.WriteEndObject();
+
+
+            jw.WritePropertyName("searchColumnsUIPickerForDocument");
+            jw.WriteStartObject();
+            foreach (var key in documentSearchColumnPickerSection)
+            {
+                jw.WritePropertyName(key.Key);
+                jw.WriteValue(key.Value);
+            }
+            jw.WriteEndObject();
+            jw.WriteEndObject();
 
             jw.WritePropertyName("contentTypes");
-                jw.WriteStartObject();
-                    jw.WritePropertyName("managedColumns");
-                        jw.WriteStartObject();
-                        foreach (var key in contentTypeSettingsSection)
-                        {                            
-                            jw.WritePropertyName(key.Key);
-                            jw.WriteValue(key.Value);                            
-                        }
-                    jw.WriteEndObject();
-                jw.WriteEndObject();
+            jw.WriteStartObject();
+            jw.WritePropertyName("managedColumns");
+            jw.WriteStartObject();
+            foreach (var key in contentTypeSettingsSection)
+            {
+                jw.WritePropertyName(key.Key);
+                jw.WriteValue(key.Value);
+            }
+            jw.WriteEndObject();
+            jw.WriteEndObject();
 
             jw.WritePropertyName("uploadMessages");
-                jw.WriteStartObject();
-                    jw.WritePropertyName("maxAttachedMessage");
-                    jw.WriteValue("Do not select more than five documents to attach at one time.");
-                    jw.WritePropertyName("attachSuccessMessage");
-                    jw.WriteValue("Documents successfully attached.");
-                    jw.WritePropertyName("attachFailureMessage");
-                    jw.WriteValue("One or more of your selected documents failed to attach:");
-                    jw.WritePropertyName("attachButtonText");
-                    jw.WriteValue("Attach Documents");
-                    jw.WritePropertyName("overwrite_Config_Property");
-                    jw.WriteValue("Email Only");
-                    jw.WritePropertyName("upload_Append_Button");
-                    jw.WriteValue("Append date to file name and save");
-                    jw.WritePropertyName("upload_Append_Button_Tooltip");
-                    jw.WriteValue("The file will be saved as new, separate document with the current date and time added to the end of the file name.");
-                    jw.WritePropertyName("content_Check_Abort");
-                    jw.WriteValue("Content check has been aborted.");
-                    jw.WritePropertyName("uploadImageDocumentIcon");
-                    jw.WriteValue("/_layouts/15/images/ic{0}.gif");
-                    jw.WritePropertyName("uploadPNGIconExtensions");
-                    jw.WriteValue("pdf");
-                    jw.WritePropertyName("attachInProgressMessage");
-                    jw.WriteValue("");
+            jw.WriteStartObject();
+            jw.WritePropertyName("maxAttachedMessage");
+            jw.WriteValue("Do not select more than five documents to attach at one time.");
+            jw.WritePropertyName("attachSuccessMessage");
+            jw.WriteValue("Documents successfully attached.");
+            jw.WritePropertyName("attachFailureMessage");
+            jw.WriteValue("One or more of your selected documents failed to attach:");
+            jw.WritePropertyName("attachButtonText");
+            jw.WriteValue("Attach Documents");
+            jw.WritePropertyName("overwrite_Config_Property");
+            jw.WriteValue("Email Only");
+            jw.WritePropertyName("upload_Append_Button");
+            jw.WriteValue("Append date to file name and save");
+            jw.WritePropertyName("upload_Append_Button_Tooltip");
+            jw.WriteValue("The file will be saved as new, separate document with the current date and time added to the end of the file name.");
+            jw.WritePropertyName("content_Check_Abort");
+            jw.WriteValue("Content check has been aborted.");
+            jw.WritePropertyName("uploadImageDocumentIcon");
+            jw.WriteValue("/_layouts/15/images/ic{0}.gif");
+            jw.WritePropertyName("uploadPNGIconExtensions");
+            jw.WriteValue("pdf");
+            jw.WritePropertyName("attachInProgressMessage");
+            jw.WriteValue("");
 
-                jw.WriteEndObject();
             jw.WriteEndObject();
-            configWriter.Write(sb.ToString());            
+            jw.WriteEndObject();
+            configWriter.Write(sb.ToString());
             configWriter.Dispose();
 
         }
