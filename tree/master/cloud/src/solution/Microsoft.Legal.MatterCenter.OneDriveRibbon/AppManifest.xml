@@ -8,7 +8,7 @@
 >
   <Properties>
     <Title>Matter Center OneDrive Bulk Actions</Title>
-    <StartPage>[Enter URL of briefcase operations page. e.g. https://[SITENAME].azurewebsites.net/Pages/BriefcaseOperations.aspx?{StandardTokens}]</StartPage>
+    <StartPage>[Enter URL of briefcase operations page. e.g. https://[SITENAME].azurewebsite.net/Pages/BriefcaseOperations.aspx?{StandardTokens}]</StartPage>
     <SupportedLocales>
       <SupportedLocale CultureName="en-US" />
     </SupportedLocales>
