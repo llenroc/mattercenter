@@ -11,7 +11,6 @@
 //// <summary>Test suite for documentDashboard for service call</summary>
 //// ***********************************************************************
 
-
 describe("DocumentDashboard Controller test suite for service call", function () {
     var mockDocumentapi = function (documentDashBoardResource) {
         getData(documentDashBoardResource, mockDocumentDashBoardResource);
@@ -163,13 +162,6 @@ describe("DocumentDashboard Controller test suite for service call", function ()
         });
     });
 
-    //// describe('Verification of downloadEmailAsAttachment function', function () {
-    ////    it('It should download email with attachment', function () {
-    ////        vm.cartelements = [{ documentClientUrl: "https://lcadms.sharepoint.com/sites/skype", selected: true, documentName: "Skype Litigation.txt", documentUrl: "https://lcadms.sharepoint.com/sites/skype/9694be04f87b22e8d238d69df9e29ff2/Skype Litigation.txt" }];
-    ////        vm.downloadEmailAsAttachment(true);
-    ////    });
-    //// });
-
     describe("Verification of pinorunpin function", function () {
         it("It should be added in pinned list and removed from pinned list", function () {
             var iCount = vm.pinDocumentCount;
@@ -185,4 +177,120 @@ describe("DocumentDashboard Controller test suite for service call", function ()
             expect(iCount).toBe(vm.pinDocumentCount);
         });
     });
+
+    describe('Verification of search  function', function () {
+        it('It should execute a search', function () {
+            vm.search();
+            expect(vm.pagenumber).toBe(1)
+            expect(vm.displaypagination).toBe(true);
+            expect(vm.documentname).toBe("All Documents");
+            expect(vm.documentid).toBe(1);
+            expect(vm.lazyloaderdashboard).toBe(true);
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.responseNull).toBe(false);
+            expect(vm.documentGridOptions).toBeDefined();
+            expect(vm.nodata).toBe(false);
+        });
+    });
+
+    //// **************** This function return the value instead of setting in object ****************
+
+    //This function return the value instead of setting in object
+    //describe('Verification of searchDocumentFile function', function () {
+    //    it('It should search a file in the document', function () {
+    //        vm.searchDocumentFile("test");
+    //        expect(vm.pagenumber).toBe(1)
+    //    });
+    //});
+
+    describe('Verification of typeheadselect function', function () {
+        it('It should select a typehead ', function () {
+            vm.typeheadselect("test", "");
+            expect(vm.documentname).toBe("All Documents");
+            expect(vm.documentid).toBe(1);
+            expect(vm.totalrecords).toBeGreaterThan(0);
+            expect(vm.documentGridOptions.data.length).toBeGreaterThan(0);
+            expect(vm.lazyloader).toBe(true);
+            expect(vm.nodata).toBe(false);
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.lazyloaderdashboard).toBe(true);
+        });
+    });
+
+    describe("Verification of filterSearchCancel function", function () {
+        it("It should trigger when the user clicks on 'Cancel' button in the filter panel", function () {
+            vm.filterSearchCancel("client");
+            expect(vm.clientdrop).toBe(false);
+            expect(vm.clientdropvisible).toBe(false);
+            expect(vm.lazyloaderdocumentclient).toBe(true);
+        });
+
+    });
+
+    describe("Verification of filterSearchOK function", function () {
+        it("It should return selected client", function () {
+            vm.selectedClients = "";
+            vm.clients = clientobj;
+            vm.filterSearchOK("client");
+            expect(vm.clientdrop).toBe(false);
+            expect(vm.clientdropvisible).toBe(false);
+            expect(vm.selectedClientsForCancel).toBe(oTestConfiguration.sSelectedClient);
+            expect(vm.selectedClients).toBe(oTestConfiguration.sSelectedClient);
+        });
+    })
+
+    describe("Verification of openStartDate function", function () {
+        it("It should return start date", function () {
+           
+            vm.openStartDate(event);
+            expect(vm.openedStartDate).toBe(true);
+        });
+    })
+
+    describe("Verification of openEndDate function", function () {
+        it("It should return start date", function () {
+
+            vm.openStartDate(event);
+            expect(vm.openedEndDate).toBe(false);
+        });
+    })
+
+    describe('Verification of getDocumentAssets   function', function () {
+    it('It should get all the documents asset', function () {
+            var data;
+            var row = {
+                "entity":
+                    {
+                        "documentUrl": { replace: function (data, test) { return data; } },
+                        "documentMatterUrl": { replace: function (data, test) { return data; } },
+                        "documentClientUrl": ""
+                    }
+            };
+            vm.getDocumentAssets(row);
+            expect(vm.searchdrop).toBe(false);
+            expect(vm.downwarddrop).toBe(true);
+            expect(vm.upwarddrop).toBe(false);
+            expect(vm.clientdrop).toBe(false);
+            expect(vm.clientdropvisible).toBe(false);
+            expect(vm.sortbydrop).toBe(false);
+            expect(vm.sortbydropvisible).toBe(false);
+        });
+    });
+
+    describe("Verification of getSearchResults function", function () {
+        it("This should get the search result", function () {
+            vm.getSearchResults();
+            expect(vm.lazyloaderdashboard).toBe(true);
+            expect(vm.documentGridOptions).toBeDefined();
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.searchdrop).toBe(false);
+            expect(vm.totalrecords).toBeGreaterThan(0);
+            expect(vm.nodata).toBe(false);
+            expect(vm.allDocumentCount).not.toBeLessThan(0);
+            expect(vm.myDocumentCount).not.toBeLessThan(0);
+            expect(vm.pinDocumentCount).not.toBeLessThan(0);
+            expect(vm.totalrecords).not.toBeLessThan(0);
+        });
+    });
 });
+

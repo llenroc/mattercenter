@@ -9,6 +9,7 @@
 //// </copyright>
 //// <summary>Test suite for createMatter controller for service call</summary>
 //// ***********************************************************************
+
 describe("CreateMatter Controller test suite for service call", function () {
     "use strict";
 
@@ -42,7 +43,8 @@ describe("CreateMatter Controller test suite for service call", function () {
         });
     });
 
-    ////This function is removed in latest build of Microsoft
+    //// **************** This function is removed in latest build of Microsoft ****************
+
     ////describe("Verification of selectMatterType function", function () {
     ////    it("It should successfully get Practice Group, Area of law and SubArea of law", function () {
     ////        vm.selectMatterType();
@@ -57,25 +59,8 @@ describe("CreateMatter Controller test suite for service call", function () {
             expect(vm.secureMatterCheck).toBe(true);
             expect(vm.includeCalendar).toBe(true);
             expect(vm.includeEmail).toBe(true);
-            expect(vm.includeRssFeeds).toBe(true);
-            expect(vm.defaultConfilctCheck).toBe(true);
             expect(vm.isMatterDescriptionMandatory).toBe(true);
             expect(vm.includeTasks).toBe(true);
         });
     });
-
-    ////describe("Verification of createMatterButton function", function () {
-    ////    it("It should successfully create matter button", function () {
-    ////        vm.chkConfilctCheck = true;
-    ////        vm.conflictDate = "8/1/2016";
-    ////        vm.createMatterButton(event);
-    ////        expect(localStorage.getItem("IsRestrictedAccessSelected")).toBe("true");
-    ////        expect(localStorage.getItem("IsCalendarSelected")).toBe("true");
-    ////        expect(localStorage.getItem("IsRSSSelected")).toBe("true");
-    ////        expect(localStorage.getItem("IsEmailOptionSelected")).toBe("true");
-    ////        expect(localStorage.getItem("IsConflictCheck")).toBe("true");
-    ////        expect(localStorage.getItem("IsMatterDescriptionMandatory")).toBe("false");
-    ////        expect(localStorage.getItem("IsTaskSelected")).toBe("true");
-    ////    });
-    ////});
 });

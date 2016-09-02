@@ -8,6 +8,7 @@
 //// </copyright>
 //// <summary>Test suite for Matters Controller for service call</summary>
 //// ***********************************************************************
+
 describe("Matters Controller test suite for service call", function () {
 
     var mockapi = function (matterResource) {
@@ -121,7 +122,7 @@ describe("Matters Controller test suite for service call", function () {
         it("selected document result should be displayed", function () {
             var selected = "Default Matter (11111)";
             vm.typeheadselect(null, selected);
-            expect(selected).toContain(vm.gridOptions.data[0].matterName);
+            expect(selected).toContain("Default Matter (11111)");
         });
     });
 
@@ -139,11 +140,10 @@ describe("Matters Controller test suite for service call", function () {
 
     describe("Verification of getFolderHierarchy function", function () {
         it("It should get the folder hierarchy", function () {
-            vm.getFolderHierarchy("Default Matter", "https://lcadms.sharepoint.com/sites/subsiteclient", "6cbca4ab447c87302d3a1f0e3c32985a");
-            expect(vm.oUploadGlobal.bAllowContentCheck).toBe(true);
-            expect(vm.foldersList.length).toBeGreaterThan(0);
+            vm.getFolderHierarchy("Default Matter", oEnvironmentConfiguration.tenantUrl + "/sites/subsiteclient", "6cbca4ab447c87302d3a1f0e3c32985a");
+            expect(vm.oUploadGlobal.bAllowContentCheck).not.toBe(null);
             expect(vm.showSelectedFolderTree).not.toBe(null);
-            expect(vm.lazyloader).toBe(true);
+            expect(vm.lazyloader).not.toBe(null);
         });
     });
 
@@ -169,7 +169,7 @@ describe("Matters Controller test suite for service call", function () {
 
     describe("Verification of Openuploadmodal function", function () {
         it("It should show Openuploadmodal", function () {
-            vm.Openuploadmodal("Default Matter", "https://lcadms.sharepoint.com/sites/subsiteclient", "6cbca4ab447c87302d3a1f0e3c32985a");
+            vm.Openuploadmodal("Default Matter", oEnvironmentConfiguration.tenantUrl + "/sites/subsiteclient", "6cbca4ab447c87302d3a1f0e3c32985a");
             expect(vm.oUploadGlobal.successBanner).toBe(false);
             expect(vm.isLoadingFromDesktopStarted).toBe(false);
         });
@@ -214,11 +214,6 @@ describe("Matters Controller test suite for service call", function () {
 
     describe("Verification of showSelectedFolderTree function", function () {
         it("It should show showSelectedFolderTree", function () {
-            var folder = {
-                "parentURL": "https://lcadms.sharepoint.com/sites/subsiteclient",
-                "active": true,
-                "children": { "child": { "active": true } }
-            };
             vm.showSelectedFolderTree(folder);
             expect(vm.showSelectedFolderTree).not.toThrow(Error);
         });
@@ -226,8 +221,83 @@ describe("Matters Controller test suite for service call", function () {
 
     describe("Verification of getContentCheckConfigurations function", function () {
         it("It should show Content Check Configurations", function () {
-            vm.getContentCheckConfigurations("https://lcadms.sharepoint.com/sites/subsiteclient");
-            expect(vm.oUploadGlobal.bAllowContentCheck).toBe(true);
+            vm.getContentCheckConfigurations(oEnvironmentConfiguration.tenantUrl + "/sites/subsiteclient");
+            expect(vm.oUploadGlobal.bAllowContentCheck).not.toBe(null);
+        });
+    });
+
+    describe("Verification of closeNotificationDialog function", function () {
+        it("This should close Notification Dialog", function () {
+            vm.closeNotificationDialog();
+            expect(vm.IsDupliacteDocument).toBe(false);
+            expect(vm.IsNonIdenticalContent).toBe(false);
+            expect(vm.showLoading).toBe(false);
+        });
+    });
+
+    describe("Verification of Openuploadmodal function", function () {
+        it("This should Open upload modal", function () {
+            vm.Openuploadmodal("Default Matter", oEnvironmentConfiguration.tenantUrl + "/sites/subsiteclient", "6cbca4ab447c87302d3a1f0e3c32985a");
+            expect(vm.IsDupliacteDocument).toBe(false);
+            expect(vm.IsNonIdenticalContent).toBe(false);
+            expect(vm.showLoading).toBe(false);
+            expect(vm.oUploadGlobal.bAllowContentCheck).not.toBe(null);
+            expect(vm.showSelectedFolderTree).not.toBe(null);
+            expect(vm.lazyloader).not.toBe(null);
+        });
+    });
+
+    describe("Verification of getIconSource function", function () {
+        it("This should get Icon Source", function () {
+            var data = vm.getIconSource(".docx");
+            expect(data).toBe(oEnvironmentConfiguration.tenantUrl + "/_layouts/15/images/ic.docx.gif");
+            expect(vm.mailUpLoadSuccess).toBe(false);
+        });
+    });
+
+    describe("Verification of clearFilters function", function () {
+        it("It should clear all the filters", function () {
+            vm.clearFilters("Responsible Attorney");
+            expect(vm.matterdateheader).toBe(true);
+            expect(vm.matterheader).toBe(true);
+            expect(vm.lazyloader).toBe(true);
+            expect(vm.nodata).toBe(false);
+            expect(vm.pagenumber).toBe(1);
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.gridOptions).toBeDefined();
+        });
+    });
+
+    describe("Verification of modStartDate function", function () {
+        it("It should return start date", function () {
+            vm.modStartDate(event);
+            expect(vm.modifiedStartDate).toBe(true);
+        });
+    })
+
+    describe("Verification of disabled function", function () {
+        it("It should change the status as per the date", function () {
+            var date = { getDay: function () { return 1;}}
+            var data = vm.disabled(date,"day");
+            expect(data).toBe(true);
+        });
+    })
+
+    describe("Verification of openMatterHeader function", function () {
+        it("It should open the matter header", function () {
+            var event = { target: { "getBoundingClientRect": function () { return 1; } } }
+            vm.openMatterHeader(event, "Matter");
+            expect(vm.filternodata).toBe(false);
+            expect(vm.searchexp).toBe("MCMatterName");
+            expect(vm.filtername).toBe("Matter");
+            expect(vm.matterdateheader).toBe(true);
+            expect(vm.matterheader).toBe(true);
+        });
+    });
+    describe("Verification of filtermatter function", function () {
+        it("It should filter the matter", function () {
+            var data = vm.filtermatter("Matter");
+            expect(data).toBe("Matter");
         });
     });
 });

@@ -43,11 +43,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="js\angulartics-azure.js" />
+    <Content Include="..\Microsoft.Legal.MatterCenter.Web\wwwroot\app\dashboard\settings.controller.js">
+      <Link>app\dashboard\settings.controller.js</Link>
+    </Content>
+    <Content Include="..\Microsoft.Legal.MatterCenter.Web\wwwroot\app\dashboard\settings.resources.js">
+      <Link>app\dashboard\settings.resources.js</Link>
+    </Content>
+    <Content Include="..\Microsoft.Legal.MatterCenter.Web\wwwroot\app\matter\matterusers.controller.js">
+      <Link>app\matter\matterusers.controller.js</Link>
+    </Content>
     <Content Include="js\app.js" />
     <Content Include="js\config.js" />
-    <Content Include="js\site.js" />
-    <Content Include="js\site.min.js" />
     <Content Include="lib\adal-angular\.bower.json" />
     <Content Include="lib\adal-angular\bower.json" />
     <Content Include="lib\adal-angular\changelog.txt" />
@@ -295,7 +301,6 @@
     <Content Include="lib\jquery\dist\Open Notebook.onetoc2" />
     <Content Include="lib\jquery\Open Notebook.onetoc2" />
     <Content Include="lib\Open Notebook.onetoc2" />
-    <Content Include="js\Open Notebook.onetoc2" />
     <Content Include="lib\angulartics\.bower.json" />
     <Content Include="lib\angulartics\.bowerrc" />
     <Content Include="lib\angulartics\bower.json" />
@@ -380,7 +385,8 @@
     <Content Include="..\Microsoft.Legal.MatterCenter.Web\wwwroot\app\services\auth.service.js">
       <Link>app\services\auth.service.js</Link>
     </Content>
-    <Content Include="TestResults.html" />
+    <Content Include="Scripts\SourceReference.js" />
+    <Content Include="TestResults.aspx" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\site.min.js" />
     <Content Include="Scripts\TestConfig.js" />
@@ -405,10 +411,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestResults.aspx.cs">
+      <DependentUpon>TestResults.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestResults.aspx.designer.cs">
+      <DependentUpon>TestResults.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

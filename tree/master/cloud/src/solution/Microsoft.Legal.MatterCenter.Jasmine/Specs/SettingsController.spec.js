@@ -96,19 +96,14 @@ describe("SettingsController test suite", function () {
                 email: "",
                 name: "No results found"
             };
-            var $label = { "assignedUser": "maquser@lcadms.onmicrosoft.com" };
+            var $label = { "assignedUser": oEnvironmentConfiguration.loggedInUserEmail };
             vm.onSelect($item, $model, $label, "conflictcheckuser", "on-blurr", event);
             expect(vm.notificationPopUpBlock).toBeUndefined();
         });
 
         it("It should return the blocked user", function () {
-            var $item = {
-                email: "maquser@lcadms.onmicrosoft.com",
-                name: "MAQ user"
-            };
-            var $label = { "assignedUser": "maquser@lcadms.onmicrosoft.com" };
             vm.oSiteUsers = {
-                "indexOf": function ($item) { return 1; }
+                "indexOf": function ($itemdata) { return 1; }
             };
             vm.onSelect(item, $model, $label, "team", "on-blurr", event, item.name);
             expect(vm.notificationPopUpBlock).toBeUndefined()
@@ -143,17 +138,6 @@ describe("SettingsController test suite", function () {
 
     describe("Verification of setClientData function", function () {
         it("It should set all the client data", function () {
-            var data = {
-                "DefaultMatterName": "Test",
-                "DefaultMatterId": 1122,
-                "IsRestrictedAccessSelected":true,
-                "IsCalendarSelected": true,
-                "IsRSSSelected": true,
-                "IsEmailOptionSelected": true,
-                "IsTaskSelected": true,
-                "IsMatterDescriptionMandatory": true,
-                "IsConflictCheck": true
-            };
             vm.setClientData(data);
             expect(vm.assignteam).toBe("Yes");
             expect(vm.calendar).toBe("Yes");
@@ -166,18 +150,7 @@ describe("SettingsController test suite", function () {
         });
    
         it("It should not set the client data", function () {
-            var data = {
-                "DefaultMatterName": "Test",
-                "DefaultMatterId": 1122,
-                "IsRestrictedAccessSelected": false,
-                "IsCalendarSelected": false,
-                "IsRSSSelected": false,
-                "IsEmailOptionSelected": false,
-                "IsTaskSelected": false,
-                "IsMatterDescriptionMandatory": false,
-                "IsConflictCheck": false
-            };
-            vm.setClientData(data);
+            vm.setClientData(dataChunk);
             expect(vm.assignteam).toBe("No");
             expect(vm.calendar).toBe("No");
             expect(vm.rss).toBe("No");
@@ -191,28 +164,15 @@ describe("SettingsController test suite", function () {
 
     describe("Verification of showSelectedClient function", function () {
         it("It should show all the selected clients", function () {
-            vm.showSelectedClient("Test","http://lcadms.sharepoint.com");
-            expect(vm.lazyloader).toBe(false);
+            vm.showSelectedClient("Test", oEnvironmentConfiguration.tenantUrl);
+            expect(vm.lazyloader).toBe(true);
             expect(vm.selected).toBe("Test");
-            expect(vm.clienturl).toBe("http://lcadms.sharepoint.com");
+            expect(vm.clienturl).toBe(oEnvironmentConfiguration.tenantUrl);
             expect(vm.nodata).toBe(false);
-            expect(vm.lazyloader).toBe(false);
-            expect(vm.clientlist).toBe(true);
-            expect(vm.showClientDetails).toBe(false);
+            expect(vm.lazyloader).toBe(true);
+            expect(vm.clientlist).toBe(false);
+            expect(vm.showClientDetails).toBe(true);
         });
     });
 
 });
-
-
-////getTaxonomyData
-////getRolesData
-////getPermissionsData
-////searchUsers
-////showSelectedClient
-////setClientData
-////addNewAssignPermissions
-////removeAssignPermissionsRow
-////onSelect
-////saveSettings
-////showSettings

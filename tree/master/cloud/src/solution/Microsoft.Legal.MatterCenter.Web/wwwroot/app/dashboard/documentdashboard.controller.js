@@ -1304,8 +1304,8 @@
                 vm.assetsuccess = false;
                 vm.closealldrops(null);
                 var Client = {
-                    Id: row.entity.documentUrl.replace("https://lcadms.sharepoint.com", ""),
-                    Name: row.entity.documentMatterUrl.replace("https://lcadms.sharepoint.com", ""),
+                    Id: row.entity.documentUrl.replace(oEnvironmentConfiguration.tenantUrl, ""),
+                    Name: row.entity.documentMatterUrl.replace(oEnvironmentConfiguration.tenantUrl, ""),
                     Url: row.entity.documentClientUrl
                 }
                 GetAssets(Client, function (response) {
@@ -1322,9 +1322,9 @@
 
             vm.gotoDocumentUrl = function (url) {
                 if (vm.assetsuccess) {
-                    $window.open(configs.global.repositoryUrl + "/SitePages/documentDetails.aspx?client=" + url.replace("https://lcadms.sharepoint.com", "") + "&listguid=" + vm.listguid + "&docguid=" + vm.docguid, "_blank");
+                    $window.open(configs.global.repositoryUrl + "/SitePages/documentDetails.aspx?client=" + url.replace(oEnvironmentConfiguration.tenantUrl, "") + "&listguid=" + vm.listguid + "&docguid=" + vm.docguid, "_blank");
                 } else {
-                    $timeout(function () { $window.open(configs.global.repositoryUrl + "/SitePages/documentDetails.aspx?client=" + url.replace("https://lcadms.sharepoint.com", "") + "&listguid=" + vm.listguid + "&docguid=" + vm.docguid, "_blank"); }, 1500);
+                    $timeout(function () { $window.open(configs.global.repositoryUrl + "/SitePages/documentDetails.aspx?client=" + url.replace(oEnvironmentConfiguration.tenantUrl, "") + "&listguid=" + vm.listguid + "&docguid=" + vm.docguid, "_blank"); }, 1500);
                 }
             }
 

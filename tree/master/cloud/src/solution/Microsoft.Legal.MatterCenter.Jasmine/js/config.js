@@ -1,12 +1,12 @@
 ﻿var configs =
 {
     "uri": {
-        "SPOsiteURL": "https://lcadms.sharepoint.com",
-        "tenant": "lcadms.onmicrosoft.com",
+        "SPOsiteURL": oEnvironmentConfiguration.tenantUrl,
+        "tenant": oEnvironmentConfiguration.tenant,
         "MainURL": "http://www.microsoft.com/mattercenter"
     },
     "ADAL": {
-        "clientId": "61394aba-09ba-4e25-ae32-e10805c6841b",
+        "clientId": oEnvironmentConfiguration.clientId,
         "authUserEmail": ""
     },
     "appInsights": {
@@ -14,7 +14,7 @@
         "appType": ""
     },
     "global": {
-        "repositoryUrl": "https://lcadms.sharepoint.com/sites/catalog"
+        "repositoryUrl": oEnvironmentConfiguration.tenantUrl + "/sites/catalog"
     },
     "matter": {
         "StampedPropertyBlockedUploadUsers": "BlockedUploadUsers",

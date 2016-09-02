@@ -343,7 +343,7 @@
         "HomeMenuText": "Home",
         "Image1Title": "Search matters",
         "Image2Title": "Search documents",
-        "HelpRequesURL": "https://lcadms.sharepoint.com/sites/catalog",
+        "HelpRequesURL": oEnvironmentConfiguration.tenantUrl + "/sites/catalog",
         "FooterLabel": "Questions? Contact",
         "MenuImageCaption": "menu",
         "MenuImageTitle": "Matter center menu",

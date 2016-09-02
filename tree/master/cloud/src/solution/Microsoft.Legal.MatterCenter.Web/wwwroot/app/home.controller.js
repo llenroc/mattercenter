@@ -17,7 +17,7 @@
             vm.navigation = uiconfigs.Navigation;
             vm.header = uiconfigs.Header;
             
-            //$rootScope.setAuthenticatedUserContext();
+            $rootScope.setAuthenticatedUserContext();
 
             //Callback function for help 
             function getHelp(options, callback) {

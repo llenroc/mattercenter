@@ -9,6 +9,7 @@
 //// </copyright>
 //// <summary>Test suite for document controller</summary>
 //// ***********************************************************************
+
 describe("documents Controller test suite", function () {
     "use strict";
 
@@ -119,9 +120,7 @@ describe("documents Controller test suite", function () {
         });
     });
 
-    // Test suite to execute test cases.
     describe("Verification of toggleCheckerAll function", function () {
-        // Test case to validate function.
         it("It should check all the checkboxes inside grid", function () {
             vm.gridOptions.data = obj;
             vm.toggleCheckerAll(true);
@@ -140,114 +139,4 @@ describe("documents Controller test suite", function () {
         });
     });
 
-    /*
-    //-------------------------------------------------------------------------
-    describe("Verification of sendDocumentAsAttachment function", function () {
-        // Test case to validate function.
-        it("It should send document as attachment", function () {
-            vm.sendDocumentAsAttachment();
-           //vm.selectedRows
-            //{
-             //   length: 5
-
-           // };
-        expect(vm.enableAttachment).toBe(true);
-        expect(vm.errorAttachDocument).toBe(false);
-        expect(vm.asyncCallCompleted).toBe(1);
-        expect(vm.showFailedAtachments).toBe(false);
-        expect(vm.showPopUpHolder).toBe(true);
-        expect(vm.attachedProgressPopUp).toBe(true);
-        });
-
-        it("It should not send document as attachment", function () {
-            vm.sendDocumentAsAttachment();
-          //vm.selectedRows
-                // {
-                //    length: 10
-    //             };
-            expect(vm.enableAttachment).toBe(false);
-            expect(vm.errorAttachDocument).toBe(true);
-        });
-    });
-     
-    describe("Verification of searchDocument function", function () {
-        it("Inside searchDocument function", function () {
-        vm.searchDocument("test");
-        expect(vm.pagenumber).toBe(1);
-    });
- });
-
-    describe("Verification of FilterModifiedDate function", function () {
-        it("It should filter the modified date ", function () {
-         vm.FilterModifiedDate("test");
-         expect(vm.lazyloader).toBe(false);
-        expect(vm.divuigrid).toBe(false);
-    });
-
-    it("It should filter based on modified date ", function () {
-        vm.FilterModifiedDate("Modified Date");
-        expect(vm.moddatefilter).toBe(true);      
-    });
-
-    it("It should filter based on created date", function () {
-        vm.FilterModifiedDate("Modified Date");
-        expect(vm.createddatefilter).toBe(true);
-
-    });
- });
-
-    describe("Verification of clearFilters function", function () {
-        it("It should clear all the filters", function () {
-        vm.clearFilters("Test");
-        expect(vm.documentheader).toBe(true);
-        expect(vm.documentdateheader).toBe(true);
-        expect(vm.lazyloader).toBe(false);
-        expect(vm.nodata).toBe(false);
-        expect(vm.pagenumber).toBe(1);
-    });
-
-    it("It should clearfilters based on LastModifiedTime and search term", function () {
-        vm.clearFilters("Test");
-        expect(vm.documentfilter).toBe(false);         
-    });
-
-    it("It should clear filters based on LastModified time and client name", function () {
-        vm.clearFilters("Test");
-        expect(vm.clientfilter).toBe(false);
-    });
-    it("It should clear filters based on search term", function () {
-        vm.clearFilters("Test");
-        expect(vm.checkoutfilter).toBe(false);
-    });
-
-    it("It should clear filters based on search term and document author", function () {
-        vm.clearFilters("Test");
-        expect(vm.authorfilter).toBe(false);
-    });
-
-    it("It should clear filters based on LastModified date", function () {
-        vm.clearFilters("Test");
-        expect(vm.moddatefilter).toBe(false);
-    });
-
-    it("It should clear filters based on CreatedDate ", function () {
-        vm.clearFilters("Test");
-        expect(vm.createddatefilter).toBe(false);
-    });
-});
-
-    describe("Verification of getDocumentAssets function", function () {
-        it("It should get all document assests", function () {
-        vm.searchDocument("test");
-        expect(vm.assetsuccess).toBe(false);
-    });
-});
-
-    describe("Verification of openDocumentHeader function", function () {
-        it("It should open the document author", function () {
-        //vm.openDocumentHeader("test");
-        expect(vm.filternodata).toBe(false);
-    });
-});
-    */
 });
