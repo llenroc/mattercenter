@@ -1,7 +1,8 @@
-﻿<!DOCTYPE html>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TestResults.aspx.cs" Inherits="Microsoft.Legal.MatterCenter.Jasmine.TestResults" %>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Jasmine</title>
+    <title>Jasmine Verification</title>
     <script src="lib/jquery/dist/jquery.js"></script>
     <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.4.1/jasmine_favicon.png" />
     <script src="lib/angular/angular.js"></script>
@@ -27,69 +28,76 @@
     <script src="/lib/adal-angular/dist/adal.min.js"></script>
     <script src="/lib/adal-angular/dist/adal-angular.min.js"></script>
     <script src="/lib/angular-ui-grid/ui-grid.min.js"></script>
-    
     <script src="/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="/scripts/site.js" asp-append-version="true"></script>
     <script src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
-    <script src="lib/angular-sanitize/angular-sanitize.js"></script>  
+    <script src="lib/angular-sanitize/angular-sanitize.js"></script>
+    <style>
+        #load {
+            position: absolute;
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #8a4182; /* Purple */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            left: 46%;
+            top: 40%;
+        }
 
-    <script src="lib/angulartics/dist/angulartics.min.js"></script>
-    <script src="js/angulartics-azure.js"></script>  
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
 
-    
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        function waitForElementToDisplay(selector, time) {
+
+            if (document.querySelector(selector) != null) {
+                document.getElementById("load").style.visibility = "hidden"
+                return;
+            }
+            else {
+                setTimeout(function () {
+                    waitForElementToDisplay(selector, time);
+                }, 0);
+            }
+        }
+
+    </script>
 
 </head>
 <body>
-    <div id="errorBlock" class="hide">
 
+    <div id="load"> </div>
+    <script type="text/javascript">waitForElementToDisplay(".jasmine-summary", 0);</script>
+
+    <div id="errorBlock" class="hide">
     </div>
     <div id="errTrinagleBlock" class="hide">
-
     </div>
     <div id="errTrinagleBroderBlock" class="hide">
-
     </div>
     <div id="errText" class="hide">
-
     </div>
     <div id="txtUser1" class="hide">
-
     </div>
+    <script src="/Scripts/app.js"></script>
+    <script src="/Scripts/TestConfig.js"></script>
     <script src="/Object/ObjectCollection.js"></script>
-    <script src="Scripts/uiconfig.js"></script>
-    <script src="Scripts/TestConfig.js"></script>
-    <!--<script src="http://mattermaqdevsite.azurewebsites.net/app/uiconfig.js"></script>-->
-    <!--<script src="http://mattermaqdevsite.azurewebsites.net/app/app.js"></script>-->
+    <script src="/Scripts/uiconfig.js"></script>
     <script src="js/app.js"></script>
     <script src="js/config.js"></script>
-    <!--<script src="http://mattermaqdevsite.azurewebsites.net/app/config.js"></script>-->
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/directives/heading.directive.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/directives/common.directive.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/home.controller.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/navigation.controller.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/services/auth.service.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/services/api.service.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/matter/matter.resources.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/matter/matters.controller.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/matter/matterusers.controller.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/dashboard/settings.resources.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/dashboard/settings.controller.js"></script>
+    <script src="Scripts/SourceReference.js"></script>
 
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/home.controller.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/dashboard/documentdashboard.resources.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/dashboard/documentdashboard.controller.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/dashboard/matterdashboard.resources.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/dashboard/matterdashboard.controller.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/matter/upload.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/document/documents.controller.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/document/document.resources.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/directives/drag.directive.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/directives/drop.directive.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/home.resources.js"></script>
-    <script src="http://mattermaqdevsite.azurewebsites.net/app/matter/createMatter.controller.js"></script>
-
-
-    <script src="/Scripts/app.js"></script>
+    <!-- *******************  All the specs file to verify Controllers ************************-->
 
     <script src="Specs/CreateMatterController.spec.js"></script>
     <script src="Specs/CreateMatterControllerservicecall.spec.js"></script>
@@ -112,5 +120,6 @@
     <script src="Specs/NavigationController.spec.js"></script>
     <script src="Specs/MatterUsersController.spec.js"></script>
     <script src="Specs/SettingsController.spec.js"></script>
+
 </body>
 </html>

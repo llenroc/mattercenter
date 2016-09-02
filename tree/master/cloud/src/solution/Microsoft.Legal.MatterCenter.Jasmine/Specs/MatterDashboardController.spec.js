@@ -190,51 +190,5 @@ describe("MatterDashBoard Controller test suite", function () {
             expect(vm.oUploadGlobal.successBanner).toBe(false);
         });
     });
-    /*
-      //-------------------------------------------------------------------------------------------------
-    describe("Verification of typeheadslect function", function () {
-        it("This should select the typehead", function () {
-            vm.typeheadselect("test", "test");
-            vm.FilterByType();
-            expect(vm.lazyloaderdashboard).toBe(false);
-            expect(vm.divuigrid).toBe(false);
-            expect(vm.displaypagination).toBe(false);
-            expect(vm.nodata).toBe(false);
-        });
-    });
 
-    describe("Verification of searchByTerm function", function () {
-        it("This should search by term", function () {
-            vm.searchByTerm();
-            expect(vm.lazyloaderdashboard).toBe(false);
-            expect(vm.divuigrid).toBe(false);
-            expect(vm.displaypagination).toBe(false);
-            expect(vm.matterid).toBe(1);
-            expect(vm.pagenumber).toBe(1);
-            expect(vm.mattername).toBe("All Matters");
-        });
-    });
-    describe("Verification of handleDesktopDrop function", function () {
-        it("This should handle desktop drop", function () {
-            vm.handleDesktopDrop("test", "test", "test");
-            vm.oUploadGlobal=
-            {
-                successBanner: null;
-            };
-            expect(vm.isLoadingFromDesktopStarted).toBe(true);
-            expect(vm.oUploadGlobal.successBanner).toBe(false);
-        });
-    });
-
-    describe("Verification of getSearchResults function", function () {
-        it("This should get search results", function () {
-            vm.getSearchResults();       
-            expect(vm.lazyloaderdashboard).toBe(false);
-            expect(vm.divuigrid).toBe(false);
-            expect(vm.displaypagination).toBe(false);
-            expect(vm.nodata).toBe(false);
-            expect(vm.searchdrop).toBe(false);       
-        });
-    });
-    */
 });

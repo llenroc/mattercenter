@@ -9,6 +9,7 @@
 //// </copyright>
 //// <summary>Test suite for Matter Users Controller</summary>
 //// ***********************************************************************
+
 describe("MatterUsers Controller test suite", function () {
     "use strict";
     var mockapi = function (matterResource) {
@@ -94,22 +95,13 @@ describe("MatterUsers Controller test suite", function () {
 
     });
 
-    ////describe("Verification of UpdateMatter function", function () {
-    ////    it("It should updates the matter details", function () {
-    ////        vm.matterProperties = { "matterObject": { "blockUserNames": "MAQ user" } };
-    ////        vm.UpdateMatter(event);
-    ////        expect(true).toBe(true);
-
-    ////    });
-    ////});
-
     describe("Verification of checkUserExists function", function () {
         it("It should check if UserExists", function () {
-            vm.checkUserExists("maquser@lcadms.onmicrosoft.com", event);
+            vm.checkUserExists(oEnvironmentConfiguration.loggedInUserEmail, event);
             expect(vm.notificationPopUpBlock).toBe(false);
         });
         it("It should not check if UserExists", function () {
-            vm.assignPermissionTeams = [{ "team": { "assignedUser": "maquser@lcadms.onmicrosoft.com" } }];
+            vm.assignPermissionTeams = [{ "team": { "assignedUser": oEnvironmentConfiguration.loggedInUserEmail } }];
             vm.checkUserExists("maquser@test.onmicrosoft.com", event);
             expect(vm.notificationPopUpBlock).toBe(false);
         });
@@ -121,19 +113,14 @@ describe("MatterUsers Controller test suite", function () {
                 email: "",
                 name: "No results found"
             };
-            var $label = { "assignedUser": "maquser@lcadms.onmicrosoft.com" };
+            var $label = { "assignedUser": oEnvironmentConfiguration.loggedInUserEmail };
             vm.onSelect($item, $model, $label, "conflictcheckuser", "on-blurr", event);
             expect(vm.notificationPopUpBlock).toBe(false);
         });
 
         it("It should return the blocked user", function () {
-            var $item = {
-                email: "maquser@lcadms.onmicrosoft.com",
-                name: "MAQ user"
-            };
-            var $label = { "assignedUser": "maquser@lcadms.onmicrosoft.com" };
             vm.oSiteUsers = { 
-                "indexOf": function ($item) { return 1; }
+                "indexOf": function ($itemdata) { return 1; }
                 };
             vm.onSelect(item, $model, $label, "team", "on-blurr", event, item.name);
             expect(vm.typehead).toBe(false);
@@ -141,15 +128,4 @@ describe("MatterUsers Controller test suite", function () {
         });
     });
 
-    
 });
-
-
-////searchUsers
-////CheckPopUp
-////removeAssignPermissionsRow
-////addNewAssignPermissions
-////confirmUser
-////checkUserExists
-////onSelect
-////UpdateMatter

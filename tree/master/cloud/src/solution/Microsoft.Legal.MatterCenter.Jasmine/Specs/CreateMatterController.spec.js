@@ -184,13 +184,13 @@ describe("CreateMatter Controller test suite", function () {
         it("It should return the conflicted user", function () {
             vm.onSelect(item, $model, $label, "conflictcheckuser", "on-blurr", event, item.name);
             expect(vm.oSiteUsers).toBeDefined();
-            expect(vm.selectedConflictCheckUser).toBe("MAQ User(MAQUser@LCADMS.onmicrosoft.com)");
+            expect(vm.selectedConflictCheckUser).toBe(oEnvironmentConfiguration.loggedInUserName + "(" + oEnvironmentConfiguration.loggedInUserEmail + ")");
         });
 
         it("It should return the blocked user", function () {
             vm.onSelect(item, $model, $label, "blockuser", "on-blurr", event, item.name);
             expect(vm.oSiteUsers).toBeDefined();
-            expect(vm.blockedUserName).toBe("MAQ User(MAQUser@LCADMS.onmicrosoft.com)");
+            expect(vm.blockedUserName).toBe(oEnvironmentConfiguration.loggedInUserName + "(" + oEnvironmentConfiguration.loggedInUserEmail + ")");
         });
 
         it("It should return the team member", function () {
@@ -198,16 +198,17 @@ describe("CreateMatter Controller test suite", function () {
             expect(vm.oSiteUsers).toBeDefined();
             expect(vm.typehead).toBe(false);
             expect(vm.notificationPopUpBlock).toBe(false);
-            expect($label.assignedUser).toBe("MAQ User(MAQUser@LCADMS.onmicrosoft.com)");
+            expect($label.assignedUser).toBe(oEnvironmentConfiguration.loggedInUserName + "(" + oEnvironmentConfiguration.loggedInUserEmail + ")");
         });
 
         it("It should return the assigned user", function () {
             vm.onSelect($item, $model, $label, "team", "on-blurr", event, item.name);
-            expect(vm.user).toBe("MAQ User");
+            expect(vm.user).toBe(oEnvironmentConfiguration.loggedInUserName);
         });
     });
 
-    ////New Angular version is introduced in latest build
+    //// **************** New Angular version is introduced in latest build ****************
+
     ////describe("Verification of saveDocumentTemplates function", function () {
     ////    it("It should return the saved document Templates", function () {
     ////        vm.primaryMatterType = true;
@@ -255,6 +256,8 @@ describe("CreateMatter Controller test suite", function () {
 
     describe("Verification of removeAssignPermissionsRow function", function () {
         it("It should return the remaining users", function () {
+
+            //Math.Random() function is used to randomize the length
             vm.assignPermissionTeams.length = Math.floor(Math.random() * 5) + 2;
             var rows = vm.assignPermissionTeams.length;
             vm.removeAssignPermissionsRow(0);
@@ -320,20 +323,6 @@ describe("CreateMatter Controller test suite", function () {
         });
     });
 
-
-    ////describe('Verification of NextClick function', function () {
-    ////    it('it should navigate to next section ', function () {
-    ////        vm.iCurrentPage = 1;
-    ////        vm.NextClick(event)
-    ////        expect(vm.NextClick(event)).not.toThrow(Error);
-    ////    });
-    ////    it('it should perform NextClick', function () {
-    ////        vm.iCurrentPage = 2;
-    ////        vm.NextClick(event)
-    ////        expect(vm.NextClick(event)).not.toThrow(Error);
-    ////    });
-    ////});
-
     describe("Verification of PreviousClick function", function () {
         it("it should navigate to previous setion", function () {
             vm.iCurrentPage = 2;
@@ -343,11 +332,6 @@ describe("CreateMatter Controller test suite", function () {
             expect(vm.prevButtonDisabled).toBe(true);
             expect(vm.nextButtonDisabled).toBe(false);
         });
-        ////it('it should perform PreviousClick', function () {
-        ////    vm.iCurrentPage = 3;
-        ////    vm.PreviousClick(event)
-        ////    expect(vm.NextClick(event)).not.toThrow(Error);
-        ////});
     });
 
     describe("Verification of confirmUser function", function () {

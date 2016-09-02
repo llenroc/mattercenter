@@ -9,6 +9,7 @@
 //// </copyright>
 //// <summary>Test suite for navigation controller</summary>
 //// ***********************************************************************
+
 describe("Navigation Controller test suite", function () {
 
     var mockapi = function (navigationResource, callback) {
