@@ -19,8 +19,8 @@ namespace Protractor_Net_Demo.SpecFlow.Specs
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("This will open the Home page and perform the verification")]
-    public partial class ThisWillOpenTheHomePageAndPerformTheVerificationFeature
+    [NUnit.Framework.DescriptionAttribute("Home Page")]
+    public partial class HomePageFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -32,7 +32,7 @@ namespace Protractor_Net_Demo.SpecFlow.Specs
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "This will open the Home page and perform the verification", "", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Home Page", "", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -65,138 +65,138 @@ namespace Protractor_Net_Demo.SpecFlow.Specs
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Open the browser and load the home page")]
+        [NUnit.Framework.DescriptionAttribute("01. Open the browser and load home page")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void OpenTheBrowserAndLoadTheHomePage()
+        public virtual void _01_OpenTheBrowserAndLoadHomePage()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Open the browser and load the home page", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("01. Open the browser and load home page", new string[] {
                         "E2E"});
 #line 4
 this.ScenarioSetup(scenarioInfo);
 #line 5
- testRunner.When("We will provide \'matteradmin@msmatter.onmicrosoft.com\' and \'P@$$w0rd01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("we will provide \'matteradmin@msmatter.onmicrosoft.com\' and \'P@$$w0rd01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 6
- testRunner.Then("The home page will be loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("home page should be loaded with element \'HomeContainer\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Open the HamberGer menu and verify the elements")]
+        [NUnit.Framework.DescriptionAttribute("02. Open the hamburger menu and verify all the elements")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void OpenTheHamberGerMenuAndVerifyTheElements()
+        public virtual void _02_OpenTheHamburgerMenuAndVerifyAllTheElements()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Open the HamberGer menu and verify the elements", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Open the hamburger menu and verify all the elements", new string[] {
                         "E2E"});
 #line 9
 this.ScenarioSetup(scenarioInfo);
 #line 10
- testRunner.When("user click on HamberGer Menu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on hamburger menu on home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 11
- testRunner.Then("HamberGer Menu should display \'Home\',\'Matters\',\'Documents\' and \'Create New Matter" +
-                    "\' menu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("hamburger menu should display \'Home\',\'Projects\',\'Documents\' and \'Create New Matte" +
+                    "r\' menu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify the links on Home page")]
+        [NUnit.Framework.DescriptionAttribute("03. Verify the links on home page")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyTheLinksOnHomePage()
+        public virtual void _03_VerifyTheLinksOnHomePage()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the links on Home page", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Verify the links on home page", new string[] {
                         "E2E"});
 #line 14
 this.ScenarioSetup(scenarioInfo);
 #line 15
- testRunner.When("user click on Learn more and dismiss link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on learn more and dismiss link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 16
- testRunner.Then("It should dismiss the link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should dismiss the link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify all the component of the page")]
+        [NUnit.Framework.DescriptionAttribute("04. Verify all components of the page")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyAllTheComponentOfThePage()
+        public virtual void _04_VerifyAllComponentsOfThePage()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify all the component of the page", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Verify all components of the page", new string[] {
                         "E2E"});
 #line 19
 this.ScenarioSetup(scenarioInfo);
 #line 20
- testRunner.When("user click on Matters link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on matters link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 21
- testRunner.Then("It should open the Matter Search page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should open the matter search page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 22
- testRunner.When("user click on Documents link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on documents link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 23
- testRunner.Then("It should open the Document search page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should open the document search page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 24
- testRunner.When("user click on Upload attachments link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on upload attachments link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 25
- testRunner.Then("It should open the Matter Search page on click", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should redirect to matter search page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 26
- testRunner.When("user click on Create a new matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on create a new matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 27
- testRunner.Then("It should open the Matter Provision page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should open the matter provision page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 28
- testRunner.When("user click on Go to Matter Center Home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on go to matter center home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 29
- testRunner.Then("It should open the Matter page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should open the matters page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify the Matter Center Support link")]
+        [NUnit.Framework.DescriptionAttribute("05. Verify the Matter Center support link")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyTheMatterCenterSupportLink()
+        public virtual void _05_VerifyTheMatterCenterSupportLink()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the Matter Center Support link", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Verify the Matter Center support link", new string[] {
                         "E2E"});
 #line 32
 this.ScenarioSetup(scenarioInfo);
 #line 33
- testRunner.When("user click on Matter Center Support link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user click on Matter Center support link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 34
- testRunner.Then("It should open draft mail with recipient \'lcaweb2@microsoft.com\' and subject as \'" +
+ testRunner.Then("it should open draft mail with recipient \'lcaweb2@microsoft.com\' and subject as \'" +
                     "CELA Project Center Feedback and Support request\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify the Contextual help section")]
+        [NUnit.Framework.DescriptionAttribute("06. Verify the contextual help section")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyTheContextualHelpSection()
+        public virtual void _06_VerifyTheContextualHelpSection()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the Contextual help section", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Verify the contextual help section", new string[] {
                         "E2E"});
 #line 37
 this.ScenarioSetup(scenarioInfo);
 #line 38
- testRunner.When("user click on contextual help icon(?)", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on contextual help icon(?)", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 39
- testRunner.Then("It should open the contextual help menu\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should open the contextual help menu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify the User Profile icon")]
+        [NUnit.Framework.DescriptionAttribute("07. Verify the user profile icon")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyTheUserProfileIcon()
+        public virtual void _07_VerifyTheUserProfileIcon()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the User Profile icon", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("07. Verify the user profile icon", new string[] {
                         "E2E"});
 #line 42
 this.ScenarioSetup(scenarioInfo);
 #line 43
- testRunner.When("user click on User Profile icon", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on user profile icon", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 44
- testRunner.Then("It should open User Profile details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should open user profile details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

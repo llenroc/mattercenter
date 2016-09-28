@@ -1,39 +1,59 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using TechTalk.SpecFlow;
+﻿// ****************************************************************************************
+// Assembly         : Microsoft.Legal.MatterCenter.Selenium
+// Author           : MAQ Software
+// Created          : 11-09-2016
+//
+// ***********************************************************************
+// <copyright file="MatterSearch.cs" company="Microsoft">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary>This file is used to perform verification of matter search page </summary>
+// ***************************************************************************************
 
 namespace Microsoft.Legal.MatterCenter.Selenium
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using OpenQA.Selenium;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Globalization;
+    using System.Threading;
+    using TechTalk.SpecFlow;
+
     [Binding]
     public class SearchMatter
     {
-        const string URL = "https://matterwebapp.azurewebsites.net/#/matters";
+        string URL = ConfigurationManager.AppSettings["matterSearch"];
         string initialState;
-        static IWebDriver webDriver = Common.getDriver();
+        static IWebDriver webDriver = CommonHelperFunction.GetDriver();
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
-        Common common = new Common();
+        CommonHelperFunction common = new CommonHelperFunction();
 
-        [When(@"We pass '(.*)' and '(.*)'")]
+        #region  01. Open the browser and load search matter page
+        [When(@"we pass '(.*)' and '(.*)'")]
         public void WhenWePassAnd(string userName, string password)
         {
-            common.getLogin(webDriver, URL);
-            Assert.IsTrue(userName.Contains("matteradmin@msmatter.onmicrosoft.com"));
-            Assert.IsTrue(password.Contains("P@$$w0rd01"));
+            common.GetLogin(webDriver, URL);
+            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["userName"]));
+            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["password"]));
         }
 
-        [Then(@"The Matter search page will be loaded as '(.*)'")]
-        public void ThenTheMatterSearchPageWillBeLoadedAs(string pageName)
+        [Then(@"matter search page should be loaded with element '(.*)'")]
+        public void ThenMatterSearchPageShouldBeLoadedWithElement(string matterCenterHeader)
         {
-            Assert.IsTrue(pageName.Contains(pageName));
+            Assert.IsTrue(common.ElementPresent(webDriver, matterCenterHeader, Selector.Id));
         }
 
-        [When(@"User opens the search matter page")]
+        #endregion
+
+        #region 07. Verify the matter drop down menu
+        [When(@"user opens the search matter page")]
         public void WhenUserOpensTheSearchMatterPage()
         {
+            common.GetLogin(webDriver, URL);
+            scriptExecutor.ExecuteScript("$('.input-group-btn ul li ')[1].click()");
             Thread.Sleep(4000);
         }
 
@@ -44,7 +64,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Assert.IsTrue(matters.Contains("My Matters"));
         }
 
-        [When(@"User clicks on All Matters")]
+        [When(@"user clicks on All Matters")]
         public void WhenUserClicksOnAllMatters()
         {
             Thread.Sleep(4000);
@@ -58,7 +78,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Assert.IsTrue(matters.Contains("All Matters"));
         }
 
-        [When(@"User clicks on Pinned Matters")]
+        [When(@"user clicks on Pinned Matters")]
         public void WhenUserClicksOnPinnedMatters()
         {
             scriptExecutor.ExecuteScript("$('.input-group-btn  ul li ')[2].click()");
@@ -70,8 +90,10 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             string matters = (string)scriptExecutor.ExecuteScript("var links = $('#gridViewPageHeaderContainer span')[0].innerHTML;return links");
             Assert.IsTrue(matters.Contains("Pinned Matters"));
         }
+        #endregion
 
-        [When(@"User types '(.*)' in search box")]
+        #region 05. Verify the matter search box
+        [When(@"user types '(.*)' in search box")]
         public void WhenUserTypesInSearchBox(string searchText)
         {
             scriptExecutor.ExecuteScript(" $('#searchmatter .form-control')[0].value = '" + searchText + "'");
@@ -79,8 +101,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             scriptExecutor.ExecuteScript("$('#basic-addon1').click()");
             Thread.Sleep(4000);
         }
-        [Then(@"All Matters with the name test will be displayed")]
-        public void ThenAllMattersWithTheNameTestWillBeDisplayed()
+        [Then(@"all matters with the searched keyword should be shown")]
+        public void ThenAllMattersWithTheSearchedKeywordShouldBeShown()
         {
             long linkLength = (long)scriptExecutor.ExecuteScript("var links = $('.col-xs-7').length;return links;");
             int linkCounter, tempCounter = 0;
@@ -88,10 +110,9 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             {
                 Thread.Sleep(1000);
                 string test = (string)scriptExecutor.ExecuteScript("var links =$('.col-xs-7')[" + linkCounter + "].innerText;return links;");
-                if (test.ToLower().Contains("test"))
+                if (test.ToLower(CultureInfo.CurrentCulture).Contains(ConfigurationManager.AppSettings["searchKeyWord"]))
                     tempCounter++;
             }
-            //Console.Write(counter);
             if (tempCounter > 0)
             {
                 Assert.IsTrue(true);
@@ -100,17 +121,24 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             {
                 Assert.IsTrue(false);
             }
+            //Removing test results
+            scriptExecutor.ExecuteScript(" $('#searchmatter .form-control')[0].value =''");
+            Thread.Sleep(4000);
+            scriptExecutor.ExecuteScript("$('#basic-addon1').click()");
+            Thread.Sleep(4000);
         }
+        #endregion
 
-        [When(@"User clicks on column picker icon")]
+        #region 06. Verify the matter column picker
+        [When(@"user clicks on column picker icon")]
         public void WhenUserClicksOnColumnPickerIcon()
         {
             Thread.Sleep(4000);
             scriptExecutor.ExecuteScript("$('.ui-grid-menu-button .ui-grid-icon-container').click()");
         }
 
-        [Then(@"A column picker should be shown\.")]
-        public void ThenAColumnPickerShouldBeShown_()
+        [Then(@"a column picker should be shown")]
+        public void ThenAColumnPickerShouldBeShown()
         {
             string mattersList = (string)scriptExecutor.ExecuteScript("var links = $('.ui-grid-menu-items li button')[1].innerText;return links");
             string matterName = (string)scriptExecutor.ExecuteScript("var links = $('.ui-grid-header-cell-wrapper span')[0].innerText;return links");
@@ -123,7 +151,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Assert.IsTrue(clientName.Contains("Client"));
             Assert.IsTrue(modifiedDate.Contains("Modified Date"));
         }
-        [When(@"User checks all columns")]
+        [When(@"user checks all columns")]
         public void WhenUserChecksAllColumns()
         {
             Thread.Sleep(4000);
@@ -133,7 +161,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Thread.Sleep(4000);
         }
 
-        [Then(@"All columns should be shown in column header")]
+        [Then(@"all columns should be shown in column header")]
         public void ThenAllColumnsShouldBeShownInColumnHeader()
         {
             string responsibleAttorney = (string)scriptExecutor.ExecuteScript("var links =$('.ui-grid-cell-contents span.ui-grid-header-cell-label')[4].innerText;return links");
@@ -144,8 +172,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Assert.IsTrue(openDate.Contains("Open Date"));
         }
 
-        [When(@"User clicks on column picker and unchecked all the columns")]
-        public void WhenUserClicksOnColumnPickerAndUncheckedAllTheColumns()
+        [When(@"user removes all the checked columns")]
+        public void WhenUserRemovesAllTheCheckedColumns()
         {
             scriptExecutor.ExecuteScript("$('.ui-grid-menu-inner ul li button')[2].click()");
             scriptExecutor.ExecuteScript("$('.ui-grid-menu-inner ul li button')[4].click()");
@@ -155,21 +183,31 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             scriptExecutor.ExecuteScript("$('.ui-grid-menu-inner ul li button')[12].click()");
         }
 
-        [Then(@"All columns should be hidden in column header except Matter column")]
+        [Then(@"all columns should be hidden in column header except matter column")]
         public void ThenAllColumnsShouldBeHiddenInColumnHeaderExceptMatterColumn()
         {
             string columnLength = (string)scriptExecutor.ExecuteScript("var links = $('.ui-grid-header-cell-row .ui-grid-header-cell').length;var num=links.toString();return num");
             Assert.IsTrue(columnLength.Contains("1"));
+            //Rechecking all columns
+            scriptExecutor.ExecuteScript("$('.ui-grid-menu-inner ul li button')[2].click()");
+            scriptExecutor.ExecuteScript("$('.ui-grid-menu-inner ul li button')[4].click()");
+            scriptExecutor.ExecuteScript("$('.ui-grid-menu-inner ul li button')[6].click()");
+            scriptExecutor.ExecuteScript("$('.ui-grid-menu-inner ul li button')[9].click()");
+            scriptExecutor.ExecuteScript("$('.ui-grid-menu-inner ul li button')[10].click()");
+            scriptExecutor.ExecuteScript("$('.ui-grid-menu-inner ul li button')[12].click()");
         }
+        #endregion
 
-        [When(@"User clicks on ECB menu")]
+        #region  02. Verify the matter ECB menu
+        [When(@"user clicks on ECB menu")]
         public void WhenUserClicksOnECBMenu()
         {
+            common.GetLogin(webDriver, URL);
             Thread.Sleep(5000);
             scriptExecutor.ExecuteScript("$('.dropdown a')[0].click()");
         }
 
-        [Then(@"A fly out should be shown")]
+        [Then(@"a fly out should be shown")]
         public void ThenAFlyOutShouldBeShown()
         {
             string uploadToMatter = (string)scriptExecutor.ExecuteScript("var links = $('.dropdown-menu .ms-ContextualMenu-item a')[0].innerText;return links");
@@ -188,14 +226,14 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Assert.IsTrue(viewMatter.Contains("View Matter Details"));
             Assert.IsTrue(goToMatterOneNote.Contains("Go to Matter OneNote"));
         }
-
-        [When(@"User clicks on upload to matter")]
+       
+        [When(@"user clicks on upload to matter")]
         public void WhenUserClicksOnUploadToMatter()
         {
             scriptExecutor.ExecuteScript("$('.dropdown-menu .ms-ContextualMenu-item a')[0].click()");
         }
 
-        [Then(@"An upload to matter pop up should be shown")]
+        [Then(@"an upload to matter pop up should be shown")]
         public void ThenAnUploadToMatterPopUpShouldBeShown()
         {
             string uploadToMatter = (string)scriptExecutor.ExecuteScript("var links = $('.attachmentHeader')[0].innerText;return links");
@@ -204,39 +242,35 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Assert.IsTrue(uploadToMatter.Contains("Upload to a matter"));
         }
 
-        [When(@"User clicks on view matter details")]
+        [When(@"user clicks on view matter details")]
         public void WhenUserClicksOnViewMatterDetails()
         {
-            //driver.Navigate().GoToUrl(URL);
-            //Thread.Sleep(5000);
             scriptExecutor.ExecuteScript("$('.dropdown a')[0].click()");
             Thread.Sleep(1000);
-            // js.ExecuteScript("$('.dropdown-menu .ms-ContextualMenu-item a')[1].click()");
         }
 
-        [Then(@"Matter landing page should load")]
+        [Then(@"matter landing page should load")]
         public void ThenMatterLandingPageShouldLoad()
         {
             string matterLibrary = (string)scriptExecutor.ExecuteScript("var links = $('.ms-ContextualMenu-item > a')[1].href;return links");
             Assert.IsTrue(matterLibrary.Contains("https://matterwebapp.azurewebsites.net/"));
         }
 
-        [When(@"User clicks on go to matter one note")]
+        [When(@"user clicks on go to matter OneNote")]
         public void WhenUserClicksOnGoToMatterOneNote()
         {
             Thread.Sleep(5000);
             scriptExecutor.ExecuteScript("$('.dropdown a')[0].click()");
-            //js.ExecuteScript("$('.dropdown-menu .ms-ContextualMenu-item a')[2].click()");
         }
 
-        [Then(@"User should be redirected to one Note")]
+        [Then(@"user should be redirected to OneNote")]
         public void ThenUserShouldBeRedirectedToOneNote()
         {
-            string URL = (string)scriptExecutor.ExecuteScript("var links =$('.ms-ContextualMenu-item > a')[2].href;return links");
-            Assert.IsTrue(URL.Contains("https://msmatter.sharepoint.com/sites/microsoft/_layouts/WopiFrame.aspx?"));
+            string checkUrl = (string)scriptExecutor.ExecuteScript("var links =$('.ms-ContextualMenu-item > a')[2].href;return links");
+            Assert.IsTrue(checkUrl.Contains("https://msmatter.sharepoint.com/sites"));
         }
 
-        [When(@"User clicks on pin this matter or unpin this matter")]
+        [When(@"user clicks on pin this matter or unpin this matter")]
         public void WhenUserClicksOnPinThisMatterOrUnpinThisMatter()
         {
             Thread.Sleep(5000);
@@ -249,7 +283,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Thread.Sleep(5000);
         }
 
-        [Then(@"Matter should be pinned or unpinned")]
+        [Then(@"matter should be pinned or unpinned")]
         public void ThenMatterShouldBePinnedOrUnpinned()
         {
             string finalState = (string)scriptExecutor.ExecuteScript("var links = $('.dropdown-menu .ms-ContextualMenu-item a')[3].innerText;return links");
@@ -264,8 +298,10 @@ namespace Microsoft.Legal.MatterCenter.Selenium
                 Assert.IsTrue(false);
             }
         }
+        #endregion
 
-        [When(@"User clicks on matter")]
+        #region 03. Verify the matter fly out
+        [When(@"user clicks on matter")]
         public void WhenUserClicksOnMatter()
         {
             Thread.Sleep(5000);
@@ -273,7 +309,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Thread.Sleep(1000);
         }
 
-        [Then(@"A matter fly out should open")]
+        [Then(@"a matter fly out should open")]
         public void ThenAMatterFlyOutShouldOpen()
         {
             string matterName = (string)scriptExecutor.ExecuteScript("var links =$('.col-xs-7 a')[0].innerText;return links");
@@ -304,28 +340,29 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Assert.IsTrue(viewMatter.Contains("View matter details"));
             Assert.IsTrue(uploadToMatter.Contains("Upload to a matter"));
         }
+       
 
-        [When(@"User clicks on View Matter details in matter fly out")]
+        [When(@"user clicks on view matter details in matter fly out")]
         public void WhenUserClicksOnViewMatterDetailsInMatterFlyOut()
-        {
-            //js.ExecuteScript("$('.ms-Callout-content')[5].click()");
+        {           
+            Thread.Sleep(1000);
         }
 
-        [Then(@"Matter Landing Page should open")]
+        [Then(@"matter landing page should open")]
         public void ThenMatterLandingPageShouldOpen()
         {
             string viewMatterDetails = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[5].href ;return links");
             Assert.IsTrue(viewMatterDetails.Contains("https://matterwebapp.azurewebsites.net/"));
         }
 
-        [When(@"User clicks on Upload to matter in matter fly out")]
+        [When(@"user clicks on upload to matter in matter fly out")]
         public void WhenUserClicksOnUploadToMatterInMatterFlyOut()
         {
             scriptExecutor.ExecuteScript("$('.ms-Callout-content')[6].click()");
         }
 
-        [Then(@"An upload to matter pop up will open")]
-        public void ThenAnUploadToMatterPopUpWillOpen()
+        [Then(@"an upload to matter pop up should open")]
+        public void ThenAnUploadToMatterPopUpShouldOpen()
         {
             string uploadMatter = (string)scriptExecutor.ExecuteScript("var links = $('.attachmentHeader')[0].innerText;return links");
             Thread.Sleep(1000);
@@ -333,18 +370,17 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Assert.IsTrue(uploadMatter.Contains("Upload to a matter"));
         }
 
+        #endregion
 
-        [When(@"user click on column name to sort the Matter in Ascending order")]
-        public void WhenUserClickOnColumnNameToSortTheMatterInAscendingOrder()
+        #region 04. Verify the matter sort
+        [When(@"user clicks on column name to sort the matter in ascending order")]
+        public void WhenUserClicksOnColumnNameToSortTheMatterInAscendingOrder()
         {
-            Thread.Sleep(4000);
-            webDriver.FindElement(By.CssSelector("div.ui-grid-cell-contents.ui-grid-header-cell-primary-focus")).Click();
-            Thread.Sleep(3000);
             webDriver.FindElement(By.CssSelector("div.ui-grid-cell-contents.ui-grid-header-cell-primary-focus")).Click();
             Thread.Sleep(2000);
         }
 
-        [Then(@"It should sort the Matter in ascending order")]
+        [Then(@"it should sort the matter in ascending order")]
         public void ThenItShouldSortTheMatterInAscendingOrder()
         {
             int totalDocument = 0,  documentCount = 0;
@@ -378,31 +414,36 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             }
             sortedDocument.TrimEnd(',');
             sortedDocument += "]";
-            tempDocumentList.Sort();
             var sortedDocumentList = scriptExecutor.ExecuteScript("var oDocumentList = " + sortedDocument + ".sort();return oDocumentList");
             foreach (string element in (IEnumerable)sortedDocumentList)
             {
-                if (element.Trim().ToLower().CompareTo(tempDocumentList[documentCount].Trim().ToLower()) == 0)
+                if(string.Equals(element.Trim(), tempDocumentList[documentCount].Trim(), StringComparison.OrdinalIgnoreCase))
                 {
-                    totalDocument++;
+                    totalDocument++;                
                 }
                 documentCount++;
             }
-            webDriver.FindElement(By.CssSelector("div.ui-grid-cell-contents.ui-grid-header-cell-primary-focus")).Click();
             Thread.Sleep(2000);
             Console.Write(totalDocument);
-            Assert.IsTrue(totalDocument >= 1);
+            Assert.IsTrue(totalDocument >= 5);
         }
+        #endregion
 
-        [When(@"user click on column filter to filter the Matter")]
-        public void WhenUserClickOnColumnFilterToFilterTheMatter()
+        #region 08. Verify the matter filter search
+        string searchKeyword;
+        [When(@"user clicks on column filter to filter the matter with the keyword '(.*)'")]
+        public void WhenUserClicksOnColumnFilterToFilterTheMatterWithTheKeyword(string filterKeyword)
         {
+            common.GetLogin(webDriver, URL);
+            Thread.Sleep(4000);
+            searchKeyword = filterKeyword;
+            scriptExecutor.ExecuteScript("$('.input-group-btn ul li ')[0].click()");
             Thread.Sleep(3000);
             webDriver.FindElement(By.CssSelector("div.ui-grid-cell-contents.ui-grid-header-cell-primary-focus")).Click();
             Thread.Sleep(3000);
             webDriver.FindElement(By.CssSelector("#acombo > img")).Click();
             Thread.Sleep(3000);
-            scriptExecutor.ExecuteScript("$('.form-control')[2].value = 'Test'");
+            scriptExecutor.ExecuteScript("$('.form-control')[2].value = '"+ filterKeyword + "'");
             Thread.Sleep(2000);
             webDriver.FindElement(By.XPath("(//button[@type='button'])[4]")).Click();
             Thread.Sleep(2000);
@@ -410,19 +451,20 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Thread.Sleep(2000);
         }
 
-        [Then(@"It should filter the Matter based on filter keyword '(.*)'")]
-        public void ThenItShouldFilterTheMatterBasedOnFilterKeyword(string filterText)
+        [Then(@"it should filter the matter based on filter keyword")]
+        public void ThenItShouldFilterTheMatterBasedOnFilterKeyword()
         {
             int filterDocument = 0;
             long length = (long)scriptExecutor.ExecuteScript("var links = $('#matterPopup a.btn-link').length;return links");
-            for (int count = 0; count > length; count++)
+            for (int count = 0; count < length; count++)
             {
                 string datachunk = (string)scriptExecutor.ExecuteScript("var links = $('#matterPopup a.btn-link')[" + count + "].innerText;return links");
-                if (datachunk.ToLower().Contains(filterText.ToLower()))
+                if (datachunk.ToLower(CultureInfo.CurrentCulture).Contains(searchKeyword.ToLower(CultureInfo.CurrentCulture)))
                     filterDocument++;
             }
             Assert.IsTrue(filterDocument >= 0);
         }
+        #endregion
 
     }
 }

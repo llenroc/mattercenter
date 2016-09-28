@@ -20,6 +20,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -43,10 +46,6 @@
     <Reference Include="Protractor">
       <HintPath>..\packages\Protractor.0.3.0\lib\net40\Protractor.dll</HintPath>
     </Reference>
-    <Reference Include="Selenium.WebDriverBackedSelenium, Version=2.53.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Selenium.WebDriverBackedSelenium.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -60,10 +59,6 @@
     <Reference Include="TechTalk.SpecFlow">
       <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
     </Reference>
-    <Reference Include="ThoughtWorks.Selenium.Core, Version=2.53.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\ThoughtWorks.Selenium.Core.dll</HintPath>
-    </Reference>
     <Reference Include="WebDriver">
       <HintPath>..\packages\Selenium.WebDriver.2.44.0\lib\net40\WebDriver.dll</HintPath>
     </Reference>
@@ -72,15 +67,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FunctionalTest\DocumentLanding.cs" />
+    <Compile Include="FunctionalTest\DocumentDashboard.cs" />
     <Compile Include="FunctionalTest\CreateMatter.cs" />
     <Compile Include="FunctionalTest\DocumentSearch.cs" />
     <Compile Include="FunctionalTest\Home.cs" />
     <Compile Include="FunctionalTest\Common.cs" />
-    <Compile Include="FunctionalTest\SearchMatter.cs" />
+    <Compile Include="FunctionalTest\MatterLanding.cs" />
+    <Compile Include="FunctionalTest\MatterSearch.cs" />
+    <Compile Include="FunctionalTest\MatterDashboard.cs" />
+    <Compile Include="FunctionalTest\Settings.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="SpecFlow\Specs\CreateMatter.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateMatter.feature</DependentUpon>
+    </Compile>
+    <Compile Include="SpecFlow\Specs\DocumentDashboard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DocumentDashboard.feature</DependentUpon>
+    </Compile>
+    <Compile Include="SpecFlow\Specs\DocumentLanding.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DocumentLanding.feature</DependentUpon>
     </Compile>
     <Compile Include="SpecFlow\Specs\DocumentSearch.feature.cs">
       <AutoGen>True</AutoGen>
@@ -92,10 +103,25 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="SpecFlow\Specs\MatterDashboard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MatterDashboard.feature</DependentUpon>
+    </Compile>
+    <Compile Include="SpecFlow\Specs\MatterLanding.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MatterLanding.feature</DependentUpon>
+    </Compile>
     <Compile Include="SpecFlow\Specs\MatterSearch.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MatterSearch.feature</DependentUpon>
+    </Compile>
+    <Compile Include="SpecFlow\Specs\Settings.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Settings.feature</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +155,14 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>CreateMatter.feature.cs</LastGenOutput>
     </None>
+    <None Include="SpecFlow\Specs\DocumentDashboard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>DocumentDashboard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="SpecFlow\Specs\DocumentLanding.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>DocumentLanding.feature.cs</LastGenOutput>
+    </None>
     <None Include="SpecFlow\Specs\DocumentSearch.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>DocumentSearch.feature.cs</LastGenOutput>
@@ -137,9 +171,21 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Home.feature.cs</LastGenOutput>
     </None>
+    <None Include="SpecFlow\Specs\MatterDashboard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>MatterDashboard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="SpecFlow\Specs\MatterLanding.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>MatterLanding.feature.cs</LastGenOutput>
+    </None>
     <None Include="SpecFlow\Specs\MatterSearch.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>MatterSearch.feature.cs</LastGenOutput>
+    </None>
+    <None Include="SpecFlow\Specs\Settings.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

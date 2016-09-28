@@ -1,47 +1,47 @@
-﻿Feature: This will open the Home page and perform the verification
+﻿Feature: Home Page
 
 @E2E
-Scenario: Open the browser and load the home page
-	When We will provide 'matteradmin@msmatter.onmicrosoft.com' and 'P@$$w0rd01'
-	Then The home page will be loaded
+Scenario:01. Open the browser and load home page
+	When we will provide 'matteradmin@msmatter.onmicrosoft.com' and 'P@$$w0rd01'
+	Then home page should be loaded with element 'HomeContainer'	   
 
 @E2E
-Scenario: Open the HamberGer menu and verify the elements
-	When user click on HamberGer Menu
-	Then HamberGer Menu should display 'Home','Matters','Documents' and 'Create New Matter' menu
+Scenario:02. Open the hamburger menu and verify all the elements
+	When user clicks on hamburger menu on home page
+	Then hamburger menu should display 'Home','Projects','Documents' and 'Create New Matter' menu
 
 @E2E	
-Scenario: Verify the links on Home page
-	When user click on Learn more and dismiss link
-	Then It should dismiss the link
+Scenario:03. Verify the links on home page
+	When user clicks on learn more and dismiss link
+	Then it should dismiss the link
 
 @E2E	
-Scenario: Verify all the component of the page
-	When user click on Matters link
-	Then It should open the Matter Search page
-	When user click on Documents link
-	Then It should open the Document search page
-	When user click on Upload attachments link 
-	Then It should open the Matter Search page on click
-	When user click on Create a new matter
-	Then It should open the Matter Provision page
-	When user click on Go to Matter Center Home page
-	Then It should open the Matter page
+Scenario:04. Verify all components of the page
+	When user clicks on matters link
+	Then it should open the matter search page
+	When user clicks on documents link
+	Then it should open the document search page
+	When user clicks on upload attachments link 
+	Then it should redirect to matter search page
+	When user clicks on create a new matter
+	Then it should open the matter provision page
+	When user clicks on go to matter center home page
+	Then it should open the matters page
 
 @E2E
-Scenario: Verify the Matter Center Support link
-	When user click on Matter Center Support link
-	Then It should open draft mail with recipient 'lcaweb2@microsoft.com' and subject as 'CELA Project Center Feedback and Support request'
+Scenario:05. Verify the Matter Center support link
+	When user click on Matter Center support link
+	Then it should open draft mail with recipient 'lcaweb2@microsoft.com' and subject as 'CELA Project Center Feedback and Support request'
 
 @E2E
-Scenario: Verify the Contextual help section
-	When user click on contextual help icon(?)
-	Then It should open the contextual help menu'
+Scenario:06. Verify the contextual help section
+	When user clicks on contextual help icon(?)
+	Then it should open the contextual help menu
 
 @E2E
-Scenario: Verify the User Profile icon
-	When user click on User Profile icon
-	Then It should open User Profile details
+Scenario:07. Verify the user profile icon
+	When user clicks on user profile icon
+	Then it should open user profile details
 
 
 

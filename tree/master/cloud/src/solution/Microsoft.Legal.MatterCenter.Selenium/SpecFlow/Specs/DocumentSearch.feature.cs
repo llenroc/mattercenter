@@ -19,8 +19,8 @@ namespace Protractor_Net_Demo.SpecFlow.Specs
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("This will open the SearchDocument and perform the verification")]
-    public partial class ThisWillOpenTheSearchDocumentAndPerformTheVerificationFeature
+    [NUnit.Framework.DescriptionAttribute("Document Search Page")]
+    public partial class DocumentSearchPageFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -32,7 +32,7 @@ namespace Protractor_Net_Demo.SpecFlow.Specs
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "This will open the SearchDocument and perform the verification", "", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Document Search Page", "", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -65,142 +65,142 @@ namespace Protractor_Net_Demo.SpecFlow.Specs
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Open the browser and load the SearchDocument page")]
+        [NUnit.Framework.DescriptionAttribute("01. Open the browser and load search document page")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void OpenTheBrowserAndLoadTheSearchDocumentPage()
+        public virtual void _01_OpenTheBrowserAndLoadSearchDocumentPage()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Open the browser and load the SearchDocument page", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("01. Open the browser and load search document page", new string[] {
                         "E2E"});
 #line 4
 this.ScenarioSetup(scenarioInfo);
 #line 5
- testRunner.When("We will give \'matteradmin@msmatter.onmicrosoft.com\' and \'P@$$w0rd01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("we will give \'matteradmin@msmatter.onmicrosoft.com\' and \'P@$$w0rd01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 6
- testRunner.Then("The search page will be loaded \'SearchDocument\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("document search page should be loaded with element \'documentgrid\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify the Document Drop down menu")]
+        [NUnit.Framework.DescriptionAttribute("07. Verify the document drop down menu")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyTheDocumentDropDownMenu()
+        public virtual void _07_VerifyTheDocumentDropDownMenu()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the Document Drop down menu", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("07. Verify the document drop down menu", new string[] {
                         "E2E"});
 #line 9
 this.ScenarioSetup(scenarioInfo);
 #line 10
- testRunner.When("user click on My Documents item from Drop Down menu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on My Documents item from drop down menu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 11
- testRunner.Then("It should display My Documents in header", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should display My Documents in header", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 12
- testRunner.When("user click on Pinned Documents item from Drop Down menu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on Pinned Documents item from drop down menu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 13
- testRunner.Then("It should display Pinned Documents in header", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should display Pinned Documents in header", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 14
- testRunner.When("user click on All Documents item from Drop Down menu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on All Documents item from drop down menu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 15
- testRunner.Then("It should display All Documents in header", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should display All Documents in header", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify the Column picker")]
+        [NUnit.Framework.DescriptionAttribute("06. Verify the column picker")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyTheColumnPicker()
+        public virtual void _06_VerifyTheColumnPicker()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the Column picker", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Verify the column picker", new string[] {
                         "E2E"});
 #line 18
 this.ScenarioSetup(scenarioInfo);
 #line 19
- testRunner.When("user click on Column picker and Checked all the columns", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on column picker and checks all columns", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 20
- testRunner.Then("It should display all the columns in header", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should display all the columns in header", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 21
- testRunner.When("user click on Column picker and Unchecked all the columns", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on column picker and remove all checked columns", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 22
- testRunner.Then("It should not display any the columns except Document column in header", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should not display any columns except document column in header", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify the document search box")]
+        [NUnit.Framework.DescriptionAttribute("05. Verify the document search box")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyTheDocumentSearchBox()
+        public virtual void _05_VerifyTheDocumentSearchBox()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the document search box", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Verify the document search box", new string[] {
                         "E2E"});
 #line 25
 this.ScenarioSetup(scenarioInfo);
 #line 26
- testRunner.When("user search with keyword \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user searches with keyword \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 27
- testRunner.Then("It should display all the document which consist of Test keyword", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should display all the document which consist of search keyword", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify the document sort")]
+        [NUnit.Framework.DescriptionAttribute("04. Verify the document sort")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyTheDocumentSort()
+        public virtual void _04_VerifyTheDocumentSort()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the document sort", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Verify the document sort", new string[] {
                         "E2E"});
 #line 30
 this.ScenarioSetup(scenarioInfo);
 #line 31
  testRunner.When("user click on column name to sort the document in Ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 32
- testRunner.Then("It should sort the document in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should sort the document in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify the document filter search")]
+        [NUnit.Framework.DescriptionAttribute("08. Verify the document filter search")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyTheDocumentFilterSearch()
+        public virtual void _08_VerifyTheDocumentFilterSearch()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the document filter search", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("08. Verify the document filter search", new string[] {
                         "E2E"});
 #line 35
 this.ScenarioSetup(scenarioInfo);
 #line 36
- testRunner.When("user click on column filter to filter the documents", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on column filter to filter the documents using keyword \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 37
- testRunner.Then("It should filter the document based on filter keyword \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should filter the document based on filtered keyword", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify the document ECB menu")]
+        [NUnit.Framework.DescriptionAttribute("02. Verify the document ECB menu")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyTheDocumentECBMenu()
+        public virtual void _02_VerifyTheDocumentECBMenu()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the document ECB menu", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Verify the document ECB menu", new string[] {
                         "E2E"});
 #line 40
 this.ScenarioSetup(scenarioInfo);
 #line 41
- testRunner.When("User clicks on ECB menu in document search page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on ECB menu in document search page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 42
- testRunner.Then("A fly out should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("a fly out should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 43
- testRunner.When("User clicks on open this document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on open this document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 44
- testRunner.Then("That document should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("that document should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 45
- testRunner.When("User clicks on view matter details in fly out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on view matter details in fly out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 46
- testRunner.Then("User should be redirected to matter landing page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("user should be redirected to matter landing page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 47
-    testRunner.When("User clicks on pin this document or unpin this document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.When("user clicks on pin this document or unpin this document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 48
  testRunner.Then("document should be pinned or unpinned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -208,26 +208,26 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify the document fly out")]
+        [NUnit.Framework.DescriptionAttribute("03. Verify the document fly out")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyTheDocumentFlyOut()
+        public virtual void _03_VerifyTheDocumentFlyOut()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the document fly out", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Verify the document fly out", new string[] {
                         "E2E"});
 #line 51
 this.ScenarioSetup(scenarioInfo);
 #line 52
- testRunner.When("User clicks on document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on document on document search page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 53
- testRunner.Then("A document fly out should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("a document fly out should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 54
- testRunner.When("User clicks on open this document in document fly out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on open this document in document fly out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 55
- testRunner.Then("That document should open when clicked", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("that document should open when clicked", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 56
- testRunner.When("User clicks on view document details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on view document details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 57
- testRunner.Then("Document landing page should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("document landing page should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

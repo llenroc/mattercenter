@@ -1,64 +1,63 @@
-﻿Feature: This will open the Search Matter page and perform the verification
+﻿Feature: Matter Search Page
 
 @E2E
-Scenario: Open the browser and load the SearchMatter page
-	When We pass 'matteradmin@msmatter.onmicrosoft.com' and 'P@$$w0rd01'
-	Then The Matter search page will be loaded as 'SearchMatter'
+Scenario: 01. Open the browser and load search matter page
+	When we pass 'matteradmin@msmatter.onmicrosoft.com' and 'P@$$w0rd01'
+	Then matter search page should be loaded with element 'matterCenterHeader'      
 
 @E2E
-Scenario: Verify the Matter Drop down Menu
-	When User opens the search matter page
+Scenario: 07. Verify the matter drop down menu
+	When user opens the search matter page
 	Then My Matter tab should be loaded
-	When User clicks on All Matters
+	When user clicks on All Matters
 	Then All Matters result should be loaded
-	When User clicks on Pinned Matters
+	When user clicks on Pinned Matters
 	Then Pinned Matters should be loaded
 
 @E2E	
-Scenario: Verify the matter search box
-	When User types 'test' in search box 
-	Then All Matters with the name test will be displayed 
+Scenario: 05. Verify the matter search box
+	When user types 'test' in search box 
+	Then all matters with the searched keyword should be shown 
 
 @E2E
-Scenario: Verify the matter column picker
-	When User clicks on column picker icon
-	Then A column picker should be shown.
-	When User checks all columns
-	Then All columns should be shown in column header 
-	When User clicks on column picker and unchecked all the columns  
-	Then All columns should be hidden in column header except Matter column 
+Scenario: 06. Verify the matter column picker
+	When user clicks on column picker icon
+	Then a column picker should be shown
+	When user checks all columns
+	Then all columns should be shown in column header 
+	When user removes all the checked columns  
+	Then all columns should be hidden in column header except matter column 
 
 @E2E
-Scenario: Verify the matter ECB menu
-	When User clicks on ECB menu
-	Then A fly out should be shown
-	When User clicks on upload to matter
-	Then An upload to matter pop up should be shown
-	When User clicks on view matter details
-	Then Matter landing page should load
-	When User clicks on go to matter one note
-	Then User should be redirected to one Note
-    When User clicks on pin this matter or unpin this matter
-	Then Matter should be pinned or unpinned
+Scenario: 02. Verify the matter ECB menu
+	When user clicks on ECB menu
+	Then a fly out should be shown
+	When user clicks on upload to matter
+	Then an upload to matter pop up should be shown
+	When user clicks on view matter details
+	Then matter landing page should load
+	When user clicks on go to matter OneNote
+	Then user should be redirected to OneNote
+    When user clicks on pin this matter or unpin this matter
+	Then matter should be pinned or unpinned
 
 @E2E   
-Scenario: Verify the matter fly out
-	When User clicks on matter
-	Then A matter fly out should open
-	When User clicks on View Matter details in matter fly out
-	Then Matter Landing Page should open
-	When User clicks on Upload to matter in matter fly out
-	Then An upload to matter pop up will open
+Scenario: 03. Verify the matter fly out
+	When user clicks on matter
+	Then a matter fly out should open
+	When user clicks on view matter details in matter fly out
+	Then matter landing page should open
+	When user clicks on upload to matter in matter fly out
+	Then an upload to matter pop up should open
  
 @E2E
-Scenario: Verify the Matter sort
-	When user click on column name to sort the Matter in Ascending order
-	Then It should sort the Matter in ascending order
+Scenario: 04. Verify the matter sort
+	When user clicks on column name to sort the matter in ascending order
+	Then it should sort the matter in ascending order
 
 @E2E
-Scenario: Verify the Matter filter search
-	When user click on column filter to filter the Matter
-	Then It should filter the Matter based on filter keyword 'Test'
+Scenario: 08. Verify the matter filter search
+	When user clicks on column filter to filter the matter with the keyword 'Test'
+	Then it should filter the matter based on filter keyword
 	     
      
-   

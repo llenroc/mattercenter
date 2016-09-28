@@ -1,26 +1,26 @@
-﻿Feature: This will open the create matter page and perform the verification feature
+﻿Feature: Create Matter Page
 
 @E2E
-Scenario: 01. Open the browser and load the Create Matter page
-	When We will enter 'matteradmin@msmatter.onmicrosoft.com' and 'P@$$w0rd01'
-	Then The matter provision page will be loaded 'CreateMatter'
+Scenario: 01. Open the browser and load create matter page
+	When we will enter 'matteradmin@msmatter.onmicrosoft.com' and 'P@$$w0rd01'
+	Then matter provision page should be loaded with element 'snConflictCheck'
 
 @E2E
 Scenario: 02. Verify Open Matter tab
-	When User select basic matter information
-	Then It should navigates to second step
+	When user selects basic matter information
+	Then it should navigate to second step
 
 @E2E
 Scenario: 03. Verify Assign Permission tab
-	When User select permission for matter
-	Then It should navigates to third step
+	When user selects permission for matter
+	Then it should navigate to third step
 
 @E2E
 Scenario: 04. Verify create and notify tab
-	When User checked on all check box
-	Then All check box should get checked
-	When User clicks on create and notify 
-	Then A new matter should get created
+	When user checks all check boxes 
+	Then all check boxes should get checked
+	When user clicks on create and notify 
+	Then a new matter should get created
 
 
 

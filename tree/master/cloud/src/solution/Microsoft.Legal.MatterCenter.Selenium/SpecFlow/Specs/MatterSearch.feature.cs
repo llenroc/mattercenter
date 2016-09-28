@@ -19,8 +19,8 @@ namespace Protractor_Net_Demo.SpecFlow.Specs
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("This will open the Search Matter page and perform the verification")]
-    public partial class ThisWillOpenTheSearchMatterPageAndPerformTheVerificationFeature
+    [NUnit.Framework.DescriptionAttribute("Matter Search Page")]
+    public partial class MatterSearchPageFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -32,7 +32,7 @@ namespace Protractor_Net_Demo.SpecFlow.Specs
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "This will open the Search Matter page and perform the verification", "", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Matter Search Page", "", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -65,41 +65,41 @@ namespace Protractor_Net_Demo.SpecFlow.Specs
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Open the browser and load the SearchMatter page")]
+        [NUnit.Framework.DescriptionAttribute("01. Open the browser and load search matter page")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void OpenTheBrowserAndLoadTheSearchMatterPage()
+        public virtual void _01_OpenTheBrowserAndLoadSearchMatterPage()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Open the browser and load the SearchMatter page", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("01. Open the browser and load search matter page", new string[] {
                         "E2E"});
 #line 4
 this.ScenarioSetup(scenarioInfo);
 #line 5
- testRunner.When("We pass \'matteradmin@msmatter.onmicrosoft.com\' and \'P@$$w0rd01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("we pass \'matteradmin@msmatter.onmicrosoft.com\' and \'P@$$w0rd01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 6
- testRunner.Then("The Matter search page will be loaded as \'SearchMatter\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("matter search page should be loaded with element \'matterCenterHeader\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify the Matter Drop down Menu")]
+        [NUnit.Framework.DescriptionAttribute("07. Verify the matter drop down menu")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyTheMatterDropDownMenu()
+        public virtual void _07_VerifyTheMatterDropDownMenu()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the Matter Drop down Menu", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("07. Verify the matter drop down menu", new string[] {
                         "E2E"});
 #line 9
 this.ScenarioSetup(scenarioInfo);
 #line 10
- testRunner.When("User opens the search matter page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user opens the search matter page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 11
  testRunner.Then("My Matter tab should be loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 12
- testRunner.When("User clicks on All Matters", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on All Matters", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 13
  testRunner.Then("All Matters result should be loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 14
- testRunner.When("User clicks on Pinned Matters", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on Pinned Matters", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 15
  testRunner.Then("Pinned Matters should be loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -107,135 +107,135 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify the matter search box")]
+        [NUnit.Framework.DescriptionAttribute("05. Verify the matter search box")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyTheMatterSearchBox()
+        public virtual void _05_VerifyTheMatterSearchBox()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the matter search box", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Verify the matter search box", new string[] {
                         "E2E"});
 #line 18
 this.ScenarioSetup(scenarioInfo);
 #line 19
- testRunner.When("User types \'test\' in search box", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user types \'test\' in search box", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 20
- testRunner.Then("All Matters with the name test will be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("all matters with the searched keyword should be shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify the matter column picker")]
+        [NUnit.Framework.DescriptionAttribute("06. Verify the matter column picker")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyTheMatterColumnPicker()
+        public virtual void _06_VerifyTheMatterColumnPicker()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the matter column picker", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Verify the matter column picker", new string[] {
                         "E2E"});
 #line 23
 this.ScenarioSetup(scenarioInfo);
 #line 24
- testRunner.When("User clicks on column picker icon", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on column picker icon", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 25
- testRunner.Then("A column picker should be shown.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("a column picker should be shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 26
- testRunner.When("User checks all columns", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user checks all columns", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 27
- testRunner.Then("All columns should be shown in column header", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("all columns should be shown in column header", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 28
- testRunner.When("User clicks on column picker and unchecked all the columns", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user removes all the checked columns", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 29
- testRunner.Then("All columns should be hidden in column header except Matter column", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("all columns should be hidden in column header except matter column", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify the matter ECB menu")]
+        [NUnit.Framework.DescriptionAttribute("02. Verify the matter ECB menu")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyTheMatterECBMenu()
+        public virtual void _02_VerifyTheMatterECBMenu()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the matter ECB menu", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Verify the matter ECB menu", new string[] {
                         "E2E"});
 #line 32
 this.ScenarioSetup(scenarioInfo);
 #line 33
- testRunner.When("User clicks on ECB menu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on ECB menu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 34
- testRunner.Then("A fly out should be shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("a fly out should be shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 35
- testRunner.When("User clicks on upload to matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on upload to matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 36
- testRunner.Then("An upload to matter pop up should be shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("an upload to matter pop up should be shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 37
- testRunner.When("User clicks on view matter details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on view matter details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 38
- testRunner.Then("Matter landing page should load", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("matter landing page should load", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 39
- testRunner.When("User clicks on go to matter one note", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on go to matter OneNote", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 40
- testRunner.Then("User should be redirected to one Note", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("user should be redirected to OneNote", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 41
-    testRunner.When("User clicks on pin this matter or unpin this matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.When("user clicks on pin this matter or unpin this matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 42
- testRunner.Then("Matter should be pinned or unpinned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("matter should be pinned or unpinned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify the matter fly out")]
+        [NUnit.Framework.DescriptionAttribute("03. Verify the matter fly out")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyTheMatterFlyOut()
+        public virtual void _03_VerifyTheMatterFlyOut()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the matter fly out", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Verify the matter fly out", new string[] {
                         "E2E"});
 #line 45
 this.ScenarioSetup(scenarioInfo);
 #line 46
- testRunner.When("User clicks on matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 47
- testRunner.Then("A matter fly out should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("a matter fly out should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 48
- testRunner.When("User clicks on View Matter details in matter fly out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on view matter details in matter fly out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 49
- testRunner.Then("Matter Landing Page should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("matter landing page should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 50
- testRunner.When("User clicks on Upload to matter in matter fly out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on upload to matter in matter fly out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 51
- testRunner.Then("An upload to matter pop up will open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("an upload to matter pop up should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify the Matter sort")]
+        [NUnit.Framework.DescriptionAttribute("04. Verify the matter sort")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyTheMatterSort()
+        public virtual void _04_VerifyTheMatterSort()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the Matter sort", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Verify the matter sort", new string[] {
                         "E2E"});
 #line 54
 this.ScenarioSetup(scenarioInfo);
 #line 55
- testRunner.When("user click on column name to sort the Matter in Ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on column name to sort the matter in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 56
- testRunner.Then("It should sort the Matter in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should sort the matter in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify the Matter filter search")]
+        [NUnit.Framework.DescriptionAttribute("08. Verify the matter filter search")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void VerifyTheMatterFilterSearch()
+        public virtual void _08_VerifyTheMatterFilterSearch()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the Matter filter search", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("08. Verify the matter filter search", new string[] {
                         "E2E"});
 #line 59
 this.ScenarioSetup(scenarioInfo);
 #line 60
- testRunner.When("user click on column filter to filter the Matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on column filter to filter the matter with the keyword \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 61
- testRunner.Then("It should filter the Matter based on filter keyword \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should filter the matter based on filter keyword", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
