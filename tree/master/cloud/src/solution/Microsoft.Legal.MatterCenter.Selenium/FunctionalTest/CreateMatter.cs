@@ -25,18 +25,18 @@ namespace Protractor_Net_Demo.FunctionalTest
     [Binding]
     public class CreateMatterSteps
     {
-        string URL = ConfigurationManager.AppSettings["createMatter"];
+        string URL = ConfigurationManager.AppSettings["CreateMatter"];
         static IWebDriver webDriver = CommonHelperFunction.GetDriver();
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
         CommonHelperFunction common = new CommonHelperFunction();
 
-        #region 01. Open the browser and load create matter page
+        #region 01. Open the browser and load 'create matter' page
         [When(@"we will enter '(.*)' and '(.*)'")]
         public void WhenWeWillEnterAnd(string userName, string password)
         {
             common.GetLogin(webDriver, URL);
-            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["userName"]));
-            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["password"]));
+            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["UserName"]));
+            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["Password"]));
         }
 
         [Then(@"matter provision page should be loaded with element '(.*)'")]
@@ -46,7 +46,7 @@ namespace Protractor_Net_Demo.FunctionalTest
         }
         #endregion
 
-        #region 02. Verify Open Matter tab
+        #region 02. Verify 'Open Matter' tab
 
         [When(@"user selects basic matter information")]
         public void WhenUserSelectsBasicMatterInformation()
@@ -56,7 +56,7 @@ namespace Protractor_Net_Demo.FunctionalTest
             Thread.Sleep(2000);
             webDriver.FindElement(By.XPath("//section[@id='snOpenMatter']/div/div[2]/select")).Click();
             Thread.Sleep(3000);
-            new SelectElement(webDriver.FindElement(By.XPath("//section[@id='snOpenMatter']/div/div[2]/select"))).SelectByText(ConfigurationManager.AppSettings["dropDownKeyword"]);
+            new SelectElement(webDriver.FindElement(By.XPath("//section[@id='snOpenMatter']/div/div[2]/select"))).SelectByText(ConfigurationManager.AppSettings["DropDownKeyword"]);
             Thread.Sleep(2000);
             webDriver.FindElement(By.CssSelector("option[value=\"100002\"]")).Click();
             Thread.Sleep(2000);
@@ -68,7 +68,7 @@ namespace Protractor_Net_Demo.FunctionalTest
             webDriver.FindElement(By.Id("txtMatterDesc")).Click();
             webDriver.FindElement(By.Id("txtMatterDesc")).Clear();
             Thread.Sleep(2000);
-            webDriver.FindElement(By.Id("txtMatterDesc")).SendKeys(ConfigurationManager.AppSettings["matterName"]);
+            webDriver.FindElement(By.Id("txtMatterDesc")).SendKeys(ConfigurationManager.AppSettings["MatterName"]);
             Thread.Sleep(2000);
             scriptExecutor.ExecuteScript("$('.col-xs-6 .buttonPrev').click();");
             Thread.Sleep(2000);
@@ -82,7 +82,7 @@ namespace Protractor_Net_Demo.FunctionalTest
         }
         #endregion
 
-        #region 03. Verify Assign Permission tab
+        #region 03. Verify 'Assign Permission' tab
 
         [When(@"user selects permission for matter")]
         public void WhenUserSelectsPermissionForMatter()
@@ -92,13 +92,13 @@ namespace Protractor_Net_Demo.FunctionalTest
             Thread.Sleep(2000);
             webDriver.FindElement(By.Id("txtConflictCheckBy")).Click();
             webDriver.FindElement(By.Id("txtConflictCheckBy")).Clear();
-            webDriver.FindElement(By.Id("txtConflictCheckBy")).SendKeys(ConfigurationManager.AppSettings["attorneyUser"]);
-            webDriver.FindElement(By.LinkText(ConfigurationManager.AppSettings["attorney"])).Click();
+            webDriver.FindElement(By.Id("txtConflictCheckBy")).SendKeys(ConfigurationManager.AppSettings["AttorneyUser"]);
+            webDriver.FindElement(By.LinkText(ConfigurationManager.AppSettings["Attorney"])).Click();
             Thread.Sleep(3000);
             webDriver.FindElement(By.Id("txtUser1")).Click();
             webDriver.FindElement(By.Id("txtUser1")).Clear();
-            webDriver.FindElement(By.Id("txtUser1")).SendKeys(ConfigurationManager.AppSettings["attorneyName"]);
-            webDriver.FindElement(By.LinkText(ConfigurationManager.AppSettings["attorneyMember"])).Click();
+            webDriver.FindElement(By.Id("txtUser1")).SendKeys(ConfigurationManager.AppSettings["AttorneyName"]);
+            webDriver.FindElement(By.LinkText(ConfigurationManager.AppSettings["AttorneyMember"])).Click();
             Thread.Sleep(2000);
             scriptExecutor.ExecuteScript("$('.calendar').val('09/14/2016').trigger('change')");
             Thread.Sleep(2000);
@@ -107,8 +107,8 @@ namespace Protractor_Net_Demo.FunctionalTest
             webDriver.FindElement(By.Id("chkConflictCheck")).Click();
             webDriver.FindElement(By.Id("txtBlockUser")).Click();
             webDriver.FindElement(By.Id("txtBlockUser")).Clear();
-            webDriver.FindElement(By.Id("txtBlockUser")).SendKeys(ConfigurationManager.AppSettings["attorneyUser"]);
-            webDriver.FindElement(By.LinkText(ConfigurationManager.AppSettings["attorney"])).Click();
+            webDriver.FindElement(By.Id("txtBlockUser")).SendKeys(ConfigurationManager.AppSettings["AttorneyUser"]);
+            webDriver.FindElement(By.LinkText(ConfigurationManager.AppSettings["Attorney"])).Click();
             Thread.Sleep(2000);
             new SelectElement(webDriver.FindElement(By.Id("permUser1"))).SelectByText("Full Control");
             Thread.Sleep(3000);
@@ -125,7 +125,7 @@ namespace Protractor_Net_Demo.FunctionalTest
 
         #endregion
 
-        #region 04. Verify create and notify tab
+        #region 04. Verify 'create and notify' tab
 
         [When(@"user checks all check boxes")]
         public void WhenUserCheckesAllCheckBoxes()
@@ -133,22 +133,22 @@ namespace Protractor_Net_Demo.FunctionalTest
             Thread.Sleep(4000);
             webDriver.FindElement(By.XPath("//main/div/div/div[3]")).Click();
             Thread.Sleep(2000);
-            bool checkTrueOrFalse = (bool)scriptExecutor.ExecuteScript("var step =$('#demo-checkbox-unselected2').prop('checked');return step;");
+            bool checkTrueOrFalse = (bool)scriptExecutor.ExecuteScript("var step = $('#demo-checkbox-unselected2').prop('checked');return step;");
             if (checkTrueOrFalse == false)
             {
                 scriptExecutor.ExecuteScript("$('#demo-checkbox-unselected2').click()");
             }
-            checkTrueOrFalse = (bool)scriptExecutor.ExecuteScript("var step =$('#demo-checkbox-unselected0').prop('checked');return step");
+            checkTrueOrFalse = (bool)scriptExecutor.ExecuteScript("var step = $('#demo-checkbox-unselected0').prop('checked');return step");
             if (checkTrueOrFalse == false)
             {
                 scriptExecutor.ExecuteScript("$('#demo-checkbox-unselected0').click()");
             }
-            checkTrueOrFalse = (bool)scriptExecutor.ExecuteScript("var step =$('#demo-checkbox-unselected3').prop('checked');return step");
+            checkTrueOrFalse = (bool)scriptExecutor.ExecuteScript("var step = $('#demo-checkbox-unselected3').prop('checked');return step");
             if (checkTrueOrFalse == false)
             {
                 scriptExecutor.ExecuteScript("$('#demo-checkbox-unselected3').click()");
             }
-            checkTrueOrFalse = (bool)scriptExecutor.ExecuteScript("var step =$('#demo-checkbox-unselected1').prop('checked');return step");
+            checkTrueOrFalse = (bool)scriptExecutor.ExecuteScript("var step = $('#demo-checkbox-unselected1').prop('checked');return step");
             if (checkTrueOrFalse == false)
             {
                 scriptExecutor.ExecuteScript("$('#demo-checkbox-unselected1').click()");
@@ -158,10 +158,10 @@ namespace Protractor_Net_Demo.FunctionalTest
         [Then(@"all check boxes should get checked")]
         public void ThenAllCheckBoxesShouldGetChecked()
         {
-            bool checkIncludeEmailNotification = (bool)scriptExecutor.ExecuteScript("var step =$('#demo-checkbox-unselected2').prop('checked');return step;");
-            bool checkIncludeCalendar = (bool)scriptExecutor.ExecuteScript("var step =$('#demo-checkbox-unselected0').prop('checked');return step;");
-            bool checkIncludeTasks = (bool)scriptExecutor.ExecuteScript("var step =$('#demo-checkbox-unselected3').prop('checked');return step;");
-            bool checkIncludeRssFeed = (bool)scriptExecutor.ExecuteScript("var step =$('#demo-checkbox-unselected3').prop('checked');return step;");
+            bool checkIncludeEmailNotification = (bool)scriptExecutor.ExecuteScript("var step = $('#demo-checkbox-unselected2').prop('checked');return step;");
+            bool checkIncludeCalendar = (bool)scriptExecutor.ExecuteScript("var step = $('#demo-checkbox-unselected0').prop('checked');return step;");
+            bool checkIncludeTasks = (bool)scriptExecutor.ExecuteScript("var step = $('#demo-checkbox-unselected3').prop('checked');return step;");
+            bool checkIncludeRssFeed = (bool)scriptExecutor.ExecuteScript("var step = $('#demo-checkbox-unselected3').prop('checked');return step;");
             Assert.IsTrue(checkIncludeEmailNotification == true);
             Assert.IsTrue(checkIncludeCalendar == true);
             Assert.IsTrue(checkIncludeTasks == true);

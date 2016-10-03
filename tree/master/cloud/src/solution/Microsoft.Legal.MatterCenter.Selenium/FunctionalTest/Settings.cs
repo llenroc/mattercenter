@@ -22,7 +22,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
     [Binding]
     public class Settings
     {
-        string URL = ConfigurationManager.AppSettings["settings"];
+        string URL = ConfigurationManager.AppSettings["Settings"];
         static IWebDriver webDriver = CommonHelperFunction.GetDriver();
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
         CommonHelperFunction common = new CommonHelperFunction();
@@ -32,8 +32,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         public void WhenWeWillEnterValueAsAnd(string userName, string password)
         {
             common.GetLogin(webDriver, URL);
-            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["userName"]));
-            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["password"]));
+            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["UserName"]));
+            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["Password"]));
         }
 
         [Then(@"settings page should be loaded with element '(.*)'")]
@@ -49,11 +49,11 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         {
             webDriver.FindElement(By.CssSelector("input.ms-TextField-field.inputMatterName")).Click();
             webDriver.FindElement(By.CssSelector("input.ms-TextField-field.inputMatterName")).Clear();
-            webDriver.FindElement(By.CssSelector("input.ms-TextField-field.inputMatterName")).SendKeys(ConfigurationManager.AppSettings["matterName"]);
+            webDriver.FindElement(By.CssSelector("input.ms-TextField-field.inputMatterName")).SendKeys(ConfigurationManager.AppSettings["MatterName"]);
             Thread.Sleep(2000);
             webDriver.FindElement(By.CssSelector("input.ms-TextField-field.inputMatterId")).Click();
             webDriver.FindElement(By.CssSelector("input.ms-TextField-field.inputMatterId")).Clear();
-            webDriver.FindElement(By.CssSelector("input.ms-TextField-field.inputMatterId")).SendKeys(ConfigurationManager.AppSettings["matterDescription"]);
+            webDriver.FindElement(By.CssSelector("input.ms-TextField-field.inputMatterId")).SendKeys(ConfigurationManager.AppSettings["MatterDescription"]);
             Thread.Sleep(2000);
             scriptExecutor.ExecuteScript("$('.popUpPGDiv').click()");
             Thread.Sleep(2000);
@@ -70,8 +70,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Thread.Sleep(2000);
             webDriver.FindElement(By.Id("txtAssign1")).Click();
             webDriver.FindElement(By.Id("txtAssign1")).Clear();
-            webDriver.FindElement(By.Id("txtAssign1")).SendKeys(ConfigurationManager.AppSettings["attorneyName"]);
-            webDriver.FindElement(By.LinkText(ConfigurationManager.AppSettings["attorneyMember"])).Click();
+            webDriver.FindElement(By.Id("txtAssign1")).SendKeys(ConfigurationManager.AppSettings["AttorneyName"]);
+            webDriver.FindElement(By.LinkText(ConfigurationManager.AppSettings["AttorneyMember"])).Click();
             Thread.Sleep(2000);
             webDriver.FindElement(By.Id("ddlRoleAssignIcon1")).Click();
             Thread.Sleep(2000);

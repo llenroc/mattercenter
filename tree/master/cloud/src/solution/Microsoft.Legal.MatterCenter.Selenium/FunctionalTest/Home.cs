@@ -22,7 +22,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
     [Binding]
     public class Home
     {
-        string URL = ConfigurationManager.AppSettings["home"];
+        string URL = ConfigurationManager.AppSettings["Home"];
         static IWebDriver webDriver = CommonHelperFunction.GetDriver();
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
         CommonHelperFunction common = new CommonHelperFunction();
@@ -31,8 +31,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         public void WhenWeWillProvideAnd(string userName, string password)
         {
             common.GetLogin(webDriver, URL);
-            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["userName"]));
-            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["password"]));
+            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["UserName"]));
+            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["Password"]));
         }
 
         [Then(@"home page should be loaded with element '(.*)'")]
@@ -50,19 +50,20 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         }
 
         [Then(@"hamburger menu should display '(.*)','(.*)','(.*)' and '(.*)' menu")]
-        public void ThenHamburgerMenuShouldDisplayAndMenu(string selectHome, string selectProjects, string selectDocument, string selectProvision)
+        public void ThenHamburgerMenuShouldDisplayAndMenu(string selectHome, string selectMatters, string selectDocument, string selectProvision)
         {
+            Thread.Sleep(2000);
             string home = (string)scriptExecutor.ExecuteScript("var links = $('.AppMenuFlyoutPriLinks a')[0].text;return links");
             string matters = (string)scriptExecutor.ExecuteScript("var links = $('.AppMenuFlyoutPriLinks a')[1].text;return links");
             string documents = (string)scriptExecutor.ExecuteScript("var links = $('.AppMenuFlyoutPriLinks a')[2].text;return links");
             string matterProvision = (string)scriptExecutor.ExecuteScript("var links = $('.AppMenuFlyoutPriLinks a')[3].text;return links");
 
             Assert.IsTrue(home.Equals(selectHome));
-            Assert.IsTrue(matters.Equals(selectProjects));
+            Assert.IsTrue(matters.Equals(selectMatters));
             Assert.IsTrue(documents.Equals(selectDocument));
             Assert.IsTrue(matterProvision.Equals(selectProvision));
-            Thread.Sleep(3000);
-            webDriver.FindElement(By.ClassName("AppSwitcherContainer")).Click();
+            Thread.Sleep(2000);
+            scriptExecutor.ExecuteScript("$('.CloseSwitcher').click()");
         }
         #endregion
 
@@ -87,7 +88,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         public void WhenUserClicksOnMattersLink()
         {
             scriptExecutor.ExecuteScript("$('.MattersContainer a figure figcaption')[0].click();");
-            Thread.Sleep(4000);         
+            Thread.Sleep(4000);
         }
 
         [Then(@"it should open the matter search page")]
@@ -98,14 +99,14 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             webDriver.Navigate().GoToUrl(new Uri(URL));
             Thread.Sleep(4000);
             string matters = (string)scriptExecutor.ExecuteScript("var links = $('.MattersContainer a figure figcaption')[0].innerText;return links");
-            Assert.IsTrue(matters.Contains("Projects"));
+            Assert.IsTrue(matters.Contains("Matters"));
         }
 
         [When(@"user clicks on documents link")]
         public void WhenUserClickOnDocumentsLink()
         {
             scriptExecutor.ExecuteScript("$('.DocumentsContainer figure figcaption')[0].click();");
-            Thread.Sleep(4000);        
+            Thread.Sleep(4000);
         }
 
         [Then(@"it should open the document search page")]
@@ -136,7 +137,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
 
         [When(@"user clicks on create a new matter")]
         public void WhenUserClicksOnCreateANewMatter()
-        {       
+        {
             scriptExecutor.ExecuteScript("$('.CreateMatterLink').click();");
             Thread.Sleep(4000);
         }
@@ -147,7 +148,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             webDriver.Navigate().GoToUrl(new Uri(URL));
             Thread.Sleep(4000);
             string matterProvision = (string)scriptExecutor.ExecuteScript("var links = $('.CreateMatterLink').attr('href');return links");
-            Assert.IsTrue(matterProvision.Contains("#/createMatter"));           
+            Assert.IsTrue(matterProvision.Contains("#/createMatter"));
         }
 
         [When(@"user clicks on go to matter center home page")]
