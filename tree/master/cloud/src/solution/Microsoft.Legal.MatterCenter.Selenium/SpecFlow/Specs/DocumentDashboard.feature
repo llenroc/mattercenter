@@ -21,7 +21,19 @@ Scenario: 07. Verify the advance filter functionality
 	Then filtered results should be shown to user
 
 Scenario: 05. Verify the sort functionality on document dashboard
-	When user sorts data in ascending order on document dashboard
+	When user sorts data for All document in ascending order on document dashboard
+	Then all records should be sorted in ascending order on document dashboard
+	When user sorts data for All document in ascending order of created date
+	Then all records should be sorted in ascending order on document dashboard
+
+	When user sorts data for Pinned document in ascending order
+	Then all records should be sorted in ascending order on document dashboard
+	When user sorts data for Pinned document in ascending order of created date
+	Then all records should be sorted in ascending order on document dashboard
+
+	When user sorts data for My document in ascending order
+	Then all records should be sorted in ascending order on document dashboard
+	When user sorts data for My document in ascending order of created date
 	Then all records should be sorted in ascending order on document dashboard
 
 Scenario: 04. Verify the mail cart functionality

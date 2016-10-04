@@ -171,8 +171,14 @@ this.ScenarioSetup(scenarioInfo);
 #line 35
 this.ScenarioSetup(scenarioInfo);
 #line 36
- testRunner.When("user clicks on column filter to filter the documents using keyword \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on column filter to filter the documents using keyword \'Test\' on My D" +
+                    "ocuments", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 37
+ testRunner.Then("it should filter the document based on filtered keyword", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 38
+ testRunner.When("user clicks on column filter to filter the documents using keyword \'Test\' on All " +
+                    "Documents", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 39
  testRunner.Then("it should filter the document based on filtered keyword", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -185,23 +191,23 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Verify the document ECB menu", new string[] {
                         "E2E"});
-#line 40
-this.ScenarioSetup(scenarioInfo);
-#line 41
- testRunner.When("user clicks on ECB menu in document search page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 42
- testRunner.Then("a fly out should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+this.ScenarioSetup(scenarioInfo);
 #line 43
- testRunner.When("user clicks on open this document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on ECB menu in document search page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 44
- testRunner.Then("that document should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("a fly out should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 45
- testRunner.When("user clicks on view matter details in fly out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on open this document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 46
- testRunner.Then("user should be redirected to matter landing page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("that document should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 47
-    testRunner.When("user clicks on pin this document or unpin this document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on view matter details in fly out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 48
+ testRunner.Then("user should be redirected to matter landing page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 49
+    testRunner.When("user clicks on pin this document or unpin this document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 50
  testRunner.Then("document should be pinned or unpinned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -214,19 +220,19 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Verify the document fly out", new string[] {
                         "E2E"});
-#line 51
-this.ScenarioSetup(scenarioInfo);
-#line 52
- testRunner.When("user clicks on document on document search page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 53
- testRunner.Then("a document fly out should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+this.ScenarioSetup(scenarioInfo);
 #line 54
- testRunner.When("user clicks on open this document in document fly out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on document on document search page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 55
- testRunner.Then("that document should open when clicked", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("a document fly out should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 56
- testRunner.When("user clicks on view document details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on open this document in document fly out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 57
+ testRunner.Then("that document should open when clicked", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 58
+ testRunner.When("user clicks on view document details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 59
  testRunner.Then("document landing page should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

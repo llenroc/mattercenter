@@ -30,9 +30,19 @@ Scenario: 07. Verify the advance filter functionality
 	Then filter results should be shown to user
 
 Scenario: 08. Verify the sort functionality in matter center home
-	When user sorts data in ascending order
+	When user sorts data for All matters in ascending order
 	Then all records should be sorted in ascending order
-	When user sorts data in ascending order of created date
+	When user sorts data for All matters in ascending order of created date
+	Then all records should be sorted in ascending order of created date
+
+	When user sorts data for Pinned matters in ascending order
+	Then all records should be sorted in ascending order
+	When user sorts data for Pinned matters in ascending order of created date
+	Then all records should be sorted in ascending order of created date
+
+	When user sorts data for My matters in ascending order
+	Then all records should be sorted in ascending order
+	When user sorts data for My matters in ascending order of created date
 	Then all records should be sorted in ascending order of created date
 
 Scenario: 09. Verify the footer on matter center home

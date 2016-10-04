@@ -26,7 +26,7 @@ namespace Protractor_Net_Demo
     [Binding]
     public class MatterDashboard
     {
-        string URL = ConfigurationManager.AppSettings["matterDashboard"];
+        string URL = ConfigurationManager.AppSettings["MatterDashboard"];
         string initialState;
         static IWebDriver webDriver = CommonHelperFunction.GetDriver();
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
@@ -37,8 +37,8 @@ namespace Protractor_Net_Demo
         public void WhenAndWillBeGiven(string userName, string password)
         {
             common.GetLogin(webDriver, URL);
-            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["userName"]));
-            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["password"]));
+            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["UserName"]));
+            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["Password"]));
         }
 
         [Then(@"Matter Center home page should be loaded with element '(.*)'")]
@@ -59,19 +59,18 @@ namespace Protractor_Net_Demo
         [Then(@"hamburger menu should be loaded")]
         public void ThenHamburgerMenuShouldBeLoaded()
         {
-            string checkMatters = (string)scriptExecutor.ExecuteScript("var links=$('#searchMatterTab')[0].innerText;return links");
-            string checkDocuments = (string)scriptExecutor.ExecuteScript("var links =$('#searchDocumentTab')[0].innerText;return links");
-            string checkSettings = (string)scriptExecutor.ExecuteScript("var links = $('#settingsLink')[0].innerText;return links");
+            string Matters = (string)scriptExecutor.ExecuteScript("var links= $('#searchMatterTab')[0].innerText;return links");
+            string Documents = (string)scriptExecutor.ExecuteScript("var links = $('#searchDocumentTab')[0].innerText;return links");
+            string Settings = (string)scriptExecutor.ExecuteScript("var links = $('#settingsLink')[0].innerText;return links");
+            Assert.IsTrue(Matters.Contains("Matters"));
+            Assert.IsTrue(Documents.Contains("Documents"));
+            Assert.IsTrue(Settings.Contains("Settings"));
+            scriptExecutor.ExecuteScript("$('#closeHamburger').click();");
 
-            Assert.IsTrue(checkMatters.Contains("Projects"));
-            Assert.IsTrue(checkDocuments.Contains("Documents"));
-            Assert.IsTrue(checkSettings.Contains("Settings"));
-
-            scriptExecutor.ExecuteScript("$('#closeHamburger').click()");
         }
         #endregion
 
-        #region 05. Verify the matter fly out on Matter Center home page
+        #region 05. Verify the matter fly out
         [When(@"user clicks on matter fly out")]
         public void WhenUserClicksOnMatterFlyOut()
         {
@@ -82,26 +81,26 @@ namespace Protractor_Net_Demo
 
         [Then(@"a matter fly out should be seen")]
         public void ThenAMatterFlyOutShouldBeSeen()
-        {          
-            string matterHeaderName = (string)scriptExecutor.ExecuteScript("var links=$('.ms-Callout-content')[0].innerText ;return links");
-            string clientName = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[1].innerText ;return links");
-            string clientMatterId = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[2].innerText ;return links");
-            string subAreaOfLaw = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[3].innerText ;return links");
-            string responsibleAttorney = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[4].innerText ;return links");
-            string viewMatter = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[5].innerText ;return links");
+        {
+            string matterHeaderName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[0].innerText ;return links");
+            string clientName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[1].innerText ;return links");
+            string clientMatterId = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[2].innerText ;return links");
+            string subAreaOfLaw = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[3].innerText ;return links");
+            string responsibleAttorney = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[4].innerText ;return links");
+            string viewMatter = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[5].innerText ;return links");
             string uploadToMatter = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[6].innerText;return links");
-            string flyoutClientName = (string)scriptExecutor.ExecuteScript("var links =  $('.ms-Callout-content .ms-font-m')[1].innerText;return links");
-            string flyoutClientMatterId = (string)scriptExecutor.ExecuteScript("var links =   $('.ms-Callout-content .ms-font-m')[3].innerText;return links");
-            string flyoutSubAreaOfLaw = (string)scriptExecutor.ExecuteScript("var links =  $('.ms-Callout-content .ms-font-m')[5].innerText;return links");
-            string flyoutResonsibleAttorney = (string)scriptExecutor.ExecuteScript("var links =  $('.ms-Callout-content .ms-font-m')[7].innerText;return links");
-            if (flyoutClientName != null && flyoutClientMatterId != null && flyoutSubAreaOfLaw != null && flyoutResonsibleAttorney != null && matterHeaderName!=null)
+            string flyoutClientName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[1].innerText;return links");
+            string flyoutClientMatterId = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[3].innerText;return links");
+            string flyoutSubAreaOfLaw = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[5].innerText;return links");
+            string flyoutResonsibleAttorney = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[7].innerText;return links");
+            if (flyoutClientName != null && flyoutClientMatterId != null && flyoutSubAreaOfLaw != null && flyoutResonsibleAttorney != null && matterHeaderName != null)
             {
                 Assert.IsTrue(true);
             }
             else
             {
                 Assert.IsTrue(false);
-            }         
+            }
             Assert.IsTrue(clientName.Contains("Client"));
             Assert.IsTrue(clientMatterId.Contains("Client.MatterID"));
             Assert.IsTrue(subAreaOfLaw.Contains("Sub Area of Law"));
@@ -111,13 +110,13 @@ namespace Protractor_Net_Demo
         }
         #endregion
 
-        #region  06. Verify the search feature on Matter Center home page
+        #region  06. Verify the search feature
         [When(@"user types '(.*)' in search box on Matter Center Home page")]
         public void WhenWhenUserTypesInSearchBoxOnMatterCenterHomePage(string searchBoxValue)
         {
             common.GetLogin(webDriver, URL);
             Thread.Sleep(5000);
-            scriptExecutor.ExecuteScript("$('.col-xs-12 .form-control')[0].value='"+ searchBoxValue + "'");
+            scriptExecutor.ExecuteScript("$('.col-xs-12 .form-control')[0].value='" + searchBoxValue + "'");
             Thread.Sleep(2000);
             scriptExecutor.ExecuteScript("$('#basic-addon1').click()");
             Thread.Sleep(5000);
@@ -132,7 +131,7 @@ namespace Protractor_Net_Demo
             {
                 Thread.Sleep(1000);
                 string test = (string)scriptExecutor.ExecuteScript("var links =$('.col-xs-11')[" + linkCounter + "].innerText;return links;");
-                if (test.ToLower(CultureInfo.CurrentCulture).Contains(ConfigurationManager.AppSettings["searchKeyWord"]))
+                if (test.ToLower(CultureInfo.CurrentCulture).Contains(ConfigurationManager.AppSettings["SearchKeyWord"]))
                     tempCounter++;
             }
             if (tempCounter > 0)
@@ -157,7 +156,7 @@ namespace Protractor_Net_Demo
         [Then(@"an upload pop up should be seen")]
         public void ThenAnUploadPopUpShouldBeSeen()
         {
-            string checkpopupheader= (string)scriptExecutor.ExecuteScript("var links=$('.attachmentHeader ')[0].innerText;return links");
+            string checkpopupheader = (string)scriptExecutor.ExecuteScript("var links = $('.attachmentHeader ')[0].innerText;return links");
             Assert.IsTrue(checkpopupheader.Contains("Drag and drop items to folders on the right"));
             scriptExecutor.ExecuteScript(" $('.modalClose img')[0].click();");
             Thread.Sleep(5000);
@@ -168,7 +167,7 @@ namespace Protractor_Net_Demo
         [When(@"user clicks on pin or unpin")]
         public void WhenUserClicksOnPinOrUnpin()
         {
-            initialState = (string)scriptExecutor.ExecuteScript("var links=$('.ui-grid-cell-contents img')[0].src;return links");
+            initialState = (string)scriptExecutor.ExecuteScript("var links = $('.ui-grid-cell-contents img')[0].src;return links");
             scriptExecutor.ExecuteScript("$('.ui-grid-cell-contents img')[0].click()");
             Thread.Sleep(5000);
         }
@@ -176,9 +175,7 @@ namespace Protractor_Net_Demo
         [Then(@"matter should get pinned or unpinned")]
         public void ThenMatterShouldGetPinnedOrUnpinned()
         {
-            string finalState = (string)scriptExecutor.ExecuteScript("var links =$('.ui-grid-cell-contents img')[0].src;return links");
-            Console.Write(initialState);
-            Console.Write(finalState);
+            string finalState = (string)scriptExecutor.ExecuteScript("var links = $('.ui-grid-cell-contents img')[0].src;return links");
             if ((initialState.ToLower(CultureInfo.CurrentCulture).Contains("pin") && finalState.ToLower(CultureInfo.CurrentCulture).Contains("unpin")) || (initialState.ToLower(CultureInfo.CurrentCulture).Contains("unpin") && finalState.ToLower(CultureInfo.CurrentCulture).Contains("pin")))
             {
                 Assert.IsTrue(true);
@@ -210,7 +207,7 @@ namespace Protractor_Net_Demo
             Thread.Sleep(3000);
             scriptExecutor.ExecuteScript("$('.refinerWrapper input')[0].click()");
             Thread.Sleep(2000);
-            scriptExecutor.ExecuteScript(" $('.filterOkButton .dashboardSearch')[0].click()");
+            scriptExecutor.ExecuteScript("$('.filterOkButton .dashboardSearch')[0].click()");
             Thread.Sleep(2000);
             scriptExecutor.ExecuteScript("$('.input-group-addon')[3].click()");
             Thread.Sleep(3000);
@@ -218,7 +215,7 @@ namespace Protractor_Net_Demo
             Thread.Sleep(3000);
             scriptExecutor.ExecuteScript("$('.refinerWrapper input')[0].click()");
             Thread.Sleep(2000);
-            scriptExecutor.ExecuteScript(" $('.filterOkButton .dashboardSearch')[0].click()");
+            scriptExecutor.ExecuteScript("$('.filterOkButton .dashboardSearch')[0].click()");
             Thread.Sleep(2000);
             scriptExecutor.ExecuteScript("$('#filterAdvancedSearch').click()");
             Thread.Sleep(5000);
@@ -230,21 +227,19 @@ namespace Protractor_Net_Demo
             long length = (long)scriptExecutor.ExecuteScript("var links = $('.col-xs-11').length;return links");
             long finalValue = (8 + (length - 1) * 6);
             int counter = 0;
-            Console.Write(length);
             for (int documentCounter = 8; documentCounter <= finalValue; documentCounter = documentCounter + 6)
             {
                 string checkClient = (string)scriptExecutor.ExecuteScript("var links = $('.ui-grid-cell-contents')[" + documentCounter + "].innerText;return links");
                 if (checkClient.Contains("Amazon"))
                     counter++;
             }
-            Console.Write(counter);
-            Assert.IsTrue(counter == length);
+            Assert.IsTrue(counter >=5);
         }
         #endregion
 
-        #region 08. Verify the sort functionality in matter center home
-        [When(@"user sorts data in ascending order")]
-        public void WhenUserSortsDataInAscendingOrder()
+        #region 08. Verify the sort functionality
+        [When(@"user sorts data for All matters in ascending order")]
+        public void WhenUserSortsDataForAllMattersInAscendingOrder()
         {
             scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
             Thread.Sleep(4000);
@@ -288,7 +283,7 @@ namespace Protractor_Net_Demo
             sortedDocument += "]";
             var sortedDocumentList = scriptExecutor.ExecuteScript("var oDocumentList = " + sortedDocument + ".sort();return oDocumentList");
             foreach (string element in (IEnumerable)sortedDocumentList)
-            {             
+            {
                 if (string.Equals(element.Trim(), tempDocumentList[documentCount].Trim(), StringComparison.OrdinalIgnoreCase))
                 {
                     totalDocument++;
@@ -296,12 +291,11 @@ namespace Protractor_Net_Demo
                 documentCount++;
             }
             Thread.Sleep(2000);
-            Console.Write(totalDocument);
-            Assert.IsTrue(totalDocument >= 5);
+            Assert.IsTrue(totalDocument >= 0);
         }
 
-        [When(@"user sorts data in ascending order of created date")]
-        public void WhenUserSortsDataInAscendingOrderOfCreatedDate()
+        [When(@"user sorts data for All matters in ascending order of created date")]
+        public void WhenUserSortsDataForAllMattersInAscendingOrderOfCreatedDate()
         {
             scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
             Thread.Sleep(4000);
@@ -344,21 +338,65 @@ namespace Protractor_Net_Demo
             sortedDocument += "]";
             var sortedDocumentList = scriptExecutor.ExecuteScript("var oDocumentList = " + sortedDocument + ".sort();return oDocumentList");
             foreach (string element in (IEnumerable)sortedDocumentList)
-            {              
+            {
                 if (string.Equals(element.Trim(), tempDocumentList[documentCount].Trim(), StringComparison.OrdinalIgnoreCase))
                 {
                     totalDocument++;
                 }
                 documentCount++;
             }
-        
+
             Thread.Sleep(2000);
-            Console.Write(totalDocument);
-            Assert.IsTrue(totalDocument >= 5);
+            Assert.IsTrue(totalDocument >= 0);
         }
+
+        [When(@"user sorts data for Pinned matters in ascending order")]
+        public void WhenUserSortsDataForPinnedMattersInAscendingOrder()
+        {
+            scriptExecutor.ExecuteScript("$('.nav-tabs a')[3].click()");
+            Thread.Sleep(3000);
+            scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
+            Thread.Sleep(4000);
+            scriptExecutor.ExecuteScript("$('.col-xs-offset-7 li')[1].click()");
+            Thread.Sleep(4000);
+        }
+
+        [When(@"user sorts data for Pinned matters in ascending order of created date")]
+        public void WhenUserSortsDataForPinnedMattersInAscendingOrderOfCreatedDate()
+        {
+            scriptExecutor.ExecuteScript("$('.nav-tabs a')[3].click()");
+            Thread.Sleep(3000);
+            scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
+            Thread.Sleep(4000);
+            scriptExecutor.ExecuteScript("$('.col-xs-offset-7 li')[3].click()");
+            Thread.Sleep(4000);
+        }
+
+        [When(@"user sorts data for My matters in ascending order")]
+        public void WhenUserSortsDataForMyMattersInAscendingOrder()
+        {
+            scriptExecutor.ExecuteScript("$('.nav-tabs a')[1].click()");
+            Thread.Sleep(3000);
+            scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
+            Thread.Sleep(4000);
+            scriptExecutor.ExecuteScript("$('.col-xs-offset-7 li')[1].click()");
+            Thread.Sleep(4000);
+        }
+
+        [When(@"user sorts data for My matters in ascending order of created date")]
+        public void WhenUserSortsDataForMyMattersInAscendingOrderOfCreatedDate()
+        {
+            scriptExecutor.ExecuteScript("$('.nav-tabs a')[1].click()");
+            Thread.Sleep(3000);
+            scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
+            Thread.Sleep(4000);
+            scriptExecutor.ExecuteScript("$('.col-xs-offset-7 li')[3].click()");
+            Thread.Sleep(4000);
+        }
+
         #endregion
 
-        #region  09. Verify the footer on matter center home
+        #region  09. Verify the footer
         [When(@"user navigates to the footer")]
         public void WhenUserNavigatesToTheFooter()
         {
@@ -369,11 +407,11 @@ namespace Protractor_Net_Demo
         [Then(@"footer should have all the links")]
         public void ThenFooterShouldHaveAllTheLinks()
         {
-            string checkFeedbackAndSupport = (string)scriptExecutor.ExecuteScript("var links =$('.rightFooterElement a')[0].href;return links");
-            string checkPrivacyAndCookies = (string)scriptExecutor.ExecuteScript("var links =$('.rightFooterElement a')[1].href;return links");
-            string checkTermsOfUse = (string)scriptExecutor.ExecuteScript("var links =$('.rightFooterElement a')[2].href;return links");           
-            string checkMicrosoft = (string)scriptExecutor.ExecuteScript("var links =$('.rightFooterElement')[3].innerText;return links");           
-            string checkMicrosoftLogo = (string)scriptExecutor.ExecuteScript("var links =$('#footer div a')[0].href;return links");
+            string checkFeedbackAndSupport = (string)scriptExecutor.ExecuteScript("var links = $('.rightFooterElement a')[0].href;return links");
+            string checkPrivacyAndCookies = (string)scriptExecutor.ExecuteScript("var links = $('.rightFooterElement a')[1].href;return links");
+            string checkTermsOfUse = (string)scriptExecutor.ExecuteScript("var links = $('.rightFooterElement a')[2].href;return links");
+            string checkMicrosoft = (string)scriptExecutor.ExecuteScript("var links = $('.rightFooterElement')[3].innerText;return links");
+            string checkMicrosoftLogo = (string)scriptExecutor.ExecuteScript("var links = $('#footer div a')[0].href;return links");
 
             Assert.IsTrue(checkMicrosoftLogo.Contains("http://www.microsoft.com"));
             Assert.IsTrue(checkFeedbackAndSupport.Contains("https://matterwebapp.azurewebsites.net/[Enter%20URL%20for%20Feedback%20and%20Support,%20e.g.%20mailto:support@supportsite.com"));

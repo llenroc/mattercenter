@@ -9,3 +9,4 @@ Scenario: 02. Set the value on settings page
 	Then settings should be saved and confirmation message should be displayed
 	        
     
+        

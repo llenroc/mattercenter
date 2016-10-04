@@ -57,7 +57,9 @@ Scenario: 04. Verify the matter sort
 
 @E2E
 Scenario: 08. Verify the matter filter search
-	When user clicks on column filter to filter the matter with the keyword 'Test'
+	When user clicks on column filter to filter the matter with the keyword 'Test' on All Matters
+	Then it should filter the matter based on filter keyword
+	When user clicks on column filter to filter the matter with the keyword 'Test' on My Matters
 	Then it should filter the matter based on filter keyword
 	     
      

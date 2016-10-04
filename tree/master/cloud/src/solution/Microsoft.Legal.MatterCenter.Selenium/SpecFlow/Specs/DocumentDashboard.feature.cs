@@ -147,8 +147,28 @@ this.ScenarioSetup(scenarioInfo);
 #line 23
 this.ScenarioSetup(scenarioInfo);
 #line 24
- testRunner.When("user sorts data in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user sorts data for All document in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 25
+ testRunner.Then("all records should be sorted in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 26
+ testRunner.When("user sorts data for All document in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 27
+ testRunner.Then("all records should be sorted in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 29
+ testRunner.When("user sorts data for Pinned document in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 30
+ testRunner.Then("all records should be sorted in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 31
+ testRunner.When("user sorts data for Pinned document in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 32
+ testRunner.Then("all records should be sorted in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 34
+ testRunner.When("user sorts data for My document in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 35
+ testRunner.Then("all records should be sorted in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 36
+ testRunner.When("user sorts data for My document in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 37
  testRunner.Then("all records should be sorted in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -159,11 +179,11 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void _04_VerifyTheMailCartFunctionality()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Verify the mail cart functionality", ((string[])(null)));
-#line 27
+#line 39
 this.ScenarioSetup(scenarioInfo);
-#line 28
+#line 40
  testRunner.When("user selects document and clicks on mail cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 29
+#line 41
  testRunner.Then("selected documents should be saved as a draft when clicked on email as attachment" +
                     " or email as link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

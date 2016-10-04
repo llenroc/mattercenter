@@ -233,8 +233,14 @@ this.ScenarioSetup(scenarioInfo);
 #line 59
 this.ScenarioSetup(scenarioInfo);
 #line 60
- testRunner.When("user clicks on column filter to filter the matter with the keyword \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on column filter to filter the matter with the keyword \'Test\' on All " +
+                    "Matters", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 61
+ testRunner.Then("it should filter the matter based on filter keyword", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 62
+ testRunner.When("user clicks on column filter to filter the matter with the keyword \'Test\' on My M" +
+                    "atters", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 63
  testRunner.Then("it should filter the matter based on filter keyword", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

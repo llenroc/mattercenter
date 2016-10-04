@@ -80,6 +80,74 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("02. Verify page components")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
+        public virtual void _02_VerifyPageComponents()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Verify page components", new string[] {
+                        "E2E"});
+#line 9
+this.ScenarioSetup(scenarioInfo);
+#line 10
+ testRunner.When("user clicks on various components on the page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 11
+ testRunner.Then("all components should work as per design", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("03. Verify file properties")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
+        public virtual void _03_VerifyFileProperties()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Verify file properties", new string[] {
+                        "E2E"});
+#line 14
+this.ScenarioSetup(scenarioInfo);
+#line 15
+ testRunner.When("user navigates to file properties section", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 16
+ testRunner.Then("all file properties should be present", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("04. Verify version details")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
+        public virtual void _04_VerifyVersionDetails()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Verify version details", new string[] {
+                        "E2E"});
+#line 19
+this.ScenarioSetup(scenarioInfo);
+#line 20
+ testRunner.When("user navigates to version section", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 21
+ testRunner.Then("all versions of the document should be seen", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("05. Verify the footer links")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
+        public virtual void _05_VerifyTheFooterLinks()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Verify the footer links", new string[] {
+                        "E2E"});
+#line 24
+this.ScenarioSetup(scenarioInfo);
+#line 25
+ testRunner.When("user navigates to footer on document landing page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 26
+ testRunner.Then("all links should be present on footer on document landing page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

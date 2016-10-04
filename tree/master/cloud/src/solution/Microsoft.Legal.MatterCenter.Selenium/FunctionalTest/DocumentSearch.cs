@@ -25,7 +25,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
     [Binding]
     public class DocumentSearch
     {
-        string URL = ConfigurationManager.AppSettings["documentSearch"];
+        string URL = ConfigurationManager.AppSettings["DocumentSearch"];
         string initialState;
         static IWebDriver webDriver = CommonHelperFunction.GetDriver();
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
@@ -36,8 +36,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         public void WhenWeWillGiveAnd(string userName, string password)
         {
             common.GetLogin(webDriver, URL);
-            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["userName"]));
-            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["password"]));
+            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["UserName"]));
+            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["Password"]));
         }
 
         [Then(@"document search page should be loaded with element '(.*)'")]
@@ -133,7 +133,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Assert.IsTrue(createdDatecolumn.Contains(createdDate.Trim()));
             Assert.IsTrue(length.ToString(CultureInfo.CurrentCulture).Equals("8"));
         }
-        
+
 
         [When(@"user clicks on column picker and remove all checked columns")]
         public void WhenUserClickOnColumnPickerAndRemoveAllCheckedColumns()
@@ -175,7 +175,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         string searchKeyword = null;
         [When(@"user searches with keyword '(.*)'")]
         public void WhenUserSearchesWithKeyword(string searchText)
-        {         
+        {
             // search 
             searchKeyword = searchText;
             scriptExecutor.ExecuteScript("document.getElementsByClassName('form-control')[0].value='" + searchText + "'");
@@ -205,10 +205,10 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         #region 04. Verify the document sort
         [When(@"user click on column name to sort the document in Ascending order")]
         public void WhenUserClickOnColumnNameToSortTheDocumentInAscendingOrder()
-        {          
+        {
             Thread.Sleep(3000);
             webDriver.FindElement(By.CssSelector("div.ui-grid-cell-contents.ui-grid-header-cell-primary-focus")).Click();
-            Thread.Sleep(3000);        
+            Thread.Sleep(3000);
         }
 
         [Then(@"it should sort the document in ascending order")]
@@ -223,14 +223,14 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             string duplicateDocuments = null;
             for (int documentCounter = 0; documentCounter < length; documentCounter++)
             {
-                string documentData = (string)scriptExecutor.ExecuteScript("var links = $('#documentPopup a.btn-link')["+ documentCounter + "].innerText;return links");
+                string documentData = (string)scriptExecutor.ExecuteScript("var links = $('#documentPopup a.btn-link')[" + documentCounter + "].innerText;return links");
                 string[] rows = documentData.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
 
                 if (!(rows[0].Equals(duplicateDocuments)))
                 {
-                   
+
                     if (rows[0] != null)
-                    documentlist[documentCounter] = rows[0];
+                        documentlist[documentCounter] = rows[0];
                     duplicateDocuments = rows[0];
                 }
             }
@@ -247,7 +247,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             sortedDocuments += "]";
             var data = scriptExecutor.ExecuteScript("var arr = " + sortedDocuments + ".sort();return arr");
             foreach (string element in (IEnumerable)data)
-            {              
+            {
                 if (string.Equals(element.Trim(), tempDocumentList[documentCount].Trim(), StringComparison.OrdinalIgnoreCase))
                 {
                     toalElement++;
@@ -262,20 +262,20 @@ namespace Microsoft.Legal.MatterCenter.Selenium
 
         #region 08. Verify the document filter search
         string keyword;
-        [When(@"user clicks on column filter to filter the documents using keyword '(.*)'")]
-        public void WhenUserClicksOnColumnFilterToFilterTheDocumentsUsingKeyword(string filterKeyword)
+        [When(@"user clicks on column filter to filter the documents using keyword '(.*)' on My Documents")]
+        public void WhenUserClicksOnColumnFilterToFilterTheDocumentsUsingKeywordOnMyDocuments(string filterKeyword)
         {
-            // Navigate to 'All documents' section
+            // Navigate to 'My documents' section
             common.GetLogin(webDriver, URL);
             Thread.Sleep(2000);
             keyword = filterKeyword;
-            scriptExecutor.ExecuteScript("$('.searchPanelDropdown')[0].click();");
+            scriptExecutor.ExecuteScript("$('.searchPanelDropdown')[1].click();");
             Thread.Sleep(4000);
             webDriver.FindElement(By.CssSelector("div.ui-grid-cell-contents.ui-grid-header-cell-primary-focus")).Click();
             Thread.Sleep(3000);
             webDriver.FindElement(By.CssSelector("a.prisma-header-dropdown-anchor > img")).Click();
             Thread.Sleep(3000);
-            scriptExecutor.ExecuteScript("$('.form-control')[2].value = '"+ filterKeyword + "'");
+            scriptExecutor.ExecuteScript("$('.form-control')[2].value = '" + filterKeyword + "'");
             Thread.Sleep(2000);
             webDriver.FindElement(By.XPath("(//button[@type='button'])[4]")).Click();
             Thread.Sleep(2000);
@@ -288,14 +288,35 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         {
             int documentCount = 0;
             long length = (long)scriptExecutor.ExecuteScript("var links = $('#documentPopup a.btn-link').length;return links");
-            for(int documentCounter = 0; documentCounter < length; documentCounter++)
+            for (int documentCounter = 0; documentCounter < length; documentCounter++)
             {
-                string documentContent = (string)scriptExecutor.ExecuteScript("var links = $('#documentPopup a.btn-link')["+ documentCounter + "].innerText;return links");
+                string documentContent = (string)scriptExecutor.ExecuteScript("var links = $('#documentPopup a.btn-link')[" + documentCounter + "].innerText;return links");
                 if (documentContent.ToLower(CultureInfo.CurrentCulture).Contains(keyword.ToLower(CultureInfo.CurrentCulture)))
                     documentCount++;
             }
-           
-            Assert.IsTrue(documentCount >=1);
+
+            Assert.IsTrue(documentCount >= 1);
+        }
+
+        [When(@"user clicks on column filter to filter the documents using keyword '(.*)' on All Documents")]
+        public void WhenUserClicksOnColumnFilterToFilterTheDocumentsUsingKeywordOnAllDocuments(string filterKeyword)
+        {
+            // Navigate to 'All documents' section
+            common.GetLogin(webDriver, URL);
+            Thread.Sleep(2000);
+            keyword = filterKeyword;
+            scriptExecutor.ExecuteScript("$('.searchPanelDropdown')[0].click();");
+            Thread.Sleep(4000);
+            webDriver.FindElement(By.CssSelector("div.ui-grid-cell-contents.ui-grid-header-cell-primary-focus")).Click();
+            Thread.Sleep(3000);
+            webDriver.FindElement(By.CssSelector("a.prisma-header-dropdown-anchor > img")).Click();
+            Thread.Sleep(3000);
+            scriptExecutor.ExecuteScript("$('.form-control')[2].value = '" + filterKeyword + "'");
+            Thread.Sleep(2000);
+            webDriver.FindElement(By.XPath("(//button[@type='button'])[4]")).Click();
+            Thread.Sleep(2000);
+            webDriver.FindElement(By.XPath("//div[@id='filterResultsContainer']/div")).Click();
+            Thread.Sleep(2000);
         }
         #endregion
 
@@ -336,7 +357,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         [Then(@"that document should open")]
         public void ThenThatDocumentShouldOpen()
         {
-            string openDocument = (string)scriptExecutor.ExecuteScript("var links =$('.dropdown-menu .ms-ContextualMenu-item a')[0].href;return links");
+            string openDocument = (string)scriptExecutor.ExecuteScript("var links = $('.dropdown-menu .ms-ContextualMenu-item a')[0].href;return links");
             Assert.IsTrue(openDocument.Contains("https://msmatter.sharepoint.com/sites/microsoft"));
         }
 
@@ -395,18 +416,18 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         [Then(@"a document fly out should open")]
         public void ThenADocumentFlyOutShouldOpen()
         {
-            string headingMatterName = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[0].innerText ;return links");
-            string matterName = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[1].innerText ;return links");
-            string clientName = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[2].innerText ;return links");
-            string documentId = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[3].innerText ;return links");
-            string authorName = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[4].innerText ;return links");
-            string modifiedDate = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[5].innerText ;return links");
+            string headingMatterName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[0].innerText ;return links");
+            string matterName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[1].innerText ;return links");
+            string clientName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[2].innerText ;return links");
+            string documentId = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[3].innerText ;return links");
+            string authorName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[4].innerText ;return links");
+            string modifiedDate = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[5].innerText ;return links");
             string openDocument = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[6].innerText;return links");
             string viewDocument = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[7].innerText;return links");
-            string flyoutMatterName = (string)scriptExecutor.ExecuteScript("var links =  $('.ms-Callout-content .ms-font-m')[1].innerText;return links");
-            string flyoutClientName = (string)scriptExecutor.ExecuteScript("var links =   $('.ms-Callout-content .ms-font-m')[3].innerText;return links");
-            string flyoutDocumentId = (string)scriptExecutor.ExecuteScript("var links =  $('.ms-Callout-content .ms-font-m')[5].innerText;return links");
-            string flyoutAuthorName = (string)scriptExecutor.ExecuteScript("var links =  $('.ms-Callout-content .ms-font-m')[7].innerText;return links");
+            string flyoutMatterName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[1].innerText;return links");
+            string flyoutClientName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[3].innerText;return links");
+            string flyoutDocumentId = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[5].innerText;return links");
+            string flyoutAuthorName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[7].innerText;return links");
             string flyoutModifiedDate = (string)scriptExecutor.ExecuteScript("var links =  $('.ms-Callout-content .ms-font-m')[9].innerText;return links");
             if (flyoutClientName != null && flyoutMatterName != null && flyoutDocumentId != null && flyoutAuthorName != null && flyoutModifiedDate != null && headingMatterName != null)
             {
@@ -436,7 +457,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         [Then(@"that document should open when clicked")]
         public void ThenThatDocumentShouldOpenWhenClicked()
         {
-            string openDocument = (string)scriptExecutor.ExecuteScript("var links =$('.dropdown-menu .ms-ContextualMenu-item a')[0].href;return links");
+            string openDocument = (string)scriptExecutor.ExecuteScript("var links = $('.dropdown-menu .ms-ContextualMenu-item a')[0].href;return links");
             Assert.IsTrue(openDocument.Contains("https://msmatter.sharepoint.com/sites/microsoft"));
         }
 
