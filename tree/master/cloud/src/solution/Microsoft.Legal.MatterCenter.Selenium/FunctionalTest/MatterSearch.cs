@@ -25,7 +25,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
     [Binding]
     public class SearchMatter
     {
-        string URL = ConfigurationManager.AppSettings["matterSearch"];
+        string URL = ConfigurationManager.AppSettings["MatterSearch"];
         string initialState;
         static IWebDriver webDriver = CommonHelperFunction.GetDriver();
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
@@ -36,8 +36,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         public void WhenWePassAnd(string userName, string password)
         {
             common.GetLogin(webDriver, URL);
-            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["userName"]));
-            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["password"]));
+            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["UserName"]));
+            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["Password"]));
         }
 
         [Then(@"matter search page should be loaded with element '(.*)'")]
@@ -96,7 +96,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         [When(@"user types '(.*)' in search box")]
         public void WhenUserTypesInSearchBox(string searchText)
         {
-            scriptExecutor.ExecuteScript(" $('#searchmatter .form-control')[0].value = '" + searchText + "'");
+            scriptExecutor.ExecuteScript("$('#searchmatter .form-control')[0].value = '" + searchText + "'");
             Thread.Sleep(4000);
             scriptExecutor.ExecuteScript("$('#basic-addon1').click()");
             Thread.Sleep(4000);
@@ -109,8 +109,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             for (linkCounter = 0; linkCounter < linkLength; linkCounter++)
             {
                 Thread.Sleep(1000);
-                string test = (string)scriptExecutor.ExecuteScript("var links =$('.col-xs-7')[" + linkCounter + "].innerText;return links;");
-                if (test.ToLower(CultureInfo.CurrentCulture).Contains(ConfigurationManager.AppSettings["searchKeyWord"]))
+                string test = (string)scriptExecutor.ExecuteScript("var links = $('.col-xs-7')[" + linkCounter + "].innerText;return links;");
+                if (test.ToLower(CultureInfo.CurrentCulture).Contains(ConfigurationManager.AppSettings["SearchKeyWord"]))
                     tempCounter++;
             }
             if (tempCounter > 0)
@@ -122,7 +122,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
                 Assert.IsTrue(false);
             }
             //Removing test results
-            scriptExecutor.ExecuteScript(" $('#searchmatter .form-control')[0].value =''");
+            scriptExecutor.ExecuteScript("$('#searchmatter .form-control')[0].value =''");
             Thread.Sleep(4000);
             scriptExecutor.ExecuteScript("$('#basic-addon1').click()");
             Thread.Sleep(4000);
@@ -142,9 +142,9 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         {
             string mattersList = (string)scriptExecutor.ExecuteScript("var links = $('.ui-grid-menu-items li button')[1].innerText;return links");
             string matterName = (string)scriptExecutor.ExecuteScript("var links = $('.ui-grid-header-cell-wrapper span')[0].innerText;return links");
-            string clientMatterId = (string)scriptExecutor.ExecuteScript("var links =$('.ui-grid-cell-contents span.ui-grid-header-cell-label')[1].innerText;return links");
-            string clientName = (string)scriptExecutor.ExecuteScript("var links =$('.ui-grid-cell-contents span.ui-grid-header-cell-label')[2].innerText;return links");
-            string modifiedDate = (string)scriptExecutor.ExecuteScript("var links =$('.ui-grid-cell-contents span.ui-grid-header-cell-label')[3].innerText;return links");
+            string clientMatterId = (string)scriptExecutor.ExecuteScript("var links = $('.ui-grid-cell-contents span.ui-grid-header-cell-label')[1].innerText;return links");
+            string clientName = (string)scriptExecutor.ExecuteScript("var links = $('.ui-grid-cell-contents span.ui-grid-header-cell-label')[2].innerText;return links");
+            string modifiedDate = (string)scriptExecutor.ExecuteScript("var links = $('.ui-grid-cell-contents span.ui-grid-header-cell-label')[3].innerText;return links");
             Assert.IsTrue(mattersList.Contains("Columns:"));
             Assert.IsTrue(matterName.Contains("Matter"));
             Assert.IsTrue(clientMatterId.Contains("Client.MatterID"));
@@ -164,9 +164,9 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         [Then(@"all columns should be shown in column header")]
         public void ThenAllColumnsShouldBeShownInColumnHeader()
         {
-            string responsibleAttorney = (string)scriptExecutor.ExecuteScript("var links =$('.ui-grid-cell-contents span.ui-grid-header-cell-label')[4].innerText;return links");
-            string subAreaOfLaw = (string)scriptExecutor.ExecuteScript("var links =$('.ui-grid-cell-contents span.ui-grid-header-cell-label')[5].innerText;return links");
-            string openDate = (string)scriptExecutor.ExecuteScript("var links =$('.ui-grid-cell-contents span.ui-grid-header-cell-label')[6].innerText;return links");
+            string responsibleAttorney = (string)scriptExecutor.ExecuteScript("var links = $('.ui-grid-cell-contents span.ui-grid-header-cell-label')[4].innerText;return links");
+            string subAreaOfLaw = (string)scriptExecutor.ExecuteScript("var links = $('.ui-grid-cell-contents span.ui-grid-header-cell-label')[5].innerText;return links");
+            string openDate = (string)scriptExecutor.ExecuteScript("var links = $('.ui-grid-cell-contents span.ui-grid-header-cell-label')[6].innerText;return links");
             Assert.IsTrue(responsibleAttorney.Contains("Responsible Attorney"));
             Assert.IsTrue(subAreaOfLaw.Contains("Sub Area of Law"));
             Assert.IsTrue(openDate.Contains("Open Date"));
@@ -226,7 +226,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Assert.IsTrue(viewMatter.Contains("View Matter Details"));
             Assert.IsTrue(goToMatterOneNote.Contains("Go to Matter OneNote"));
         }
-       
+
         [When(@"user clicks on upload to matter")]
         public void WhenUserClicksOnUploadToMatter()
         {
@@ -266,7 +266,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         [Then(@"user should be redirected to OneNote")]
         public void ThenUserShouldBeRedirectedToOneNote()
         {
-            string checkUrl = (string)scriptExecutor.ExecuteScript("var links =$('.ms-ContextualMenu-item > a')[2].href;return links");
+            string checkUrl = (string)scriptExecutor.ExecuteScript("var links = $('.ms-ContextualMenu-item > a')[2].href;return links");
             Assert.IsTrue(checkUrl.Contains("https://msmatter.sharepoint.com/sites"));
         }
 
@@ -287,8 +287,6 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         public void ThenMatterShouldBePinnedOrUnpinned()
         {
             string finalState = (string)scriptExecutor.ExecuteScript("var links = $('.dropdown-menu .ms-ContextualMenu-item a')[3].innerText;return links");
-            Console.Write(initialState);
-            Console.Write(finalState);
             if ((initialState.Contains("Pin") && finalState.Contains("Unpin")) || (initialState.Contains("Unpin") && finalState.Contains("Pin")))
             {
                 Assert.IsTrue(true);
@@ -312,18 +310,18 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         [Then(@"a matter fly out should open")]
         public void ThenAMatterFlyOutShouldOpen()
         {
-            string matterName = (string)scriptExecutor.ExecuteScript("var links =$('.col-xs-7 a')[0].innerText;return links");
-            string matterHeaderName = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[0].innerText ;return links");
-            string clientName = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[1].innerText ;return links");
-            string clientMatterId = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[2].innerText ;return links");
-            string subAreaOfLaw = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[3].innerText ;return links");
-            string responsibleAttorney = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[4].innerText ;return links");
-            string viewMatter = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[5].innerText ;return links");
+            string matterName = (string)scriptExecutor.ExecuteScript("var links = $('.col-xs-7 a')[0].innerText;return links");
+            string matterHeaderName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[0].innerText ;return links");
+            string clientName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[1].innerText ;return links");
+            string clientMatterId = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[2].innerText ;return links");
+            string subAreaOfLaw = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[3].innerText ;return links");
+            string responsibleAttorney = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[4].innerText ;return links");
+            string viewMatter = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[5].innerText ;return links");
             string uploadToMatter = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[6].innerText;return links");
-            string flyoutClientName = (string)scriptExecutor.ExecuteScript("var links =  $('.ms-Callout-content .ms-font-m')[1].innerText;return links");
-            string flyoutClientMatterId = (string)scriptExecutor.ExecuteScript("var links =   $('.ms-Callout-content .ms-font-m')[3].innerText;return links");
-            string flyoutSubAreaOfLaw = (string)scriptExecutor.ExecuteScript("var links =  $('.ms-Callout-content .ms-font-m')[5].innerText;return links");
-            string flyoutResonsibleAttorney = (string)scriptExecutor.ExecuteScript("var links =  $('.ms-Callout-content .ms-font-m')[7].innerText;return links");
+            string flyoutClientName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[1].innerText;return links");
+            string flyoutClientMatterId = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[3].innerText;return links");
+            string flyoutSubAreaOfLaw = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[5].innerText;return links");
+            string flyoutResonsibleAttorney = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[7].innerText;return links");
             if (flyoutClientName != null && flyoutClientMatterId != null && flyoutSubAreaOfLaw != null && flyoutResonsibleAttorney != null)
             {
                 Assert.IsTrue(true);
@@ -340,18 +338,18 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Assert.IsTrue(viewMatter.Contains("View matter details"));
             Assert.IsTrue(uploadToMatter.Contains("Upload to a matter"));
         }
-       
+
 
         [When(@"user clicks on view matter details in matter fly out")]
         public void WhenUserClicksOnViewMatterDetailsInMatterFlyOut()
-        {           
+        {
             Thread.Sleep(1000);
         }
 
         [Then(@"matter landing page should open")]
         public void ThenMatterLandingPageShouldOpen()
         {
-            string viewMatterDetails = (string)scriptExecutor.ExecuteScript("var links =$('.ms-Callout-content')[5].href ;return links");
+            string viewMatterDetails = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[5].href ;return links");
             Assert.IsTrue(viewMatterDetails.Contains("https://matterwebapp.azurewebsites.net/"));
         }
 
@@ -383,7 +381,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         [Then(@"it should sort the matter in ascending order")]
         public void ThenItShouldSortTheMatterInAscendingOrder()
         {
-            int totalDocument = 0,  documentCount = 0;
+            int totalDocument = 0, documentCount = 0;
             char[] delimiters = new char[] { '\r', '\n' };
 
             long length = (long)scriptExecutor.ExecuteScript("var links = $('#matterPopup a.btn-link').length;return links");
@@ -417,14 +415,13 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             var sortedDocumentList = scriptExecutor.ExecuteScript("var oDocumentList = " + sortedDocument + ".sort();return oDocumentList");
             foreach (string element in (IEnumerable)sortedDocumentList)
             {
-                if(string.Equals(element.Trim(), tempDocumentList[documentCount].Trim(), StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(element.Trim(), tempDocumentList[documentCount].Trim(), StringComparison.OrdinalIgnoreCase))
                 {
-                    totalDocument++;                
+                    totalDocument++;
                 }
                 documentCount++;
             }
             Thread.Sleep(2000);
-            Console.Write(totalDocument);
             Assert.IsTrue(totalDocument >= 5);
         }
         #endregion
@@ -443,7 +440,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Thread.Sleep(3000);
             webDriver.FindElement(By.CssSelector("#acombo > img")).Click();
             Thread.Sleep(3000);
-            scriptExecutor.ExecuteScript("$('.form-control')[2].value = '"+ filterKeyword + "'");
+            scriptExecutor.ExecuteScript("$('.form-control')[2].value = '" + filterKeyword + "'");
             Thread.Sleep(2000);
             webDriver.FindElement(By.XPath("(//button[@type='button'])[4]")).Click();
             Thread.Sleep(2000);

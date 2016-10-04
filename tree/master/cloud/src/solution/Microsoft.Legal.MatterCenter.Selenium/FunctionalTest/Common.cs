@@ -26,7 +26,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
     public class CommonHelperFunction
     {
         static IWebDriver webDriver = new InternetExplorerDriver();
-        
+
         /// <summary>
         /// This method is used to perform authentication
         /// </summary>
@@ -118,10 +118,10 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         /// </summary>
         /// <param name="webDriver">Selenium driver object</param>
         /// <param name="URL">URL of page to load</param>
-        public void GetLogin(IWebDriver webDriver,string URL)
+        public void GetLogin(IWebDriver webDriver, string URL)
         {
             if (webDriver == null)
-            throw new ArgumentNullException("webDriver");
+                throw new ArgumentNullException("webDriver");
 
             webDriver.Navigate().GoToUrl(new Uri(URL));
             if (ElementPresent(webDriver, ConfigurationManager.AppSettings["UseAnotherAccount"], Selector.Class))

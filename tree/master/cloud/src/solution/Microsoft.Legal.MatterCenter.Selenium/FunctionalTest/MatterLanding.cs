@@ -23,7 +23,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
     [Binding]
     public class MatterLanding
     {
-        string URL = ConfigurationManager.AppSettings["matterLanding"];
+        string URL = ConfigurationManager.AppSettings["MatterLanding"];
         string initialState;
         static IWebDriver webDriver = CommonHelperFunction.GetDriver();
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
@@ -34,8 +34,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         public void WhenUserPassAnd(string userName, string password)
         {
             common.GetLogin(webDriver, URL);
-            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["userName"]));
-            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["password"]));
+            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["UserName"]));
+            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["Password"]));
         }
 
         [Then(@"matter landing page should be loaded with element '(.*)'")]
@@ -57,16 +57,16 @@ namespace Microsoft.Legal.MatterCenter.Selenium
 
         [Then(@"all components should be present")]
         public void ThenAllComponentsShouldBePresent()
-        {          
+        {
             int checkEmptyTask = (webDriver.FindElements(By.CssSelector(".taskBoard .emptyItems"))).Count;
             int taskPresent = (webDriver.FindElements(By.CssSelector(".taskBoard .emptyItems"))).Count;
             int checkEmptyEvent = (webDriver.FindElements(By.CssSelector(".eventBoard .emptyItems"))).Count;
-            int eventPresent= (webDriver.FindElements(By.CssSelector(".eventBody"))).Count;
+            int eventPresent = (webDriver.FindElements(By.CssSelector(".eventBody"))).Count;
 
             Assert.IsTrue(checkEmptyTask > 0 || taskPresent > 0);
             Assert.IsTrue(checkEmptyEvent > 0 || eventPresent > 0);
-           
-            if (common.ElementPresent(webDriver, "rssPane", Selector.Id) == true )
+
+            if (common.ElementPresent(webDriver, "rssPane", Selector.Id) == true)
             {
                 Assert.IsTrue(true);
             }
@@ -84,8 +84,6 @@ namespace Microsoft.Legal.MatterCenter.Selenium
                 Assert.IsTrue(false);
             }
             string finalState = (string)scriptExecutor.ExecuteScript("var links = $('#PinMatter img').eq(0).attr('class');return links");
-            Console.Write(initialState);
-            Console.Write(finalState);
             if ((initialState.ToLower(CultureInfo.CurrentCulture).Contains("pinimg") && finalState.ToLower(CultureInfo.CurrentCulture).Contains("hide pinimg")) || (initialState.ToLower(CultureInfo.CurrentCulture).Contains("hide pinimg") && finalState.ToLower(CultureInfo.CurrentCulture).Contains("pinimg")))
             {
                 Assert.IsTrue(true);
@@ -98,7 +96,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         }
         #endregion
 
-        #region 3. Verify the matter profile and matter description
+        #region 03. Verify the matter profile and matter description
         [When(@"user clicks on matter profile tab")]
         public void WhenUserClicksOnMatterProfileTab()
         {
@@ -108,18 +106,18 @@ namespace Microsoft.Legal.MatterCenter.Selenium
 
         [Then(@"all the matter details should be seen")]
         public void ThenAllTheMatterDetailsShouldBeSeen()
-        {           
-            string clientName = (string)scriptExecutor.ExecuteScript("var links =$('.matterDetailTitle')[0].innerText ;return links");
-            string clientMatterId = (string)scriptExecutor.ExecuteScript("var links =$('.matterDetailTitle')[1].innerText ;return links");
-            string practiceGroup = (string)scriptExecutor.ExecuteScript("var links =$('.matterDetailTitle')[2].innerText ;return links");
-            string areaOfLaw = (string)scriptExecutor.ExecuteScript("var links =$('.matterDetailTitle')[3].innerText;return links");
-            string responsibleAttorney = (string)scriptExecutor.ExecuteScript("var links =$('.matterDetailTitle')[4].innerText ;return links");     
+        {
+            string clientName = (string)scriptExecutor.ExecuteScript("var links = $('.matterDetailTitle')[0].innerText ;return links");
+            string clientMatterId = (string)scriptExecutor.ExecuteScript("var links = $('.matterDetailTitle')[1].innerText ;return links");
+            string practiceGroup = (string)scriptExecutor.ExecuteScript("var links = $('.matterDetailTitle')[2].innerText ;return links");
+            string areaOfLaw = (string)scriptExecutor.ExecuteScript("var links = $('.matterDetailTitle')[3].innerText;return links");
+            string responsibleAttorney = (string)scriptExecutor.ExecuteScript("var links = $('.matterDetailTitle')[4].innerText ;return links");
             string checkClientName = (string)scriptExecutor.ExecuteScript("var links = $('.matterDetailText')[0].innerText;return links");
-            string checkClientMatterId = (string)scriptExecutor.ExecuteScript("var links =$('.matterDetailText')[1].innerText;return links");
-            string checkpracticeGroup = (string)scriptExecutor.ExecuteScript("var links =$('.matterDetailText')[2].innerText ;return links");
+            string checkClientMatterId = (string)scriptExecutor.ExecuteScript("var links = $('.matterDetailText')[1].innerText;return links");
+            string checkpracticeGroup = (string)scriptExecutor.ExecuteScript("var links = $('.matterDetailText')[2].innerText ;return links");
             string checkAreaOfLaw = (string)scriptExecutor.ExecuteScript("var links = $('.matterDetailText')[3].innerText;return links");
             string checkResonsibleAttorney = (string)scriptExecutor.ExecuteScript("var links = $('.matterDetailText')[4].innerText;return links");
-            if (checkClientName != null && checkClientMatterId != null && checkpracticeGroup != null && checkAreaOfLaw != null && checkResonsibleAttorney!=null)
+            if (checkClientName != null && checkClientMatterId != null && checkpracticeGroup != null && checkAreaOfLaw != null && checkResonsibleAttorney != null)
             {
                 Assert.IsTrue(true);
             }
@@ -127,12 +125,12 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             {
                 Assert.IsTrue(false);
             }
-            
-            Assert.IsTrue(clientName.Contains("Client Name"));
+
+            Assert.IsTrue(clientName.Contains("Project Name"));
             Assert.IsTrue(clientMatterId.Contains("Client & Matter ID"));
             Assert.IsTrue(practiceGroup.Contains("Practice Group"));
             Assert.IsTrue(areaOfLaw.Contains("Area of Law"));
-            Assert.IsTrue(responsibleAttorney.Contains("Responsible Attorney"));         
+            Assert.IsTrue(responsibleAttorney.Contains("Responsible Attorney"));
         }
 
         [When(@"user clicks on matter description tab")]
@@ -160,11 +158,11 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         [Then(@"all links should be present in the footer")]
         public void ThenAllLinksShouldBePresentInTheFooter()
         {
-            string checkFeedbackAndSupport = (string)scriptExecutor.ExecuteScript("var links =$('.footerLink a')[0].href;return links");
-            string checkPrivacyAndCookies = (string)scriptExecutor.ExecuteScript("var links =$('.footerLink a')[1].href;return links");
-            string checkTermsOfUse = (string)scriptExecutor.ExecuteScript("var links =$('.footerLink a')[2].href;return links");
-            string checkMicrosoft = (string)scriptExecutor.ExecuteScript("var links =$('.footerLink span')[0].innerText;return links");
-            string checkMicrosoftLogo = (string)scriptExecutor.ExecuteScript("var links =$('.footerLogo a img').eq(0).attr('title');return links");
+            string checkFeedbackAndSupport = (string)scriptExecutor.ExecuteScript("var links = $('.footerLink a')[0].href;return links");
+            string checkPrivacyAndCookies = (string)scriptExecutor.ExecuteScript("var links = $('.footerLink a')[1].href;return links");
+            string checkTermsOfUse = (string)scriptExecutor.ExecuteScript("var links = $('.footerLink a')[2].href;return links");
+            string checkMicrosoft = (string)scriptExecutor.ExecuteScript("var links = $('.footerLink span')[0].innerText;return links");
+            string checkMicrosoftLogo = (string)scriptExecutor.ExecuteScript("var links = $('.footerLogo a img').eq(0).attr('title');return links");
 
             Assert.IsTrue(checkMicrosoftLogo.Contains("Microsoft"));
             Assert.IsTrue(checkFeedbackAndSupport.Contains("https://msmatter.sharepoint.com/sites/microsoft/SitePages/[Enter%20URL%20for%20Support,%20e.g.%20mailto:support@supportsite.com"));
@@ -186,8 +184,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         [Then(@"hamburger menu should be seen")]
         public void ThenHamburgerMenuShouldBeSeen()
         {
-            string checkMatters = (string)scriptExecutor.ExecuteScript("var links=$('.menuFlyoutColumn a')[0].innerText;return links");
-            string checkDocuments = (string)scriptExecutor.ExecuteScript("var links =$('.menuFlyoutColumn a')[1].innerText;return links");
+            string checkMatters = (string)scriptExecutor.ExecuteScript("var links = $('.menuFlyoutColumn a')[0].innerText;return links");
+            string checkDocuments = (string)scriptExecutor.ExecuteScript("var links = $('.menuFlyoutColumn a')[1].innerText;return links");
             string checkSettings = (string)scriptExecutor.ExecuteScript("var links = $('.menuFlyoutColumn a')[2].innerText;return links");
 
             Assert.IsTrue(checkMatters.Contains("Matters"));
