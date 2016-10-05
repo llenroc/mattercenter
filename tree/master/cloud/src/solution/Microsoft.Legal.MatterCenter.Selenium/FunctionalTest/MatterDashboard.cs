@@ -50,7 +50,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
 
         #region 02. Verify the hamburger menu
         [When(@"user clicks on hamburger menu on Matter Center home page")]
-        public void WhenUserClicksOnHamburgerMenuOnMatterCenterHomePage()
+        public void WhenUserClicksOnHamburgerMenuOnMatterCenterHomepage()
         {
             scriptExecutor.ExecuteScript("$('#openHamburger').click();");
             Thread.Sleep(4000);
@@ -122,8 +122,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Thread.Sleep(5000);
         }
 
-        [Then(@"all results having the searched keyword should be displayed")]
-        public void ThenAllResultsHavingTheSearchKeywordShouldBeDisplayed()
+        [Then(@"all results having '(.*)' keyword should be displayed")]
+        public void ThenAllResultsHavingKeywordShouldBeDisplayed(string searchBoxValue)
         {
             long linkLength = (long)scriptExecutor.ExecuteScript("var links = $('.col-xs-11').length;return links;");
             int linkCounter, tempCounter = 0;
@@ -131,7 +131,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             {
                 Thread.Sleep(1000);
                 string test = (string)scriptExecutor.ExecuteScript("var links =$('.col-xs-11')[" + linkCounter + "].innerText;return links;");
-                if (test.ToLower(CultureInfo.CurrentCulture).Contains(ConfigurationManager.AppSettings["SearchKeyWord"]))
+                if (!String.IsNullOrEmpty(searchBoxValue) && test.ToLower(CultureInfo.CurrentCulture).Contains(searchBoxValue.ToLower(CultureInfo.CurrentCulture)))
                     tempCounter++;
             }
             if (tempCounter > 0)
@@ -225,7 +225,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         public void ThenFilterResultsShouldBeShownToUser()
         {
             long length = (long)scriptExecutor.ExecuteScript("var links = $('.col-xs-11').length;return links");
-            long finalValue = (8 + (length - 1) * 6);
+            // ***This calculation will return the number of elements present in matter grid***
+            long finalValue = (8 + (length - 1) * 6); 
             int counter = 0;
             for (int documentCounter = 8; documentCounter <= finalValue; documentCounter = documentCounter + 6)
             {
@@ -238,8 +239,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         #endregion
 
         #region 08. Verify the sort functionality
-        [When(@"user sorts data in ascending order")]
-        public void WhenUserSortsDataInAscendingOrder()
+        [When(@"user sorts data for All matters in ascending order")]
+        public void WhenUserSortsDataForAllMattersInAscendingOrder()
         {
             scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
             Thread.Sleep(4000);
@@ -294,8 +295,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Assert.IsTrue(totalDocument >= 0);
         }
 
-        [When(@"user sorts data in ascending order of created date")]
-        public void WhenUserSortsDataInAscendingOrderOfCreatedDate()
+        [When(@"user sorts data for All matters in ascending order of created date")]
+        public void WhenUserSortsDataForAllMattersInAscendingOrderOfCreatedDate()
         {
             scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
             Thread.Sleep(4000);
@@ -349,6 +350,51 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Thread.Sleep(2000);
             Assert.IsTrue(totalDocument >= 0);
         }
+
+        [When(@"user sorts data for Pinned matters in ascending order")]
+        public void WhenUserSortsDataForPinnedMattersInAscendingOrder()
+        {
+            scriptExecutor.ExecuteScript("$('.nav-tabs a')[3].click()");
+            Thread.Sleep(3000);
+            scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
+            Thread.Sleep(4000);
+            scriptExecutor.ExecuteScript("$('.col-xs-offset-7 li')[1].click()");
+            Thread.Sleep(4000);
+        }
+
+        [When(@"user sorts data for Pinned matters in ascending order of created date")]
+        public void WhenUserSortsDataForPinnedMattersInAscendingOrderOfCreatedDate()
+        {
+            scriptExecutor.ExecuteScript("$('.nav-tabs a')[3].click()");
+            Thread.Sleep(3000);
+            scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
+            Thread.Sleep(4000);
+            scriptExecutor.ExecuteScript("$('.col-xs-offset-7 li')[3].click()");
+            Thread.Sleep(4000);
+        }
+
+        [When(@"user sorts data for My matters in ascending order")]
+        public void WhenUserSortsDataForMyMattersInAscendingOrder()
+        {
+            scriptExecutor.ExecuteScript("$('.nav-tabs a')[1].click()");
+            Thread.Sleep(3000);
+            scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
+            Thread.Sleep(4000);
+            scriptExecutor.ExecuteScript("$('.col-xs-offset-7 li')[1].click()");
+            Thread.Sleep(4000);
+        }
+
+        [When(@"user sorts data for My matters in ascending order of created date")]
+        public void WhenUserSortsDataForMyMattersInAscendingOrderOfCreatedDate()
+        {
+            scriptExecutor.ExecuteScript("$('.nav-tabs a')[1].click()");
+            Thread.Sleep(3000);
+            scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
+            Thread.Sleep(4000);
+            scriptExecutor.ExecuteScript("$('.col-xs-offset-7 li')[3].click()");
+            Thread.Sleep(4000);
+        }
+
         #endregion
 
         #region  09. Verify the footer
@@ -373,6 +419,26 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Assert.IsTrue(checkPrivacyAndCookies.Contains("https://matterwebapp.azurewebsites.net/[Enter%20URL%20for%20Privacy%20terms,%20e.g.%20privacy.supportsite.com"));
             Assert.IsTrue(checkTermsOfUse.Contains("https://matterwebapp.azurewebsites.net/[Enter%20URL%20for%20Terms%20of%20use,%20e.g.%20termofuse.supportsite.com"));
             Assert.IsTrue(checkMicrosoft.Contains("2016 Microsoft"));
+        }
+
+        #endregion
+
+        #region 10. Verify enterprise search
+        [When(@"user types '(.*)' in enterprise search box on Matter Center Home page")]
+        public void WhenUserTypesInEnterpriseSearchBoxOnMatterCenterHomepage(string searchBoxValue)
+        {
+            common.GetLogin(webDriver, URL);
+            Thread.Sleep(4000);
+            webDriver.FindElement(By.Id("searchText")).SendKeys(searchBoxValue);
+            scriptExecutor.ExecuteScript("$('.searchIcon').click()");
+            Thread.Sleep(5000);
+        }
+
+        [Then(@"user should redirect to enterprise page with search results for '(.*)'")]
+        public void ThenUserShouldRedirectToEnterprisePageWithSearchResults(string searchBox)
+        {
+            string url = webDriver.Url;
+            Assert.IsTrue(!String.IsNullOrEmpty(searchBox) && url.ToLower(CultureInfo.CurrentCulture).Contains(searchBox.ToLower(CultureInfo.CurrentCulture)));
         }
 
         #endregion

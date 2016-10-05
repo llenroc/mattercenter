@@ -123,14 +123,16 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         public void WhenUserTypesInSearchBoxOnDocumentDashboard(string searchBox)
         {
             Thread.Sleep(2000);
-            webDriver.FindElement(By.CssSelector(".col-xs-12 .form-control")).SendKeys(searchBox);
+            webDriver.FindElement(By.CssSelector(".col-xs-12 .form-control")).Clear();
+            Thread.Sleep(1000);
+            scriptExecutor.ExecuteScript("$('.col-xs-12 .form-control')[0].value='" + searchBox+"'");
             Thread.Sleep(2000);
-            scriptExecutor.ExecuteScript("$('.dropdown-menu li')[0].click()");
+            scriptExecutor.ExecuteScript("$('#basic-addon1').click()");
             Thread.Sleep(5000);
         }
 
-        [Then(@"all documents having the searched keyword should be displayed")]
-        public void ThenAllDocumentsHavingTheSearchedKeywordShouldBeDisplayed()
+        [Then(@"all documents having '(.*)' keyword should be displayed")]
+        public void ThenAllDocumentsHavingKeywordShouldBeDisplayed(string searchBox)
         {
             long linkLength = (long)scriptExecutor.ExecuteScript("var links = $('.ui-grid-canvas .ui-grid-row ').length;return links;");
             int linkCounter, tempCounter = 0;
@@ -138,7 +140,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             {
                 Thread.Sleep(1000);
                 string test = (string)scriptExecutor.ExecuteScript("var links = $('.col-xs-12 #documentPopup')[" + linkCounter + "].title;return links;");
-                if (test.ToLower(CultureInfo.CurrentCulture).Contains(ConfigurationManager.AppSettings["SearchKeyWord"]))
+                if (!String.IsNullOrEmpty(searchBox) && test.ToLower(CultureInfo.CurrentCulture).Contains(searchBox.ToLower(CultureInfo.CurrentCulture)))
                     tempCounter++;
             }
             if (tempCounter > 0)
@@ -182,18 +184,22 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             {
                 string checkClient = (string)scriptExecutor.ExecuteScript("var links = $('.ui-grid-cell-contents')[" + documentCounter + "].innerText;return links");
                 if (checkClient.Contains("Amazon"))
+                {
                     counter++;
+                }
             }
             Assert.IsTrue(counter > 5);
         }
         #endregion
 
         #region 05. Verify the sort functionality on document dashboard page
-        [When(@"user sorts data in ascending order on document dashboard")]
-        public void WhenUserSortsDataInAscendingOrderOnDocumentDashboard()
+        [When(@"user sorts data for My document in ascending order")]
+        public void WhenUserSortsDataForMyDocumentInAscendingOrder()
         {
             common.GetLogin(webDriver, URL);
             Thread.Sleep(6000);
+            scriptExecutor.ExecuteScript("$('.nav-tabs a')[1].click()");
+            Thread.Sleep(3000);
             scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
             Thread.Sleep(4000);
             scriptExecutor.ExecuteScript("$('.col-sm-4 ul li')[1].click()");
@@ -250,6 +256,62 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Thread.Sleep(2000);
             Assert.IsTrue(totalDocument >= 0);
         }
+
+        [When(@"user sorts data for My document in ascending order of created date")]
+        public void WhenUserSortsDataForMyDocumentInAscendingOrderOfCreatedDate()
+        {
+            scriptExecutor.ExecuteScript("$('.nav-tabs a')[1].click()");
+            Thread.Sleep(3000);
+            scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
+            Thread.Sleep(4000);
+            scriptExecutor.ExecuteScript("$('.col-sm-4 ul li')[3].click()");
+            Thread.Sleep(4000);
+        }
+
+        [When(@"user sorts data in ascending order on document dashboard")]
+        public void WhenUserSortsDataInAscendingOrderOnDocumentDashboard()
+        {
+            scriptExecutor.ExecuteScript("$('.nav-tabs a')[2].click()");
+            Thread.Sleep(3000);
+            scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
+            Thread.Sleep(4000);
+            scriptExecutor.ExecuteScript("$('.col-sm-4 ul li')[1].click()");
+            Thread.Sleep(4000);
+        }
+
+        [When(@"user sorts data in ascending order of created date")]
+        public void WhenUserSortsDataInAscendingOrderOfCreatedDate()
+        {
+            scriptExecutor.ExecuteScript("$('.nav-tabs a')[2].click()");
+            Thread.Sleep(3000);
+            scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
+            Thread.Sleep(4000);
+            scriptExecutor.ExecuteScript("$('.col-sm-4 ul li')[3].click()");
+            Thread.Sleep(4000);
+        }
+
+        [When(@"user sorts data for Pinned document in ascending order")]
+        public void WhenUserSortsDataForPinnedDocumentInAscendingOrder()
+        {
+            scriptExecutor.ExecuteScript("$('.nav-tabs a')[3].click()");
+            Thread.Sleep(3000);
+            scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
+            Thread.Sleep(4000);
+            scriptExecutor.ExecuteScript("$('.col-sm-4 ul li')[1].click()");
+            Thread.Sleep(4000);
+        }
+
+        [When(@"user sorts data for Pinned document in ascending order of created date")]
+        public void WhenUserSortsDataForPinnedDocumentInAscendingOrderOfCreatedDate()
+        {
+            scriptExecutor.ExecuteScript("$('.nav-tabs a')[3].click()");
+            Thread.Sleep(3000);
+            scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
+            Thread.Sleep(4000);
+            scriptExecutor.ExecuteScript("$('.col-sm-4 ul li')[3].click()");
+            Thread.Sleep(4000);
+        }
+
         #endregion
 
         #region 04. Verify the 'mail cart' functionality on document dashboard page.

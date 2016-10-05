@@ -118,7 +118,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 19
  testRunner.When("user types \'test\' in search box", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 20
- testRunner.Then("all matters with the searched keyword should be shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("all matters with \'test\' keyword should be shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -233,9 +233,32 @@ this.ScenarioSetup(scenarioInfo);
 #line 59
 this.ScenarioSetup(scenarioInfo);
 #line 60
- testRunner.When("user clicks on column filter to filter the matter with the keyword \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on column filter to filter the matter with the keyword \'Test\' on All " +
+                    "Matters", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 61
  testRunner.Then("it should filter the matter based on filter keyword", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 62
+ testRunner.When("user clicks on column filter to filter the matter with the keyword \'Test\' on My M" +
+                    "atters", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 63
+ testRunner.Then("it should filter the matter based on filter keyword", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("09. Verify the matter search box using managed properties")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
+        public virtual void _09_VerifyTheMatterSearchBoxUsingManagedProperties()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("09. Verify the matter search box using managed properties", new string[] {
+                        "E2E"});
+#line 66
+this.ScenarioSetup(scenarioInfo);
+#line 67
+ testRunner.When("user types \'MCMatterName: test\' in search box", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 68
+ testRunner.Then("all matters with \'test\' keyword should be shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

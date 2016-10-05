@@ -84,7 +84,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         #region 03. Verify 'Assign Permission' tab
 
         [When(@"user selects permission for matter")]
-        public void WhenUserSelectsPermissionForMatter()
+        public void WhenUserSelectsPermissionFormatter()
         {
             Thread.Sleep(2000);
             webDriver.FindElement(By.XPath("//main/div/div/div[2]")).Click();
@@ -175,7 +175,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         }
 
         [Then(@"a new matter should get created")]
-        public void ThenANewMatterShouldGetCreated()
+        public void ThenNewMatterShouldGetCreated()
         {
             string checkHereLink = (string)scriptExecutor.ExecuteScript("var step = $('.notification a')[0].innerText;return step;");
             Assert.IsTrue(checkHereLink.Contains("here"));

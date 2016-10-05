@@ -101,8 +101,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             scriptExecutor.ExecuteScript("$('#basic-addon1').click()");
             Thread.Sleep(4000);
         }
-        [Then(@"all matters with the searched keyword should be shown")]
-        public void ThenAllMattersWithTheSearchedKeywordShouldBeShown()
+        [Then(@"all matters with '(.*)' keyword should be shown")]
+        public void ThenAllMattersWithKeywordShouldBeShown(string searchText)
         {
             long linkLength = (long)scriptExecutor.ExecuteScript("var links = $('.col-xs-7').length;return links;");
             int linkCounter, tempCounter = 0;
@@ -110,7 +110,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             {
                 Thread.Sleep(1000);
                 string test = (string)scriptExecutor.ExecuteScript("var links = $('.col-xs-7')[" + linkCounter + "].innerText;return links;");
-                if (test.ToLower(CultureInfo.CurrentCulture).Contains(ConfigurationManager.AppSettings["SearchKeyWord"]))
+                if (!String.IsNullOrEmpty(searchText) && test.ToLower(CultureInfo.CurrentCulture).Contains(searchText.ToLower(CultureInfo.CurrentCulture)))
                     tempCounter++;
             }
             if (tempCounter > 0)
@@ -428,8 +428,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
 
         #region 08. Verify the matter filter search
         string searchKeyword;
-        [When(@"user clicks on column filter to filter the matter with the keyword '(.*)'")]
-        public void WhenUserClicksOnColumnFilterToFilterTheMatterWithTheKeyword(string filterKeyword)
+        [When(@"user clicks on column filter to filter the matter with the keyword '(.*)' on All Matters")]
+        public void WhenUserClicksOnColumnFilterToFilterTheMatterWithTheKeywordOnAllMatters(string filterKeyword)
         {
             common.GetLogin(webDriver, URL);
             Thread.Sleep(4000);
@@ -460,6 +460,31 @@ namespace Microsoft.Legal.MatterCenter.Selenium
                     filterDocument++;
             }
             Assert.IsTrue(filterDocument >= 0);
+        }
+
+        [When(@"user clicks on column filter to filter the matter with the keyword '(.*)' on My Matters")]
+        public void WhenUserClicksOnColumnFilterToFilterTheMatterWithTheKeywordOnMyMatters(string filterKeyword)
+        {
+            webDriver.FindElement(By.ClassName("AppSwitcherContainer")).Click();
+            scriptExecutor.ExecuteScript("$('.AppMenuFlyoutPriLinks a')[0].click();");
+            Thread.Sleep(3000);
+            webDriver.FindElement(By.ClassName("AppSwitcherContainer")).Click();
+            Thread.Sleep(2000);
+            scriptExecutor.ExecuteScript("$('.AppMenuFlyoutPriLinks a')[1].click();");
+            Thread.Sleep(3000);
+            searchKeyword = filterKeyword;
+            scriptExecutor.ExecuteScript("$('.input-group-btn ul li ')[1].click()");
+            Thread.Sleep(3000);
+            webDriver.FindElement(By.CssSelector("div.ui-grid-cell-contents.ui-grid-header-cell-primary-focus")).Click();
+            Thread.Sleep(3000);
+            webDriver.FindElement(By.CssSelector("#acombo > img")).Click();
+            Thread.Sleep(3000);
+            scriptExecutor.ExecuteScript("$('.form-control')[2].value = '" + filterKeyword + "'");
+            Thread.Sleep(2000);
+            webDriver.FindElement(By.XPath("(//button[@type='button'])[4]")).Click();
+            Thread.Sleep(2000);
+            webDriver.FindElement(By.XPath("//div[@id='filterResultsContainer']/div")).Click();
+            Thread.Sleep(2000);
         }
         #endregion
 

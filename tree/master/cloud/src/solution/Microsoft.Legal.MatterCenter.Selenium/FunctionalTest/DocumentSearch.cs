@@ -172,27 +172,25 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         #endregion
 
         #region 05. Verify the document search box
-        string searchKeyword = null;
         [When(@"user searches with keyword '(.*)'")]
         public void WhenUserSearchesWithKeyword(string searchText)
         {
             // search 
-            searchKeyword = searchText;
             scriptExecutor.ExecuteScript("document.getElementsByClassName('form-control')[0].value='" + searchText + "'");
             Thread.Sleep(2000);
             scriptExecutor.ExecuteScript("$('#basic-addon1').click();");
             Thread.Sleep(3000);
         }
 
-        [Then(@"it should display all the document which consist of search keyword")]
-        public void ThenItShouldDisplayAllTheDocumentWhichConsistOfSearchKeyword()
+        [Then(@"it should display all the document which consist of '(.*)' keyword")]
+        public void ThenItShouldDisplayAllTheDocumentWhichConsistOfKeyword(string searchText)
         {
             int searchCount = 0;
             long length = (long)scriptExecutor.ExecuteScript("var links = $('.ui-grid-row').length;return links");
             for (int count = 0; count < length; count++)
             {
                 string gridData = (string)scriptExecutor.ExecuteScript("var links = $('.ui-grid-row')[" + count + "].innerText;return links");
-                if (gridData.ToLower(CultureInfo.CurrentCulture).Contains(searchKeyword.ToLower(CultureInfo.CurrentCulture)))
+                if (!String.IsNullOrEmpty(searchText) && gridData.ToLower(CultureInfo.CurrentCulture).Contains(searchText.ToLower(CultureInfo.CurrentCulture)))
                     searchCount++;
             }
             Assert.IsTrue(searchCount > 1);
@@ -262,14 +260,14 @@ namespace Microsoft.Legal.MatterCenter.Selenium
 
         #region 08. Verify the document filter search
         string keyword;
-        [When(@"user clicks on column filter to filter the documents using keyword '(.*)'")]
-        public void WhenUserClicksOnColumnFilterToFilterTheDocumentsUsingKeyword(string filterKeyword)
+        [When(@"user clicks on column filter to filter the documents using keyword '(.*)' on My Documents")]
+        public void WhenUserClicksOnColumnFilterToFilterTheDocumentsUsingKeywordOnMyDocuments(string filterKeyword)
         {
-            // Navigate to 'All documents' section
+            // Navigate to 'My documents' section
             common.GetLogin(webDriver, URL);
             Thread.Sleep(2000);
             keyword = filterKeyword;
-            scriptExecutor.ExecuteScript("$('.searchPanelDropdown')[0].click();");
+            scriptExecutor.ExecuteScript("$('.searchPanelDropdown')[1].click();");
             Thread.Sleep(4000);
             webDriver.FindElement(By.CssSelector("div.ui-grid-cell-contents.ui-grid-header-cell-primary-focus")).Click();
             Thread.Sleep(3000);
@@ -294,8 +292,28 @@ namespace Microsoft.Legal.MatterCenter.Selenium
                 if (documentContent.ToLower(CultureInfo.CurrentCulture).Contains(keyword.ToLower(CultureInfo.CurrentCulture)))
                     documentCount++;
             }
-
             Assert.IsTrue(documentCount >= 1);
+        }
+
+        [When(@"user clicks on column filter to filter the documents using keyword '(.*)' on All Documents")]
+        public void WhenUserClicksOnColumnFilterToFilterTheDocumentsUsingKeywordOnAllDocuments(string filterKeyword)
+        {
+            // Navigate to 'All documents' section
+            common.GetLogin(webDriver, URL);
+            Thread.Sleep(2000);
+            keyword = filterKeyword;
+            scriptExecutor.ExecuteScript("$('.searchPanelDropdown')[0].click();");
+            Thread.Sleep(4000);
+            webDriver.FindElement(By.CssSelector("div.ui-grid-cell-contents.ui-grid-header-cell-primary-focus")).Click();
+            Thread.Sleep(3000);
+            webDriver.FindElement(By.CssSelector("a.prisma-header-dropdown-anchor > img")).Click();
+            Thread.Sleep(3000);
+            scriptExecutor.ExecuteScript("$('.form-control')[2].value = '" + filterKeyword + "'");
+            Thread.Sleep(2000);
+            webDriver.FindElement(By.XPath("(//button[@type='button'])[4]")).Click();
+            Thread.Sleep(2000);
+            webDriver.FindElement(By.XPath("//div[@id='filterResultsContainer']/div")).Click();
+            Thread.Sleep(2000);
         }
         #endregion
 
@@ -437,7 +455,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         public void ThenThatDocumentShouldOpenWhenClicked()
         {
             string openDocument = (string)scriptExecutor.ExecuteScript("var links = $('.dropdown-menu .ms-ContextualMenu-item a')[0].href;return links");
-            Assert.IsTrue(openDocument.Contains("https://msmatter.sharepoint.com/sites/microsoft"));
+            Assert.IsTrue(openDocument.Contains(ConfigurationManager.AppSettings["OpenDocument"]));
         }
 
         [When(@"user clicks on view document details")]

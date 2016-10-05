@@ -17,7 +17,7 @@ Scenario: 07. Verify the matter drop down menu
 @E2E	
 Scenario: 05. Verify the matter search box
 	When user types 'test' in search box 
-	Then all matters with the searched keyword should be shown 
+	Then all matters with 'test' keyword should be shown 
 
 @E2E
 Scenario: 06. Verify the matter column picker
@@ -57,7 +57,12 @@ Scenario: 04. Verify the matter sort
 
 @E2E
 Scenario: 08. Verify the matter filter search
-	When user clicks on column filter to filter the matter with the keyword 'Test'
+	When user clicks on column filter to filter the matter with the keyword 'Test' on All Matters
 	Then it should filter the matter based on filter keyword
-	     
-     
+	When user clicks on column filter to filter the matter with the keyword 'Test' on My Matters
+	Then it should filter the matter based on filter keyword
+
+@E2E	     
+Scenario: 09. Verify the matter search box using managed properties
+	When user types 'MCMatterName: test' in search box 
+	Then all matters with 'test' keyword should be shown 

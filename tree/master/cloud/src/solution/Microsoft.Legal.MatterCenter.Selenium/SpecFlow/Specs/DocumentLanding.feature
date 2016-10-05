@@ -24,3 +24,8 @@ Scenario:04. Verify version details
 Scenario:05. Verify the footer links
 	When user navigates to footer on document landing page
 	Then all links should be present on footer on document landing page  
+
+@E2E
+Scenario:06. Verify the pin/unpin functionality
+	When user clicks on pin/unpin button
+	Then document should get pinned/unpinned
