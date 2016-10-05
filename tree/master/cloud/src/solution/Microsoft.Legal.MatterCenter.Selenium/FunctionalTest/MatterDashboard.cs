@@ -10,7 +10,7 @@
 // <summary>This file is used to perform verification of matter dashboard page </summary>
 // ****************************************************************************************
 
-namespace Protractor_Net_Demo
+namespace Microsoft.Legal.MatterCenter.Selenium
 {
     using Microsoft.Legal.MatterCenter.Selenium;
     using Microsoft.VisualStudio.TestTools.UnitTesting;

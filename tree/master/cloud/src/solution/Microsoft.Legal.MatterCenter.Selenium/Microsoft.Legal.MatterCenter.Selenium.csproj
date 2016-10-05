@@ -73,6 +73,7 @@
     <Compile Include="FunctionalTest\DocumentSearch.cs" />
     <Compile Include="FunctionalTest\Home.cs" />
     <Compile Include="FunctionalTest\Common.cs" />
+    <Compile Include="FunctionalTest\ManagePermission.cs" />
     <Compile Include="FunctionalTest\MatterLanding.cs" />
     <Compile Include="FunctionalTest\MatterSearch.cs" />
     <Compile Include="FunctionalTest\MatterDashboard.cs" />
@@ -102,6 +103,11 @@
       <DependentUpon>Home.feature</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="SpecFlow\Specs\ManagePermission.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ManagePermission.feature</DependentUpon>
     </Compile>
     <Compile Include="SpecFlow\Specs\MatterDashboard.feature.cs">
       <AutoGen>True</AutoGen>
@@ -170,6 +176,10 @@
     <None Include="SpecFlow\Specs\Home.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Home.feature.cs</LastGenOutput>
+    </None>
+    <None Include="SpecFlow\Specs\ManagePermission.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ManagePermission.feature.cs</LastGenOutput>
     </None>
     <None Include="SpecFlow\Specs\MatterDashboard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
