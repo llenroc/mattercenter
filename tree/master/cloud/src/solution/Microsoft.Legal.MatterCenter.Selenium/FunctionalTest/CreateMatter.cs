@@ -10,9 +10,8 @@
 // <summary>This file is used to perform verification of create matter page </summary>
 // ****************************************************************************************
 
-namespace Protractor_Net_Demo.FunctionalTest
+namespace Microsoft.Legal.MatterCenter.Selenium
 {
-    using Microsoft.Legal.MatterCenter.Selenium;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using OpenQA.Selenium;
     using OpenQA.Selenium.Support.UI;
