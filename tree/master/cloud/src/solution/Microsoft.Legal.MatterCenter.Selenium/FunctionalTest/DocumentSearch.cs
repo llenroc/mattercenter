@@ -172,27 +172,25 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         #endregion
 
         #region 05. Verify the document search box
-        string searchKeyword = null;
         [When(@"user searches with keyword '(.*)'")]
         public void WhenUserSearchesWithKeyword(string searchText)
         {
             // search 
-            searchKeyword = searchText;
             scriptExecutor.ExecuteScript("document.getElementsByClassName('form-control')[0].value='" + searchText + "'");
             Thread.Sleep(2000);
             scriptExecutor.ExecuteScript("$('#basic-addon1').click();");
             Thread.Sleep(3000);
         }
 
-        [Then(@"it should display all the document which consist of search keyword")]
-        public void ThenItShouldDisplayAllTheDocumentWhichConsistOfSearchKeyword()
+        [Then(@"it should display all the document which consist of '(.*)' keyword")]
+        public void ThenItShouldDisplayAllTheDocumentWhichConsistOfKeyword(string searchText)
         {
             int searchCount = 0;
             long length = (long)scriptExecutor.ExecuteScript("var links = $('.ui-grid-row').length;return links");
             for (int count = 0; count < length; count++)
             {
                 string gridData = (string)scriptExecutor.ExecuteScript("var links = $('.ui-grid-row')[" + count + "].innerText;return links");
-                if (gridData.ToLower(CultureInfo.CurrentCulture).Contains(searchKeyword.ToLower(CultureInfo.CurrentCulture)))
+                if (!String.IsNullOrEmpty(searchText) && gridData.ToLower(CultureInfo.CurrentCulture).Contains(searchText.ToLower(CultureInfo.CurrentCulture)))
                     searchCount++;
             }
             Assert.IsTrue(searchCount > 1);
@@ -294,7 +292,6 @@ namespace Microsoft.Legal.MatterCenter.Selenium
                 if (documentContent.ToLower(CultureInfo.CurrentCulture).Contains(keyword.ToLower(CultureInfo.CurrentCulture)))
                     documentCount++;
             }
-
             Assert.IsTrue(documentCount >= 1);
         }
 
@@ -458,7 +455,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         public void ThenThatDocumentShouldOpenWhenClicked()
         {
             string openDocument = (string)scriptExecutor.ExecuteScript("var links = $('.dropdown-menu .ms-ContextualMenu-item a')[0].href;return links");
-            Assert.IsTrue(openDocument.Contains("https://msmatter.sharepoint.com/sites/microsoft"));
+            Assert.IsTrue(openDocument.Contains(ConfigurationManager.AppSettings["OpenDocument"]));
         }
 
         [When(@"user clicks on view document details")]

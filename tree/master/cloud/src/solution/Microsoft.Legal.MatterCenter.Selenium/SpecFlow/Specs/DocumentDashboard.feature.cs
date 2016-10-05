@@ -66,14 +66,16 @@ namespace Protractor_Net_Demo.SpecFlow.Specs
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("01. Open the browser and load document dashboard page")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
         public virtual void _01_OpenTheBrowserAndLoadDocumentDashboardPage()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("01. Open the browser and load document dashboard page", ((string[])(null)));
-#line 3
-this.ScenarioSetup(scenarioInfo);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("01. Open the browser and load document dashboard page", new string[] {
+                        "E2E"});
 #line 4
- testRunner.When("we will enter \'matteradmin@msmatter.onmicrosoft.com\' and \'P@$$w0rd01\' to login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+this.ScenarioSetup(scenarioInfo);
 #line 5
+ testRunner.When("we will enter \'matteradmin@msmatter.onmicrosoft.com\' and \'P@$$w0rd01\' to login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 6
  testRunner.Then("document dashboard page should be loaded with element \'allDocuments\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -81,14 +83,16 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("02. Verify the document fly out on document dashboard")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
         public virtual void _02_VerifyTheDocumentFlyOutOnDocumentDashboard()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Verify the document fly out on document dashboard", ((string[])(null)));
-#line 7
-this.ScenarioSetup(scenarioInfo);
-#line 8
- testRunner.When("user clicks on document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Verify the document fly out on document dashboard", new string[] {
+                        "E2E"});
 #line 9
+this.ScenarioSetup(scenarioInfo);
+#line 10
+ testRunner.When("user clicks on document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 11
  testRunner.Then("a document fly out should be seen", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -96,14 +100,16 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("03. Verify the pin/unpin functionality")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
         public virtual void _03_VerifyThePinUnpinFunctionality()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Verify the pin/unpin functionality", ((string[])(null)));
-#line 11
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Verify the pin/unpin functionality", new string[] {
+                        "E2E"});
+#line 14
 this.ScenarioSetup(scenarioInfo);
-#line 12
+#line 15
  testRunner.When("user clicks on pin or unpin icon", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 13
+#line 16
  testRunner.Then("document should get pinned or unpinned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -111,29 +117,33 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("06. Verify the search feature on document dashboard")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
         public virtual void _06_VerifyTheSearchFeatureOnDocumentDashboard()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Verify the search feature on document dashboard", ((string[])(null)));
-#line 15
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Verify the search feature on document dashboard", new string[] {
+                        "E2E"});
+#line 19
 this.ScenarioSetup(scenarioInfo);
-#line 16
+#line 20
  testRunner.When("user types \'test\' in search box on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 17
- testRunner.Then("all documents having the searched keyword should be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 21
+ testRunner.Then("all documents having \'test\' keyword should be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("07. Verify the advance filter functionality")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
         public virtual void _07_VerifyTheAdvanceFilterFunctionality()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("07. Verify the advance filter functionality", ((string[])(null)));
-#line 19
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("07. Verify the advance filter functionality", new string[] {
+                        "E2E"});
+#line 24
 this.ScenarioSetup(scenarioInfo);
-#line 20
+#line 25
  testRunner.When("user clicks on advance filter on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 21
+#line 26
  testRunner.Then("filtered results should be shown to user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -141,34 +151,36 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("05. Verify the sort functionality on document dashboard")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
         public virtual void _05_VerifyTheSortFunctionalityOnDocumentDashboard()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Verify the sort functionality on document dashboard", ((string[])(null)));
-#line 23
-this.ScenarioSetup(scenarioInfo);
-#line 24
- testRunner.When("user sorts data for All document in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 25
- testRunner.Then("all records should be sorted in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 26
- testRunner.When("user sorts data for All document in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 27
- testRunner.Then("all records should be sorted in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Verify the sort functionality on document dashboard", new string[] {
+                        "E2E"});
 #line 29
- testRunner.When("user sorts data for Pinned document in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+this.ScenarioSetup(scenarioInfo);
 #line 30
- testRunner.Then("all records should be sorted in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("user sorts data in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 31
- testRunner.When("user sorts data for Pinned document in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Then("all records should be sorted in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 32
+ testRunner.When("user sorts data in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 33
  testRunner.Then("all records should be sorted in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 34
- testRunner.When("user sorts data for My document in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 35
- testRunner.Then("all records should be sorted in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("user sorts data for Pinned document in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 36
- testRunner.When("user sorts data for My document in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Then("all records should be sorted in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 37
+ testRunner.When("user sorts data for Pinned document in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 38
+ testRunner.Then("all records should be sorted in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 40
+ testRunner.When("user sorts data for My document in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 41
+ testRunner.Then("all records should be sorted in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 42
+ testRunner.When("user sorts data for My document in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 43
  testRunner.Then("all records should be sorted in ascending order on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -176,16 +188,35 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("04. Verify the mail cart functionality")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
         public virtual void _04_VerifyTheMailCartFunctionality()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Verify the mail cart functionality", ((string[])(null)));
-#line 39
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Verify the mail cart functionality", new string[] {
+                        "E2E"});
+#line 46
 this.ScenarioSetup(scenarioInfo);
-#line 40
+#line 47
  testRunner.When("user selects document and clicks on mail cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 41
+#line 48
  testRunner.Then("selected documents should be saved as a draft when clicked on email as attachment" +
                     " or email as link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("08. Verify the search feature with managed properties on document dashboard")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
+        public virtual void _08_VerifyTheSearchFeatureWithManagedPropertiesOnDocumentDashboard()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("08. Verify the search feature with managed properties on document dashboard", new string[] {
+                        "E2E"});
+#line 51
+this.ScenarioSetup(scenarioInfo);
+#line 52
+ testRunner.When("user types \'DocTitle:test\' in search box on document dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 53
+ testRunner.Then("all documents having \'test\' keyword should be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

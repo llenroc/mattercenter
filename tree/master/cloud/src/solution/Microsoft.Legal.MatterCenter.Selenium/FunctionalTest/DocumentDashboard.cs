@@ -10,7 +10,7 @@
 // <summary>This file is used to perform verification of document dashboard page </summary>
 // ****************************************************************************************
 
-namespace Protractor_Net_Demo
+namespace Microsoft.Legal.MatterCenter.Selenium
 {
     using Microsoft.Legal.MatterCenter.Selenium;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -123,14 +123,16 @@ namespace Protractor_Net_Demo
         public void WhenUserTypesInSearchBoxOnDocumentDashboard(string searchBox)
         {
             Thread.Sleep(2000);
-            webDriver.FindElement(By.CssSelector(".col-xs-12 .form-control")).SendKeys(searchBox);
+            webDriver.FindElement(By.CssSelector(".col-xs-12 .form-control")).Clear();
+            Thread.Sleep(1000);
+            scriptExecutor.ExecuteScript("$('.col-xs-12 .form-control')[0].value='" + searchBox+"'");
             Thread.Sleep(2000);
-            scriptExecutor.ExecuteScript("$('.dropdown-menu li')[0].click()");
+            scriptExecutor.ExecuteScript("$('#basic-addon1').click()");
             Thread.Sleep(5000);
         }
 
-        [Then(@"all documents having the searched keyword should be displayed")]
-        public void ThenAllDocumentsHavingTheSearchedKeywordShouldBeDisplayed()
+        [Then(@"all documents having '(.*)' keyword should be displayed")]
+        public void ThenAllDocumentsHavingKeywordShouldBeDisplayed(string searchBox)
         {
             long linkLength = (long)scriptExecutor.ExecuteScript("var links = $('.ui-grid-canvas .ui-grid-row ').length;return links;");
             int linkCounter, tempCounter = 0;
@@ -138,7 +140,7 @@ namespace Protractor_Net_Demo
             {
                 Thread.Sleep(1000);
                 string test = (string)scriptExecutor.ExecuteScript("var links = $('.col-xs-12 #documentPopup')[" + linkCounter + "].title;return links;");
-                if (test.ToLower(CultureInfo.CurrentCulture).Contains(ConfigurationManager.AppSettings["SearchKeyWord"]))
+                if (!String.IsNullOrEmpty(searchBox) && test.ToLower(CultureInfo.CurrentCulture).Contains(searchBox.ToLower(CultureInfo.CurrentCulture)))
                     tempCounter++;
             }
             if (tempCounter > 0)
@@ -182,7 +184,9 @@ namespace Protractor_Net_Demo
             {
                 string checkClient = (string)scriptExecutor.ExecuteScript("var links = $('.ui-grid-cell-contents')[" + documentCounter + "].innerText;return links");
                 if (checkClient.Contains("Amazon"))
+                {
                     counter++;
+                }
             }
             Assert.IsTrue(counter > 5);
         }
@@ -264,8 +268,8 @@ namespace Protractor_Net_Demo
             Thread.Sleep(4000);
         }
 
-        [When(@"user sorts data for All document in ascending order on document dashboard")]
-        public void WhenUserSortsDataForAllDocumentInAscendingOrderOnDocumentDashboard()
+        [When(@"user sorts data in ascending order on document dashboard")]
+        public void WhenUserSortsDataInAscendingOrderOnDocumentDashboard()
         {
             scriptExecutor.ExecuteScript("$('.nav-tabs a')[2].click()");
             Thread.Sleep(3000);
@@ -275,8 +279,8 @@ namespace Protractor_Net_Demo
             Thread.Sleep(4000);
         }
 
-        [When(@"user sorts data for All document in ascending order of created date")]
-        public void WhenUserSortsDataForAllDocumentInAscendingOrderOfCreatedDate()
+        [When(@"user sorts data in ascending order of created date")]
+        public void WhenUserSortsDataInAscendingOrderOfCreatedDate()
         {
             scriptExecutor.ExecuteScript("$('.nav-tabs a')[2].click()");
             Thread.Sleep(3000);

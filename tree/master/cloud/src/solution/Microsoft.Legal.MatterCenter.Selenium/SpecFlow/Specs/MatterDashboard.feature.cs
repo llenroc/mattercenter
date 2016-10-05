@@ -83,14 +83,16 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("02. Verify the hamburger menu")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
         public virtual void _02_VerifyTheHamburgerMenu()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Verify the hamburger menu", ((string[])(null)));
-#line 8
-this.ScenarioSetup(scenarioInfo);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Verify the hamburger menu", new string[] {
+                        "E2E"});
 #line 9
- testRunner.When("user clicks on hamburger menu on Matter Center home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+this.ScenarioSetup(scenarioInfo);
 #line 10
+ testRunner.When("user clicks on hamburger menu on Matter Center home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 11
  testRunner.Then("hamburger menu should be loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -98,14 +100,16 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("05. Verify the matter fly out on Matter Center home page")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
         public virtual void _05_VerifyTheMatterFlyOutOnMatterCenterHomePage()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Verify the matter fly out on Matter Center home page", ((string[])(null)));
-#line 12
-this.ScenarioSetup(scenarioInfo);
-#line 13
- testRunner.When("user clicks on matter fly out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Verify the matter fly out on Matter Center home page", new string[] {
+                        "E2E"});
 #line 14
+this.ScenarioSetup(scenarioInfo);
+#line 15
+ testRunner.When("user clicks on matter fly out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 16
  testRunner.Then("a matter fly out should be seen", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -113,29 +117,33 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("06. Verify the search feature on matter center home page")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
         public virtual void _06_VerifyTheSearchFeatureOnMatterCenterHomePage()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Verify the search feature on matter center home page", ((string[])(null)));
-#line 16
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Verify the search feature on matter center home page", new string[] {
+                        "E2E"});
+#line 19
 this.ScenarioSetup(scenarioInfo);
-#line 17
+#line 20
  testRunner.When("user types \'test\' in search box on Matter Center Home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 18
- testRunner.Then("all results having the searched keyword should be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 21
+ testRunner.Then("all results having \'Test\' keyword should be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("04. Verify the upload button functionality")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
         public virtual void _04_VerifyTheUploadButtonFunctionality()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Verify the upload button functionality", ((string[])(null)));
-#line 20
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Verify the upload button functionality", new string[] {
+                        "E2E"});
+#line 24
 this.ScenarioSetup(scenarioInfo);
-#line 21
+#line 25
  testRunner.When("user clicks on upload button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 22
+#line 26
  testRunner.Then("an upload pop up should be seen", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -143,14 +151,16 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("03. Verify the pin/unpin functionality")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
         public virtual void _03_VerifyThePinUnpinFunctionality()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Verify the pin/unpin functionality", ((string[])(null)));
-#line 24
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Verify the pin/unpin functionality", new string[] {
+                        "E2E"});
+#line 29
 this.ScenarioSetup(scenarioInfo);
-#line 25
+#line 30
  testRunner.When("user clicks on pin or unpin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 26
+#line 31
  testRunner.Then("matter should get pinned or unpinned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -158,14 +168,16 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("07. Verify the advance filter functionality")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
         public virtual void _07_VerifyTheAdvanceFilterFunctionality()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("07. Verify the advance filter functionality", ((string[])(null)));
-#line 28
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("07. Verify the advance filter functionality", new string[] {
+                        "E2E"});
+#line 34
 this.ScenarioSetup(scenarioInfo);
-#line 29
+#line 35
  testRunner.When("user clicks on advance filter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 30
+#line 36
  testRunner.Then("filter results should be shown to user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -173,34 +185,36 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("08. Verify the sort functionality in matter center home")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
         public virtual void _08_VerifyTheSortFunctionalityInMatterCenterHome()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("08. Verify the sort functionality in matter center home", ((string[])(null)));
-#line 32
-this.ScenarioSetup(scenarioInfo);
-#line 33
- testRunner.When("user sorts data for All matters in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 34
- testRunner.Then("all records should be sorted in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 35
- testRunner.When("user sorts data for All matters in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 36
- testRunner.Then("all records should be sorted in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 38
- testRunner.When("user sorts data for Pinned matters in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("08. Verify the sort functionality in matter center home", new string[] {
+                        "E2E"});
 #line 39
- testRunner.Then("all records should be sorted in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+this.ScenarioSetup(scenarioInfo);
 #line 40
- testRunner.When("user sorts data for Pinned matters in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user sorts data for All matters in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 41
- testRunner.Then("all records should be sorted in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 43
- testRunner.When("user sorts data for My matters in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 44
  testRunner.Then("all records should be sorted in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 42
+ testRunner.When("user sorts data for All matters in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 43
+ testRunner.Then("all records should be sorted in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 45
- testRunner.When("user sorts data for My matters in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user sorts data for Pinned matters in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 46
+ testRunner.Then("all records should be sorted in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 47
+ testRunner.When("user sorts data for Pinned matters in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 48
+ testRunner.Then("all records should be sorted in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 50
+ testRunner.When("user sorts data for My matters in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 51
+ testRunner.Then("all records should be sorted in ascending order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 52
+ testRunner.When("user sorts data for My matters in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 53
  testRunner.Then("all records should be sorted in ascending order of created date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -208,15 +222,53 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("09. Verify the footer on matter center home")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
         public virtual void _09_VerifyTheFooterOnMatterCenterHome()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("09. Verify the footer on matter center home", ((string[])(null)));
-#line 48
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("09. Verify the footer on matter center home", new string[] {
+                        "E2E"});
+#line 56
 this.ScenarioSetup(scenarioInfo);
-#line 49
+#line 57
  testRunner.When("user navigates to the footer", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 50
+#line 58
  testRunner.Then("footer should have all the links", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("10. Verify the search feature using managed properties on matter center home page" +
+            "")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
+        public virtual void _10_VerifyTheSearchFeatureUsingManagedPropertiesOnMatterCenterHomePage()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("10. Verify the search feature using managed properties on matter center home page" +
+                    "", new string[] {
+                        "E2E"});
+#line 61
+this.ScenarioSetup(scenarioInfo);
+#line 62
+ testRunner.When("user types \'MCMatterName:Test\' in search box on Matter Center Home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 63
+ testRunner.Then("all results having \'Test\' keyword should be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("11. Verify enterprise search feature on matter center home page")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
+        public virtual void _11_VerifyEnterpriseSearchFeatureOnMatterCenterHomePage()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("11. Verify enterprise search feature on matter center home page", new string[] {
+                        "E2E"});
+#line 66
+this.ScenarioSetup(scenarioInfo);
+#line 67
+ testRunner.When("user types \'Test\' in enterprise search box on Matter Center Home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 68
+ testRunner.Then("user should redirect to enterprise page with search results for \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

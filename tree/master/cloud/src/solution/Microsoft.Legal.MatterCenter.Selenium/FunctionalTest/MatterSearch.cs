@@ -101,8 +101,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             scriptExecutor.ExecuteScript("$('#basic-addon1').click()");
             Thread.Sleep(4000);
         }
-        [Then(@"all matters with the searched keyword should be shown")]
-        public void ThenAllMattersWithTheSearchedKeywordShouldBeShown()
+        [Then(@"all matters with '(.*)' keyword should be shown")]
+        public void ThenAllMattersWithKeywordShouldBeShown(string searchText)
         {
             long linkLength = (long)scriptExecutor.ExecuteScript("var links = $('.col-xs-7').length;return links;");
             int linkCounter, tempCounter = 0;
@@ -110,7 +110,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             {
                 Thread.Sleep(1000);
                 string test = (string)scriptExecutor.ExecuteScript("var links = $('.col-xs-7')[" + linkCounter + "].innerText;return links;");
-                if (test.ToLower(CultureInfo.CurrentCulture).Contains(ConfigurationManager.AppSettings["SearchKeyWord"]))
+                if (!String.IsNullOrEmpty(searchText) && test.ToLower(CultureInfo.CurrentCulture).Contains(searchText.ToLower(CultureInfo.CurrentCulture)))
                     tempCounter++;
             }
             if (tempCounter > 0)

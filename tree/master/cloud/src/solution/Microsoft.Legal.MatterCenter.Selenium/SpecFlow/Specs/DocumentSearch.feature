@@ -24,7 +24,7 @@ Scenario: 06. Verify the column picker
 @E2E
 Scenario:05. Verify the document search box
 	When user searches with keyword 'Test'
-	Then it should display all the document which consist of search keyword
+	Then it should display all the document which consist of 'test' keyword
 
 @E2E
 Scenario:04. Verify the document sort
@@ -57,4 +57,8 @@ Scenario:03. Verify the document fly out
 	Then that document should open when clicked
 	When user clicks on view document details
 	Then document landing page should open
-	      
+
+@E2E	      
+Scenario:09. Verify the document search box for managed search
+ 	When user searches with keyword 'DocTitle:test'
+	Then it should display all the document which consist of 'Test' keyword

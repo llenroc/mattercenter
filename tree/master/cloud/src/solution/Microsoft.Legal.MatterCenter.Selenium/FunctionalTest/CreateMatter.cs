@@ -10,7 +10,7 @@
 // <summary>This file is used to perform verification of create matter page </summary>
 // ****************************************************************************************
 
-namespace Protractor_Net_Demo.FunctionalTest
+namespace Microsoft.Legal.MatterCenter.Selenium
 {
     using Microsoft.Legal.MatterCenter.Selenium;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -85,7 +85,7 @@ namespace Protractor_Net_Demo.FunctionalTest
         #region 03. Verify 'Assign Permission' tab
 
         [When(@"user selects permission for matter")]
-        public void WhenUserSelectsPermissionForMatter()
+        public void WhenUserSelectsPermissionFormatter()
         {
             Thread.Sleep(2000);
             webDriver.FindElement(By.XPath("//main/div/div/div[2]")).Click();
@@ -176,7 +176,7 @@ namespace Protractor_Net_Demo.FunctionalTest
         }
 
         [Then(@"a new matter should get created")]
-        public void ThenANewMatterShouldGetCreated()
+        public void ThenNewMatterShouldGetCreated()
         {
             string checkHereLink = (string)scriptExecutor.ExecuteScript("var step = $('.notification a')[0].innerText;return step;");
             Assert.IsTrue(checkHereLink.Contains("here"));

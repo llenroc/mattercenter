@@ -148,6 +148,23 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("06. Verify the pin/unpin functionality")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
+        public virtual void _06_VerifyThePinUnpinFunctionality()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Verify the pin/unpin functionality", new string[] {
+                        "E2E"});
+#line 29
+this.ScenarioSetup(scenarioInfo);
+#line 30
+ testRunner.When("user clicks on pin/unpin button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 31
+ testRunner.Then("document should get pinned/unpinned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

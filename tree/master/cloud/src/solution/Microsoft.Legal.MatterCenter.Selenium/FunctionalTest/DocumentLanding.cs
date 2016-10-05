@@ -12,27 +12,29 @@
 
 namespace Microsoft.Legal.MatterCenter.Selenium
 {
-    using VisualStudio.TestTools.UnitTesting;
     using OpenQA.Selenium;
+    using System;
     using System.Configuration;
     using System.Threading;
-    using TechTalk.SpecFlow;
-    using System;
     using System.Web;
+    using TechTalk.SpecFlow;
+    using VisualStudio.TestTools.UnitTesting;
 
     [Binding]
     public class DocumentLanding
     {
-        string URL = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["DocumentLandingPage"]);
+        static string link = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["DocumentLandingPage"]);
+        Uri URL = new Uri(link);
         static IWebDriver webDriver = CommonHelperFunction.GetDriver();
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
         CommonHelperFunction common = new CommonHelperFunction();
+        bool pinned;
 
         #region 01. Open the browser and load document landing page
         [When(@"user will provide '(.*)' and '(.*)'")]
         public void WhenUserWillProvideAnd(string userName, string password)
         {
-            webDriver.Navigate().GoToUrl(new Uri(URL));
+            webDriver.Navigate().GoToUrl(URL);
             Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["UserName"]));
             Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["Password"]));
         }
@@ -190,7 +192,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         [When(@"user navigates to footer on document landing page")]
         public void WhenUserNavigatesToFooterOnDocumentLandingPage()
         {
-            webDriver.Navigate().GoToUrl(new Uri(URL));
+            webDriver.Navigate().GoToUrl(URL);
             Thread.Sleep(5000);
         }
 
@@ -214,6 +216,42 @@ namespace Microsoft.Legal.MatterCenter.Selenium
 
         #endregion
 
+        #region 06. Verify pin/unpin functionality
+
+        [When(@"user clicks on pin/unpin button")]
+        public void WhenUserClicksOnPinUnpinButton()
+        {
+            Thread.Sleep(2000);
+            if((Boolean)(scriptExecutor.ExecuteScript("var bool = $('#unpinDocument').hasClass('hide'); return bool;")))
+            {
+                scriptExecutor.ExecuteScript("$('#spanPin').click();");
+                pinned = true;
+            }
+            else
+            {
+                scriptExecutor.ExecuteScript("$('#spanUnpin').click();");
+                pinned = false;
+            }
+        }
+
+        [Then(@"document should get pinned/unpinned")]
+        public void ThenDocumentShouldGetPinnedUnpinned()
+        {
+            if ((Boolean)(scriptExecutor.ExecuteScript("var bool = $('#unpinDocument').hasClass('hide'); return bool;")) && !pinned)
+            {
+                Assert.IsTrue(true);
+            }
+            else if (!(Boolean)(scriptExecutor.ExecuteScript("var bool = $('#unpinDocument').hasClass('hide'); return bool;")) && pinned)
+            {
+                Assert.IsTrue(true);
+            }
+            else
+            {
+                Assert.IsFalse(true);
+            }
+        }
+
+        #endregion
 
     }
 }

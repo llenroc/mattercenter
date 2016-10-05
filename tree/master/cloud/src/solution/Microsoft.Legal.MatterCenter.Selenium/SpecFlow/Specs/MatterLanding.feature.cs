@@ -152,6 +152,23 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("06. Verify the manage user functionality")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
+        public virtual void _06_VerifyTheManageUserFunctionality()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Verify the manage user functionality", new string[] {
+                        "E2E"});
+#line 31
+this.ScenarioSetup(scenarioInfo);
+#line 32
+    testRunner.When("user clicks on group icon", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 33
+ testRunner.Then("popup should display list of attorneys", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

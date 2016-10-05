@@ -27,4 +27,9 @@ Scenario:05. Verify the hamburger menu
     When user clicks on hamburger menu
 	Then hamburger menu should be seen 
 
+@E2E
+Scenario:06. Verify the manage user functionality
+    When user clicks on group icon
+	Then popup should display list of attorneys
+
 	    

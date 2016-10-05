@@ -139,7 +139,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 26
  testRunner.When("user searches with keyword \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 27
- testRunner.Then("it should display all the document which consist of search keyword", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("it should display all the document which consist of \'test\' keyword", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -234,6 +234,23 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.When("user clicks on view document details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 59
  testRunner.Then("document landing page should open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("09. Verify the document search box for managed search")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
+        public virtual void _09_VerifyTheDocumentSearchBoxForManagedSearch()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("09. Verify the document search box for managed search", new string[] {
+                        "E2E"});
+#line 62
+this.ScenarioSetup(scenarioInfo);
+#line 63
+  testRunner.When("user searches with keyword \'DocTitle:test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 64
+ testRunner.Then("it should display all the document which consist of \'Test\' keyword", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

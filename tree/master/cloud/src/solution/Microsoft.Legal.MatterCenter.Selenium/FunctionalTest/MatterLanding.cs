@@ -28,6 +28,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         static IWebDriver webDriver = CommonHelperFunction.GetDriver();
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
         CommonHelperFunction common = new CommonHelperFunction();
+        string firstUser;
 
         #region 01. Open the browser and load matter landing page
         [When(@"user pass '(.*)' and '(.*)'")]
@@ -194,6 +195,32 @@ namespace Microsoft.Legal.MatterCenter.Selenium
 
             scriptExecutor.ExecuteScript("$('#menu').click();");
         }
+        #endregion
+
+        #region 06. Verify manage user functionality
+
+        [When(@"user clicks on group icon")]
+        public void WhenUserClicksOnGroupIcon()
+        {
+            scriptExecutor.ExecuteScript("$('.userIcon')[0].click()");
+            firstUser = (string)scriptExecutor.ExecuteScript("var len = $('.ms-imnSpan')[0].innerText ; return len;");
+            Thread.Sleep(5000);
+            scriptExecutor.ExecuteScript("$('.selectedUserIcon')[0].click()");
+        }
+
+        [Then(@"popup should display list of attorneys")]
+        public void ThenPopupShouldDisplayListOfAttorneys()
+        {
+            if (!String.IsNullOrEmpty(firstUser))
+            {
+                Assert.IsTrue(true);
+            }
+            else
+            {
+                Assert.IsFalse(true);
+            }
+        }
+
         #endregion
     }
 }
