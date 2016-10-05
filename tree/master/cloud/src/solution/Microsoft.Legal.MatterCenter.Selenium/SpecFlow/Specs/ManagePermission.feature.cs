@@ -82,16 +82,16 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute(":02. User will add attorney to the Matter")]
+        [NUnit.Framework.DescriptionAttribute(":02. User will add Attorney to the Matter")]
         [NUnit.Framework.CategoryAttribute("E2E")]
         public virtual void _02_UserWillAddAttorneyToTheMatter()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo(":02. User will add attorney to the Matter", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo(":02. User will add Attorney to the Matter", new string[] {
                         "E2E"});
 #line 9
 this.ScenarioSetup(scenarioInfo);
 #line 10
- testRunner.When("user will add new attroney to the matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user will add new Attorney to the matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 11
  testRunner.Then("Attroney should be added in the matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

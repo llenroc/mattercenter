@@ -1,14 +1,14 @@
 ﻿
 namespace Microsoft.Legal.MatterCenter.Selenium
 {
-    using VisualStudio.TestTools.UnitTesting;
     using OpenQA.Selenium;
     using OpenQA.Selenium.Support.UI;
+    using System;
     using System.Configuration;
     using System.Threading;
-    using TechTalk.SpecFlow;
-    using System;
     using System.Web;
+    using TechTalk.SpecFlow;
+    using VisualStudio.TestTools.UnitTesting;
 
     [Binding]
     public class ManagePermission
@@ -37,8 +37,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         }
         #endregion
 
-        #region 02. User will add attorney to the Matter
-        [When(@"user will add new attroney to the matter")]
+        #region 02. User will add Attorney to the Matter
+        [When(@"user will add new Attorney to the matter")]
         public void WhenUserWillAddNewAttroneyToTheMatter()
         {
             scriptExecutor.ExecuteScript("$('#addMorePermissions').click()");
@@ -46,7 +46,6 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             webDriver.FindElement(By.LinkText(ConfigurationManager.AppSettings["AttorneyMember"])).Click();
             scriptExecutor.ExecuteScript("$('#ddlRoleAssign" + (existingUsers + 1) + "').val('Responsible Attorney')");
             scriptExecutor.ExecuteScript("$('#ddlPermAssign" + (existingUsers + 1) + "').val('Full Control')");
-
         }
 
         [Then(@"Attroney should be added in the matter")]

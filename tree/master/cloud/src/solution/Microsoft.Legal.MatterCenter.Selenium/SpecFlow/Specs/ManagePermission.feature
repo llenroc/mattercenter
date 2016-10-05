@@ -6,8 +6,8 @@ Scenario:01. Open the browser and load manage permission page
 	Then manage permission page should be loaded with default permission	
 
 @E2E
-Scenario: :02. User will add attorney to the Matter
-	When user will add new attroney to the matter
+Scenario: :02. User will add Attorney to the Matter
+	When user will add new Attorney to the matter
 	Then Attroney should be added in the matter
 
 @E2E
