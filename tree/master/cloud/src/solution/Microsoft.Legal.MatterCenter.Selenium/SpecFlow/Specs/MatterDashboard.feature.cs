@@ -74,7 +74,7 @@ namespace Protractor_Net_Demo.SpecFlow.Specs
 #line 4
 this.ScenarioSetup(scenarioInfo);
 #line 5
- testRunner.When("\'matteradmin@msmatter.onmicrosoft.com\' and \'P@$$w0rd01\' will be given", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user enters credentials on matter dashboard page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 6
  testRunner.Then("Matter Center home page should be loaded with element \'mcIcon\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -127,7 +127,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 20
  testRunner.When("user types \'test\' in search box on Matter Center Home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 21
- testRunner.Then("all results having \'Test\' keyword should be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("all results having \'test\' keyword should be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -167,11 +167,11 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("07. Verify the advance filter functionality")]
+        [NUnit.Framework.DescriptionAttribute("08. Verify the advance filter functionality")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void _07_VerifyTheAdvanceFilterFunctionality()
+        public virtual void _08_VerifyTheAdvanceFilterFunctionality()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("07. Verify the advance filter functionality", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("08. Verify the advance filter functionality", new string[] {
                         "E2E"});
 #line 34
 this.ScenarioSetup(scenarioInfo);
@@ -184,11 +184,11 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("08. Verify the sort functionality in matter center home")]
+        [NUnit.Framework.DescriptionAttribute("09. Verify the sort functionality in matter center home")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void _08_VerifyTheSortFunctionalityInMatterCenterHome()
+        public virtual void _09_VerifyTheSortFunctionalityInMatterCenterHome()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("08. Verify the sort functionality in matter center home", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("09. Verify the sort functionality in matter center home", new string[] {
                         "E2E"});
 #line 39
 this.ScenarioSetup(scenarioInfo);
@@ -221,11 +221,11 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("09. Verify the footer on matter center home")]
+        [NUnit.Framework.DescriptionAttribute("10. Verify the footer on matter center home")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void _09_VerifyTheFooterOnMatterCenterHome()
+        public virtual void _10_VerifyTheFooterOnMatterCenterHome()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("09. Verify the footer on matter center home", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("10. Verify the footer on matter center home", new string[] {
                         "E2E"});
 #line 56
 this.ScenarioSetup(scenarioInfo);
@@ -238,12 +238,12 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("10. Verify the search feature using managed properties on matter center home page" +
+        [NUnit.Framework.DescriptionAttribute("07. Verify the search feature using managed properties on matter center home page" +
             "")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void _10_VerifyTheSearchFeatureUsingManagedPropertiesOnMatterCenterHomePage()
+        public virtual void _07_VerifyTheSearchFeatureUsingManagedPropertiesOnMatterCenterHomePage()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("10. Verify the search feature using managed properties on matter center home page" +
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("07. Verify the search feature using managed properties on matter center home page" +
                     "", new string[] {
                         "E2E"});
 #line 61

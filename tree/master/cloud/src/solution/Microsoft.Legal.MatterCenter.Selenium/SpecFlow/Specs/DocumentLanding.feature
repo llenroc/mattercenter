@@ -2,27 +2,27 @@
 
 @E2E
 Scenario:01. Open the browser and load document landing page
-	When user will provide 'matteradmin@msmatter.onmicrosoft.com' and 'P@$$w0rd01'
+	When user enters credentials on document landing page
 	Then document landing page should be loaded with element 'documentName'
 	
 @E2E
-Scenario:02. Verify page components
-	When user clicks on various components on the page
-	Then all components should work as per design  
+Scenario:02. Verify action links
+	When user loads document landing page
+	Then document action links should be present
 	
 @E2E
 Scenario:03. Verify file properties
-	When user navigates to file properties section
+	When user expands file properties section
 	Then all file properties should be present  
 
 @E2E
 Scenario:04. Verify version details
-	When user navigates to version section
+	When user expands version section
 	Then all versions of the document should be seen
       
 @E2E
 Scenario:05. Verify the footer links
-	When user navigates to footer on document landing page
+	When user clicks on footer on document landing page
 	Then all links should be present on footer on document landing page  
 
 @E2E

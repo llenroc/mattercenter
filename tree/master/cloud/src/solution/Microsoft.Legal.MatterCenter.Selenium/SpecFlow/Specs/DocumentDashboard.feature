@@ -2,7 +2,7 @@
 
 @E2E
 Scenario: 01. Open the browser and load document dashboard page
-	When we will enter 'matteradmin@msmatter.onmicrosoft.com' and 'P@$$w0rd01' to login
+	When user enters credentials on document dashboard page
 	Then document dashboard page should be loaded with element 'allDocuments'
 
 @E2E
@@ -21,7 +21,7 @@ Scenario: 06. Verify the search feature on document dashboard
 	Then all documents having 'test' keyword should be displayed
 
 @E2E
-Scenario: 07. Verify the advance filter functionality
+Scenario: 08. Verify the advance filter functionality
 	When user clicks on advance filter on document dashboard
 	Then filtered results should be shown to user
 
@@ -30,24 +30,24 @@ Scenario: 05. Verify the sort functionality on document dashboard
 	When user sorts data in ascending order on document dashboard
 	Then all records should be sorted in ascending order on document dashboard
 	When user sorts data in ascending order of created date
-	Then all records should be sorted in ascending order on document dashboard
+	Then all records should be sorted in ascending order on document dashboard by created date
 
 	When user sorts data for Pinned document in ascending order
 	Then all records should be sorted in ascending order on document dashboard
 	When user sorts data for Pinned document in ascending order of created date
-	Then all records should be sorted in ascending order on document dashboard
+	Then all records should be sorted in ascending order on document dashboard by created date
 
 	When user sorts data for My document in ascending order
 	Then all records should be sorted in ascending order on document dashboard
 	When user sorts data for My document in ascending order of created date
-	Then all records should be sorted in ascending order on document dashboard
+	Then all records should be sorted in ascending order on document dashboard by created date
 
 @E2E
 Scenario: 04. Verify the mail cart functionality
 	When user selects document and clicks on mail cart
-	Then selected documents should be saved as a draft when clicked on email as attachment or email as link
+	Then popup should display email as link or email as attachment options
 	
 @E2E    
-Scenario: 08. Verify the search feature with managed properties on document dashboard
+Scenario: 07. Verify the search feature with managed properties on document dashboard
 	When user types 'DocTitle:test' in search box on document dashboard
 	Then all documents having 'test' keyword should be displayed		  

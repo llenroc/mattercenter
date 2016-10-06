@@ -31,12 +31,10 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         string firstUser;
 
         #region 01. Open the browser and load matter landing page
-        [When(@"user pass '(.*)' and '(.*)'")]
-        public void WhenUserPassAnd(string userName, string password)
+        [When(@"user enters credentials on matter landing page")]
+        public void WhenUserEntersCredentialsOnMatterLandingPage()
         {
             common.GetLogin(webDriver, URL);
-            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["UserName"]));
-            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["Password"]));
         }
 
         [Then(@"matter landing page should be loaded with element '(.*)'")]
@@ -47,7 +45,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         #endregion
 
         #region 02. Verify the matter components
-        [When(@"user checks all the components")]
+        [When(@"user loads matter landing page")]
         public void WhenUserChecksAllTheComponents()
         {
             common.GetLogin(webDriver, URL);
@@ -56,7 +54,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Thread.Sleep(5000);
         }
 
-        [Then(@"all components should be present")]
+        [Then(@"all matter components - Task, RSS, Calender and OneNote should be present")]
         public void ThenAllComponentsShouldBePresent()
         {
             int checkEmptyTask = (webDriver.FindElements(By.CssSelector(".taskBoard .emptyItems"))).Count;
@@ -149,7 +147,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         #endregion
 
         #region 04. Verify the footer
-        [When(@"user navigates to footer")]
+        [When(@"user clicks on footer")]
         public void WhenUserNavigatesToFooter()
         {
             common.GetLogin(webDriver, URL);
@@ -208,7 +206,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             scriptExecutor.ExecuteScript("$('.selectedUserIcon')[0].click()");
         }
 
-        [Then(@"popup should display list of attorneys")]
+        [Then(@"popup should display list of Attorneys")]
         public void ThenPopupShouldDisplayListOfAttorneys()
         {
             if (!String.IsNullOrEmpty(firstUser))

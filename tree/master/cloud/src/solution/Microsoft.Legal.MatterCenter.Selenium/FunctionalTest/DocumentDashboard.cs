@@ -33,12 +33,10 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         CommonHelperFunction common = new CommonHelperFunction();
 
         #region 01. Open the browser and load document dashboard page
-        [When(@"we will enter '(.*)' and '(.*)' to login")]
-        public void WhenWeWillEnterAndToLogin(string userName, string password)
+        [When(@"user enters credentials on document dashboard page")]
+        public void WhenUserEntersCredentialsOnDocumentDashboardPage()
         {
             common.GetLogin(webDriver, URL);
-            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["UserName"]));
-            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["Password"]));
             Thread.Sleep(5000);
         }
 
@@ -257,6 +255,57 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Assert.IsTrue(totalDocument >= 0);
         }
 
+        [Then(@"all records should be sorted in ascending order on document dashboard by created date")]
+        public void ThenAllRecordsShouldBeSortedInAscendingOrderOnDocumentDashboardByCreatedDate()
+        {
+            int totalDocument = 0, documentCount = 0, counter = 0; ;
+            char[] delimiters = new char[] { '\r', '\n' };
+
+            long length = (long)scriptExecutor.ExecuteScript("var links = $('.ui-grid-canvas .ui-grid-row ').length;return links");
+            string sortedDocument = "[";
+            string[] documentList = new string[length];
+            string duplicateDocuments = null;
+            for (int documentCounter = 0; documentCounter < length; documentCounter++)
+            {
+                string datachunk = (string)scriptExecutor.ExecuteScript("var links = $('.col-xs-12 #documentPopup')[" + documentCounter + "].title;return links");
+                string[] rows = datachunk.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+
+                if (!(rows[0].Equals(duplicateDocuments)))
+                {
+
+                    if (rows[0] != null)
+                    {
+                        documentList[counter] = rows[0];
+                        counter++;
+                    }
+                    duplicateDocuments = rows[0];
+                }
+            }
+            var tempDocumentList = new List<string>();
+            foreach (var document in documentList)
+            {
+                if (!string.IsNullOrEmpty(document))
+                {
+                    tempDocumentList.Add(document);
+                    sortedDocument += "'" + document + "',";
+                }
+            }
+            sortedDocument.TrimEnd(',');
+            sortedDocument += "]";
+            documentCount = 0;
+            var sortedDocumentList = scriptExecutor.ExecuteScript("var oDocumentList = " + sortedDocument + ".sort();return oDocumentList");
+            foreach (string element in (IEnumerable)sortedDocumentList)
+            {
+                if (string.Equals(element.Trim(), tempDocumentList[documentCount].Trim(), StringComparison.OrdinalIgnoreCase))
+                {
+                    totalDocument++;
+                }
+                documentCount++;
+            }
+            Thread.Sleep(2000);
+            Assert.IsTrue(totalDocument >= 0);
+        }
+
         [When(@"user sorts data for My document in ascending order of created date")]
         public void WhenUserSortsDataForMyDocumentInAscendingOrderOfCreatedDate()
         {
@@ -333,8 +382,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Thread.Sleep(1000);
         }
 
-        [Then(@"selected documents should be saved as a draft when clicked on email as attachment or email as link")]
-        public void ThenSelectedDocumentsShouldBeSavedAsADraftWhenClickedOnEmailAsAttachmentOrEmailAsLink()
+        [Then(@"popup should display email as link or email as attachment options")]
+        public void PopupShouldDisplayEmailAsLinkOrEmailAsAttchmentOptions()
         {
             Assert.IsTrue(common.ElementPresent(webDriver, "emailAttachmentOption", Selector.Class));
             Assert.IsTrue(common.ElementPresent(webDriver, "emailLinkOption", Selector.Class));

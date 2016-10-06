@@ -2,7 +2,7 @@
 
 @E2E
 Scenario:01. Open the browser and load home page
-	When we will provide 'matteradmin@msmatter.onmicrosoft.com' and 'P@$$w0rd01'
+	When user enters credentials on home page
 	Then home page should be loaded with element 'HomeContainer'	   
 
 @E2E

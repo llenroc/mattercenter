@@ -36,18 +36,18 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             if (webDriver == null)
                 throw new ArgumentNullException("webDriver");
             IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
-            webDriver.FindElement(By.Id(ConfigurationManager.AppSettings["UserIDTextBox"])).Click();
-            webDriver.FindElement(By.Id(ConfigurationManager.AppSettings["UserIDTextBox"])).Clear();
-            scriptExecutor.ExecuteScript(ConfigurationManager.AppSettings["UserIDSelector"]);
+            webDriver.FindElement(By.Id("cred_userid_inputtext")).Click();
+            webDriver.FindElement(By.Id("cred_userid_inputtext")).Clear();
+            scriptExecutor.ExecuteScript("document.getElementById('cred_userid_inputtext').value='"+ ConfigurationManager.AppSettings["UserName"]+"'");
             Thread.Sleep(5000);
-            webDriver.FindElement(By.Id(ConfigurationManager.AppSettings["UserPasswordTextBox"])).Click();
-            webDriver.FindElement(By.Id(ConfigurationManager.AppSettings["UserPasswordTextBox"])).Clear();
+            webDriver.FindElement(By.Id("cred_password_inputtext")).Click();
+            webDriver.FindElement(By.Id("cred_password_inputtext")).Clear();
             Thread.Sleep(3000);
-            scriptExecutor.ExecuteScript(ConfigurationManager.AppSettings["UserPasswordSelector"]);
+            scriptExecutor.ExecuteScript("document.getElementById('cred_password_inputtext').setAttribute('value','"+ ConfigurationManager.AppSettings["Password"] + "')");
             Thread.Sleep(3000);
-            scriptExecutor.ExecuteScript(ConfigurationManager.AppSettings["KeepSignInButtonCheckBox"]);
+            scriptExecutor.ExecuteScript("document.getElementById('cred_keep_me_signed_in_checkbox').checked = true;");
             Thread.Sleep(2000);
-            webDriver.FindElement(By.Id(ConfigurationManager.AppSettings["SignInButton"])).Click();
+            webDriver.FindElement(By.Id("cred_sign_in_button")).Click();
             Thread.Sleep(1000);
         }
 
@@ -57,7 +57,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         /// <param name="webDriver">Selenium driver object</param>
         /// <param name="elementName">Element name</param>
         /// <param name="elementType">Element type</param>
-        /// <returns></returns>
+        /// <returns>Boolean value based on elements present</returns>
         public bool ElementPresent(IWebDriver webDriver, string elementName, Selector elementType)
         {
 
@@ -124,24 +124,23 @@ namespace Microsoft.Legal.MatterCenter.Selenium
                 throw new ArgumentNullException("webDriver");
 
             webDriver.Navigate().GoToUrl(new Uri(URL));
-            if (ElementPresent(webDriver, ConfigurationManager.AppSettings["UseAnotherAccount"], Selector.Class))
+            if (ElementPresent(webDriver, "use_another_account", Selector.Class))
             {
-                webDriver.FindElement(By.ClassName(ConfigurationManager.AppSettings["UseAnotherAccount"])).Click();
+                webDriver.FindElement(By.ClassName("use_another_account")).Click();
                 Authenticate(webDriver);
             }
             else if (ElementPresent(webDriver, "ms-spo-solutionItem", Selector.Class))
             {
                 webDriver.FindElement(By.LinkText("Click here to sign in with a different account to this site.")).Click();
                 Thread.Sleep(5000);
-                webDriver.FindElement(By.ClassName(ConfigurationManager.AppSettings["UseAnotherAccount"])).Click();
+                webDriver.FindElement(By.ClassName("use_another_account")).Click();
                 Authenticate(webDriver);
             }
-            else if (ElementPresent(webDriver, ConfigurationManager.AppSettings["UserIDTextBox"], 0))
+            else if (ElementPresent(webDriver, "cred_userid_inputtext", 0))
             {
                 Authenticate(webDriver);
             }
             Thread.Sleep(5000);
         }
-
     }
 }

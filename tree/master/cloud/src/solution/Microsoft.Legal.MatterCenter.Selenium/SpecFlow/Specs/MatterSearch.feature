@@ -2,7 +2,7 @@
 
 @E2E
 Scenario: 01. Open the browser and load search matter page
-	When we pass 'matteradmin@msmatter.onmicrosoft.com' and 'P@$$w0rd01'
+	When user enters credentials on matter search page
 	Then matter search page should be loaded with element 'matterCenterHeader'      
 
 @E2E

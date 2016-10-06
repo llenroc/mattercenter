@@ -23,17 +23,16 @@ namespace Microsoft.Legal.MatterCenter.Selenium
     public class Settings
     {
         string URL = ConfigurationManager.AppSettings["Settings"];
+        string createURL = ConfigurationManager.AppSettings["CreateMatter"];
         static IWebDriver webDriver = CommonHelperFunction.GetDriver();
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
         CommonHelperFunction common = new CommonHelperFunction();
 
         #region 01. Open the browser and load settings page
-        [When(@"we will enter value as '(.*)' and '(.*)'")]
-        public void WhenWeWillEnterValueAsAnd(string userName, string password)
+        [When(@"user enters credentials on settings page")]
+        public void WhenUserEntersCredentialsOnSettingsPage()
         {
             common.GetLogin(webDriver, URL);
-            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["UserName"]));
-            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["Password"]));
         }
 
         [Then(@"settings page should be loaded with element '(.*)'")]
@@ -105,7 +104,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Assert.IsTrue(clientLink.ToLower(CultureInfo.CurrentCulture).Contains("https://msmatter.sharepoint.com/sitepages/settings.aspx"));
             Assert.IsTrue(pageDescription.ToLower(CultureInfo.CurrentCulture).Contains("this page shows the current settings for this client’s new matters. the first section allows you to set new matter default selections, which can be changed when a matter is created. the second section defines settings that can not be changed when a new matter is created. no changes are required, and any changes made will not affect existing matters"));
         }
-        #endregion
+        #endregion     
     }
 }
 

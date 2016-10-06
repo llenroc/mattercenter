@@ -2,7 +2,7 @@
 
 @E2E
 Scenario: 01. Open the browser and load create matter page
-	When we will enter 'matteradmin@msmatter.onmicrosoft.com' and 'P@$$w0rd01'
+	When user enters credentials on matter provision page
 	Then matter provision page should be loaded with element 'snConflictCheck'
 
 @E2E
