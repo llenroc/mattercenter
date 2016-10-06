@@ -2,13 +2,13 @@
 
 @E2E
 Scenario:01. Open the browser and load matter landing page
-	When user pass 'matteradmin@msmatter.onmicrosoft.com' and 'P@$$w0rd01'
+	When user enters credentials on matter landing page
 	Then matter landing page should be loaded with element 'matterInfo'
 
 @E2E
 Scenario:02. Verify the matter components
-    When user checks all the components
-	Then all components should be present
+    When user loads matter landing page
+	Then all matter components - Task, RSS, Calender and OneNote should be present
 
 @E2E
 Scenario:03. Verify the matter profile and matter description
@@ -19,7 +19,7 @@ Scenario:03. Verify the matter profile and matter description
 
 @E2E
 Scenario:04. Verify the footer
-    When user navigates to footer 
+    When user clicks on footer
 	Then all links should be present in the footer
 
 @E2E
@@ -30,6 +30,6 @@ Scenario:05. Verify the hamburger menu
 @E2E
 Scenario:06. Verify the manage user functionality
     When user clicks on group icon
-	Then popup should display list of attorneys
+	Then popup should display list of Attorneys
 
 	    

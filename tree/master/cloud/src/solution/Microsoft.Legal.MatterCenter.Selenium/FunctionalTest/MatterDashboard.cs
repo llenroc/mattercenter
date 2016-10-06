@@ -33,12 +33,10 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         CommonHelperFunction common = new CommonHelperFunction();
 
         #region 01. Open the browser and load Matter Center home page
-        [When(@"'(.*)' and '(.*)' will be given")]
-        public void WhenAndWillBeGiven(string userName, string password)
+        [When(@"user enters credentials on matter dashboard page")]
+        public void WhenUserEntersCredentialsOnMatterDashboardPage()
         {
             common.GetLogin(webDriver, URL);
-            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["UserName"]));
-            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["Password"]));
         }
 
         [Then(@"Matter Center home page should be loaded with element '(.*)'")]
@@ -431,13 +429,14 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Thread.Sleep(4000);
             webDriver.FindElement(By.Id("searchText")).SendKeys(searchBoxValue);
             scriptExecutor.ExecuteScript("$('.searchIcon').click()");
-            Thread.Sleep(5000);
+            Thread.Sleep(10000);
         }
 
         [Then(@"user should redirect to enterprise page with search results for '(.*)'")]
         public void ThenUserShouldRedirectToEnterprisePageWithSearchResults(string searchBox)
         {
             string url = webDriver.Url;
+            Console.Write(url);
             Assert.IsTrue(!String.IsNullOrEmpty(searchBox) && url.ToLower(CultureInfo.CurrentCulture).Contains(searchBox.ToLower(CultureInfo.CurrentCulture)));
         }
 

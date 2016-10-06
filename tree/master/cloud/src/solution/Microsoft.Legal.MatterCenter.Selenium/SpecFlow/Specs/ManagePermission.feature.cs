@@ -74,7 +74,7 @@ namespace Protractor_Net_Demo.SpecFlow.Specs
 #line 4
 this.ScenarioSetup(scenarioInfo);
 #line 5
- testRunner.When("user will give \'matteradmin@msmatter.onmicrosoft.com\' and \'P@$$w0rd01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user enters credentials on manage permissions page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 6
  testRunner.Then("manage permission page should be loaded with default permission", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -91,26 +91,26 @@ this.ScenarioSetup(scenarioInfo);
 #line 9
 this.ScenarioSetup(scenarioInfo);
 #line 10
- testRunner.When("user will add new Attorney to the matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user adds new Attorney to the matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 11
- testRunner.Then("Attroney should be added in the matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Attorney should be added in the matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute(":03. User will save updated attroney to the project")]
+        [NUnit.Framework.DescriptionAttribute(":03. User will save updated Attorney to the matter")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void _03_UserWillSaveUpdatedAttroneyToTheProject()
+        public virtual void _03_UserWillSaveUpdatedAttorneyToTheMatter()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo(":03. User will save updated attroney to the project", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo(":03. User will save updated Attorney to the matter", new string[] {
                         "E2E"});
 #line 14
 this.ScenarioSetup(scenarioInfo);
 #line 15
- testRunner.When("user will click on save button on manage permission page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on save button on manage permission page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 16
- testRunner.Then("updated attroney should be added in the matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("updated Attorney should be added in the matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

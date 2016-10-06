@@ -32,12 +32,10 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         CommonHelperFunction common = new CommonHelperFunction();
 
         #region 01. Open the browser and load search document page
-        [When(@"we will give '(.*)' and '(.*)'")]
-        public void WhenWeWillGiveAnd(string userName, string password)
+        [When(@"user enters credentials on document search page")]
+        public void WhenUserEntersCredentialsOnDocumentSearchPage()
         {
             common.GetLogin(webDriver, URL);
-            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["UserName"]));
-            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["Password"]));
         }
 
         [Then(@"document search page should be loaded with element '(.*)'")]

@@ -30,12 +30,10 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         CommonHelperFunction common = new CommonHelperFunction();
 
         #region 01. Open the browser and load 'create matter' page
-        [When(@"we will enter '(.*)' and '(.*)'")]
-        public void WhenWeWillEnterAnd(string userName, string password)
+        [When(@"user enters credentials on matter provision page")]
+        public void WhenWeWillEnterAnd()
         {
             common.GetLogin(webDriver, URL);
-            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["UserName"]));
-            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["Password"]));
         }
 
         [Then(@"matter provision page should be loaded with element '(.*)'")]

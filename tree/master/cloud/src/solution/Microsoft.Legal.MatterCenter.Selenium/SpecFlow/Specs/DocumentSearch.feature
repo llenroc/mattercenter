@@ -2,7 +2,7 @@
 
 @E2E
 Scenario: 01. Open the browser and load search document page
-	When we will give 'matteradmin@msmatter.onmicrosoft.com' and 'P@$$w0rd01'
+	When user enters credentials on document search page
 	Then document search page should be loaded with element 'documentgrid'
 
 @E2E	
@@ -61,4 +61,4 @@ Scenario:03. Verify the document fly out
 @E2E	      
 Scenario:09. Verify the document search box for managed search
  	When user searches with keyword 'DocTitle:test'
-	Then it should display all the document which consist of 'Test' keyword
+	Then it should display all the document which consist of 'test' keyword

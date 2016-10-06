@@ -27,12 +27,10 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
         CommonHelperFunction common = new CommonHelperFunction();
         #region 01. Open the browser and load home page
-        [When(@"we will provide (.*) and (.*)")]
-        public void WhenWeWillProvideAnd(string userName, string password)
+        [When(@"user enters credentials on home page")]
+        public void WhenUserEntersCredentialsOnHomePage()
         {
             common.GetLogin(webDriver, URL);
-            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["UserName"]));
-            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["Password"]));
         }
 
         [Then(@"home page should be loaded with element '(.*)'")]

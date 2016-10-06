@@ -74,7 +74,7 @@ namespace Protractor_Net_Demo.SpecFlow.Specs
 #line 4
 this.ScenarioSetup(scenarioInfo);
 #line 5
- testRunner.When("we will enter value as \'matteradmin@msmatter.onmicrosoft.com\' and \'P@$$w0rd01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user enters credentials on settings page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 6
  testRunner.Then("settings page should be loaded with element \'settingName\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

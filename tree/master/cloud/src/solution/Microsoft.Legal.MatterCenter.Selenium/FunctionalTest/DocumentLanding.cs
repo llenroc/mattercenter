@@ -31,12 +31,10 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         bool pinned;
 
         #region 01. Open the browser and load document landing page
-        [When(@"user will provide '(.*)' and '(.*)'")]
-        public void WhenUserWillProvideAnd(string userName, string password)
+        [When(@"user enters credentials on document landing page")]
+        public void WhenUserEntersCredentialsOnDocumentLandingPage()
         {
             webDriver.Navigate().GoToUrl(URL);
-            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["UserName"]));
-            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["Password"]));
         }
 
         [Then(@"document landing page should be loaded with element '(.*)'")]
@@ -46,11 +44,11 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         }
         #endregion
 
-        #region 02. Verify page components
+        #region 02. Verify action links
         string initialState;
         string checkIn, checkOut;
-        [When(@"user clicks on various components on the page")]
-        public void WhenUserClicksOnVariousComponentsOnThePage()
+        [When(@"user loads document landing page")]
+        public void WhenUserLoadsDocumentLandingPage()
         {
             Thread.Sleep(5000);
             initialState = (string)scriptExecutor.ExecuteScript("var links = $('#pinUnpinDocument span').eq(0).attr('class');return links");
@@ -59,8 +57,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Thread.Sleep(5000);
         }
 
-        [Then(@"all components should work as per design")]
-        public void ThenAllComponentsShouldWorkAsPerDesign()
+        [Then(@"document action links should be present")]
+        public void ThenActionLinks()
         {
             string checkDownload = (string)scriptExecutor.ExecuteScript("var links = $('#spanDownload')[0].innerText;return links");
             string checkShare = (string)scriptExecutor.ExecuteScript("var links = $('#spanShare')[0].innerText;return links");
@@ -90,8 +88,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         #endregion
 
         #region 03. Verify file properties
-        [When(@"user navigates to file properties section")]
-        public void WhenUserNavigatesToFilePropertiesSection()
+        [When(@"user expands file properties section")]
+        public void WhenUserExpandsFilePropertiesSection()
         {
             scriptExecutor.ExecuteScript("$('#fileProperties img')[0].click()");
             Thread.Sleep(1000);
@@ -163,8 +161,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
 
         #region 04. Verify version details
 
-        [When(@"user navigates to version section")]
-        public void WhenUserNavigatesToVersionSection()
+        [When(@"user expands version section")]
+        public void WhenUserExpandsVersionSection()
         {
             scriptExecutor.ExecuteScript("$('.viewMoreContainer img')[0].click()");
             Thread.Sleep(1000);
@@ -189,7 +187,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         #endregion
 
         #region 05. Verify the footer links
-        [When(@"user navigates to footer on document landing page")]
+        [When(@"user clicks on footer on document landing page")]
         public void WhenUserNavigatesToFooterOnDocumentLandingPage()
         {
             webDriver.Navigate().GoToUrl(URL);

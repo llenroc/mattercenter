@@ -32,12 +32,10 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         CommonHelperFunction common = new CommonHelperFunction();
 
         #region  01. Open the browser and load search matter page
-        [When(@"we pass '(.*)' and '(.*)'")]
-        public void WhenWePassAnd(string userName, string password)
+        [When(@"user enters credentials on matter search page")]
+        public void WhenUserEntersCredentialsOnMatterSearchPage()
         {
             common.GetLogin(webDriver, URL);
-            Assert.IsTrue(userName.Contains(ConfigurationManager.AppSettings["UserName"]));
-            Assert.IsTrue(password.Contains(ConfigurationManager.AppSettings["Password"]));
         }
 
         [Then(@"matter search page should be loaded with element '(.*)'")]
