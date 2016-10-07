@@ -31,7 +31,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
 
         #region 01. Open the browser and load 'create matter' page
         [When(@"user enters credentials on matter provision page")]
-        public void WhenWeWillEnterAnd()
+        public void WhenUserEntersCredentialsOnMatterProvisionPage()
         {
             common.GetLogin(webDriver, URL);
         }
@@ -82,7 +82,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         #region 03. Verify 'Assign Permission' tab
 
         [When(@"user selects permission for matter")]
-        public void WhenUserSelectsPermissionFormatter()
+        public void WhenUserSelectsPermissionForMatter()
         {
             Thread.Sleep(2000);
             webDriver.FindElement(By.XPath("//main/div/div/div[2]")).Click();

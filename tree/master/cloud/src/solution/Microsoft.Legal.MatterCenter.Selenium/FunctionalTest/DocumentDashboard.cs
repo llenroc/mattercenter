@@ -26,8 +26,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
     [Binding]
     public class DocumentDashboard
     {
-        string URL = ConfigurationManager.AppSettings["DocumentDashboard"];
-        string initialState;
+        string URL = ConfigurationManager.AppSettings["DocumentDashboard"],
+               initialState = String.Empty;
         static IWebDriver webDriver = CommonHelperFunction.GetDriver();
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
         CommonHelperFunction common = new CommonHelperFunction();
@@ -58,19 +58,19 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         [Then(@"a document fly out should be seen")]
         public void ThenADocumentFlyOutShouldBeSeen()
         {
-            string headingMatterName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[0].innerText ;return links");
-            string matterName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[1].innerText ;return links");
-            string clientName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[2].innerText ;return links");
-            string documentId = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[3].innerText ;return links");
-            string authorName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[4].innerText ;return links");
-            string modifiedDate = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[5].innerText ;return links");
-            string openDocument = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[6].innerText;return links");
-            string viewDocument = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[7].innerText;return links");
-            string flyoutMatterName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[1].innerText;return links");
-            string flyoutClientName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[3].innerText;return links");
-            string flyoutDocumentId = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[5].innerText;return links");
-            string flyoutAuthorName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[7].innerText;return links");
-            string flyoutModifiedDate = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[9].innerText;return links");
+            string headingMatterName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[0].innerText ;return links"),
+                   matterName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[1].innerText ;return links"),
+                   clientName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[2].innerText ;return links"),
+                   documentId = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[3].innerText ;return links"),
+                   authorName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[4].innerText ;return links"),
+                   modifiedDate = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[5].innerText ;return links"),
+                   openDocument = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[6].innerText;return links"),
+                   viewDocument = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[7].innerText;return links"),
+                   flyoutMatterName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[1].innerText;return links"),
+                   flyoutClientName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[3].innerText;return links"),
+                   flyoutDocumentId = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[5].innerText;return links"),
+                   flyoutAuthorName = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[7].innerText;return links"),
+                   flyoutModifiedDate = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content .ms-font-m')[9].innerText;return links");
             if (flyoutClientName != null && flyoutMatterName != null && flyoutDocumentId != null && flyoutAuthorName != null && flyoutModifiedDate != null && headingMatterName != null)
             {
                 Assert.IsTrue(true);
@@ -138,7 +138,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             {
                 Thread.Sleep(1000);
                 string test = (string)scriptExecutor.ExecuteScript("var links = $('.col-xs-12 #documentPopup')[" + linkCounter + "].title;return links;");
-                if (!String.IsNullOrEmpty(searchBox) && test.ToLower(CultureInfo.CurrentCulture).Contains(searchBox.ToLower(CultureInfo.CurrentCulture)))
+                if (!String.IsNullOrWhiteSpace(searchBox) && test.ToLower(CultureInfo.CurrentCulture).Contains(searchBox.ToLower(CultureInfo.CurrentCulture)))
                     tempCounter++;
             }
             if (tempCounter > 0)
@@ -211,9 +211,9 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             char[] delimiters = new char[] { '\r', '\n' };
 
             long length = (long)scriptExecutor.ExecuteScript("var links = $('.ui-grid-canvas .ui-grid-row ').length;return links");
-            string sortedDocument = "[";
+            string sortedDocument = "[", duplicateDocuments = null;
             string[] documentList = new string[length];
-            string duplicateDocuments = null;
+
             for (int documentCounter = 0; documentCounter < length; documentCounter++)
             {
                 string datachunk = (string)scriptExecutor.ExecuteScript("var links = $('.col-xs-12 #documentPopup')[" + documentCounter + "].title;return links");
@@ -233,7 +233,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             var tempDocumentList = new List<string>();
             foreach (var document in documentList)
             {
-                if (!string.IsNullOrEmpty(document))
+                if (!string.IsNullOrWhiteSpace(document))
                 {
                     tempDocumentList.Add(document);
                     sortedDocument += "'" + document + "',";
@@ -258,49 +258,36 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         [Then(@"all records should be sorted in ascending order on document dashboard by created date")]
         public void ThenAllRecordsShouldBeSortedInAscendingOrderOnDocumentDashboardByCreatedDate()
         {
-            int totalDocument = 0, documentCount = 0, counter = 0; ;
+            int totalDocument = 0;
             char[] delimiters = new char[] { '\r', '\n' };
 
             long length = (long)scriptExecutor.ExecuteScript("var links = $('.ui-grid-canvas .ui-grid-row ').length;return links");
-            string sortedDocument = "[";
+            string  format = "MMM dd, yyyy", format1 = "MMM d, yyyy";
             string[] documentList = new string[length];
-            string duplicateDocuments = null;
-            for (int documentCounter = 0; documentCounter < length; documentCounter++)
+            DateTime[] dates = new DateTime[length];
+            DateTime[] datesSorted = new DateTime[length];
+            CultureInfo provider = CultureInfo.InvariantCulture;
+            for (int documentCounter = 1; documentCounter <= length; documentCounter++)
             {
-                string datachunk = (string)scriptExecutor.ExecuteScript("var links = $('.col-xs-12 #documentPopup')[" + documentCounter + "].title;return links");
-                string[] rows = datachunk.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
-
-                if (!(rows[0].Equals(duplicateDocuments)))
+                string datachunk = (string)scriptExecutor.ExecuteScript("var links = $('.docModDateGridClass .ng-scope')[" + documentCounter + "].innerText;return links");
+                if (datachunk.Length == 12)
                 {
-
-                    if (rows[0] != null)
-                    {
-                        documentList[counter] = rows[0];
-                        counter++;
-                    }
-                    duplicateDocuments = rows[0];
+                    dates[documentCounter-1] = DateTime.ParseExact(datachunk, format, provider);
+                    datesSorted[documentCounter - 1] = DateTime.ParseExact(datachunk, format, provider);
+                }
+                else
+                {
+                    dates[documentCounter-1] = DateTime.ParseExact(datachunk, format1, provider);
+                    datesSorted[documentCounter - 1] = DateTime.ParseExact(datachunk, format1, provider);
                 }
             }
-            var tempDocumentList = new List<string>();
-            foreach (var document in documentList)
+            Array.Sort(datesSorted);
+            for (int index = 0; index < length; index++)
             {
-                if (!string.IsNullOrEmpty(document))
-                {
-                    tempDocumentList.Add(document);
-                    sortedDocument += "'" + document + "',";
-                }
-            }
-            sortedDocument.TrimEnd(',');
-            sortedDocument += "]";
-            documentCount = 0;
-            var sortedDocumentList = scriptExecutor.ExecuteScript("var oDocumentList = " + sortedDocument + ".sort();return oDocumentList");
-            foreach (string element in (IEnumerable)sortedDocumentList)
-            {
-                if (string.Equals(element.Trim(), tempDocumentList[documentCount].Trim(), StringComparison.OrdinalIgnoreCase))
+                if (dates[index] == datesSorted[index])
                 {
                     totalDocument++;
                 }
-                documentCount++;
             }
             Thread.Sleep(2000);
             Assert.IsTrue(totalDocument >= 0);
@@ -383,7 +370,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         }
 
         [Then(@"popup should display email as link or email as attachment options")]
-        public void PopupShouldDisplayEmailAsLinkOrEmailAsAttchmentOptions()
+        public void ThenPopupShouldDisplayEmailAsLinkOrEmailAsAttchmentOptions()
         {
             Assert.IsTrue(common.ElementPresent(webDriver, "emailAttachmentOption", Selector.Class));
             Assert.IsTrue(common.ElementPresent(webDriver, "emailLinkOption", Selector.Class));

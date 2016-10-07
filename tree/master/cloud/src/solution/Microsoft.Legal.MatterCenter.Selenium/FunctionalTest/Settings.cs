@@ -22,8 +22,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
     [Binding]
     public class Settings
     {
-        string URL = ConfigurationManager.AppSettings["Settings"];
-        string createURL = ConfigurationManager.AppSettings["CreateMatter"];
+        string URL = ConfigurationManager.AppSettings["Settings"],
+               createURL = ConfigurationManager.AppSettings["CreateMatter"];
         static IWebDriver webDriver = CommonHelperFunction.GetDriver();
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
         CommonHelperFunction common = new CommonHelperFunction();
@@ -97,9 +97,9 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         [Then(@"settings should be saved and confirmation message should be displayed")]
         public void ThenSettingsShouldBeSavedAndConfirmationMessageShouldBeDisplayed()
         {
-            string successMessage = (string)scriptExecutor.ExecuteScript("var links = $('#successMessage')[0].innerText;return links");
-            string clientLink = (string)scriptExecutor.ExecuteScript("var links = $('.clientLinks').attr('href');return links");
-            string pageDescription = (string)scriptExecutor.ExecuteScript("var links = $('.pageDescription')[0].innerText;return links");
+            string successMessage = (string)scriptExecutor.ExecuteScript("var links = $('#successMessage')[0].innerText;return links"),
+                   clientLink = (string)scriptExecutor.ExecuteScript("var links = $('.clientLinks').attr('href');return links"),
+                   pageDescription = (string)scriptExecutor.ExecuteScript("var links = $('.pageDescription')[0].innerText;return links");
             Assert.IsTrue(successMessage.ToLower(CultureInfo.CurrentCulture).Contains("your changes have been saved. go back to clients"));
             Assert.IsTrue(clientLink.ToLower(CultureInfo.CurrentCulture).Contains("https://msmatter.sharepoint.com/sitepages/settings.aspx"));
             Assert.IsTrue(pageDescription.ToLower(CultureInfo.CurrentCulture).Contains("this page shows the current settings for this client’s new matters. the first section allows you to set new matter default selections, which can be changed when a matter is created. the second section defines settings that can not be changed when a new matter is created. no changes are required, and any changes made will not affect existing matters"));
