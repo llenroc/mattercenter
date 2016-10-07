@@ -82,11 +82,11 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute(":02. User will add Attorney to the Matter")]
+        [NUnit.Framework.DescriptionAttribute("02. User will add Attorney to the Matter")]
         [NUnit.Framework.CategoryAttribute("E2E")]
         public virtual void _02_UserWillAddAttorneyToTheMatter()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo(":02. User will add Attorney to the Matter", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. User will add Attorney to the Matter", new string[] {
                         "E2E"});
 #line 9
 this.ScenarioSetup(scenarioInfo);
@@ -99,11 +99,11 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute(":03. User will save updated Attorney to the matter")]
+        [NUnit.Framework.DescriptionAttribute("03. User will save updated Attorney to the matter")]
         [NUnit.Framework.CategoryAttribute("E2E")]
         public virtual void _03_UserWillSaveUpdatedAttorneyToTheMatter()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo(":03. User will save updated Attorney to the matter", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. User will save updated Attorney to the matter", new string[] {
                         "E2E"});
 #line 14
 this.ScenarioSetup(scenarioInfo);

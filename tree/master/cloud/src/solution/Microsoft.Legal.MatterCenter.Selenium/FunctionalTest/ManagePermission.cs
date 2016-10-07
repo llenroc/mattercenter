@@ -31,7 +31,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
 
         #region 01. Open the browser and load manage permission page
         [When(@"user enters credentials on manage permissions page")]
-        public void WhenUserWillGiveAnd()
+        public void WhenUserEntersCredentialsOnManagePpermissionsPage()
         {
             webDriver.Navigate().GoToUrl(new Uri(URL));
             Thread.Sleep(4000);
@@ -66,7 +66,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
 
         #region 03. User will save updated Attorney to the matter
         [When(@"user clicks on save button on manage permission page")]
-        public void WhenUserWillClickOnSaveButtonOnManagePermissionPage()
+        public void WhenUserClicksOnSaveButtonOnManagePermissionPage()
         {
             scriptExecutor.ExecuteScript("$('#btnSave').click()");
             Thread.Sleep(15000);
