@@ -90,12 +90,15 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             webDriver.FindElement(By.Id("txtConflictCheckBy")).Click();
             webDriver.FindElement(By.Id("txtConflictCheckBy")).Clear();
             webDriver.FindElement(By.Id("txtConflictCheckBy")).SendKeys(ConfigurationManager.AppSettings["AttorneyUser"]);
-            webDriver.FindElement(By.LinkText(ConfigurationManager.AppSettings["Attorney"])).Click();
+            Thread.Sleep(1000);
+            webDriver.FindElement(By.XPath("//*[contains(@id,'typeahead-10')]")).Click();
             Thread.Sleep(3000);
             webDriver.FindElement(By.Id("txtUser1")).Click();
             webDriver.FindElement(By.Id("txtUser1")).Clear();
             webDriver.FindElement(By.Id("txtUser1")).SendKeys(ConfigurationManager.AppSettings["AttorneyName"]);
-            webDriver.FindElement(By.LinkText(ConfigurationManager.AppSettings["AttorneyMember"])).Click();
+            webDriver.FindElement(By.Id("txtUser1")).SendKeys(Keys.ArrowDown);
+            Thread.Sleep(1000);
+            webDriver.FindElement(By.Id("txtUser1")).SendKeys(Keys.Enter);
             Thread.Sleep(2000);
             scriptExecutor.ExecuteScript("$('.calendar').val('09/14/2016').trigger('change')");
             Thread.Sleep(2000);
@@ -105,7 +108,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             webDriver.FindElement(By.Id("txtBlockUser")).Click();
             webDriver.FindElement(By.Id("txtBlockUser")).Clear();
             webDriver.FindElement(By.Id("txtBlockUser")).SendKeys(ConfigurationManager.AppSettings["AttorneyUser"]);
-            webDriver.FindElement(By.LinkText(ConfigurationManager.AppSettings["Attorney"])).Click();
+            Thread.Sleep(1000);
+            webDriver.FindElement(By.XPath("//*[contains(@id,'typeahead-14')]")).Click();
             Thread.Sleep(2000);
             new SelectElement(webDriver.FindElement(By.Id("permUser1"))).SelectByText(ConfigurationManager.AppSettings["PermissionLevel"]);
             Thread.Sleep(3000);

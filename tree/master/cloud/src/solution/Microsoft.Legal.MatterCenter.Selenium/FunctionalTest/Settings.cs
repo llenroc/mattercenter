@@ -71,7 +71,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             webDriver.FindElement(By.Id("txtAssign1")).Click();
             webDriver.FindElement(By.Id("txtAssign1")).Clear();
             webDriver.FindElement(By.Id("txtAssign1")).SendKeys(ConfigurationManager.AppSettings["AttorneyName"]);
-            webDriver.FindElement(By.LinkText(ConfigurationManager.AppSettings["AttorneyMember"])).Click();
+            scriptExecutor.ExecuteScript("$('.ui-menu-item')[0].click()");
             Thread.Sleep(2000);
             webDriver.FindElement(By.Id("ddlRoleAssignIcon1")).Click();
             Thread.Sleep(2000);
@@ -136,7 +136,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             scriptExecutor.ExecuteScript("$('.buttonPrev')[1].click()");
             Thread.Sleep(3000);
             assignedTo = (string)scriptExecutor.ExecuteScript("var aName = $('.inputAssignPerm')[0].value; return aName;");
-            Assert.IsTrue(assignedTo.ToLower(CultureInfo.CurrentCulture).Contains(ConfigurationManager.AppSettings["AttorneyMember"].ToLower(CultureInfo.CurrentCulture)));
+            Assert.IsTrue(assignedTo.ToLower(CultureInfo.CurrentCulture).Contains(ConfigurationManager.AppSettings["AttorneyName"].ToLower(CultureInfo.CurrentCulture)));
         }
 
         #endregion

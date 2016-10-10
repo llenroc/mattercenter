@@ -52,7 +52,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         {
             scriptExecutor.ExecuteScript("$('#addMorePermissions').click()");
             webDriver.FindElement(By.Id("txtAssign" + (existingUsers + 1))).SendKeys(ConfigurationManager.AppSettings["AttorneyName"]);
-            webDriver.FindElement(By.LinkText(ConfigurationManager.AppSettings["AttorneyMember"])).Click();
+            scriptExecutor.ExecuteScript("$('.ui-menu-item')[0].click()");
             scriptExecutor.ExecuteScript("$('#ddlRoleAssign" + (existingUsers + 1) + "').val('Responsible Attorney')");
             scriptExecutor.ExecuteScript("$('#ddlPermAssign" + (existingUsers + 1) + "').val('Full Control')");
         }
