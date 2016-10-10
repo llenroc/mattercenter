@@ -91,7 +91,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 9
 this.ScenarioSetup(scenarioInfo);
 #line 10
- testRunner.When("user clicks on hamburger menu on Matter Center home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on hamburger menu on Matter Center homepage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 11
  testRunner.Then("hamburger menu should be loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -99,11 +99,11 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("05. Verify the matter fly out on Matter Center home page")]
+        [NUnit.Framework.DescriptionAttribute("05. Verify the matter fly out on Matter Center homepage")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void _05_VerifyTheMatterFlyOutOnMatterCenterHomePage()
+        public virtual void _05_VerifyTheMatterFlyOutOnMatterCenterHomepage()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Verify the matter fly out on Matter Center home page", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Verify the matter fly out on Matter Center homepage", new string[] {
                         "E2E"});
 #line 14
 this.ScenarioSetup(scenarioInfo);
@@ -116,16 +116,16 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("06. Verify the search feature on matter center home page")]
+        [NUnit.Framework.DescriptionAttribute("06. Verify the search feature on matter center homepage")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void _06_VerifyTheSearchFeatureOnMatterCenterHomePage()
+        public virtual void _06_VerifyTheSearchFeatureOnMatterCenterHomepage()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Verify the search feature on matter center home page", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Verify the search feature on matter center homepage", new string[] {
                         "E2E"});
 #line 19
 this.ScenarioSetup(scenarioInfo);
 #line 20
- testRunner.When("user types \'test\' in search box on Matter Center Home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user types \'test\' in search box on Matter Center Homepage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 21
  testRunner.Then("all results having \'test\' keyword should be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -249,7 +249,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 61
 this.ScenarioSetup(scenarioInfo);
 #line 62
- testRunner.When("user types \'MCMatterName:Test\' in search box on Matter Center Home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user types \'MCMatterName:Test\' in search box on Matter Center Homepage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 63
  testRunner.Then("all results having \'Test\' keyword should be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

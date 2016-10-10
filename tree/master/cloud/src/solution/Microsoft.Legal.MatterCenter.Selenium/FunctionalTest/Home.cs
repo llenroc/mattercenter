@@ -27,8 +27,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
         CommonHelperFunction common = new CommonHelperFunction();
         #region 01. Open the browser and load home page
-        [When(@"user enters credentials on home page")]
-        public void WhenUserEntersCredentialsOnHomePage()
+        [When(@"user enters credentials on homepage")]
+        public void WhenUserEntersCredentialsOnHomepage()
         {
             common.GetLogin(webDriver, URL);
         }
@@ -41,8 +41,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         #endregion
 
         #region 02. Open the hamburger menu and verify all the elements
-        [When(@"user clicks on hamburger menu on home page")]
-        public void WhenUserClicksOnHamburgerMenuOnHomePage()
+        [When(@"user clicks on hamburger menu on homepage")]
+        public void WhenUserClicksOnHamburgerMenuOnHomepage()
         {
             webDriver.FindElement(By.ClassName("AppSwitcherContainer")).Click();
         }

@@ -15,6 +15,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
     using OpenQA.Selenium;
     using System;
     using System.Configuration;
+    using System.Globalization;
     using System.Threading;
     using System.Web;
     using TechTalk.SpecFlow;
@@ -26,28 +27,28 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         string URL = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["ManagePermissionPage"]);
         static IWebDriver webDriver = CommonHelperFunction.GetDriver();
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
-        CommonHelperFunction common = new CommonHelperFunction();
         static int existingUsers = 0;
+        CultureInfo culture = Thread.CurrentThread.CurrentCulture;
 
         #region 01. Open the browser and load manage permission page
         [When(@"user enters credentials on manage permissions page")]
-        public void WhenUserEntersCredentialsOnManagePpermissionsPage()
+        public void WhenUserEntersCredentialsOnManagePermissionsPage()
         {
             webDriver.Navigate().GoToUrl(new Uri(URL));
             Thread.Sleep(4000);
         }
 
         [Then(@"manage permission page should be loaded with default permission")]
-        public void ThenMnanagePermissionPageShouldBeLoadedWithDefaultPermission()
+        public void ThenManagePermissionPageShouldBeLoadedWithDefaultPermission()
         {
-            existingUsers = Convert.ToInt32(scriptExecutor.ExecuteScript("var length =$('.assignNewPermission').length;return length;"));
+            existingUsers = Convert.ToInt32(scriptExecutor.ExecuteScript("var length =$('.assignNewPermission').length;return length;"),culture);
             Assert.IsTrue(0 < existingUsers);
         }
         #endregion
 
         #region 02. User will add Attorney to the Matter
         [When(@"user adds new Attorney to the matter")]
-        public void WhenUserAddsNewAttroneyToTheMatter()
+        public void WhenUserAddsNewAttorneyToTheMatter()
         {
             scriptExecutor.ExecuteScript("$('#addMorePermissions').click()");
             webDriver.FindElement(By.Id("txtAssign" + (existingUsers + 1))).SendKeys(ConfigurationManager.AppSettings["AttorneyName"]);
@@ -59,7 +60,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         [Then(@"Attorney should be added in the matter")]
         public void ThenAttorneyShouldBeAddedInTheMatter()
         {
-            int newUser = Convert.ToInt32(scriptExecutor.ExecuteScript("var length =$('.assignNewPermission').length;return length;"));
+            int newUser = Convert.ToInt32(scriptExecutor.ExecuteScript("var length =$('.assignNewPermission').length;return length;"),culture);
             Assert.IsTrue(existingUsers + 1 == newUser);
         }
         #endregion
@@ -75,7 +76,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         [Then(@"updated Attorney should be added in the matter")]
         public void ThenUpdatedAttorneyShouldBeAddedInTheMatter()
         {
-            int newUser = Convert.ToInt32(scriptExecutor.ExecuteScript("var length =$('.assignNewPermission').length;return length;"));
+            int newUser = Convert.ToInt32(scriptExecutor.ExecuteScript("var length =$('.assignNewPermission').length;return length;"), culture);
             Assert.IsTrue(existingUsers + 1 == newUser);
         }
         #endregion

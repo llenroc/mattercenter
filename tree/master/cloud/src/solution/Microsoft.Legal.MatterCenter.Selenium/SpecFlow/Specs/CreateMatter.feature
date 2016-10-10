@@ -12,7 +12,7 @@ Scenario: 02. Verify Open Matter tab
 
 @E2E
 Scenario: 03. Verify Assign Permission tab
-	When user selects permission for matter
+	When user selects permission for current matter
 	Then it should navigate to third step
 
 @E2E

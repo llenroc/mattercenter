@@ -53,7 +53,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         }
 
         [Then(@"all matter components - Task, RSS, Calender and OneNote should be present")]
-        public void ThenAllComponentsTaskRSSCalenderAndCalenderShouldBePresent()
+        public void ThenAllComponentsTaskRSSCalendarAndOneNoteShouldBePresent()
         {
             int checkEmptyTask = (webDriver.FindElements(By.CssSelector(".taskBoard .emptyItems"))).Count;
             int taskPresent = (webDriver.FindElements(By.CssSelector(".taskBoard .emptyItems"))).Count;

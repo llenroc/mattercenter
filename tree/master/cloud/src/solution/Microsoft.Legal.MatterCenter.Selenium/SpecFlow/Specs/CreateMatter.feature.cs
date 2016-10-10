@@ -108,7 +108,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 14
 this.ScenarioSetup(scenarioInfo);
 #line 15
- testRunner.When("user selects permission for matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user selects permission for current matter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 16
  testRunner.Then("it should navigate to third step", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
