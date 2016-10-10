@@ -124,11 +124,11 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("06. Verify the matter column picker")]
+        [NUnit.Framework.DescriptionAttribute("09. Verify the matter column picker")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void _06_VerifyTheMatterColumnPicker()
+        public virtual void _09_VerifyTheMatterColumnPicker()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Verify the matter column picker", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("09. Verify the matter column picker", new string[] {
                         "E2E"});
 #line 23
 this.ScenarioSetup(scenarioInfo);
@@ -247,11 +247,11 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("09. Verify the matter search box using managed properties")]
+        [NUnit.Framework.DescriptionAttribute("06. Verify the matter search box using managed properties")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void _09_VerifyTheMatterSearchBoxUsingManagedProperties()
+        public virtual void _06_VerifyTheMatterSearchBoxUsingManagedProperties()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("09. Verify the matter search box using managed properties", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Verify the matter search box using managed properties", new string[] {
                         "E2E"});
 #line 66
 this.ScenarioSetup(scenarioInfo);

@@ -81,8 +81,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
 
         #region 03. Verify 'Assign Permission' tab
 
-        [When(@"user selects permission for matter")]
-        public void WhenUserSelectsPermissionForMatter()
+        [When(@"user selects permission for current matter")]
+        public void WhenUserSelectsPermissionForCurrentMatter()
         {
             Thread.Sleep(2000);
             webDriver.FindElement(By.XPath("//main/div/div/div[2]")).Click();
@@ -90,24 +90,28 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             webDriver.FindElement(By.Id("txtConflictCheckBy")).Click();
             webDriver.FindElement(By.Id("txtConflictCheckBy")).Clear();
             webDriver.FindElement(By.Id("txtConflictCheckBy")).SendKeys(ConfigurationManager.AppSettings["AttorneyUser"]);
-            webDriver.FindElement(By.LinkText(ConfigurationManager.AppSettings["Attorney"])).Click();
+            Thread.Sleep(1000);
+            webDriver.FindElement(By.XPath("//*[contains(@id,'typeahead-10')]")).Click();
             Thread.Sleep(3000);
             webDriver.FindElement(By.Id("txtUser1")).Click();
             webDriver.FindElement(By.Id("txtUser1")).Clear();
             webDriver.FindElement(By.Id("txtUser1")).SendKeys(ConfigurationManager.AppSettings["AttorneyName"]);
-            webDriver.FindElement(By.LinkText(ConfigurationManager.AppSettings["AttorneyMember"])).Click();
+            webDriver.FindElement(By.Id("txtUser1")).SendKeys(Keys.ArrowDown);
+            Thread.Sleep(1000);
+            webDriver.FindElement(By.Id("txtUser1")).SendKeys(Keys.Enter);
             Thread.Sleep(2000);
             scriptExecutor.ExecuteScript("$('.calendar').val('09/14/2016').trigger('change')");
             Thread.Sleep(2000);
             webDriver.FindElement(By.Id("roleUser1")).Click();
-            new SelectElement(webDriver.FindElement(By.Id("roleUser1"))).SelectByText("Responsible Attorney");
+            new SelectElement(webDriver.FindElement(By.Id("roleUser1"))).SelectByText(ConfigurationManager.AppSettings["Role"]); 
             webDriver.FindElement(By.Id("chkConflictCheck")).Click();
             webDriver.FindElement(By.Id("txtBlockUser")).Click();
             webDriver.FindElement(By.Id("txtBlockUser")).Clear();
             webDriver.FindElement(By.Id("txtBlockUser")).SendKeys(ConfigurationManager.AppSettings["AttorneyUser"]);
-            webDriver.FindElement(By.LinkText(ConfigurationManager.AppSettings["Attorney"])).Click();
+            Thread.Sleep(1000);
+            webDriver.FindElement(By.XPath("//*[contains(@id,'typeahead-14')]")).Click();
             Thread.Sleep(2000);
-            new SelectElement(webDriver.FindElement(By.Id("permUser1"))).SelectByText("Full Control");
+            new SelectElement(webDriver.FindElement(By.Id("permUser1"))).SelectByText(ConfigurationManager.AppSettings["PermissionLevel"]);
             Thread.Sleep(3000);
             scriptExecutor.ExecuteScript("$('.col-xs-6 .buttonPrev').click();");
             Thread.Sleep(3000);

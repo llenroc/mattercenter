@@ -14,6 +14,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using OpenQA.Selenium;
+    using OpenQA.Selenium.Support.UI;
     using System.Configuration;
     using System.Globalization;
     using System.Threading;
@@ -70,7 +71,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             webDriver.FindElement(By.Id("txtAssign1")).Click();
             webDriver.FindElement(By.Id("txtAssign1")).Clear();
             webDriver.FindElement(By.Id("txtAssign1")).SendKeys(ConfigurationManager.AppSettings["AttorneyName"]);
-            webDriver.FindElement(By.LinkText(ConfigurationManager.AppSettings["AttorneyMember"])).Click();
+            scriptExecutor.ExecuteScript("$('.ui-menu-item')[0].click()");
             Thread.Sleep(2000);
             webDriver.FindElement(By.Id("ddlRoleAssignIcon1")).Click();
             Thread.Sleep(2000);
@@ -105,6 +106,41 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Assert.IsTrue(pageDescription.ToLower(CultureInfo.CurrentCulture).Contains("this page shows the current settings for this client’s new matters. the first section allows you to set new matter default selections, which can be changed when a matter is created. the second section defines settings that can not be changed when a new matter is created. no changes are required, and any changes made will not affect existing matters"));
         }
         #endregion     
+
+        #region 03. Verify values on matter provision page 
+
+        [When(@"user goes to matter provision page")]
+        public void WhenUserGoesToMatterProvisionPage()
+        {
+            common.GetLogin(webDriver, createURL);
+            Thread.Sleep(5000);
+            webDriver.FindElement(By.XPath("//main/div/div/div")).Click();
+            Thread.Sleep(2000);
+            webDriver.FindElement(By.XPath("//section[@id='snOpenMatter']/div/div[2]/select")).Click();
+            Thread.Sleep(3000);
+            new SelectElement(webDriver.FindElement(By.XPath("//section[@id='snOpenMatter']/div/div[2]/select"))).SelectByText(ConfigurationManager.AppSettings["DropDownKeyword"]);
+            new SelectElement(webDriver.FindElement(By.XPath("//section[@id='snOpenMatter']/div/div[2]/select"))).SelectByText(ConfigurationManager.AppSettings["DropDownClient"]);
+            Thread.Sleep(2000);
+            webDriver.FindElement(By.Id("txtMatterDesc")).Clear();
+            webDriver.FindElement(By.Id("txtMatterDesc")).SendKeys(ConfigurationManager.AppSettings["MatterDescription"]);
+            Thread.Sleep(2000);
+
+        }
+
+        [Then(@"preset values should be loaded")]
+        public void ThenPresetValuesShouldBeLoaded()
+        {
+            string matterName = (string)scriptExecutor.ExecuteScript("var mName = $('#txtMatterName')[0].value; return mName;"),
+                   assignedTo = string.Empty;
+            Assert.IsTrue(matterName.ToLower(CultureInfo.CurrentCulture).Contains(ConfigurationManager.AppSettings["MatterName"].ToLower(CultureInfo.CurrentCulture)));
+            scriptExecutor.ExecuteScript("$('.buttonPrev')[1].click()");
+            Thread.Sleep(3000);
+            assignedTo = (string)scriptExecutor.ExecuteScript("var aName = $('.inputAssignPerm')[0].value; return aName;");
+            Assert.IsTrue(assignedTo.ToLower(CultureInfo.CurrentCulture).Contains(ConfigurationManager.AppSettings["AttorneyName"].ToLower(CultureInfo.CurrentCulture)));
+        }
+
+        #endregion
+
     }
 }
 

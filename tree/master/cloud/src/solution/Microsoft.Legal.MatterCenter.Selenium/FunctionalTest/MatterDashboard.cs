@@ -46,7 +46,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         #endregion
 
         #region 02. Verify the hamburger menu
-        [When(@"user clicks on hamburger menu on Matter Center home page")]
+        [When(@"user clicks on hamburger menu on Matter Center homepage")]
         public void WhenUserClicksOnHamburgerMenuOnMatterCenterHomepage()
         {
             scriptExecutor.ExecuteScript("$('#openHamburger').click();");
@@ -108,8 +108,8 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         #endregion
 
         #region  06. Verify the search feature
-        [When(@"user types '(.*)' in search box on Matter Center Home page")]
-        public void WhenUserTypesInSearchBoxOnMatterCenterHomePage(string searchBoxValue)
+        [When(@"user types '(.*)' in search box on Matter Center Homepage")]
+        public void WhenUserTypesInSearchBoxOnMatterCenterHomepage(string searchBoxValue)
         {
             common.GetLogin(webDriver, URL);
             Thread.Sleep(5000);

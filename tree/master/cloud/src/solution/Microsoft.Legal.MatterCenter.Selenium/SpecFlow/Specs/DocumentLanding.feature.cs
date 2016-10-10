@@ -99,11 +99,11 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("03. Verify file properties")]
+        [NUnit.Framework.DescriptionAttribute("04. Verify file properties")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void _03_VerifyFileProperties()
+        public virtual void _04_VerifyFileProperties()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Verify file properties", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Verify file properties", new string[] {
                         "E2E"});
 #line 14
 this.ScenarioSetup(scenarioInfo);
@@ -116,11 +116,11 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("04. Verify version details")]
+        [NUnit.Framework.DescriptionAttribute("05. Verify version details")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void _04_VerifyVersionDetails()
+        public virtual void _05_VerifyVersionDetails()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Verify version details", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Verify version details", new string[] {
                         "E2E"});
 #line 19
 this.ScenarioSetup(scenarioInfo);
@@ -133,11 +133,11 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("05. Verify the footer links")]
+        [NUnit.Framework.DescriptionAttribute("06. Verify the footer links")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void _05_VerifyTheFooterLinks()
+        public virtual void _06_VerifyTheFooterLinks()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Verify the footer links", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Verify the footer links", new string[] {
                         "E2E"});
 #line 24
 this.ScenarioSetup(scenarioInfo);
@@ -150,11 +150,11 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("06. Verify the pin/unpin functionality")]
+        [NUnit.Framework.DescriptionAttribute("03. Verify the pin/unpin functionality")]
         [NUnit.Framework.CategoryAttribute("E2E")]
-        public virtual void _06_VerifyThePinUnpinFunctionality()
+        public virtual void _03_VerifyThePinUnpinFunctionality()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Verify the pin/unpin functionality", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Verify the pin/unpin functionality", new string[] {
                         "E2E"});
 #line 29
 this.ScenarioSetup(scenarioInfo);

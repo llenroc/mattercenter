@@ -74,7 +74,7 @@ namespace Protractor_Net_Demo.SpecFlow.Specs
 #line 4
 this.ScenarioSetup(scenarioInfo);
 #line 5
- testRunner.When("user enters credentials on home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user enters credentials on homepage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 6
  testRunner.Then("home page should be loaded with element \'HomeContainer\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -91,7 +91,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 9
 this.ScenarioSetup(scenarioInfo);
 #line 10
- testRunner.When("user clicks on hamburger menu on home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("user clicks on hamburger menu on homepage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 11
  testRunner.Then("hamburger menu should display \'Home\',\'Matters\',\'Documents\' and \'Create New Matter" +
                     "\' menu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

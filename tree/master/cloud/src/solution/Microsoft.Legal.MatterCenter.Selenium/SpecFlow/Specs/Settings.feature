@@ -9,3 +9,8 @@ Scenario: 01. Open the browser and load settings page
 Scenario: 02. Set the value on settings page 
 	When settings page is configured and save button is clicked
 	Then settings should be saved and confirmation message should be displayed
+
+@E2E
+Scenario: 03. Verify values on Matter provision page 
+	When user goes to matter provision page
+	Then preset values should be loaded

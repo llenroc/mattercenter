@@ -20,7 +20,7 @@ Scenario: 05. Verify the matter search box
 	Then all matters with 'test' keyword should be shown 
 
 @E2E
-Scenario: 06. Verify the matter column picker
+Scenario: 09. Verify the matter column picker
 	When user clicks on column picker icon
 	Then a column picker should be shown
 	When user checks all columns
@@ -63,6 +63,6 @@ Scenario: 08. Verify the matter filter search
 	Then it should filter the matter based on filter keyword
 
 @E2E	     
-Scenario: 09. Verify the matter search box using managed properties
+Scenario: 06. Verify the matter search box using managed properties
 	When user types 'MCMatterName: test' in search box 
 	Then all matters with 'test' keyword should be shown 

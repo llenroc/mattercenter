@@ -28,7 +28,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         static IWebDriver webDriver = CommonHelperFunction.GetDriver();
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
         CommonHelperFunction common = new CommonHelperFunction();
-        bool pinned;
+        bool pinned = false;
 
         #region 01. Open the browser and load document landing page
         [When(@"user enters credentials on document landing page")]
@@ -229,6 +229,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
                 scriptExecutor.ExecuteScript("$('#spanUnpin').click();");
                 pinned = false;
             }
+            Thread.Sleep(2000);
         }
 
         [Then(@"document should get pinned/unpinned")]

@@ -259,11 +259,9 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         public void ThenAllRecordsShouldBeSortedInAscendingOrderOnDocumentDashboardByCreatedDate()
         {
             int totalDocument = 0;
-            char[] delimiters = new char[] { '\r', '\n' };
 
             long length = (long)scriptExecutor.ExecuteScript("var links = $('.ui-grid-canvas .ui-grid-row ').length;return links");
             string  format = "MMM dd, yyyy", format1 = "MMM d, yyyy";
-            string[] documentList = new string[length];
             DateTime[] dates = new DateTime[length];
             DateTime[] datesSorted = new DateTime[length];
             CultureInfo provider = CultureInfo.InvariantCulture;
@@ -370,7 +368,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         }
 
         [Then(@"popup should display email as link or email as attachment options")]
-        public void ThenPopupShouldDisplayEmailAsLinkOrEmailAsAttchmentOptions()
+        public void ThenPopupShouldDisplayEmailAsLinkOrEmailAsAttachmentOptions()
         {
             Assert.IsTrue(common.ElementPresent(webDriver, "emailAttachmentOption", Selector.Class));
             Assert.IsTrue(common.ElementPresent(webDriver, "emailLinkOption", Selector.Class));
