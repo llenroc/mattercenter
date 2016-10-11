@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Protractor_Net_Demo.SpecFlow.Specs
+namespace Microsoft.Legal.MatterCenter.Selenium.SpecFlow.Specs
 {
     using TechTalk.SpecFlow;
     
