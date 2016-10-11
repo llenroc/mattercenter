@@ -137,6 +137,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             Thread.Sleep(3000);
             assignedTo = (string)scriptExecutor.ExecuteScript("var aName = $('.inputAssignPerm')[0].value; return aName;");
             Assert.IsTrue(assignedTo.ToLower(CultureInfo.CurrentCulture).Contains(ConfigurationManager.AppSettings["AttorneyName"].ToLower(CultureInfo.CurrentCulture)));
+            webDriver.Quit();
         }
 
         #endregion
