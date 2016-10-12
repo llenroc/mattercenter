@@ -308,8 +308,10 @@
     <Content Include="lib\angulartics\LICENSE" />
     <Content Include="lib\angulartics\README.md" />
     <None Include="Properties\PublishProfiles\mattercenterjasmine - FTP %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\mattercenterjasmine - FTP %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\mattercenterjasmine - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\mattercenterjasmine - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\mattercenterjasmine - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\mattercenterjasmine - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\mattermaqdevsite - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\mattermaqdevsite - Web Deploy.pubxml" />
