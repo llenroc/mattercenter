@@ -138,7 +138,7 @@ describe("MatterDashBoard Controller test suite for service call", function () {
             vm.next();
             expect(vm.first).toBeGreaterThan(0);
             expect(vm.last).toBeGreaterThan(0);
-            expect(vm.total).toBeGreaterThan(0);
+            expect(vm.total).not.toBeLessThan(0);
             expect(vm.pagenumber).toBeGreaterThan(0);
             expect(vm.fromtopage).toBe(vm.first + " - " + vm.totalrecords);
             expect(vm.displaypagination).toBe(true);
@@ -266,7 +266,7 @@ describe("MatterDashBoard Controller test suite for service call", function () {
             expect(vm.Pinnedobj).toBeDefined();
             expect(vm.pinMatterCount).toBeGreaterThan(0);
             expect(vm.matterGridOptions.data).toBeDefined();
-            expect(vm.totalrecords).toBe(0);
+            expect(vm.totalrecords).toBeGreaterThan(0);
             expect(vm.lazyloaderdashboard).toBe(true);
             expect(vm.divuigrid).toBe(true);
 

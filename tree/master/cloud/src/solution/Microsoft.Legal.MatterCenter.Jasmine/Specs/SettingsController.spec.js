@@ -164,10 +164,10 @@ describe("SettingsController test suite", function () {
 
     describe("Verification of showSelectedClient function", function () {
         it("It should show all the selected clients", function () {
-            vm.showSelectedClient("Test", oEnvironmentConfiguration.tenantUrl);
+            vm.showSelectedClient("Test", oTestConfiguration.sValidMatterClientURL);
             expect(vm.lazyloader).toBe(true);
             expect(vm.selected).toBe("Test");
-            expect(vm.clienturl).toBe(oEnvironmentConfiguration.tenantUrl);
+            expect(vm.clienturl).toBe(oTestConfiguration.sValidMatterClientURL);
             expect(vm.nodata).toBe(false);
             expect(vm.lazyloader).toBe(true);
             expect(vm.clientlist).toBe(false);

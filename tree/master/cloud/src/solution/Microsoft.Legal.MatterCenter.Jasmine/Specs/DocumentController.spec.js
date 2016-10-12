@@ -91,12 +91,12 @@ describe("documents Controller test suite", function () {
     });
 
     describe("Verification of search function", function () {
-        it("It should perform the text search in all documents", function () {
+        it("It should perform the text search in my documents", function () {
             vm.selected = "";
             vm.search();
             expect(vm.pagenumber).toBe(1);
-            expect(vm.documentname).toBe("All Documents");
-            expect(vm.documentid).toBe(1);
+            expect(vm.documentname).toBe("My Documents");
+            expect(vm.documentid).toBe(2);
             expect(vm.lazyloader).toBe(false);
             expect(vm.responseNull).toBe(false);
             expect(vm.divuigrid).toBe(false);

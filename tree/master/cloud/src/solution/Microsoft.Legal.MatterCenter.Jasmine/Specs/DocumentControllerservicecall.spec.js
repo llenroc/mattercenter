@@ -50,7 +50,7 @@ describe("documents Controller test suite for service call", function () {
             vm.documentsearch(term, property, false);
             expect(vm.divuigrid).toBe(true);
             expect(vm.nodata).toBe(false);
-            expect(vm.lazyloader).toBe(true);
+            expect(vm.lazyloader).toBe(false);
             expect(vm.filternodata).toBe(false);
             expect(vm.details.length).toBeGreaterThan(0);
             expect(vm.details).not.toBe(null);
@@ -98,7 +98,7 @@ describe("documents Controller test suite for service call", function () {
             vm.PinMatter(pinObject);
             vm.documentid = 1;
             vm.documentname = "All Documents";
-            expect(vm.divuigrid).toBe(true);
+            expect(vm.divuigrid).toBe(false);
             expect(vm.responseNull).toBe(false);
             expect(vm.nodata).toBe(false);
             expect(vm.gridOptions.data.length).toBeGreaterThan(0);
@@ -115,7 +115,7 @@ describe("documents Controller test suite for service call", function () {
             vm.UnpinDocument(pinObject);
             vm.documentid = 1;
             vm.documentname = "All Documents";
-            expect(vm.divuigrid).toBe(true);
+            expect(vm.divuigrid).toBe(false);
             expect(vm.responseNull).toBe(false);
             expect(vm.nodata).toBe(false);
             expect(vm.gridOptions.data.length).toBeGreaterThan(0);

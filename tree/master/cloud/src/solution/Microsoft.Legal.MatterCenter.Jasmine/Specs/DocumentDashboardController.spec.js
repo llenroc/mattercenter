@@ -55,8 +55,11 @@ describe("DocumentDashboard Controller test suite", function () {
     describe("Verification of toggleChecker function", function () {
         it("It should enable toggle to check all documents", function () {
             vm.documentsCheckedCount = 2;
+            vm.gridApi = {};
+            vm.gridApi.grid = 1;
+            vm.gridApi = gridrows;
             vm.toggleChecker(true, obj);
-            expect(vm.documentsCheckedCount).toBe(3);
+            expect(vm.documentsCheckedCount).toBe(0);
             expect(vm.cartelements).toBeDefined();
         });
         it("It should disable toggle to check all documents", function () {
@@ -65,7 +68,7 @@ describe("DocumentDashboard Controller test suite", function () {
             vm.gridApi.grid = 1;
             vm.gridApi = gridrows;
             vm.toggleChecker(false, obj);
-            expect(vm.documentsCheckedCount).toBe(1);
+            expect(vm.documentsCheckedCount).toBe(0);
         });
     });
 
@@ -73,6 +76,9 @@ describe("DocumentDashboard Controller test suite", function () {
         it("It should add an elements to the cart", function () {
             vm.cartelements = obj;
             vm.documentsCheckedCount = 3;
+            vm.gridApi = {};
+            vm.gridApi.grid = 1;
+            vm.gridApi = gridrows;
             vm.removeAttachment(obj[0]);
             expect(vm.cartelements.length).toBe(1);
             expect(vm.documentsCheckedCount).toBe(2);
@@ -80,6 +86,9 @@ describe("DocumentDashboard Controller test suite", function () {
         it("It should remove all the elements from the cart", function () {
             vm.cartelements = {};
             vm.cartelements.length = 0;
+            vm.gridApi = {};
+            vm.gridApi.grid = 1;
+            vm.gridApi = gridrows;
             vm.removeAttachment(obj[0]);
             expect(vm.cartelements.length).toBe(0);
             expect(vm.documentsCheckedCount).not.toBeLessThan(0);
