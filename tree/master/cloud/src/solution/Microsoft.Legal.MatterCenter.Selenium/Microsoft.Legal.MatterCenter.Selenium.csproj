@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Legal.MatterCenter.Selenium</RootNamespace>
     <AssemblyName>Microsoft.Legal.MatterCenter.Selenium</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,15 +49,27 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="TechTalk.SpecFlow">
       <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
     </Reference>
@@ -68,17 +81,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FunctionalTest\DocumentLanding.cs" />
-    <Compile Include="FunctionalTest\DocumentDashboard.cs" />
-    <Compile Include="FunctionalTest\CreateMatter.cs" />
-    <Compile Include="FunctionalTest\DocumentSearch.cs" />
-    <Compile Include="FunctionalTest\Home.cs" />
-    <Compile Include="FunctionalTest\Common.cs" />
-    <Compile Include="FunctionalTest\ManagePermission.cs" />
-    <Compile Include="FunctionalTest\MatterLanding.cs" />
-    <Compile Include="FunctionalTest\MatterSearch.cs" />
-    <Compile Include="FunctionalTest\MatterDashboard.cs" />
-    <Compile Include="FunctionalTest\Settings.cs" />
+    <Compile Include="FunctionalTestSuite\DocumentLanding.cs" />
+    <Compile Include="FunctionalTestSuite\DocumentDashboard.cs" />
+    <Compile Include="FunctionalTestSuite\CreateMatter.cs" />
+    <Compile Include="FunctionalTestSuite\DocumentSearch.cs" />
+    <Compile Include="FunctionalTestSuite\Home.cs" />
+    <Compile Include="FunctionalTestSuite\Common.cs" />
+    <Compile Include="FunctionalTestSuite\ManagePermission.cs" />
+    <Compile Include="FunctionalTestSuite\MatterLanding.cs" />
+    <Compile Include="FunctionalTestSuite\MatterSearch.cs" />
+    <Compile Include="FunctionalTestSuite\MatterDashboard.cs" />
+    <Compile Include="FunctionalTestSuite\Settings.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="SpecFlow\Specs\CreateMatter.feature.cs">
       <AutoGen>True</AutoGen>
