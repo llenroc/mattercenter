@@ -314,7 +314,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         }
         #endregion
 
-        #region 02. Verify the document ECB menu
+        #region 02. Verify the document Ecb menu
         [When(@"user clicks on ECB menu in document search page")]
         public void WhenUserClicksOnECBMenuInDocumentSearchPage()
         {
@@ -468,6 +468,61 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             string viewDocuments = (string)scriptExecutor.ExecuteScript("var links = $('.ms-Callout-content')[7].innerText;return links");
             Assert.IsTrue(viewDocuments.Contains("View document details"));
         }
+        #endregion
+
+        #region 09. Verify no results on searching gibberish text
+
+        [When(@"user searches with random keywords on document search page")]
+        public void WhenUserSearchesWithRandomKeywordsOnDocumentSearchPage()
+        {
+            string searchText = ConfigurationManager.AppSettings["Gibberish"];
+            common.GetLogin(webDriver, URL);
+            Thread.Sleep(3000);
+            webDriver.FindElement(By.CssSelector(".form-control")).Clear();
+            webDriver.FindElement(By.CssSelector(".form-control")).SendKeys(searchText);
+            Thread.Sleep(2000);
+            scriptExecutor.ExecuteScript("$('#basic-addon1').click();");
+            Thread.Sleep(3000);
+        }
+
+        [Then(@"no results should be displayed on document search page")]
+        public void ThenNoResultsShouldBeDisplayedOnDocumentSearchPage()
+        {
+            string noResults = (string)scriptExecutor.ExecuteScript("var result = $('.noResultsText')[0].innerText; return result;");
+            Assert.IsTrue(noResults.ToLower(CultureInfo.CurrentCulture).Contains("nothing matches your search term"));
+        }
+
+        #endregion
+
+        #region 10. Verify no results on searching gibberish text on document filter
+
+        [When(@"user clicks on column filter to filter the documents using random keyword")]
+        public void WhenUserClicksOnColumnFilterToFilterTheDocumentsUsingRandomKeyword()
+        {
+            common.GetLogin(webDriver, URL);
+            Thread.Sleep(2000);
+            string searchBox = ConfigurationManager.AppSettings["Gibberish"];
+            scriptExecutor.ExecuteScript("$('.searchPanelDropdown')[0].click();");
+            Thread.Sleep(4000);
+            webDriver.FindElement(By.CssSelector("div.ui-grid-cell-contents.ui-grid-header-cell-primary-focus")).Click();
+            Thread.Sleep(3000);
+            webDriver.FindElement(By.CssSelector("a.prisma-header-dropdown-anchor > img")).Click();
+            Thread.Sleep(3000);
+            webDriver.FindElement(By.XPath("/html/body/div/div/main/div/div[6]/div[1]/input")).Clear();
+            webDriver.FindElement(By.XPath("/html/body/div/div/main/div/div[6]/div[1]/input")).Click();
+            webDriver.FindElement(By.XPath("/html/body/div/div/main/div/div[6]/div[1]/input")).SendKeys(searchBox);
+            Thread.Sleep(2000);
+            webDriver.FindElement(By.XPath("(//button[@type='button'])[4]")).Click();
+            Thread.Sleep(2000);
+        }
+
+        [Then(@"no documents should be displayed inside the fly out")]
+        public void ThenNoDocumentsShouldBeDisplayedInsideTheFlyOut()
+        {
+            string noItems = (string)scriptExecutor.ExecuteScript("var text = $('.filterFlyOutNoResults span')[0].innerText; return text");
+            Assert.IsTrue(noItems.ToLower(CultureInfo.CurrentCulture).Contains("there are no items"));
+        }
+
         #endregion
 
     }

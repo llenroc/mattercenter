@@ -22,7 +22,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
     using TechTalk.SpecFlow;
 
     [Binding]
-    public class CreateMatterSteps
+    public class CreateMatter
     {
         string URL = ConfigurationManager.AppSettings["CreateMatter"];
         static IWebDriver webDriver = CommonHelperFunction.GetDriver();
