@@ -15,6 +15,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using OpenQA.Selenium;
     using OpenQA.Selenium.Support.UI;
+    using System;
     using System.Configuration;
     using System.Globalization;
     using System.Threading;
@@ -28,6 +29,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         static IWebDriver webDriver = CommonHelperFunction.GetDriver();
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
         CommonHelperFunction common = new CommonHelperFunction();
+        CultureInfo culture = CultureInfo.CurrentCulture;
 
         #region 01. Open the browser and load settings page
         [When(@"user enters credentials on settings page")]
@@ -43,10 +45,99 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         }
         #endregion
 
+        #region 02. Verify deletion of team members 
+
+        [When(@"user tries to delete all the team members")]
+        public void WhenUserTriesToDeleteAllTheTeamMembers()
+        {
+            common.GetLogin(webDriver, URL);
+            Thread.Sleep(2000);
+            int noOfMembers = Convert.ToInt32(scriptExecutor.ExecuteScript("var length = $('.assignNewPerm').length; return length;"));
+
+            for (int index = 0; index < noOfMembers; index++)
+            {
+                scriptExecutor.ExecuteScript("$('.close')[0].click()");
+                Thread.Sleep(1000);
+            }
+        }
+
+        [Then(@"last team member should not be deleted")]
+        public void ThenLastTeamMemberShouldNotBeDeleted()
+        {
+            int noOfMembers = Convert.ToInt32(scriptExecutor.ExecuteScript("var length = $('.assignNewPerm').length; return length;"));
+            Assert.IsTrue(noOfMembers > 0);
+        }
+
+        #endregion
+
+        #region 03. Verify error message on adding non-existing team member
+
+        [When(@"user adds non-existing Attorney to the team")]
+        public void WhenUserAddsNon_ExistingAttorneyToTheTeam()
+        {
+            common.GetLogin(webDriver, URL);
+            webDriver.FindElement(By.CssSelector("input.ms-TextField-field.inputMatterName")).Click();
+            webDriver.FindElement(By.CssSelector("input.ms-TextField-field.inputMatterName")).Clear();
+            webDriver.FindElement(By.CssSelector("input.ms-TextField-field.inputMatterName")).SendKeys(ConfigurationManager.AppSettings["MatterName"]);
+            Thread.Sleep(2000);
+            webDriver.FindElement(By.CssSelector("input.ms-TextField-field.inputMatterId")).Click();
+            webDriver.FindElement(By.CssSelector("input.ms-TextField-field.inputMatterId")).Clear();
+            webDriver.FindElement(By.CssSelector("input.ms-TextField-field.inputMatterId")).SendKeys(ConfigurationManager.AppSettings["MatterDescription"]);
+            Thread.Sleep(2000);
+            scriptExecutor.ExecuteScript("$('.popUpPGDiv').click()");
+            Thread.Sleep(2000);
+            scriptExecutor.ExecuteScript("$('.popUpOptions')[0].click()");
+            Thread.Sleep(2000);
+            webDriver.FindElement(By.CssSelector("img.iconForward.iconPosition")).Click();
+            Thread.Sleep(3000);
+            scriptExecutor.ExecuteScript("$('.popUpDTContent')[0].click()");
+            Thread.Sleep(2000);
+            webDriver.FindElement(By.CssSelector("div.popUpDTContent.popUpSelected")).Click();
+            Thread.Sleep(2000);
+            scriptExecutor.ExecuteScript("$('#assignTeamTrue')[0].click()");
+            scriptExecutor.ExecuteScript("$('#assignTeamFalse')[0].click()");
+            Thread.Sleep(2000);
+            webDriver.FindElement(By.Id("txtAssign1")).Click();
+            webDriver.FindElement(By.Id("txtAssign1")).Clear();
+            webDriver.FindElement(By.Id("txtAssign1")).SendKeys(ConfigurationManager.AppSettings["Gibberish"]);
+            scriptExecutor.ExecuteScript("$('.ui-menu-item')[0].click()");
+            Thread.Sleep(2000);
+            webDriver.FindElement(By.Id("ddlRoleAssignIcon1")).Click();
+            Thread.Sleep(2000);
+            webDriver.FindElement(By.XPath("//div[@id='ddlRoleAssignList1']/div[4]")).Click();
+            Thread.Sleep(2000);
+            webDriver.FindElement(By.Id("ddlPermAssignIcon1")).Click();
+            Thread.Sleep(2000);
+            webDriver.FindElement(By.XPath("//div[@id='ddlPermAssignList1']/div[2]")).Click();
+            Thread.Sleep(3000);
+            scriptExecutor.ExecuteScript("$('#includeRSSTrue').click()");
+            Thread.Sleep(1000);
+            scriptExecutor.ExecuteScript("$('#includeEmailTrue').click()");
+            Thread.Sleep(1000);
+            scriptExecutor.ExecuteScript("$('#includeCalendarTrue').click()");
+            Thread.Sleep(1000);
+            scriptExecutor.ExecuteScript("$('#includeTasksTrue').click()");
+            Thread.Sleep(1000);
+            scriptExecutor.ExecuteScript("$('#matterRequiredTrue').click()");
+            Thread.Sleep(2000);
+            scriptExecutor.ExecuteScript("$('#saveButton').click()");
+            Thread.Sleep(3000);
+        }
+
+        [Then(@"error should be thrown on saving")]
+        public void ThenErrorShouldBeThrownOnSaving()
+        {
+            string errorMsg = (string)scriptExecutor.ExecuteScript("var error = $('.errText')[0].innerText; return error;");
+            Assert.IsTrue(errorMsg.ToLower(CultureInfo.CurrentCulture).Contains("please enter valid team members"));
+        }
+
+        #endregion
+
         #region  02. Set the value on settings page 
         [When(@"settings page is configured and save button is clicked")]
         public void WhenSettingsPageIsConfiguredAndSaveButtonIsClicked()
         {
+            common.GetLogin(webDriver, URL);
             webDriver.FindElement(By.CssSelector("input.ms-TextField-field.inputMatterName")).Click();
             webDriver.FindElement(By.CssSelector("input.ms-TextField-field.inputMatterName")).Clear();
             webDriver.FindElement(By.CssSelector("input.ms-TextField-field.inputMatterName")).SendKeys(ConfigurationManager.AppSettings["MatterName"]);

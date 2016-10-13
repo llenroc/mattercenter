@@ -27,6 +27,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         static IWebDriver webDriver = CommonHelperFunction.GetDriver();
         IJavaScriptExecutor scriptExecutor = (IJavaScriptExecutor)webDriver;
         CommonHelperFunction common = new CommonHelperFunction();
+        CultureInfo culture = Thread.CurrentThread.CurrentCulture;
 
         #region 01. Open the browser and load matter landing page
         [When(@"user enters credentials on matter landing page")]
@@ -217,6 +218,28 @@ namespace Microsoft.Legal.MatterCenter.Selenium
             {
                 Assert.IsFalse(true);
             }
+        }
+
+        #endregion
+
+        #region 07. Verify empty results on searching non-existing files
+
+        [When(@"user types random text in file search")]
+        public void WhenUserTypesRandomTextInFileSearch()
+        {
+            common.GetLogin(webDriver, URL);
+            Thread.Sleep(10000);
+            webDriver.FindElement(By.Id("inplaceSearchDiv_WPQ5_lsinput")).Clear();
+            webDriver.FindElement(By.Id("inplaceSearchDiv_WPQ5_lsinput")).SendKeys(ConfigurationManager.AppSettings["Gibberish"]);
+            scriptExecutor.ExecuteScript("$('#inplaceSearchDiv_WPQ5_lsimg')[0].click();");
+            Thread.Sleep(3000);
+        }
+
+        [Then(@"no results should be displayed")]
+        public void ThenNoResultsShouldBeDisplayed()
+        {
+            int tableLength = Convert.ToInt32(scriptExecutor.ExecuteScript("var length = $('.ms-listviewtable tr').length; return length;"),culture);
+            Assert.IsTrue(tableLength <= 1);
         }
 
         #endregion
