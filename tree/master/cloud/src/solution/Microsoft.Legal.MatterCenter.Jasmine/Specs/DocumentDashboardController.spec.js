@@ -160,4 +160,22 @@ describe("DocumentDashboard Controller test suite", function () {
         });
     });
 
+    //This methods are not available on current published build
+
+    //describe("Verification of collapseDateControls function", function () {
+    //    it("It should collapse date controls", function () {
+    //        vm.collapseDateControls();
+    //        expect(vm.openedStartDate).toBe(false);
+    //        expect(vm.openedEndDate).toBe(false);
+    //    });     
+    //});
+
+    //describe("Verification of displayColumn function", function () {
+    //    it("It should switch the displayed column", function () {
+    //        var sHeaderName = vm.switchFuction("GridColumn6Header");
+    //        expect(sHeaderName).toBe(false);
+            
+    //    });     
+    //});
+
 });
