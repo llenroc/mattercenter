@@ -16,7 +16,7 @@ describe("MatterUsers Controller test suite", function () {
         getData(matterResource, mockMatterResource);
 
     };
-   
+
     beforeEach(module("matterMain"));
     beforeEach(module("matterMain", function ($provide) {
         $provide.factory("matterResource", ["$resource", "auth", mockMatterResource]);
@@ -106,7 +106,7 @@ describe("MatterUsers Controller test suite", function () {
             expect(vm.notificationPopUpBlock).toBe(false);
         });
     });
- 
+
     describe("Verification of onSelect function", function () {
         it("It should return the conflicted user", function () {
             var $item = {
@@ -128,4 +128,22 @@ describe("MatterUsers Controller test suite", function () {
         });
     });
 
-});
+    describe("Verification of confirmUser function", function () {    
+        it("It should confirm the list of users", function () {
+            vm.textInputUser = {};
+            vm.confirmUser(true);
+            expect(vm.notificationPopUpBlock).toBe(false);
+            expect(vm.textInputUser.userConfirmation).toBe(true);       
+        });
+
+        it("It should not confirm the list of users", function () {
+            vm.textInputUser = {};
+            vm.confirmUser(false);
+            expect(vm.notificationPopUpBlock).toBe(false);
+            expect(vm.textInputUser.userConfirmation).toBe(false);
+            expect(vm.textInputUser.userExsists).toBe(false);
+            expect(vm.textInputUser.assignedUser).toBe("");
+        });
+    });
+
+   });
