@@ -114,9 +114,9 @@
       <DependentUpon>DocumentSearch.feature</DependentUpon>
     </Compile>
     <Compile Include="SpecFlow\Specs\Home.feature.cs">
-      <DependentUpon>Home.feature</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Home.feature</DependentUpon>
     </Compile>
     <Compile Include="SpecFlow\Specs\ManagePermission.feature.cs">
       <AutoGen>True</AutoGen>

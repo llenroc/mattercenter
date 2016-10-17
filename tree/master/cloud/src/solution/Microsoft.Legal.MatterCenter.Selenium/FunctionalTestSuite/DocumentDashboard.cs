@@ -120,6 +120,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         [When(@"user types '(.*)' in search box on document dashboard")]
         public void WhenUserTypesInSearchBoxOnDocumentDashboard(string searchBox)
         {
+            common.GetLogin(webDriver, URL);
             Thread.Sleep(2000);
             webDriver.FindElement(By.CssSelector(".col-xs-12 .form-control")).Clear();
             Thread.Sleep(1000);
