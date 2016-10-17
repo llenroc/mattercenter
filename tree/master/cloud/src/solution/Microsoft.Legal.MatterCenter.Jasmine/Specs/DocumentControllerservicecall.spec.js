@@ -238,4 +238,17 @@ describe("documents Controller test suite for service call", function () {
             expect(vm.documentheader).toBe(true);
         });
     });
+
+    describe("Verification of filterSearch function", function () {
+        it("It should filter the search results", function () {
+            vm.searchexp = "FileName";
+            vm.filterSearch("test");
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.nodata).toBe(false);
+            expect(vm.lazyloaderFilter).toBe(true);
+            expect(vm.details.length).toBeGreaterThan(0);
+            expect(vm.filternodata).toBe(false);
+        });
+    });
+
 });

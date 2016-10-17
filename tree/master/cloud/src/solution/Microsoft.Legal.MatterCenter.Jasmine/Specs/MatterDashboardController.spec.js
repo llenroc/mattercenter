@@ -191,4 +191,13 @@ describe("MatterDashBoard Controller test suite", function () {
         });
     });
 
+    describe("Verification of showDocTabs function", function () {
+        it("It should display document tabs", function () {
+            vm.showInnerNav = true;
+            vm.showDocTabs(event);
+            expect(vm.showNavTab).toBe(true);
+            expect(vm.showInnerNav).toBe(false);
+        });
+    });
+
 });

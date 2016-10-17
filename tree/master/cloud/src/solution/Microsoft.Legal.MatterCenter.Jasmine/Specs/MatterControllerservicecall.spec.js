@@ -300,4 +300,16 @@ describe("Matters Controller test suite for service call", function () {
             expect(data).toBe("Matter");
         });
     });
+
+    describe("Verification of export function", function () {
+        it("This should export the data in spreadsheet", function () {
+            vm.searchexp = "MCMatterName";
+            vm.filterSearch("test");
+            expect(vm.divuigrid).toBe(true);
+            expect(vm.nodata).toBe(false);
+            expect(vm.lazyloaderFilter).toBe(true);
+            expect(vm.details.length).toBeGreaterThan(0);
+            expect(vm.filternodata).toBe(false);
+        });
+    });
 });
