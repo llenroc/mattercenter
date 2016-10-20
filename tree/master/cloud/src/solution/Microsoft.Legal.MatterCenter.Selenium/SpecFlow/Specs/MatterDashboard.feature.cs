@@ -289,12 +289,12 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("11. Verify no results on gibberish search")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("11. Verify no results on invalid search")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Matter Dashboard Page")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("E2E")]
-        public virtual void _11_VerifyNoResultsOnGibberishSearch()
+        public virtual void _11_VerifyNoResultsOnInvalidSearch()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("11. Verify no results on gibberish search", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("11. Verify no results on invalid search", new string[] {
                         "E2E"});
 #line 71
 this.ScenarioSetup(scenarioInfo);
