@@ -389,7 +389,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         {
             scriptExecutor.ExecuteScript("$('.nav-tabs a')[3].click()");
             Thread.Sleep(3000);
-            scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
+            scriptExecutor.ExecuteScript("$('.col-sm-offset-6 img')[0].click()");
             Thread.Sleep(4000);
             scriptExecutor.ExecuteScript("$('.col-xs-offset-7 li')[3].click()");
             Thread.Sleep(4000);
@@ -400,7 +400,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         {
             scriptExecutor.ExecuteScript("$('.nav-tabs a')[1].click()");
             Thread.Sleep(3000);
-            scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
+            scriptExecutor.ExecuteScript("$('.col-sm-offset-6 img')[0].click()");
             Thread.Sleep(4000);
             scriptExecutor.ExecuteScript("$('.col-xs-offset-7 li')[1].click()");
             Thread.Sleep(4000);
@@ -411,7 +411,7 @@ namespace Microsoft.Legal.MatterCenter.Selenium
         {
             scriptExecutor.ExecuteScript("$('.nav-tabs a')[1].click()");
             Thread.Sleep(3000);
-            scriptExecutor.ExecuteScript("$('.col-xs-4 img').click()");
+            scriptExecutor.ExecuteScript("$('.col-sm-offset-6 img')[0].click()");
             Thread.Sleep(4000);
             scriptExecutor.ExecuteScript("$('.col-xs-offset-7 li')[3].click()");
             Thread.Sleep(4000);

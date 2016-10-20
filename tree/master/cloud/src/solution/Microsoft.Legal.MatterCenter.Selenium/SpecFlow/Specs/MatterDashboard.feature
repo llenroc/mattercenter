@@ -68,6 +68,6 @@ Scenario: 12. Verify enterprise search feature on matter center home page
 	Then user should redirect to enterprise page with search results for 'Test'
 
 @E2E
-Scenario: 11. Verify no results on gibberish search
+Scenario: 11. Verify no results on invalid search
 	When user types gibberish in search box on Matter Center dashboard
 	Then no results should be displayed on Matter Center dashboard
