@@ -52,6 +52,7 @@
     <Content Include="..\Microsoft.Legal.MatterCenter.Web\wwwroot\app\matter\matterusers.controller.js">
       <Link>app\matter\matterusers.controller.js</Link>
     </Content>
+    <Content Include="Elements.html" />
     <Content Include="js\app.js" />
     <Content Include="js\config.js" />
     <Content Include="lib\adal-angular\.bower.json" />
@@ -244,8 +245,10 @@
     <Content Include="lib\jquery\dist\jquery.min.js" />
     <Content Include="lib\jquery\dist\jquery.min.map" />
     <Content Include="lib\jquery\MIT-LICENSE.txt" />
+    <Content Include="Object\mockObjects.js" />
     <Content Include="Object\ObjectCollection.js" />
     <Content Include="packages.config" />
+    <Content Include="References.js" />
     <Content Include="Scripts\app.js" />
     <Content Include="Open Notebook.onetoc2" />
     <Content Include="bower.json" />
@@ -317,8 +320,10 @@
     <None Include="Properties\PublishProfiles\mattermaqdevsite - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\POCAPI - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\POCAPI - FTP %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\POCAPI - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\POCAPI - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\POCAPI - Web Deploy %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\POCAPI - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -409,7 +414,9 @@
     <Content Include="Specs\SettingsController.spec.js" />
     <Content Include="Specs\NavigationController.spec.js" />
     <Content Include="Specs\UploadVerification.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -431,6 +438,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,4 +1,5 @@
-﻿/// <disable>JS2074, JS3058</disable>
+﻿/// <reference path="../References.js" />
+/// <disable>JS2074, JS3058</disable>
 //// ***********************************************************************
 //// Author           : MAQ USER
 //// Created          : 31-08-2016
@@ -26,7 +27,7 @@ describe("MatterDashBoard Controller test suite", function () {
 
     beforeEach(module("ui.router"));
     beforeEach(module("ui.bootstrap"));
-
+    
     beforeEach(inject(function ($controller, $rootScope) {
         rootScope = $rootScope.$new();
         vm = $controller("MatterDashBoardController as vm", { $scope: $scope, $state: $state, $stateParams: $stateParams, matterDashBoardResource: mockMatterDashBoardResource, api: mockapi, $rootScope: rootScope, $http: $http, $location: $location, $q: $q });

@@ -17,6 +17,9 @@ var $location = {
     absUrl: function () {
         var url = "https://" + oEnvironmentConfiguration.azureSiteName + ".azurewebsites.net&test=1&attempt=2|jasminetest.html";
         return url;
+    },
+    search: function () {
+        return { mattertype: "", practicegroup: "", teamname: "" }
     }
 };
 
@@ -34,6 +37,9 @@ var adalService = {
 };
 
 var mockapi = function () {
+};
+
+var mockadalAuthenticationService = function () {
 };
 
 var mocknavigationResource = {
@@ -416,32 +422,22 @@ var gridrows = {
     }
 }
 
+var http = {
+    "status": 200,
+};
+
 function getData(objectData, resourceData) {
-    var sURL = oTestConfiguration.sSiteURL + resourceData[objectData.method];
-    var http = new XMLHttpRequest();
-    var sPostdata;
 
-    if (!IsJsonString(objectData.data)) {
-        sPostdata = JSON.stringify(objectData.data);
-    } else {
-        sPostdata = objectData.data;
-    }
-    http.open("POST", sURL, false);
-    var accessToken = "Bearer " + sessionStorage.getItem("adal.idtoken");
-    // Send the proper header information along with the request
-    http.setRequestHeader("Content-type", "application/json");
-    http.setRequestHeader("Accept", "application/json");
-    http.setRequestHeader("Authorization", accessToken);
-    http.send(sPostdata);
-
-    if (http.status === 200) {// That's HTTP for 'ok'
-        if (objectData.success) {
-            objectData.success(JSON.parse(http.responseText));
+    var sURLValue = resourceData[objectData.method].replace("/api/v1/", "");
+    if (sURLValue.indexOf("gettaxonomy") !== -1) {
+        if (objectData.data.TermStoreDetails.TermSetName && "Clients" === objectData.data.TermStoreDetails.TermSetName) {
+            sURLValue = sURLValue + "/client";
         }
         else {
-            return JSON.parse(http.responseText);
+            sURLValue = sURLValue + "/practiceGroup";
         }
     }
+    objectData.success(mockObjects[sURLValue]);
 }
 
 function IsJsonString(sValue) {

@@ -1,4 +1,5 @@
-﻿//// ***********************************************************************
+﻿/// <reference path="../References.js" />
+//// ***********************************************************************
 //// Author           : MAQ USER
 //// Created          : 31-08-2016
 ////
@@ -27,7 +28,7 @@ describe("MatterDashBoard Controller test suite for service call", function () {
 
     beforeEach(module('ui.router'));
     beforeEach(module('ui.bootstrap'));
-
+    
     beforeEach(inject(function ($controller, $rootScope) {
         rootScope = $rootScope.$new();
         vm = $controller('MatterDashBoardController as vm', { $scope: $scope, $state: $state, $stateParams: $stateParams, matterDashBoardResource: mockMatterDashBoardResource, api: mockapi, $rootScope: rootScope, $http: $http, $location: $location, $q: $q });
@@ -126,7 +127,7 @@ describe("MatterDashBoard Controller test suite for service call", function () {
     describe("Verification of sortyby function", function () {
         it("It should sort all the data", function () {
             var sortexp = "AlphabeticalUp";
-            vm.sortyby(sortexp, "Searchkeyword");
+            vm.sortby(sortexp, "Searchkeyword");
             expect(vm.lazyloaderdashboard).toBe(true);
         });
     });
@@ -266,7 +267,7 @@ describe("MatterDashBoard Controller test suite for service call", function () {
             expect(vm.Pinnedobj).toBeDefined();
             expect(vm.pinMatterCount).toBeGreaterThan(0);
             expect(vm.matterGridOptions.data).toBeDefined();
-            expect(vm.totalrecords).toBeGreaterThan(0);
+            expect(vm.totalrecords).not.toBeLessThan(0);
             expect(vm.lazyloaderdashboard).toBe(true);
             expect(vm.divuigrid).toBe(true);
 
@@ -281,7 +282,7 @@ describe("MatterDashBoard Controller test suite for service call", function () {
             vm.showAreaofLawDrop(event);
             expect(vm.clientdrop).toBe(false);
             expect(vm.clientdropvisible).toBe(false);
-            expect(vm.lazyloaderaol).toBe(true);
+            expect(vm.lazyloaderaol).toBe(false);
             expect(vm.pgdrop).toBe(false);
             expect(vm.pgdropvisible).toBe(false);
         });
