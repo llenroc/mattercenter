@@ -430,7 +430,7 @@ function getData(objectData, resourceData) {
 
     var sURLValue = resourceData[objectData.method].replace("/api/v1/", "");
     if (sURLValue.indexOf("gettaxonomy") !== -1) {
-        if (objectData.data.TermStoreDetails.TermSetName === "Clients") {
+        if (objectData.data.TermStoreDetails.TermSetName && "Clients" === objectData.data.TermStoreDetails.TermSetName) {
             sURLValue = sURLValue + "/client";
         }
         else {

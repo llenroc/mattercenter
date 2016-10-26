@@ -1,6 +1,6 @@
 ﻿var oEnvironmentConfiguration = {
     tenant: "MySharePoint.onmicrosoft.com",
-    tenantUrl: "https://MyShaerPoint.sharepoint.com",
+    tenantUrl: "https://MySharePoint.sharepoint.com",
     loggedInUserName: "TestUser",
     loggedInUserEmail: "TestUser@MySharePoint.onmicrosoft.com",
     azureSiteName: window.config.azureSiteName
