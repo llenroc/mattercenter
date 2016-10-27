@@ -3,9 +3,6 @@
 
     // Enter Global Config Values & Instantiate ADAL AuthenticationContext
     window.config = {
-
-        //***************************** CONFIGURAATION VALUES ****************************//
-        azureSiteName: "matterwebapp", //Enter Azure site name
         instance: 'https://login.microsoftonline.com/',
         postLogoutRedirectUri: window.location.origin,
     };
