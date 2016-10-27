@@ -33,7 +33,29 @@
 /// <reference path="Scripts/uiconfig.js" />
 /// <reference path="js/app.js" />
 /// <reference path="js/config.js" />
-/// <reference path="Scripts/SourceReference.js" />
+
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/directives/heading.directive.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/directives/common.directive.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/navigation.controller.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/services/auth.service.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/services/api.service.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/matter/matter.resources.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/matter/matters.controller.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/matter/matterusers.controller.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/dashboard/settings.resources.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/dashboard/settings.controller.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/home.resources.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/home.controller.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/dashboard/documentdashboard.resources.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/dashboard/documentdashboard.controller.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/dashboard/matterdashboard.resources.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/dashboard/matterdashboard.controller.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/matter/Upload.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/document/documents.controller.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/document/document.resources.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/directives/drag.directive.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/directives/drop.directive.js" />
+/// <reference path="../Microsoft.Legal.MatterCenter.Web/wwwroot/app/matter/createMatter.controller.js" />
 
 
 
